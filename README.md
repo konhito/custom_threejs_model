@@ -1,5 +1,5 @@
 <h3 align="center">
-  <img src = "https://giphy.com/embed/jBOOXxSJfG8kqMxT11" width="200px" alt="gif" />
+  <img src = "https://i.giphy.com/l41JU9pUyosHzWyuQ.webp" width="200px" alt="gif" />
   <br/>
   Custom Three.js Model Viewer
 </h3>
