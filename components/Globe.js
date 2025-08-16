@@ -391,6 +391,7 @@ export default function GlobeComponent() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
+  const controlsRef = useRef(); // Add this line to store controls reference
 
   // India data for the lotus flower
   const indiaData = {
@@ -415,7 +416,7 @@ export default function GlobeComponent() {
       "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
     color: "#ff6b9d",
     special: true,
-    size: 0.2,
+    size: 0.15, // Decreased from 0.2 to 0.15
     gltfPath: "/lotus.glb",
   };
 
@@ -612,6 +613,19 @@ export default function GlobeComponent() {
                      console.log("🌸 India ball added above India");
         }
 
+        // Move controls declaration BEFORE the click handler
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+        controls.enableZoom = true;
+        controls.enablePan = false;
+        controls.minDistance = 3;
+        controls.maxDistance = 15;
+        
+        // Store controls reference so closeModal can access it
+        controlsRef.current = controls;
+
         // Add click detection using raycasting
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
@@ -655,16 +669,6 @@ export default function GlobeComponent() {
         // Add click listener
         renderer.domElement.addEventListener("click", handleClick);
 
-        // Add controls
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.5;
-        controls.enableZoom = true;
-        controls.enablePan = false;
-        controls.minDistance = 3;
-        controls.maxDistance = 15;
-
         // Animation loop
         const animate = () => {
           requestAnimationFrame(animate);
@@ -707,6 +711,11 @@ export default function GlobeComponent() {
     setTimeout(() => {
       setSelectedCountry(null);
     }, 300);
+    
+    // Restart globe rotation when modal closes
+    if (controlsRef.current && controlsRef.current.autoRotate === false) {
+      controlsRef.current.autoRotate = true;
+    }
   };
 
   return (
