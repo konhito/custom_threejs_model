@@ -390,6 +390,7 @@ export default function GlobeComponent() {
   const containerRef = useRef();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
 
   // India data for the lotus flower
   const indiaData = {
@@ -466,17 +467,32 @@ export default function GlobeComponent() {
         // Load your custom Globe.glb
         const loader = new GLTFLoader();
         
-        loader.load(
-          "/Globe.glb",
-          (gltf) => {
-            const globe = gltf.scene;
-            globe.scale.setScalar(3);
-            scene.add(globe);
-            console.log("✅ Globe loaded successfully");
+                 loader.load(
+           "/Globe.glb",
+           (gltf) => {
+             const globe = gltf.scene;
+             globe.scale.setScalar(3);
+             
+             // Add initial scale animation
+             globe.scale.setScalar(0.1);
+             scene.add(globe);
+             console.log("✅ Globe loaded successfully");
 
-            // Now add the small ball above India
-            addIndiaBall(scene, camera);
-          },
+             // Animate globe scale
+             const scaleAnimation = () => {
+               if (globe.scale.x < 3) {
+                 globe.scale.addScalar(0.1);
+                 requestAnimationFrame(scaleAnimation);
+               } else {
+                 globe.scale.setScalar(3);
+                 setIsGlobeLoaded(true);
+               }
+             };
+             scaleAnimation();
+
+             // Now add the small ball above India
+             addIndiaBall(scene, camera);
+           },
           undefined,
           (error) => {
             console.error("Failed to load Globe.glb:", error);
@@ -484,39 +500,71 @@ export default function GlobeComponent() {
           }
         );
         
-        // Function to create fallback globe
-        function createFallbackGlobe() {
-          console.log("🔄 Creating fallback globe");
-          // Create fallback sphere
-          const geometry = new THREE.SphereGeometry(3, 32, 32);
-          const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
-          const sphere = new THREE.Mesh(geometry, material);
-          scene.add(sphere);
-          
-          // Add India ball
-          addIndiaBall(scene, camera);
-        }
+                 // Function to create fallback globe
+         function createFallbackGlobe() {
+           console.log("🔄 Creating fallback globe");
+           // Create fallback sphere
+           const geometry = new THREE.SphereGeometry(3, 32, 32);
+           const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
+           const sphere = new THREE.Mesh(geometry, material);
+           
+           // Add initial scale animation for fallback
+           sphere.scale.setScalar(0.1);
+           scene.add(sphere);
+           
+           // Animate fallback globe scale
+           const scaleAnimation = () => {
+             if (sphere.scale.x < 3) {
+               sphere.scale.addScalar(0.1);
+               requestAnimationFrame(scaleAnimation);
+             } else {
+               sphere.scale.setScalar(3);
+               setIsGlobeLoaded(true);
+             }
+           };
+           scaleAnimation();
+           
+           // Add India ball
+           addIndiaBall(scene, camera);
+         }
 
-        // Function to add India ball above the country
-        function addIndiaBall(scene, camera) {
-          const ballGroup = new THREE.Group();
-          
-          // Main sphere (ball) - this will be clickable
-          const sphereGeometry = new THREE.SphereGeometry(indiaData.size, 32, 32);
-          const sphereMaterial = new THREE.MeshPhongMaterial({
-            color: indiaData.color,
-            shininess: 120,
-            specular: 0x666666,
-            transparent: true,
-            opacity: 0.9,
-          });
-          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-          
-          // Store country data for click handling
-          sphere.userData = { data: indiaData };
-          sphere.castShadow = true;
-          sphere.receiveShadow = true;
-          ballGroup.add(sphere);
+                 // Function to add India ball above the country
+         function addIndiaBall(scene, camera) {
+           const ballGroup = new THREE.Group();
+           
+           // Main sphere (ball) - this will be clickable
+           const sphereGeometry = new THREE.SphereGeometry(indiaData.size, 32, 32);
+           const sphereMaterial = new THREE.MeshPhongMaterial({
+             color: indiaData.color,
+             shininess: 120,
+             specular: 0x666666,
+             transparent: true,
+             opacity: 0.9,
+           });
+           const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+           
+           // Store country data for click handling
+           sphere.userData = { data: indiaData };
+           sphere.castShadow = true;
+           sphere.receiveShadow = true;
+           ballGroup.add(sphere);
+           
+           // Add initial scale animation for the ball
+           ballGroup.scale.setScalar(0);
+           scene.add(ballGroup);
+           
+           // Animate ball appearance with delay
+           setTimeout(() => {
+             const ballAnimation = () => {
+               if (ballGroup.scale.x < 1) {
+                 ballGroup.scale.addScalar(0.1);
+                 requestAnimationFrame(ballAnimation);
+               } else {
+                 ballGroup.scale.setScalar(1);
+               }
+             };
+             ballAnimation();
+           }, 1000); // Delay ball animation until globe is mostly loaded
 
           // Outer glow
           const glowGeometry = new THREE.SphereGeometry(indiaData.size * 1.4, 16, 16);
@@ -561,8 +609,7 @@ export default function GlobeComponent() {
           ballGroup.position.set(x, y, z);
           ballGroup.userData = { data: indiaData };
           
-          scene.add(ballGroup);
-          console.log("🌸 India ball added above India");
+                     console.log("🌸 India ball added above India");
         }
 
         // Add click detection using raycasting
@@ -672,11 +719,24 @@ export default function GlobeComponent() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Main globe container */}
-      <div
-        ref={containerRef}
-        className="w-full h-full cursor-grab active:cursor-grabbing relative"
-      />
+             {/* Main globe container */}
+       <div
+         ref={containerRef}
+         className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 ${
+           isGlobeLoaded ? 'opacity-100' : 'opacity-0'
+         }`}
+       />
+       
+       {/* Loading Animation */}
+       {!isGlobeLoaded && (
+         <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+           <div className="text-center">
+             <div className="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+             <h2 className="text-2xl font-bold text-white mb-2">Loading Galactic Garden</h2>
+             <p className="text-blue-300 text-lg">Preparing your cosmic journey...</p>
+           </div>
+         </div>
+       )}
 
       {/* UI Overlay */}
       
