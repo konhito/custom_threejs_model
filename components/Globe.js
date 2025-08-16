@@ -45,7 +45,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
         );
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.2;
 
@@ -387,442 +387,278 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
 }
 
 export default function GlobeComponent() {
-  const globeRef = useRef();
   const containerRef = useRef();
-  const [Globe, setGlobe] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // Enhanced country data with national flowers
-  const countryData = [
-    {
-      id: "IN_ROSE",
-      name: "Rose",
-      country: "India",
-      countryCode: "IN",
-      lat: 20.5937,
-      lng: 78.9629,
-      capital: "New Delhi",
-      population: "1.4 billion",
-      continent: "Asia",
-      language: "Hindi, English",
-      currency: "Indian Rupee (INR)",
-      flowerName: "Lotus",
-      flowerScientificName: "Nelumbo nucifera",
-      flowerDescription:
-        "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
-      culturalSignificance:
-        "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
-      botanicalInfo:
-        "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
-      color: "#ff6b9d",
-      special: true,
-      size: 2.8,
-      gltfPath: "/lotus.glb", // Added GLB path for India
-    },
-    {
-      id: "JP_CHERRY",
-      name: "Cherry Blossom",
-      country: "Japan",
-      countryCode: "JP",
-      lat: 36.2048,
-      lng: 138.2529,
-      capital: "Tokyo",
-      population: "125 million",
-      continent: "Asia",
-      language: "Japanese",
-      currency: "Japanese Yen (JPY)",
-      flowerName: "Cherry Blossom (Sakura)",
-      flowerScientificName: "Prunus × yedoensis",
-      flowerDescription:
-        "Cherry blossoms represent the fleeting nature of life and beauty. These delicate pink and white flowers bloom briefly each spring, creating spectacular displays across Japan.",
-      culturalSignificance:
-        "Central to Japanese culture, sakura season is celebrated with hanami (flower viewing) festivals. It symbolizes the ephemeral nature of life and renewal.",
-      botanicalInfo:
-        "Ornamental cherry trees that bloom for only 1-2 weeks in spring. There are over 200 varieties of cherry blossoms in Japan, each with unique characteristics.",
-      color: "#ff9ec7",
-      special: true,
-      size: 2.6,
-    },
-    {
-      id: "BR_IPEYELLOW",
-      name: "Golden Trumpet Tree",
-      country: "Brazil",
-      countryCode: "BR",
-      lat: -14.235,
-      lng: -51.9253,
-      capital: "Brasília",
-      population: "215 million",
-      continent: "South America",
-      language: "Portuguese",
-      currency: "Brazilian Real (BRL)",
-      flowerName: "Ipê-amarelo (Golden Trumpet Tree)",
-      flowerScientificName: "Handroanthus albus",
-      flowerDescription:
-        "The golden trumpet tree produces brilliant yellow flowers that create stunning displays across Brazil. It blooms during the dry season, bringing vibrant color to the landscape.",
-      culturalSignificance:
-        "Symbol of Brazilian identity and natural beauty. The tree represents strength, resilience, and the country's rich biodiversity.",
-      botanicalInfo:
-        "A deciduous tree that can reach 30 meters in height. It blooms abundantly with trumpet-shaped yellow flowers before the leaves appear.",
-      color: "#ffd700",
-      special: true,
-      size: 2.7,
-    },
-    {
-      id: "US_ROSE",
-      name: "Rose",
-      country: "United States",
-      countryCode: "US",
-      lat: 39.8283,
-      lng: -98.5795,
-      capital: "Washington D.C.",
-      population: "333 million",
-      continent: "North America",
-      language: "English",
-      currency: "US Dollar (USD)",
-      flowerName: "Rose",
-      flowerScientificName: "Rosa",
-      flowerDescription:
-        "The rose is America's national flower, representing love, beauty, and passion. With thousands of varieties, roses have been cultivated for centuries and remain one of the most beloved flowers worldwide.",
-      culturalSignificance:
-        "Symbol of love and romance in American culture. Different colored roses carry different meanings - red for love, white for purity, yellow for friendship.",
-      botanicalInfo:
-        "Perennial flowering plants with over 300 species. They feature thorny stems, compound leaves, and fragrant flowers in various colors.",
-      color: "#dc143c",
-      special: true,
-      size: 2.5,
-    },
-    {
-      id: "FR_IRIS",
-      name: "Iris",
-      country: "France",
-      countryCode: "FR",
-      lat: 46.6034,
-      lng: 1.8883,
-      capital: "Paris",
-      population: "68 million",
-      continent: "Europe",
-      language: "French",
-      currency: "Euro (EUR)",
-      flowerName: "Iris (Fleur-de-lis)",
-      flowerScientificName: "Iris pseudacorus",
-      flowerDescription:
-        "The iris, stylized as the fleur-de-lis, has been a symbol of French royalty for centuries. These elegant flowers feature intricate petals and come in many colors.",
-      culturalSignificance:
-        "Symbol of French monarchy and national identity. The fleur-de-lis appears on the French coat of arms and represents faith, wisdom, and chivalry.",
-      botanicalInfo:
-        "Perennial plants with sword-like leaves and showy flowers. They grow from rhizomes and prefer moist, well-drained soil.",
-      color: "#4169e1",
-      special: true,
-      size: 2.4,
-    },
-  ];
+  // India data for the lotus flower
+  const indiaData = {
+    id: "IN_LOTUS",
+    name: "Lotus",
+    country: "India",
+    countryCode: "IN",
+    lat: 20.5937,
+    lng: -55.9629,
+    capital: "New Delhi",
+    population: "1.4 billion",
+    continent: "Asia",
+    language: "Hindi, English",
+    currency: "Indian Rupee (INR)",
+    flowerName: "Lotus",
+    flowerScientificName: "Nelumbo nucifera",
+    flowerDescription:
+      "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
+    culturalSignificance:
+      "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
+    botanicalInfo:
+      "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
+    color: "#ff6b9d",
+    special: true,
+    size: 0.2,
+    gltfPath: "/lotus.glb",
+  };
 
   useEffect(() => {
+    if (!containerRef.current) return;
+
     const loadGlobe = async () => {
-      if (typeof window !== "undefined") {
-        try {
-          const GlobeGL = (await import("globe.gl")).default;
-          setGlobe(() => GlobeGL);
-        } catch (error) {
-          console.error("Failed to load globe.gl:", error);
-        }
-      }
-    };
-    loadGlobe();
-  }, []);
-
-  useEffect(() => {
-    if (!Globe || !containerRef.current) return;
-
-    let globe;
-    let THREE;
-
-    const initializeGlobe = async () => {
       try {
-        THREE = await import("three");
+        const THREE = await import("three");
+        const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader.js");
+        const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls.js");
 
-        globe = Globe()
-          .globeImageUrl("//unpkg.com/three-globe/example/img/earth-day.jpg")
-          .bumpImageUrl(
-            "//unpkg.com/three-globe/example/img/earth-topology.png"
-          )
-          .backgroundColor("rgba(0,0,0,0)")
-          .width(containerRef.current.clientWidth)
-          .height(containerRef.current.clientHeight)
-          .showGlobe(true)
-          .showAtmosphere(true)
-          .atmosphereColor("#4a90e2")
-          .atmosphereAltitude(0.25);
+        // Clear container
+        containerRef.current.innerHTML = "";
 
-        globe(containerRef.current);
-        globeRef.current = globe;
+        // Create scene
+        const scene = new THREE.Scene();
+        scene.background = null; // Make background transparent so CSS background shows
 
-        setTimeout(() => {
-          const scene = globe.scene();
-          const renderer = globe.renderer();
-          const camera = globe.camera();
+        // Create camera
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          containerRef.current.clientWidth / containerRef.current.clientHeight,
+          0.1,
+          1000
+        );
+        camera.position.set(0, 0, 8);
 
-          if (scene && renderer && camera) {
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.antialias = true;
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // Create renderer
+        const renderer = new THREE.WebGLRenderer({ 
+          antialias: true,
+          alpha: true // Enable alpha channel for transparency
+        });
+        renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha (transparent)
+        containerRef.current.appendChild(renderer.domElement);
 
-            // Clear existing lights
-            const lightsToRemove = [];
-            scene.traverse((child) => {
-              if (child.isLight) lightsToRemove.push(child);
-            });
-            lightsToRemove.forEach((light) => scene.remove(light));
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
 
-            // Enhanced lighting setup
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        directionalLight.castShadow = true;
+        scene.add(directionalLight);
 
-            const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
-            mainLight.position.set(2, 2, 2);
-            mainLight.castShadow = true;
-            scene.add(mainLight);
+        // Load your custom Globe.glb
+        const loader = new GLTFLoader();
+        
+        loader.load(
+          "/Globe.glb",
+          (gltf) => {
+            const globe = gltf.scene;
+            globe.scale.setScalar(3);
+            scene.add(globe);
+            console.log("✅ Globe loaded successfully");
 
-            const fillLight = new THREE.DirectionalLight(0x74c7ec, 0.6);
-            fillLight.position.set(-2, -1, -2);
-            scene.add(fillLight);
-
-            const rimLight = new THREE.DirectionalLight(0xff9f7a, 0.4);
-            rimLight.position.set(0, 0, -3);
-            scene.add(rimLight);
-
-            renderer.toneMappingExposure = 1.2;
-
-            // Add custom click detection using raycasting
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2();
-
-            const handleClick = (event) => {
-              // Get mouse position
-              const rect = containerRef.current.getBoundingClientRect();
-              mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-              mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-              // Update raycaster
-              raycaster.setFromCamera(mouse, camera);
-
-              // Get all intersectable objects
-              const intersectableObjects = [];
-              scene.traverse((child) => {
-                if (child.userData && child.userData.data && child.isMesh) {
-                  intersectableObjects.push(child);
-                }
-              });
-
-              // Check for intersections
-              const intersects =
-                raycaster.intersectObjects(intersectableObjects);
-
-              console.log("Click detected! Intersects:", intersects.length);
-
-              if (intersects.length > 0) {
-                const clickedObject = intersects[0].object;
-                const countryData = clickedObject.userData.data;
-
-                console.log("Clicked country:", countryData);
-
-                if (countryData) {
-                  // Stop auto rotation
-                  const controls = globe.controls();
-                  if (controls) {
-                    controls.autoRotate = false;
-                  }
-
-                  // Show modal
-                  setSelectedCountry(countryData);
-                  setIsModalVisible(true);
-
-                  console.log("Modal should open for:", countryData.country);
-                }
-              }
-            };
-
-            // Add click listener to the renderer's DOM element
-            renderer.domElement.addEventListener("click", handleClick);
-
-            // Store cleanup function
-            globe._customCleanup = () => {
-              renderer.domElement.removeEventListener("click", handleClick);
-            };
+            // Now add the small ball above India
+            addIndiaBall(scene, camera);
+          },
+          undefined,
+          (error) => {
+            console.error("Failed to load Globe.glb:", error);
+            createFallbackGlobe();
           }
-        }, 100);
+        );
+        
+        // Function to create fallback globe
+        function createFallbackGlobe() {
+          console.log("🔄 Creating fallback globe");
+          // Create fallback sphere
+          const geometry = new THREE.SphereGeometry(3, 32, 32);
+          const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
+          const sphere = new THREE.Mesh(geometry, material);
+          scene.add(sphere);
+          
+          // Add India ball
+          addIndiaBall(scene, camera);
+        }
 
-        // Smooth controls
-        const controls = globe.controls();
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.8;
-        controls.enableZoom = true;
-        controls.enablePan = false;
-        controls.minDistance = 140;
-        controls.maxDistance = 800;
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.03;
-        controls.rotateSpeed = 0.5;
+        // Function to add India ball above the country
+        function addIndiaBall(scene, camera) {
+          const ballGroup = new THREE.Group();
+          
+          // Main sphere (ball) - this will be clickable
+          const sphereGeometry = new THREE.SphereGeometry(indiaData.size, 32, 32);
+          const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: indiaData.color,
+            shininess: 120,
+            specular: 0x666666,
+            transparent: true,
+            opacity: 0.9,
+          });
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          
+          // Store country data for click handling
+          sphere.userData = { data: indiaData };
+          sphere.castShadow = true;
+          sphere.receiveShadow = true;
+          ballGroup.add(sphere);
 
-        // Create simple 3D balls with proper click handling
-        globe
-          .objectsData(countryData)
-          .objectThreeObject((d) => {
-            const group = new THREE.Group();
+          // Outer glow
+          const glowGeometry = new THREE.SphereGeometry(indiaData.size * 1.4, 16, 16);
+          const glowMaterial = new THREE.MeshBasicMaterial({
+            color: indiaData.color,
+            transparent: true,
+            opacity: 0.15,
+          });
+          const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+          glow.userData = { data: indiaData };
+          ballGroup.add(glow);
 
-            // Store data reference for click handling
-            group.userData = { data: d };
+          // Ring effect for special countries
+          const ringGeometry = new THREE.RingGeometry(
+            indiaData.size * 1.8,
+            indiaData.size * 2.2,
+            32
+          );
+          const ringMaterial = new THREE.MeshBasicMaterial({
+            color: indiaData.color,
+            transparent: true,
+            opacity: 0.3,
+            side: THREE.DoubleSide,
+          });
+          const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+          ring.rotateX(Math.PI / 2);
+          ring.userData = { data: indiaData };
+          ballGroup.add(ring);
 
-            // Main sphere (ball) - this will be clickable
-            const sphereGeometry = new THREE.SphereGeometry(d.size, 32, 32);
-            const sphereMaterial = new THREE.MeshPhongMaterial({
-              color: d.color,
-              shininess: 120,
-              specular: 0x666666,
-              transparent: true,
-              opacity: 0.9,
-            });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          // Position the ball above India
+          const lat = indiaData.lat;
+          const lng = indiaData.lng;
+          const radius = 3.5; // Closer to the globe surface
+          
+          const phi = (90 - lat) * (Math.PI / 180);
+          const theta = (lng + 180) * (Math.PI / 180);
+          
+          const x = -(radius * Math.sin(phi) * Math.cos(theta));
+          const y = radius * Math.cos(phi);
+          const z = radius * Math.sin(phi) * Math.sin(theta);
+          
+          ballGroup.position.set(x, y, z);
+          ballGroup.userData = { data: indiaData };
+          
+          scene.add(ballGroup);
+          console.log("🌸 India ball added above India");
+        }
 
-            // Store data directly on the sphere
-            sphere.userData = { data: d };
-            sphere.castShadow = true;
-            sphere.receiveShadow = true;
-            group.add(sphere);
+        // Add click detection using raycasting
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
 
-            // Outer glow
-            const glowGeometry = new THREE.SphereGeometry(d.size * 1.4, 16, 16);
-            const glowMaterial = new THREE.MeshBasicMaterial({
-              color: d.color,
-              transparent: true,
-              opacity: 0.15,
-            });
-            const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-            glow.userData = { data: d };
-            group.add(glow);
+        const handleClick = (event) => {
+          // Get mouse position
+          const rect = containerRef.current.getBoundingClientRect();
+          mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-            // Ring effect for special countries
-            if (d.special) {
-              const ringGeometry = new THREE.RingGeometry(
-                d.size * 1.8,
-                d.size * 2.2,
-                32
-              );
-              const ringMaterial = new THREE.MeshBasicMaterial({
-                color: d.color,
-                transparent: true,
-                opacity: 0.3,
-                side: THREE.DoubleSide,
-              });
-              const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-              ring.rotateX(Math.PI / 2);
-              ring.userData = { data: d };
-              group.add(ring);
-            }
+          // Update raycaster
+          raycaster.setFromCamera(mouse, camera);
 
-            return group;
-          })
-          .objectAltitude((d) => (d.special ? 0.08 : 0.05))
-          .onObjectClick((obj) => {
-            console.log("CLICK EVENT TRIGGERED!"); // Debug log
-            console.log("Clicked object:", obj); // Debug log
-
-            if (!obj) {
-              console.log("No object clicked");
-              return;
-            }
-
-            // Try to find country data
-            let data = null;
-
-            // Check direct userData
-            if (obj.userData && obj.userData.data) {
-              data = obj.userData.data;
-              console.log("Found data on object:", data);
-            }
-            // Check parent userData
-            else if (
-              obj.parent &&
-              obj.parent.userData &&
-              obj.parent.userData.data
-            ) {
-              data = obj.parent.userData.data;
-              console.log("Found data on parent:", data);
-            }
-
-            if (data) {
-              console.log(
-                `Opening dialog for: ${data.country} - ${data.flowerName}`
-              );
-
-              // Stop auto rotation
-              const controls = globe.controls();
-              if (controls) {
-                controls.autoRotate = false;
-              }
-
-              // Set state to show modal
-              setSelectedCountry(data);
-              setIsModalVisible(true);
-
-              console.log("Modal should be visible now");
-            } else {
-              console.log("ERROR: No country data found!");
-              console.log("Object structure:", obj);
-              console.log("Object userData:", obj.userData);
-              if (obj.parent) {
-                console.log("Parent userData:", obj.parent.userData);
-              }
-            }
-          })
-          .onObjectHover((obj, prevObj) => {
-            // Change cursor on hover for better UX
-            if (obj) {
-              document.body.style.cursor = "pointer";
-              console.log(
-                "Hovering over:",
-                obj.userData?.data?.country || "unknown"
-              );
-            } else {
-              document.body.style.cursor = "default";
+          // Get all intersectable objects
+          const intersectableObjects = [];
+          scene.traverse((child) => {
+            if (child.userData && child.userData.data && child.isMesh) {
+              intersectableObjects.push(child);
             }
           });
+
+          // Check for intersections
+          const intersects = raycaster.intersectObjects(intersectableObjects);
+
+          if (intersects.length > 0) {
+            const clickedObject = intersects[0].object;
+            const countryData = clickedObject.userData.data;
+
+            if (countryData) {
+              // Stop auto rotation
+              controls.autoRotate = false;
+
+              // Show modal
+              setSelectedCountry(countryData);
+              setIsModalVisible(true);
+              console.log("🌸 Opening lotus dialog for India");
+            }
+          }
+        };
+
+        // Add click listener
+        renderer.domElement.addEventListener("click", handleClick);
+
+        // Add controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+        controls.enableZoom = true;
+        controls.enablePan = false;
+        controls.minDistance = 3;
+        controls.maxDistance = 15;
+
+        // Animation loop
+        const animate = () => {
+          requestAnimationFrame(animate);
+          controls.update();
+          renderer.render(scene, camera);
+        };
+        animate();
+
+        // Handle resize
+        const handleResize = () => {
+          if (!containerRef.current) return;
+          const width = containerRef.current.clientWidth;
+          const height = containerRef.current.clientHeight;
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(width, height);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup
+        return () => {
+          window.removeEventListener("resize", handleResize);
+          renderer.domElement.removeEventListener("click", handleClick);
+          if (containerRef.current) {
+            containerRef.current.innerHTML = "";
+          }
+        };
+
       } catch (error) {
-        console.error("Error initializing globe:", error);
+        console.error("Error loading Three.js:", error);
       }
     };
 
-    const handleResize = () => {
-      if (globe && containerRef.current) {
-        globe
-          .width(containerRef.current.clientWidth)
-          .height(containerRef.current.clientHeight);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    initializeGlobe();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (containerRef.current && globe) {
-        containerRef.current.innerHTML = "";
-      }
-    };
-  }, [Globe]);
+    loadGlobe();
+  }, []);
 
   const closeModal = () => {
     setIsModalVisible(false);
     setTimeout(() => {
       setSelectedCountry(null);
-      // Reset globe view and restart auto rotation
-      if (globeRef.current) {
-        const controls = globeRef.current.controls();
-        controls.autoRotate = true;
-        globeRef.current.pointOfView({ altitude: 3 }, 1000);
-      }
     }, 300);
   };
 
@@ -836,28 +672,35 @@ export default function GlobeComponent() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {!Globe ? (
-        <div className="flex items-center justify-center h-full">
-          <div className="bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-white/10">
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-12 h-12 bg-blue-400 rounded-full animate-spin flex items-center justify-center">
-                <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              </div>
-              <p className="text-xl font-light text-white">
-                Loading Galactic Garden...
-              </p>
-              <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-              </div>
-            </div>
+      {/* Main globe container */}
+      <div
+        ref={containerRef}
+        className="w-full h-full cursor-grab active:cursor-grabbing relative"
+      />
+
+      {/* UI Overlay */}
+      <div className="absolute top-6 left-6 bg-black/40 backdrop-blur-xl px-6 py-4 rounded-2xl border border-white/20 shadow-xl">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <Flower className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">
+              India's Lotus Globe
+            </h1>
+            <p className="text-blue-300 text-sm">
+              Click the ball above India to see the lotus
+            </p>
           </div>
         </div>
-      ) : (
-        <div
-          ref={containerRef}
-          className="w-full h-full cursor-grab active:cursor-grabbing"
-        />
-      )}
+      </div>
+
+      {/* Instructions */}
+      <div className="absolute bottom-6 right-6 bg-black/40 backdrop-blur-xl px-4 py-3 rounded-xl border border-white/20">
+        <p className="text-white/90 text-sm">
+          🖱️ Drag to rotate • 🔍 Scroll to zoom • 🌸 Click India ball for lotus
+        </p>
+      </div>
 
       {/* Enhanced Flower Detail Modal */}
       {selectedCountry && (
