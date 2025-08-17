@@ -416,7 +416,7 @@ export default function GlobeComponent() {
       "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
     color: "#ff6b9d",
     special: true,
-    size: 0.15, // Decreased from 0.2 to 0.15
+    size: 0.08, // Decreased from 0.2 to 0.15
     gltfPath: "/lotus.glb",
   };
 
@@ -426,8 +426,12 @@ export default function GlobeComponent() {
     const loadGlobe = async () => {
       try {
         const THREE = await import("three");
-        const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader.js");
-        const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls.js");
+        const { GLTFLoader } = await import(
+          "three/examples/jsm/loaders/GLTFLoader.js"
+        );
+        const { OrbitControls } = await import(
+          "three/examples/jsm/controls/OrbitControls.js"
+        );
 
         // Clear container
         containerRef.current.innerHTML = "";
@@ -446,11 +450,14 @@ export default function GlobeComponent() {
         camera.position.set(0, 0, 8);
 
         // Create renderer
-        const renderer = new THREE.WebGLRenderer({ 
+        const renderer = new THREE.WebGLRenderer({
           antialias: true,
-          alpha: true // Enable alpha channel for transparency
+          alpha: true, // Enable alpha channel for transparency
         });
-        renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+        renderer.setSize(
+          containerRef.current.clientWidth,
+          containerRef.current.clientHeight
+        );
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha (transparent)
@@ -467,108 +474,116 @@ export default function GlobeComponent() {
 
         // Load your custom Globe.glb
         const loader = new GLTFLoader();
-        
-                 loader.load(
-           "/Globe.glb",
-           (gltf) => {
-             const globe = gltf.scene;
-             globe.scale.setScalar(3);
-             
-             // Add initial scale animation
-             globe.scale.setScalar(0.1);
-             scene.add(globe);
-             console.log("✅ Globe loaded successfully");
 
-             // Animate globe scale
-             const scaleAnimation = () => {
-               if (globe.scale.x < 3) {
-                 globe.scale.addScalar(0.1);
-                 requestAnimationFrame(scaleAnimation);
-               } else {
-                 globe.scale.setScalar(3);
-                 setIsGlobeLoaded(true);
-               }
-             };
-             scaleAnimation();
+        loader.load(
+          "/Globe.glb",
+          (gltf) => {
+            const globe = gltf.scene;
+            globe.scale.setScalar(3);
 
-             // Now add the small ball above India
-             addIndiaBall(scene, camera);
-           },
+            // Add initial scale animation
+            globe.scale.setScalar(0.1);
+            scene.add(globe);
+            console.log("✅ Globe loaded successfully");
+
+            // Animate globe scale
+            const scaleAnimation = () => {
+              if (globe.scale.x < 3) {
+                globe.scale.addScalar(0.1);
+                requestAnimationFrame(scaleAnimation);
+              } else {
+                globe.scale.setScalar(3);
+                setIsGlobeLoaded(true);
+              }
+            };
+            scaleAnimation();
+
+            // Now add the small ball above India
+            addIndiaBall(scene, camera);
+          },
           undefined,
           (error) => {
             console.error("Failed to load Globe.glb:", error);
             createFallbackGlobe();
           }
         );
-        
-                 // Function to create fallback globe
-         function createFallbackGlobe() {
-           console.log("🔄 Creating fallback globe");
-           // Create fallback sphere
-           const geometry = new THREE.SphereGeometry(3, 32, 32);
-           const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
-           const sphere = new THREE.Mesh(geometry, material);
-           
-           // Add initial scale animation for fallback
-           sphere.scale.setScalar(0.1);
-           scene.add(sphere);
-           
-           // Animate fallback globe scale
-           const scaleAnimation = () => {
-             if (sphere.scale.x < 3) {
-               sphere.scale.addScalar(0.1);
-               requestAnimationFrame(scaleAnimation);
-             } else {
-               sphere.scale.setScalar(3);
-               setIsGlobeLoaded(true);
-             }
-           };
-           scaleAnimation();
-           
-           // Add India ball
-           addIndiaBall(scene, camera);
-         }
 
-                 // Function to add India ball above the country
-         function addIndiaBall(scene, camera) {
-           const ballGroup = new THREE.Group();
-           
-           // Main sphere (ball) - this will be clickable
-           const sphereGeometry = new THREE.SphereGeometry(indiaData.size, 32, 32);
-           const sphereMaterial = new THREE.MeshPhongMaterial({
-             color: indiaData.color,
-             shininess: 120,
-             specular: 0x666666,
-             transparent: true,
-             opacity: 0.9,
-           });
-           const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-           
-           // Store country data for click handling
-           sphere.userData = { data: indiaData };
-           sphere.castShadow = true;
-           sphere.receiveShadow = true;
-           ballGroup.add(sphere);
-           
-           // Add initial scale animation for the ball
-           ballGroup.scale.setScalar(0);
-           scene.add(ballGroup);
-           
-           // Animate ball appearance with delay
-           setTimeout(() => {
-             const ballAnimation = () => {
-               if (ballGroup.scale.x < 1) {
-                 ballGroup.scale.addScalar(0.1);
-                 requestAnimationFrame(ballAnimation);
-               } else {
-                 ballGroup.scale.setScalar(1);
-               }
-             };
-             ballAnimation();
-           }, 1000); // Delay ball animation until globe is mostly loaded
+        // Function to create fallback globe
+        function createFallbackGlobe() {
+          console.log("🔄 Creating fallback globe");
+          // Create fallback sphere
+          const geometry = new THREE.SphereGeometry(3, 32, 32);
+          const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
+          const sphere = new THREE.Mesh(geometry, material);
+
+          // Add initial scale animation for fallback
+          sphere.scale.setScalar(0.1);
+          scene.add(sphere);
+
+          // Animate fallback globe scale
+          const scaleAnimation = () => {
+            if (sphere.scale.x < 3) {
+              sphere.scale.addScalar(0.1);
+              requestAnimationFrame(scaleAnimation);
+            } else {
+              sphere.scale.setScalar(3);
+              setIsGlobeLoaded(true);
+            }
+          };
+          scaleAnimation();
+
+          // Add India ball
+          addIndiaBall(scene, camera);
+        }
+
+        // Function to add India ball above the country
+        function addIndiaBall(scene, camera) {
+          const ballGroup = new THREE.Group();
+
+          // Main sphere (ball) - this will be clickable
+          const sphereGeometry = new THREE.SphereGeometry(
+            indiaData.size,
+            16,
+            16
+          );
+          const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: indiaData.color,
+            shininess: 120,
+            specular: 0x666666,
+            transparent: true,
+            opacity: 0.9,
+          });
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+          // Store country data for click handling
+          sphere.userData = { data: indiaData };
+          sphere.castShadow = true;
+          sphere.receiveShadow = true;
+          ballGroup.add(sphere);
+
+          // Add initial scale animation for the ball
+          ballGroup.scale.setScalar(0);
+          scene.add(ballGroup);
+
+          // Animate ball appearance with delay
+          setTimeout(() => {
+            const ballAnimation = () => {
+              if (ballGroup.scale.x < 1) {
+                ballGroup.scale.addScalar(0.1);
+                requestAnimationFrame(ballAnimation);
+              } else {
+                ballGroup.scale.setScalar(1);
+              }
+            };
+            ballAnimation();
+          }, 1000); // Delay ball animation until globe is mostly loaded
 
           // Outer glow
-          const glowGeometry = new THREE.SphereGeometry(indiaData.size * 1.4, 16, 16);
+          const glowGeometry = new THREE.SphereGeometry(
+            indiaData.size * 1.4,
+            16,
+            16
+          );
           const glowMaterial = new THREE.MeshBasicMaterial({
             color: indiaData.color,
             transparent: true,
@@ -598,19 +613,19 @@ export default function GlobeComponent() {
           // Position the ball above India
           const lat = indiaData.lat;
           const lng = indiaData.lng;
-          const radius = 3.5; // Closer to the globe surface
-          
+          const radius = 3.2; // Closer to the globe surface
+
           const phi = (90 - lat) * (Math.PI / 180);
           const theta = (lng + 180) * (Math.PI / 180);
-          
+
           const x = -(radius * Math.sin(phi) * Math.cos(theta));
           const y = radius * Math.cos(phi);
           const z = radius * Math.sin(phi) * Math.sin(theta);
-          
+
           ballGroup.position.set(x, y, z);
           ballGroup.userData = { data: indiaData };
-          
-                     console.log("🌸 India ball added above India");
+
+          console.log("🌸 India ball added above India");
         }
 
         // Move controls declaration BEFORE the click handler
@@ -622,7 +637,7 @@ export default function GlobeComponent() {
         controls.enablePan = false;
         controls.minDistance = 3;
         controls.maxDistance = 15;
-        
+
         // Store controls reference so closeModal can access it
         controlsRef.current = controls;
 
@@ -697,7 +712,6 @@ export default function GlobeComponent() {
             containerRef.current.innerHTML = "";
           }
         };
-
       } catch (error) {
         console.error("Error loading Three.js:", error);
       }
@@ -711,7 +725,7 @@ export default function GlobeComponent() {
     setTimeout(() => {
       setSelectedCountry(null);
     }, 300);
-    
+
     // Restart globe rotation when modal closes
     if (controlsRef.current && controlsRef.current.autoRotate === false) {
       controlsRef.current.autoRotate = true;
@@ -728,30 +742,32 @@ export default function GlobeComponent() {
         backgroundRepeat: "no-repeat",
       }}
     >
-             {/* Main globe container */}
-       <div
-         ref={containerRef}
-         className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 ${
-           isGlobeLoaded ? 'opacity-100' : 'opacity-0'
-         }`}
-       />
-       
-       {/* Loading Animation */}
-       {!isGlobeLoaded && (
-         <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-           <div className="text-center">
-             <div className="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-             <h2 className="text-2xl font-bold text-white mb-2">Loading Galactic Garden</h2>
-             <p className="text-blue-300 text-lg">Preparing your cosmic journey...</p>
-           </div>
-         </div>
-       )}
+      {/* Main globe container */}
+      <div
+        ref={containerRef}
+        className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 ${
+          isGlobeLoaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      {/* Loading Animation */}
+      {!isGlobeLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+          <div className="text-center">
+            <div className="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <h2 className="text-2xl font-bold text-white mb-2">
+              Loading Galactic Garden
+            </h2>
+            <p className="text-blue-300 text-lg">
+              Preparing your cosmic journey...
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* UI Overlay */}
-      
 
       {/* Instructions */}
-     
 
       {/* Enhanced Flower Detail Modal */}
       {selectedCountry && (
