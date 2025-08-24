@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Lock, Info } from "lucide-react";
+import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info } from "lucide-react";
 
 const navigationItems = [
   {
@@ -51,10 +51,10 @@ const navigationItems = [
     description: "Our impact and transparency"
   },
   {
-    name: "Sacred Portal",
-    href: "/portal",
-    icon: Lock,
-    description: "Locked page - special access required"
+    name: "The Living Archive",
+    href: "/living-archive",
+    icon: BookOpen,
+    description: "Core content of the NAHIARA universe"
   }
 ];
 
