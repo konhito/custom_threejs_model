@@ -1,58 +1,73 @@
 import Navigation from "../../components/Navigation";
 import Link from "next/link";
-import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target } from "lucide-react";
+import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target, ExternalLink, Rotate3D } from "lucide-react";
 
-// Chart Component
+// Standard Bar Chart Component
 function PollinatorDeclineChart() {
   const data = [
-    { label: "Wild flowering plants depending on pollinators (2016)", percentage: 90, color: "from-blue-500 to-blue-600" },
-    { label: "Food crops requiring pollinators (2016)", percentage: 75, color: "from-blue-500 to-blue-600" },
-    { label: "Pollinating insects highly threatened (2025)", percentage: 40, color: "from-red-500 to-red-600" },
-    { label: "Annual decline of terrestrial insects (per decade)", percentage: 9, color: "from-red-500 to-red-600" },
-    { label: "Managed bee colony losses (U.S., 2025)", percentage: 65, color: "from-orange-500 to-orange-600" },
-    { label: "Native pollinators at risk (N. America, 2025)", percentage: 22, color: "from-orange-500 to-orange-600" }
+    { label: "Wild flowering plants (2016)", percentage: 90, color: "#1e40af" },
+    { label: "Food crops (2016)", percentage: 75, color: "#3b82f6" },
+    { label: "Insects threatened (2025)", percentage: 40, color: "#dc2626" },
+    { label: "Annual decline (per decade)", percentage: 9, color: "#ef4444" },
+    { label: "US bee losses (2025)", percentage: 65, color: "#ea580c" },
+    { label: "Native pollinators at risk", percentage: 22, color: "#f97316" }
   ];
 
   return (
-    <div className="bg-white/90 rounded-2xl p-6 border border-gray-200 shadow-lg">
-      <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">
-        Pollinator Decline - Key Figures
+    <div className="bg-white/95 rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-lg">
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
+        Pollinator decline - Key figures
       </h3>
       
-      <div className="space-y-4">
-        {data.map((item, index) => (
-          <div key={index} className="flex items-center space-x-4">
-            <div className="w-48 text-sm text-gray-700 flex-shrink-0">
-              {item.label}
-            </div>
-            <div className="flex-1 relative">
-              <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
-                  className={`h-3 bg-gradient-to-r ${item.color} rounded-full transition-all duration-1000 ease-out`}
-                  style={{ width: `${item.percentage}%` }}
-                ></div>
+      <div className="relative h-[28rem] sm:h-[32rem] lg:h-[36rem] pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-8">
+        {/* Grid Lines */}
+        <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+          {[100, 80, 60, 40, 20, 0].map((value) => (
+            <div key={value} className="flex items-center">
+              <div className="w-6 sm:w-8 lg:w-16 text-xs text-gray-400 font-medium pr-2 sm:pr-3 text-right">
+                {value}%
               </div>
-              <div className="absolute -top-1 -right-2 w-8 h-5 bg-white border border-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-xs font-bold text-gray-700">{item.percentage}%</span>
+              <div className="flex-1 border-t border-gray-200"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bars */}
+        <div className="relative flex items-end justify-center space-x-3 sm:space-x-6 lg:space-x-12 h-full">
+          {data.map((item, index) => (
+            <div key={index} className="flex flex-col items-center relative z-10">
+              <div 
+                className="w-8 sm:w-12 lg:w-16 rounded-t-sm relative shadow-md hover:shadow-lg transition-shadow duration-200"
+                style={{ 
+                  height: `${(item.percentage / 100) * 28}rem`,
+                  backgroundColor: item.color 
+                }}
+              >
+                <div className="absolute -top-10 sm:-top-12 lg:-top-16 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-700 bg-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-200 shadow-sm max-w-14 sm:max-w-18 lg:max-w-24">
+                  {item.percentage}%
+                </div>
+              </div>
+              <div className="mt-3 sm:mt-4 lg:mt-6 text-xs sm:text-sm text-gray-600 text-center max-w-14 sm:max-w-18 lg:max-w-24 leading-tight font-medium">
+                {item.label}
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <div className="flex items-center justify-center space-x-6 text-xs text-gray-600">
+      <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
+        <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-xs sm:text-sm text-gray-600">
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded"></div>
-            <span>2016 Data</span>
+            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded"></div>
+            <span className="font-medium">2016 Data</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-600 rounded"></div>
-            <span>2025 Crisis</span>
+            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-red-600 rounded"></div>
+            <span className="font-medium">2025 Crisis</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded"></div>
-            <span>US Impact</span>
+            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-orange-600 rounded"></div>
+            <span className="font-medium">US Impact</span>
           </div>
         </div>
       </div>
@@ -65,46 +80,172 @@ export default function PollinatorsPage() {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-6">
+      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8 sm:mb-12 text-center">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4 sm:mb-6">
               Pollinators
             </h1>
-            <p className="text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              The invisible guardians of life on Earth. Thanks to them, millions of flowers transform into fruits and seeds, ensuring the continuity of ecosystems and the nourishment of humanity.
+            <p className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed">
+              The invisible guardians of life on Earth. These essential creatures keep our planet's biodiversity in balance, pollinating the plants that feed us all.
             </p>
           </div>
 
-          {/* Main Content */}
-          <div className="space-y-16">
-            {/* Introduction Section */}
-            <section className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 lg:p-12 shadow-xl border border-white/20">
+          {/* Guardians of Biodiversity */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-white/20">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6">
-                  Guardians of Biodiversity
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 sm:mb-8">
+                  Guardians of biodiversity
                 </h2>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  In AquaMundi, pollinators hold a central place alongside national flowers, as they represent the bridge between nature, culture, and survival. These remarkable creatures are the unsung heroes that keep our planet's delicate balance intact.
-                </p>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  From the tiniest bee to the most magnificent hummingbird, each pollinator plays a vital role in the grand symphony of life, ensuring that future generations can continue to marvel at the beauty and abundance of our natural world.
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    In AquaMundi, pollinators hold a central place alongside national flowers, as they represent the bridge between nature, culture, and survival. These remarkable creatures are the unsung heroes that keep our planet's delicate balance intact.
+                  </p>
+                  <p>
+                    From the tiniest bee to the most magnificent hummingbird, each pollinator plays a vital role in the grand symphony of life, ensuring that future generations can continue to marvel at the beauty and abundance of our natural world.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* NAHIARA Manifesto Section */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-red-200">
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-800 mb-3 sm:mb-4">
+                  From decline to guardianship
+                </h2>
+                <p className="text-lg sm:text-xl text-red-700 font-medium">
+                  A manifesto from the NAHIARA universe (2016 – 2025)
                 </p>
               </div>
-            </section>
 
-            {/* Visual Chart Section */}
-            <section className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl p-8 lg:p-12 border border-gray-200 shadow-xl">
-              <div className="max-w-5xl mx-auto">
-                <div className="text-center mb-8">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <TrendingDown className="w-8 h-8 text-white" />
+              <div className="max-w-5xl mx-auto space-y-8 sm:space-y-10">
+                {/* 2016 Section */}
+                <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
+                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
+                    <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-100 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-600 font-bold text-sm sm:text-base">2016</span>
+                    The historic IPBES report
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">90% of wild flowering plants depended on animal pollinators</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">More than 75% of global food crops required their intervention</p>
+                    </div>
                   </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
-                    The Numbers Don't Lie
+                </div>
+
+                {/* 2025 Section */}
+                <div className="bg-red-100/80 rounded-2xl p-6 sm:p-8 border border-red-300">
+                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
+                    <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-200 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-700 font-bold text-sm sm:text-base">2025</span>
+                    The evidence is alarming
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+                    <div className="flex items-start space-x-3">
+                      <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700">Over 40% of global pollinating insects are highly threatened</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700">Terrestrial insect populations decline at ~9% per decade</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700">Managed bee colony losses in U.S. reached 60–70% in a single year</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <p className="text-gray-700">22% of North America's native pollinators at high risk of extinction</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Institutional Inertia Section */}
+                <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
+                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
+                    <Shield className="w-6 h-6 text-red-600 mr-3" />
+                    Institutional inertia
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">Fragmented initiatives that never reached global coordination</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">Short-term priorities that relegated biodiversity</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">Underestimation of pollinators as vital infrastructure</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-gray-700">Resistance to move away from pesticide-intensive agriculture</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Call for Action Section */}
+                <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 sm:p-8 border border-amber-300">
+                  <h3 className="text-xl sm:text-2xl font-bold text-amber-800 mb-4 sm:mb-6 flex items-center">
+                    <Target className="w-6 h-6 text-amber-600 mr-3" />
+                    A call for the next decade
+                  </h3>
+                  <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+                    The NAHIARA thesis calls for urgent global action:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
+                    <div className="flex items-start space-x-3">
+                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                      <p className="text-gray-700">Integrate pollinator protection into national and food security policies</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                      <p className="text-gray-700">Establish ecological corridors for species survival and mobility</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                      <p className="text-gray-700">Transition agricultural systems toward regenerative models</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+                      <p className="text-gray-700">Implement real-time global monitoring, accessible and transparent</p>
+                    </div>
+                    <div className="flex items-start space-x-3 sm:col-span-2">
+                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
+                      <p className="text-gray-700">Embed pollinators into education and culture as living symbols of life</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Conclusion Section */}
+                <div className="bg-red-50 rounded-2xl p-6 sm:p-8 border border-red-200 text-center">
+                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-3 sm:mb-4">Conclusion</h3>
+                  <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                    Protecting pollinators is not optional – it is a moral, ecological, and cultural duty. The coming decade will decide whether humanity chooses restoration or collapse.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Chart Section */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-6 sm:mb-8">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
+                  The numbers don't lie
                   </h2>
-                  <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                <p className="text-sm sm:text-base lg:text-lg text-gray-700 max-w-2xl mx-auto">
                     Visual representation of the pollinator crisis from 2016 to 2025, showing the dramatic decline and urgent need for action.
                   </p>
                 </div>
@@ -113,212 +254,237 @@ export default function PollinatorsPage() {
               </div>
             </section>
 
-            {/* NAHIARA Manifesto Section */}
-            <section className="bg-gradient-to-br from-red-50 to-orange-100 rounded-3xl p-8 lg:p-12 border border-red-200 shadow-xl">
-              <div className="max-w-5xl mx-auto">
-                <div className="text-center mb-8">
-                  <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <AlertTriangle className="w-8 h-8 text-white" />
-                  </div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-red-800 mb-4">
-                    From Decline to Guardianship
+          {/* Guardians Section */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
+                Guardians of biodiversity
                   </h2>
-                  <p className="text-lg text-red-700 font-medium">
-                    A Manifesto from the NAHIARA Universe (2016 – 2025)
+              <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
+                From tiny bees to magnificent hummingbirds, these creatures form the foundation of our food web and ecosystem health.
                   </p>
                 </div>
 
-                <div className="space-y-8">
-                  {/* 2016 Findings */}
-                  <div className="bg-white/80 rounded-2xl p-6 border border-red-200">
-                    <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center">
-                      <span className="w-8 h-8 bg-red-100 rounded-full mr-3 flex items-center justify-center text-red-600 font-bold text-sm">2016</span>
-                      The Historic IPBES Report
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">90% of wild flowering plants depended on animal pollinators</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {/* Bees */}
+              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-2xl sm:text-3xl">🐝</span>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">More than 75% of global food crops required their intervention</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Bees</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  The most efficient pollinators, responsible for pollinating over 80% of flowering plants worldwide.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Honeybees</span>
+                    <span className="font-semibold text-gray-800">Global</span>
+                      </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Bumblebees</span>
+                    <span className="font-semibold text-gray-800">Temperate regions</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Solitary bees</span>
+                    <span className="font-semibold text-gray-800">Diverse habitats</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* 2025 Crisis */}
-                  <div className="bg-red-100/80 rounded-2xl p-6 border border-red-300">
-                    <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center">
-                      <span className="w-8 h-8 bg-red-200 rounded-full mr-3 flex items-center justify-center text-red-700 font-bold text-sm">2025</span>
-                      The Evidence is Alarming
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-start space-x-3">
-                        <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700">Over 40% of global pollinating insects are highly threatened</p>
+              {/* Birds */}
+              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-2xl sm:text-3xl">🐦</span>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700">Terrestrial insect populations decline at ~9% per decade</p>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Birds</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  Hummingbirds, sunbirds, and other nectar-feeding birds pollinate tubular flowers with their long beaks.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Hummingbirds</span>
+                    <span className="font-semibold text-gray-800">Americas</span>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700">Managed bee colony losses in U.S. reached 60–70% in a single year</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Sunbirds</span>
+                    <span className="font-semibold text-gray-800">Africa, Asia</span>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700">22% of North America's native pollinators at high risk of extinction</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Institutional Inertia */}
-                  <div className="bg-white/80 rounded-2xl p-6 border border-red-200">
-                    <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center">
-                      <Shield className="w-6 h-6 text-red-600 mr-3" />
-                      Institutional Inertia
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">Fragmented initiatives that never reached global coordination</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">Short-term priorities that relegated biodiversity</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">Underestimation of pollinators as vital infrastructure</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-gray-700">Resistance to move away from pesticide-intensive agriculture</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Honeyeaters</span>
+                    <span className="font-semibold text-gray-800">Australia</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Call to Action */}
-                  <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 border border-amber-300">
-                    <h3 className="text-xl font-bold text-amber-800 mb-4 flex items-center">
-                      <Target className="w-6 h-6 text-amber-600 mr-3" />
-                      A Call for the Next Decade
-                    </h3>
-                    <p className="text-gray-700 mb-4 text-sm">
-                      The NAHIARA thesis calls for urgent global action:
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-start space-x-3">
-                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-                        <p className="text-gray-700">Integrate pollinator protection into national and food security policies</p>
+              {/* Butterflies */}
+              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-purple-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-2xl sm:text-3xl">🦋</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Butterflies & moths</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  Beautiful pollinators that prefer flat, open flowers and are active during daylight hours.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Monarchs</span>
+                    <span className="font-semibold text-gray-800">North America</span>
                       </div>
-                      <div className="flex items-start space-x-3">
-                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-                        <p className="text-gray-700">Establish ecological corridors for species survival and mobility</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-                        <p className="text-gray-700">Transition agricultural systems toward regenerative models</p>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
-                        <p className="text-gray-700">Implement real-time global monitoring, accessible and transparent</p>
-                      </div>
-                      <div className="flex items-start space-x-3 md:col-span-2">
-                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
-                        <p className="text-gray-700">Embed pollinators into education and culture as living symbols of life</p>
-                      </div>
-                    </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Swallowtails</span>
+                    <span className="font-semibold text-gray-800">Global</span>
                   </div>
-
-                  {/* Conclusion */}
-                  <div className="bg-red-50 rounded-2xl p-6 border border-red-200 text-center">
-                    <h3 className="text-xl font-bold text-red-800 mb-3">Conclusion</h3>
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      Protecting pollinators is not optional – it is a moral, ecological, and cultural duty. The coming decade will decide whether humanity chooses restoration or collapse.
-                    </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Hawk moths</span>
+                    <span className="font-semibold text-gray-800">Night pollinators</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Bats */}
+              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-2xl sm:text-3xl">🦇</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Bats</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers like agave and cacti.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Lesser long-nosed</span>
+                    <span className="font-semibold text-gray-800">Mexico, US</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Fruit bats</span>
+                    <span className="font-semibold text-gray-800">Tropical regions</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Nectar bats</span>
+                    <span className="font-semibold text-gray-800">Desert ecosystems</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Beetles */}
+              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-2xl sm:text-3xl">🪲</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Beetles & other pollinators</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  Ancient pollinators that have been pollinating flowers for over 150 million years, including flies and wasps.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Flower beetles</span>
+                    <span className="font-semibold text-gray-800">Global</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Hoverflies</span>
+                    <span className="font-semibold text-gray-800">Bee mimics</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Wasps</span>
+                    <span className="font-semibold text-gray-800">Diverse species</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Impact */}
+              <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl p-6 sm:p-8 border border-amber-200 shadow-lg">
+                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <Globe className="w-8 sm:w-10 h-8 sm:h-10 text-white" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Global impact</h3>
+                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
+                  Pollinators are essential for maintaining biodiversity and food security worldwide.
+                </p>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Food production</span>
+                    <span className="font-semibold text-gray-800">75% of crops</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Wild plants</span>
+                    <span className="font-semibold text-gray-800">90% depend</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Ecosystem health</span>
+                    <span className="font-semibold text-gray-800">Critical</span>
+                  </div>
+                </div>
+              </div>
               </div>
             </section>
 
-            {/* Three Pillars */}
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Biological Diversity */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
-                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
-                  <Globe className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-blue-800 mb-3">Biological Diversity</h3>
-                <p className="text-blue-700">
-                  Bees, hummingbirds, butterflies, bats, and other species that play key roles across continents are included. Each pollinator is presented with its scientific and educational context.
-                </p>
-              </div>
-
-              {/* Symbolic Dimension */}
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200">
-                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mb-4">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-purple-800 mb-3">Symbolic Dimension</h3>
-                <p className="text-purple-700">
-                  Every pollinator is also treated as a poetic guardian within the narrative of AquaMundi, with a symbolic name and a unique role in the story.
-                </p>
-              </div>
-
-              {/* Interactive Gallery */}
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-4">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-green-800 mb-3">Interactive Gallery</h3>
-                <p className="text-green-700">
-                  The digital gallery will allow visitors to explore pollinators in 3D, access scientific and symbolic data, and discover the connections linking them with each national flower.
-                </p>
-              </div>
-            </section>
-
-            {/* Gallery Preview Section */}
-            <section className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 lg:p-12 border border-amber-200">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
-                  Explore the Pollinators Gallery
+          {/* Call to Action */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-amber-200 text-center">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
+                Take action today
                 </h2>
-                <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                  Discover an initial gallery of bees, hummingbirds, butterflies, bats, and other beings that keep the planet's biodiversity in balance. Explore their images, learn their names, and join us in building a living archive.
+              <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                Every small action counts. Plant native flowers, avoid pesticides, and support pollinator-friendly initiatives in your community.
                 </p>
-              </div>
-
-              <div className="text-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <Link 
                   href="/pollinators/gallery"
-                  className="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
                 >
-                  <span className="text-lg">Access the Pollinators Gallery</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <span>Explore gallery</span>
+                  <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
+                </Link>
+                <Link 
+                  href="/education"
+                  className="inline-flex items-center space-x-2 bg-white/80 hover:bg-white text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 border border-amber-200"
+                >
+                  <span>Learn more</span>
+                  <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
               </div>
-
-              <div className="mt-8 text-center">
-                <p className="text-sm text-gray-600">
-                  This gallery will soon transform into a 3D digital garden where you can interact with pollinators in their natural habitats.
-                </p>
               </div>
             </section>
 
-            {/* Impact Section */}
-            <section className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 lg:p-12 shadow-xl border border-white/20">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6">
-                  Ambassadors of Hope
+          {/* Future Vision */}
+          <section className="mb-12 sm:mb-16 lg:mb-20">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-blue-200">
+              <div className="text-center mb-6 sm:mb-8">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
+                  Future vision
                 </h2>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Through this integration, AquaMundi turns pollinators into ambassadors of hope, reminding us that without them, life itself could not flourish. They are the living threads that connect every flower, every fruit, and every future generation.
+                <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
+                  We're building a comprehensive living archive of Earth's pollinators, connecting them with national flowers and creating an interactive 3D experience.
                 </p>
               </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <Globe className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Global coverage</h3>
+                  <p className="text-sm text-gray-600">Comprehensive database of pollinators from every continent and ecosystem</p>
+                </div>
+                
+                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <Rotate3D className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">3D exploration</h3>
+                  <p className="text-sm text-gray-600">Interactive 3D models and virtual environments for immersive learning</p>
+                </div>
+                
+                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <Heart className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Conservation focus</h3>
+                  <p className="text-sm text-gray-600">Data-driven insights to support pollinator conservation efforts worldwide</p>
+                </div>
+              </div>
+              </div>
             </section>
-          </div>
         </div>
       </div>
     </div>
