@@ -34,7 +34,7 @@ export default function LivingArchivePage() {
             {/* The Book Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                The Book
+                The Book of Flowers – Central Work of NAHIARA
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed mb-8">
                 Immerse yourself in the complete NAHIARA experience through our comprehensive book, 
