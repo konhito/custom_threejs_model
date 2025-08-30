@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info } from "lucide-react";
+import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target } from "lucide-react";
 
 const navigationItems = [
   {
@@ -55,6 +55,12 @@ const navigationItems = [
     href: "/living-archive",
     icon: BookOpen,
     description: "Core content of the NAHIARA universe"
+  },
+  {
+    name: "Araihan Measure",
+    href: "/araihan-measure",
+    icon: Target,
+    description: "Araihan Measure initiative"
   }
 ];
 

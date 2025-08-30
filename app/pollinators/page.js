@@ -111,6 +111,7 @@ export default function PollinatorsPage() {
             </div>
           </section>
 
+his 
           {/* NAHIARA Manifesto Section */}
           <section className="mb-12 sm:mb-16 lg:mb-20">
             <div className="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-red-200">

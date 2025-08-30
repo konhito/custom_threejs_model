@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { X, MapPin, Flower, Info, Rotate3D } from "lucide-react";
+import { X, MapPin, Flower, Info, Rotate3D, Target } from "lucide-react";
+import Link from "next/link";
 
 // Flower Detail Modal Component
 function FlowerDetailModal({ country, isVisible, onClose }) {
