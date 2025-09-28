@@ -418,7 +418,7 @@ export default function GlobeComponent() {
         "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
       color: "#ff6b9d",
       special: true,
-      size: 0.08,
+      size: 0.10,
       gltfPath: "/lotus.glb",
     },
     {
@@ -443,7 +443,7 @@ export default function GlobeComponent() {
         "A woody perennial flowering plant with over 300 species. Roses are known for their fragrant flowers and thorny stems.",
       color: "#e91e63",
       special: false,
-      size: 0.06,
+      size: 0.08,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -468,7 +468,7 @@ export default function GlobeComponent() {
         "A small, daisy-like flowering plant with white petals and yellow centers. Known for its medicinal properties and pleasant aroma, it grows wild across Russia's vast territories.",
       color: "#ffffff",
       special: true,
-      size: 0.07,
+      size: 0.09,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -493,7 +493,7 @@ export default function GlobeComponent() {
         "A perennial flowering plant with large, fragrant, colorful blooms. The tree peony is particularly prized for its beauty and has been cultivated in China for centuries.",
       color: "#ff1744",
       special: true,
-      size: 0.08,
+      size: 0.10,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -518,7 +518,7 @@ export default function GlobeComponent() {
         "A hardy perennial plant with delicate, pincushion-like flowers in shades of blue, purple, and white. It thrives in Mongolia's continental climate and steppe environment.",
       color: "#673ab7",
       special: false,
-      size: 0.06,
+      size: 0.08,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -543,7 +543,7 @@ export default function GlobeComponent() {
         "A fragrant flowering plant with small, white, star-shaped flowers. Known for its sweet, intoxicating scent, jasmine is widely cultivated in Pakistan's gardens and parks.",
       color: "#4caf50",
       special: false,
-      size: 0.06,
+      size: 0.08,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -568,7 +568,7 @@ export default function GlobeComponent() {
         "An aquatic perennial plant with large, floating leaves and beautiful white or pink flowers. It thrives in Bangladesh's numerous rivers, ponds, and wetlands.",
       color: "#2196f3",
       special: false,
-      size: 0.06,
+      size: 0.08,
       gltfPath: null, // Will use fallback flower
     },
     {
@@ -699,7 +699,7 @@ export default function GlobeComponent() {
   ];
 
   // Helper function to calculate 3D coordinates from lat/lng
-  const calculate3DCoordinates = (lat, lng, radius = 3.2) => {
+  const calculate3DCoordinates = (lat, lng, radius = 4.5) => {
     const phi = (90 - lat) * (Math.PI / 180);
     const theta = (lng + 180) * (Math.PI / 180);
     
@@ -736,6 +736,7 @@ export default function GlobeComponent() {
     };
   };
 
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -755,6 +756,7 @@ export default function GlobeComponent() {
         // Create scene
         const scene = new THREE.Scene();
         scene.background = null; // Make background transparent so CSS background shows
+        console.log("✅ Scene created");
 
         // Create camera
         const camera = new THREE.PerspectiveCamera(
@@ -764,6 +766,7 @@ export default function GlobeComponent() {
           1000
         );
         camera.position.set(0, 0, 8);
+        console.log("✅ Camera positioned at:", camera.position);
 
         // Create renderer
         const renderer = new THREE.WebGLRenderer({
@@ -779,14 +782,118 @@ export default function GlobeComponent() {
         renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha (transparent)
         containerRef.current.appendChild(renderer.domElement);
 
-        // Add lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        // Add balanced lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         directionalLight.position.set(5, 5, 5);
         directionalLight.castShadow = true;
         scene.add(directionalLight);
+
+        // Add subtle colored ambient light for atmospheric glow
+        const coloredAmbientLight = new THREE.AmbientLight(0x4a90e2, 0.05);
+        scene.add(coloredAmbientLight);
+
+        // Helper function to calculate 3D coordinates (local version with custom radius)
+        const calculate3DCoordsWithRadius = (lat, lng, radius) => {
+          const phi = (90 - lat) * (Math.PI / 180);
+          const theta = (lng + 180) * (Math.PI / 180);
+          
+          return {
+            x: -(radius * Math.sin(phi) * Math.cos(theta)),
+            y: radius * Math.cos(phi),
+            z: radius * Math.sin(phi) * Math.sin(theta)
+          };
+        };
+
+        // Function to calculate distance from screen center
+        const getDistanceFromScreenCenter = (worldPosition, camera, renderer) => {
+          // Convert world position to screen coordinates
+          const vector = worldPosition.clone();
+          vector.project(camera);
+          
+          // Convert to screen coordinates
+          const x = (vector.x * 0.5 + 0.5) * renderer.domElement.clientWidth;
+          const y = (vector.y * 0.5 + 0.5) * renderer.domElement.clientHeight;
+          
+          // Calculate distance from screen center
+          const screenCenterX = renderer.domElement.clientWidth / 2;
+          const screenCenterY = renderer.domElement.clientHeight / 2;
+          
+          const distance = Math.sqrt(
+            Math.pow(x - screenCenterX, 2) + Math.pow(y - screenCenterY, 2)
+          );
+          
+          // Normalize distance (0 = center, 1 = edge)
+          const maxDistance = Math.sqrt(
+            Math.pow(screenCenterX, 2) + Math.pow(screenCenterY, 2)
+          );
+          
+          return Math.min(distance / maxDistance, 1);
+        };
+
+        // Function to create dynamic color based on distance from screen center
+        const getDynamicColor = (baseColor, distanceFromCenter) => {
+          // Parse base color
+          const color = new THREE.Color(baseColor);
+          
+          // Calculate brightness factor with dramatic range (1.5 at center, 0.2 at edge)
+          const brightness = 1.5 - (distanceFromCenter * 1.3);
+          
+          // Calculate saturation factor (1.2 at center, 0.4 at edge)
+          const saturation = 1.2 - (distanceFromCenter * 0.8);
+          
+          // Apply brightness and saturation
+          const hsl = { h: 0, s: 0, l: 0 };
+          color.getHSL(hsl);
+          
+          // Adjust saturation and lightness with more dramatic effect
+          hsl.s = Math.min(hsl.s * saturation, 1.0);
+          hsl.l = Math.min(hsl.l * brightness, 1.0);
+          
+          // Convert back to color
+          const dynamicColor = new THREE.Color();
+          dynamicColor.setHSL(hsl.h, hsl.s, hsl.l);
+          
+          return dynamicColor;
+        };
+
+        // Function to update ball colors and opacity based on screen position
+        const updateBallColors = (scene, camera, renderer) => {
+          scene.traverse((child) => {
+            if (child.userData && child.userData.data && child.material) {
+              const ballGroup = child.parent;
+              if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
+                const countryData = ballGroup.userData.data;
+                const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
+                const dynamicColor = getDynamicColor(countryData.color, distanceFromCenter);
+                
+                // Calculate dramatic opacity factor (1.5 at center, 0.3 at edge)
+                const opacityFactor = 1.5 - (distanceFromCenter * 1.2);
+                const clampedOpacityFactor = Math.max(0.1, Math.min(opacityFactor, 1.0));
+                
+                // Update main ball color
+                if (child.material.color) {
+                  child.material.color.copy(dynamicColor);
+                }
+                
+                // Store original opacity if not already stored
+                if (!child.material.userData) {
+                  child.material.userData = {};
+                }
+                if (child.material.userData.originalOpacity === undefined) {
+                  child.material.userData.originalOpacity = child.material.opacity || 0.9;
+                }
+                
+                // Update opacity with dramatic range
+                if (child.material.opacity !== undefined) {
+                  child.material.opacity = child.material.userData.originalOpacity * clampedOpacityFactor;
+                }
+              }
+            }
+          });
+        };
 
         // Load your custom Globe.glb
         const loader = new GLTFLoader();
@@ -795,7 +902,14 @@ export default function GlobeComponent() {
           "/Globe.glb",
           (gltf) => {
             const globe = gltf.scene;
-            globe.scale.setScalar(3);
+            
+            // Ensure globe materials are visible
+            globe.traverse((child) => {
+              if (child.isMesh && child.material) {
+                child.material.transparent = false;
+                child.material.opacity = 1.0;
+              }
+            });
 
             // Add initial scale animation
             globe.scale.setScalar(0.1);
@@ -804,12 +918,13 @@ export default function GlobeComponent() {
 
             // Animate globe scale
             const scaleAnimation = () => {
-              if (globe.scale.x < 3) {
+              if (globe.scale.x < 4.0) {
                 globe.scale.addScalar(0.1);
                 requestAnimationFrame(scaleAnimation);
               } else {
-                globe.scale.setScalar(3);
+                globe.scale.setScalar(4.0);
                 setIsGlobeLoaded(true);
+                console.log("✅ Globe animation complete");
               }
             };
             scaleAnimation();
@@ -817,7 +932,9 @@ export default function GlobeComponent() {
             // Now add country balls for all countries
             addCountryBalls(scene, camera);
           },
-          undefined,
+          (progress) => {
+            console.log(`Loading Globe.glb: ${Math.round((progress.loaded / progress.total) * 100)}%`);
+          },
           (error) => {
             console.error("Failed to load Globe.glb:", error);
             createFallbackGlobe();
@@ -827,23 +944,29 @@ export default function GlobeComponent() {
         // Function to create fallback globe
         function createFallbackGlobe() {
           console.log("🔄 Creating fallback globe");
-          // Create fallback sphere
-          const geometry = new THREE.SphereGeometry(3, 32, 32);
-          const material = new THREE.MeshPhongMaterial({ color: 0x4a90e2 });
+          // Create fallback sphere with better visibility
+          const geometry = new THREE.SphereGeometry(1, 32, 32);
+          const material = new THREE.MeshPhongMaterial({ 
+            color: 0x4a90e2,
+            transparent: false,
+            opacity: 1.0
+          });
           const sphere = new THREE.Mesh(geometry, material);
 
           // Add initial scale animation for fallback
           sphere.scale.setScalar(0.1);
           scene.add(sphere);
+          console.log("✅ Fallback globe added to scene");
 
           // Animate fallback globe scale
           const scaleAnimation = () => {
-            if (sphere.scale.x < 3) {
+            if (sphere.scale.x < 4.0) {
               sphere.scale.addScalar(0.1);
               requestAnimationFrame(scaleAnimation);
             } else {
-              sphere.scale.setScalar(3);
+              sphere.scale.setScalar(4.0);
               setIsGlobeLoaded(true);
+              console.log("✅ Fallback globe animation complete");
             }
           };
           scaleAnimation();
@@ -851,6 +974,9 @@ export default function GlobeComponent() {
           // Add country balls
           addCountryBalls(scene, camera);
         }
+
+        // Store ball groups for zoom scaling
+        const ballGroups = [];
 
         // Function to add country balls for all countries
         function addCountryBalls(scene, camera) {
@@ -895,26 +1021,58 @@ export default function GlobeComponent() {
               ballAnimation();
             }, 1000 + (index * 200)); // Staggered delay for each country
 
-            // Outer glow
-            const glowGeometry = new THREE.SphereGeometry(
-              countryData.size * 1.4,
-              16,
-              16
-            );
-            const glowMaterial = new THREE.MeshBasicMaterial({
-              color: countryData.color,
-              transparent: true,
-              opacity: 0.15,
-            });
-            const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-            glow.userData = { data: countryData };
-            ballGroup.add(glow);
+              // Subtle 3-layer glow effect for better visual balance
+              // Inner glow (closest to ball)
+              const innerGlowGeometry = new THREE.SphereGeometry(
+                countryData.size * 1.3,
+                16,
+                16
+              );
+              const innerGlowMaterial = new THREE.MeshBasicMaterial({
+                color: countryData.color,
+                transparent: true,
+                opacity: 0.25,
+              });
+              const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
+              innerGlow.userData = { data: countryData };
+              ballGroup.add(innerGlow);
 
-            // Ring effect for special countries
-            if (countryData.special) {
-              const ringGeometry = new THREE.RingGeometry(
+              // Middle glow
+              const middleGlowGeometry = new THREE.SphereGeometry(
                 countryData.size * 1.8,
-                countryData.size * 2.2,
+                16,
+                16
+              );
+              const middleGlowMaterial = new THREE.MeshBasicMaterial({
+                color: countryData.color,
+                transparent: true,
+                opacity: 0.15,
+              });
+              const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
+              middleGlow.userData = { data: countryData };
+              ballGroup.add(middleGlow);
+
+              // Outer glow
+              const outerGlowGeometry = new THREE.SphereGeometry(
+                countryData.size * 2.4,
+                16,
+                16
+              );
+              const outerGlowMaterial = new THREE.MeshBasicMaterial({
+                color: countryData.color,
+                transparent: true,
+                opacity: 0.08,
+              });
+              const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
+              outerGlow.userData = { data: countryData };
+              ballGroup.add(outerGlow);
+
+            // Subtle ring effect for special countries
+            if (countryData.special) {
+              // Single elegant ring
+              const ringGeometry = new THREE.RingGeometry(
+                countryData.size * 1.6,
+                countryData.size * 1.9,
                 32
               );
               const ringMaterial = new THREE.MeshBasicMaterial({
@@ -932,11 +1090,59 @@ export default function GlobeComponent() {
             // Position the ball using the helper function
             const coords = calculate3DCoordinates(countryData.lat, countryData.lng);
             ballGroup.position.set(coords.x, coords.y, coords.z);
-            ballGroup.userData = { data: countryData };
+            ballGroup.userData = { 
+              data: countryData,
+              isHovered: false 
+            };
+
+            // Store ball group for zoom scaling
+            ballGroups.push(ballGroup);
 
             console.log(`🌸 ${countryData.country} ball added at coordinates:`, coords);
+            console.log(`Ball distance from origin: ${Math.sqrt(coords.x*coords.x + coords.y*coords.y + coords.z*coords.z)}`);
           });
         }
+
+        // Function to scale and reposition satellites based on camera distance (zoom level)
+        const scaleSatellitesBasedOnZoom = (camera) => {
+          const distance = camera.position.length();
+          const minDistance = 3; // Minimum zoom distance
+          const maxDistance = 15; // Maximum zoom distance
+          
+          // Calculate normalized distance (0 = closest, 1 = farthest)
+          const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
+          
+          // Calculate base scale factor (closer = smaller satellites)
+          // Scale from 0.4x to 1.2x based on distance
+          const baseScaleFactor = 0.4 + (normalizedDistance * 0.8); // Range from 0.4 to 1.2
+          
+          // Calculate dynamic radius (closer zoom = satellites closer to globe)
+          // Radius from 4.2 to 4.8 based on distance
+          const dynamicRadius = 4.2 + (normalizedDistance * 0.6); // Range from 4.2 to 4.8
+          
+          // Debug logging (remove in production)
+          if (Math.random() < 0.01) { // Only log occasionally to avoid spam
+            console.log(`Zoom: ${distance.toFixed(1)}, Base Scale: ${baseScaleFactor.toFixed(2)}, Radius: ${dynamicRadius.toFixed(2)}`);
+          }
+          
+          // Apply scaling and repositioning to all ball groups
+          ballGroups.forEach((ballGroup) => {
+            if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
+              const countryData = ballGroup.userData.data;
+              
+              // Calculate final scale factor (base scale * hover multiplier)
+              const hoverMultiplier = ballGroup.userData.isHovered ? 1.3 : 1.0;
+              const finalScaleFactor = baseScaleFactor * hoverMultiplier;
+              
+              // Apply the combined scaling
+              ballGroup.scale.setScalar(finalScaleFactor);
+              
+              // Reposition with dynamic radius
+              const coords = calculate3DCoordsWithRadius(countryData.lat, countryData.lng, dynamicRadius);
+              ballGroup.position.set(coords.x, coords.y, coords.z);
+            }
+          });
+        };
 
         // Move controls declaration BEFORE the click handler
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -947,6 +1153,11 @@ export default function GlobeComponent() {
         controls.enablePan = false;
         controls.minDistance = 3;
         controls.maxDistance = 15;
+
+        // Add zoom event listener to immediately scale satellites
+        controls.addEventListener('change', () => {
+          scaleSatellitesBasedOnZoom(camera);
+        });
 
         // Store controls reference so closeModal can access it
         controlsRef.current = controls;
@@ -994,10 +1205,70 @@ export default function GlobeComponent() {
         // Add click listener
         renderer.domElement.addEventListener("click", handleClick);
 
-        // Animation loop
+        // Add hover effect for balls
+        let hoveredBall = null;
+        
+        const handleMouseMove = (event) => {
+          const mouse = new THREE.Vector2();
+          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+          const raycaster = new THREE.Raycaster();
+          raycaster.setFromCamera(mouse, camera);
+
+          // Check for intersections with balls
+          const intersects = raycaster.intersectObjects(scene.children, true);
+          
+          // Reset previously hovered ball
+          if (hoveredBall) {
+            hoveredBall.userData.isHovered = false;
+            hoveredBall = null;
+          }
+
+          // Find the first ball intersection
+          for (let intersect of intersects) {
+            if (intersect.object.userData && intersect.object.userData.data) {
+              hoveredBall = intersect.object.parent; // Get the ball group
+              hoveredBall.userData.isHovered = true; // Mark as hovered
+              break;
+            }
+          }
+        };
+
+        renderer.domElement.addEventListener("mousemove", handleMouseMove);
+
+        // Animation loop with pulsing glow effect and dynamic colors
         const animate = () => {
           requestAnimationFrame(animate);
           controls.update();
+          
+          // Scale satellites based on zoom level
+          scaleSatellitesBasedOnZoom(camera);
+          
+          // Update ball colors based on screen position
+          updateBallColors(scene, camera, renderer);
+          
+          // Add dynamic pulsing glow animation based on screen position
+          const time = Date.now() * 0.001;
+          scene.traverse((child) => {
+            if (child.userData && child.userData.data && child.material && child.material.transparent) {
+              // Only animate glow materials (not the main ball)
+              if (child.geometry.type === 'SphereGeometry' && child.material.opacity < 0.6) {
+                const ballGroup = child.parent;
+                if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
+                  const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
+                  
+                  // More pulsing for center satellites, less for edge satellites
+                  const pulseIntensity = 0.15 * (1 - distanceFromCenter); // 0.15 at center, 0 at edge
+                  const pulseSpeed = 1.2 + (0.8 * (1 - distanceFromCenter)); // Faster pulse at center
+                  
+                  const pulse = Math.sin(time * pulseSpeed) * pulseIntensity + (1 - pulseIntensity);
+                  child.material.opacity = child.material.opacity * pulse;
+                }
+              }
+            }
+          });
+          
           renderer.render(scene, camera);
         };
         animate();
@@ -1018,6 +1289,7 @@ export default function GlobeComponent() {
         return () => {
           window.removeEventListener("resize", handleResize);
           renderer.domElement.removeEventListener("click", handleClick);
+          renderer.domElement.removeEventListener("mousemove", handleMouseMove);
           if (containerRef.current) {
             containerRef.current.innerHTML = "";
           }
