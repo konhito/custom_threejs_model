@@ -397,29 +397,29 @@ export default function GlobeComponent() {
   // Countries data array - India and USA only
   const countriesData = [
     {
-      id: "IN_LOTUS",
-      name: "Lotus",
-      country: "India",
-      countryCode: "IN",
-      lat: 20.5937,
+    id: "IN_LOTUS",
+    name: "Lotus",
+    country: "India",
+    countryCode: "IN",
+    lat: 20.5937,
       lng: -55.9629, // Your custom globe coordinates
-      capital: "New Delhi",
-      population: "1.4 billion",
-      continent: "Asia",
-      language: "Hindi, English",
-      currency: "Indian Rupee (INR)",
-      flowerName: "Lotus",
-      flowerScientificName: "Nelumbo nucifera",
-      flowerDescription:
-        "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
-      culturalSignificance:
-        "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
-      botanicalInfo:
-        "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
-      color: "#ff6b9d",
-      special: true,
+    capital: "New Delhi",
+    population: "1.4 billion",
+    continent: "Asia",
+    language: "Hindi, English",
+    currency: "Indian Rupee (INR)",
+    flowerName: "Lotus",
+    flowerScientificName: "Nelumbo nucifera",
+    flowerDescription:
+      "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
+    culturalSignificance:
+      "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
+    botanicalInfo:
+      "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
+    color: "#ff6b9d",
+    special: true,
       size: 0.10,
-      gltfPath: "/lotus.glb",
+    gltfPath: "/lotus.glb",
     },
     {
       id: "US_ROSE",
@@ -981,53 +981,53 @@ export default function GlobeComponent() {
         // Function to add country balls for all countries
         function addCountryBalls(scene, camera) {
           countriesData.forEach((countryData, index) => {
-            const ballGroup = new THREE.Group();
+          const ballGroup = new THREE.Group();
 
-            // Main sphere (ball) - this will be clickable
-            const sphereGeometry = new THREE.SphereGeometry(
+          // Main sphere (ball) - this will be clickable
+          const sphereGeometry = new THREE.SphereGeometry(
               countryData.size,
-              16,
-              16
-            );
-            const sphereMaterial = new THREE.MeshPhongMaterial({
+            16,
+            16
+          );
+          const sphereMaterial = new THREE.MeshPhongMaterial({
               color: countryData.color,
-              shininess: 120,
-              specular: 0x666666,
-              transparent: true,
-              opacity: 0.9,
-            });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            shininess: 120,
+            specular: 0x666666,
+            transparent: true,
+            opacity: 0.9,
+          });
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-            // Store country data for click handling
+          // Store country data for click handling
             sphere.userData = { data: countryData };
-            sphere.castShadow = true;
-            sphere.receiveShadow = true;
-            ballGroup.add(sphere);
+          sphere.castShadow = true;
+          sphere.receiveShadow = true;
+          ballGroup.add(sphere);
 
-            // Add initial scale animation for the ball
-            ballGroup.scale.setScalar(0);
-            scene.add(ballGroup);
+          // Add initial scale animation for the ball
+          ballGroup.scale.setScalar(0);
+          scene.add(ballGroup);
 
             // Animate ball appearance with delay (staggered for visual effect)
-            setTimeout(() => {
-              const ballAnimation = () => {
-                if (ballGroup.scale.x < 1) {
-                  ballGroup.scale.addScalar(0.1);
-                  requestAnimationFrame(ballAnimation);
-                } else {
-                  ballGroup.scale.setScalar(1);
-                }
-              };
-              ballAnimation();
+          setTimeout(() => {
+            const ballAnimation = () => {
+              if (ballGroup.scale.x < 1) {
+                ballGroup.scale.addScalar(0.1);
+                requestAnimationFrame(ballAnimation);
+              } else {
+                ballGroup.scale.setScalar(1);
+              }
+            };
+            ballAnimation();
             }, 1000 + (index * 200)); // Staggered delay for each country
 
               // Subtle 3-layer glow effect for better visual balance
               // Inner glow (closest to ball)
               const innerGlowGeometry = new THREE.SphereGeometry(
                 countryData.size * 1.3,
-                16,
-                16
-              );
+            16,
+            16
+          );
               const innerGlowMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
                 transparent: true,
@@ -1045,9 +1045,9 @@ export default function GlobeComponent() {
               );
               const middleGlowMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
-                transparent: true,
-                opacity: 0.15,
-              });
+            transparent: true,
+            opacity: 0.15,
+          });
               const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
               middleGlow.userData = { data: countryData };
               ballGroup.add(middleGlow);
@@ -1070,21 +1070,21 @@ export default function GlobeComponent() {
             // Subtle ring effect for special countries
             if (countryData.special) {
               // Single elegant ring
-              const ringGeometry = new THREE.RingGeometry(
+          const ringGeometry = new THREE.RingGeometry(
                 countryData.size * 1.6,
                 countryData.size * 1.9,
-                32
-              );
-              const ringMaterial = new THREE.MeshBasicMaterial({
+            32
+          );
+          const ringMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
-                transparent: true,
-                opacity: 0.3,
-                side: THREE.DoubleSide,
-              });
-              const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-              ring.rotateX(Math.PI / 2);
+            transparent: true,
+            opacity: 0.3,
+            side: THREE.DoubleSide,
+          });
+          const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+          ring.rotateX(Math.PI / 2);
               ring.userData = { data: countryData };
-              ballGroup.add(ring);
+          ballGroup.add(ring);
             }
 
             // Position the ball using the helper function
