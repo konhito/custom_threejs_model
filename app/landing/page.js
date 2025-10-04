@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
@@ -266,7 +266,8 @@ function AccessDenied() {
   );
 }
 
-export default function Landing() {
+// Landing Content Component that uses useSearchParams
+function LandingContent() {
   const [language, setLanguage] = useState('en');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -886,5 +887,29 @@ ${currentContent.vision.text}
       </footer>
       </div>
     </>
+  );
+}
+
+// Loading fallback component
+function LandingLoading() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          Loading...
+        </h2>
+        <p className="text-gray-600">Please wait while we prepare your experience.</p>
+      </div>
+    </div>
+  );
+}
+
+// Main export with Suspense boundary
+export default function Landing() {
+  return (
+    <Suspense fallback={<LandingLoading />}>
+      <LandingContent />
+    </Suspense>
   );
 }
