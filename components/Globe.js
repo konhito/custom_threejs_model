@@ -236,39 +236,39 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
       }`}
     >
       <div
-        className={`bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden border border-white/20 transition-all duration-500 transform ${
+        className={`bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] sm:max-h-[95vh] md:max-h-[95vh] lg:max-h-[95vh] overflow-hidden border border-white/20 transition-all duration-500 transform ${
           isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
       >
         {/* Header */}
-        <div className="relative p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-b border-white/10">
+        <div className="relative p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-b border-white/10">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-10"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-10"
           >
-            <X className="w-5 h-5 text-gray-700" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
           </button>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4 pr-12 sm:pr-0">
             <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0"
               style={{
                 background: `linear-gradient(135deg, ${country.color}20, ${country.color}40)`,
                 border: `2px solid ${country.color}`,
               }}
             >
-              <Flower className="w-8 h-8" style={{ color: country.color }} />
+              <Flower className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: country.color }} />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-1">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1 truncate">
                 {country.flowerName}
               </h1>
-              <p className="text-lg italic text-gray-600 mb-1">
+              <p className="text-sm sm:text-base lg:text-lg italic text-gray-600 mb-1 truncate">
                 {country.flowerScientificName}
               </p>
-              <p className="text-sm text-gray-500 flex items-center">
-                <MapPin className="w-3 h-3 mr-1" />
-                National flower of {country.country}
+              <p className="text-xs sm:text-sm text-gray-500 flex items-center">
+                <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                <span className="truncate">National flower of {country.country}</span>
               </p>
             </div>
           </div>
@@ -280,7 +280,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
           <div className="lg:w-1/2 relative bg-gradient-to-br from-slate-50 to-blue-50">
             <div
               ref={modelViewerRef}
-              className="w-full h-64 lg:h-full rounded-lg"
+              className="w-full h-48 sm:h-56 md:h-64 lg:h-full rounded-lg"
             />
 
             {!isModelLoaded && (
@@ -304,79 +304,79 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
           </div>
 
           {/* Information Panel */}
-          <div className="lg:w-1/2 p-6 overflow-y-auto">
-            <div className="space-y-6">
+          <div className="lg:w-1/2 p-4 sm:p-6 overflow-y-auto">
+            <div className="space-y-4 sm:space-y-6">
               {/* Country Info */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-xl">
-                  <h4 className="font-semibold text-gray-700 mb-1 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-4 rounded-xl">
+                  <h4 className="font-semibold text-gray-700 mb-1 text-xs sm:text-sm">
                     Country
                   </h4>
-                  <p className="text-lg font-bold text-blue-600">
+                  <p className="text-base sm:text-lg font-bold text-blue-600">
                     {country.country}
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl">
-                  <h4 className="font-semibold text-gray-700 mb-1 text-sm">
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 rounded-xl">
+                  <h4 className="font-semibold text-gray-700 mb-1 text-xs sm:text-sm">
                     Population
                   </h4>
-                  <p className="text-lg font-bold text-green-600">
+                  <p className="text-base sm:text-lg font-bold text-green-600">
                     {country.population}
                   </p>
                 </div>
               </div>
 
               {/* Flower Information */}
-              <div className="space-y-4">
-                <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-xl border border-pink-200/50">
-                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-4 sm:p-5 rounded-xl border border-pink-200/50">
+                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 flex items-center text-sm sm:text-base">
                     <Flower
-                      className="w-4 h-4 mr-2"
+                      className="w-4 h-4 mr-2 flex-shrink-0"
                       style={{ color: country.color }}
                     />
                     Description
                   </h4>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                     {country.flowerDescription}
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-5 rounded-xl">
-                  <h4 className="font-semibold text-gray-800 mb-3">
+                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-4 sm:p-5 rounded-xl">
+                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">
                     Cultural Significance
                   </h4>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                     {country.culturalSignificance}
                   </p>
                 </div>
 
-                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-5 rounded-xl">
-                  <h4 className="font-semibold text-gray-800 mb-3">
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 sm:p-5 rounded-xl">
+                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">
                     Botanical Information
                   </h4>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                     {country.botanicalInfo}
                   </p>
                 </div>
               </div>
 
               {/* Additional Country Details */}
-              <div className="grid grid-cols-1 gap-3">
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600">Capital:</span>
-                  <span className="text-gray-800">{country.capital}</span>
+              <div className="grid grid-cols-1 gap-2 sm:gap-3">
+                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Capital:</span>
+                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.capital}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600">Language:</span>
-                  <span className="text-gray-800">{country.language}</span>
+                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Language:</span>
+                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.language}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600">Currency:</span>
-                  <span className="text-gray-800">{country.currency}</span>
+                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Currency:</span>
+                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.currency}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600">Continent:</span>
-                  <span className="text-gray-800">{country.continent}</span>
+                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Continent:</span>
+                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.continent}</span>
                 </div>
               </div>
             </div>
@@ -758,14 +758,25 @@ export default function GlobeComponent() {
         scene.background = null; // Make background transparent so CSS background shows
         console.log("✅ Scene created");
 
-        // Create camera
+        // Create camera with mobile-friendly settings
         const camera = new THREE.PerspectiveCamera(
           75,
           containerRef.current.clientWidth / containerRef.current.clientHeight,
           0.1,
           1000
         );
-        camera.position.set(0, 0, 8);
+        
+        // Adjust camera position based on screen size
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        
+        if (isMobile) {
+          camera.position.set(0, 0, 5); // Much closer for mobile
+        } else if (isTablet) {
+          camera.position.set(0, 0, 6.5); // Medium distance for tablet
+        } else {
+          camera.position.set(0, 0, 8); // Original distance for desktop
+        }
         console.log("✅ Camera positioned at:", camera.position);
 
         // Create renderer
@@ -911,18 +922,19 @@ export default function GlobeComponent() {
               }
             });
 
-            // Add initial scale animation
+            // Add initial scale animation with mobile-friendly scaling
+            const targetScale = isMobile ? 2.2 : isTablet ? 2.8 : 4.0;
             globe.scale.setScalar(0.1);
             scene.add(globe);
             console.log("✅ Globe loaded successfully");
 
             // Animate globe scale
             const scaleAnimation = () => {
-              if (globe.scale.x < 4.0) {
+              if (globe.scale.x < targetScale) {
                 globe.scale.addScalar(0.1);
                 requestAnimationFrame(scaleAnimation);
               } else {
-                globe.scale.setScalar(4.0);
+                globe.scale.setScalar(targetScale);
                 setIsGlobeLoaded(true);
                 console.log("✅ Globe animation complete");
               }
@@ -953,18 +965,19 @@ export default function GlobeComponent() {
           });
           const sphere = new THREE.Mesh(geometry, material);
 
-          // Add initial scale animation for fallback
+          // Add initial scale animation for fallback with mobile-friendly scaling
+          const targetScale = isMobile ? 2.2 : isTablet ? 2.8 : 4.0;
           sphere.scale.setScalar(0.1);
           scene.add(sphere);
           console.log("✅ Fallback globe added to scene");
 
           // Animate fallback globe scale
           const scaleAnimation = () => {
-            if (sphere.scale.x < 4.0) {
+            if (sphere.scale.x < targetScale) {
               sphere.scale.addScalar(0.1);
               requestAnimationFrame(scaleAnimation);
             } else {
-              sphere.scale.setScalar(4.0);
+              sphere.scale.setScalar(targetScale);
               setIsGlobeLoaded(true);
               console.log("✅ Fallback globe animation complete");
             }
@@ -983,9 +996,16 @@ export default function GlobeComponent() {
           countriesData.forEach((countryData, index) => {
           const ballGroup = new THREE.Group();
 
+          // Adjust satellite size based on device type
+          const adjustedSize = isMobile 
+            ? countryData.size * 1.2  // 20% larger on mobile for better visibility
+            : isTablet 
+            ? countryData.size * 0.9  // 10% smaller on tablet
+            : countryData.size;       // Original size on desktop
+
           // Main sphere (ball) - this will be clickable
           const sphereGeometry = new THREE.SphereGeometry(
-              countryData.size,
+              adjustedSize,
             16,
             16
           );
@@ -1024,7 +1044,7 @@ export default function GlobeComponent() {
               // Subtle 3-layer glow effect for better visual balance
               // Inner glow (closest to ball)
               const innerGlowGeometry = new THREE.SphereGeometry(
-                countryData.size * 1.3,
+                adjustedSize * 1.3,
             16,
             16
           );
@@ -1039,7 +1059,7 @@ export default function GlobeComponent() {
 
               // Middle glow
               const middleGlowGeometry = new THREE.SphereGeometry(
-                countryData.size * 1.8,
+                adjustedSize * 1.8,
                 16,
                 16
               );
@@ -1054,7 +1074,7 @@ export default function GlobeComponent() {
 
               // Outer glow
               const outerGlowGeometry = new THREE.SphereGeometry(
-                countryData.size * 2.4,
+                adjustedSize * 2.4,
                 16,
                 16
               );
@@ -1071,8 +1091,8 @@ export default function GlobeComponent() {
             if (countryData.special) {
               // Single elegant ring
           const ringGeometry = new THREE.RingGeometry(
-                countryData.size * 1.6,
-                countryData.size * 1.9,
+                adjustedSize * 1.6,
+                adjustedSize * 1.9,
             32
           );
           const ringMaterial = new THREE.MeshBasicMaterial({
@@ -1087,8 +1107,9 @@ export default function GlobeComponent() {
           ballGroup.add(ring);
             }
 
-            // Position the ball using the helper function
-            const coords = calculate3DCoordinates(countryData.lat, countryData.lng);
+            // Position the ball using the helper function with closer radius for mobile
+            const initialRadius = isMobile ? 2.5 : isTablet ? 3.0 : 4.5;
+            const coords = calculate3DCoordinates(countryData.lat, countryData.lng, initialRadius);
             ballGroup.position.set(coords.x, coords.y, coords.z);
             ballGroup.userData = { 
               data: countryData,
@@ -1106,19 +1127,29 @@ export default function GlobeComponent() {
         // Function to scale and reposition satellites based on camera distance (zoom level)
         const scaleSatellitesBasedOnZoom = (camera) => {
           const distance = camera.position.length();
-          const minDistance = 3; // Minimum zoom distance
-          const maxDistance = 15; // Maximum zoom distance
+          
+          // Mobile-friendly distance limits
+          const minDistance = isMobile ? 2 : isTablet ? 2.5 : 3;
+          const maxDistance = isMobile ? 10 : isTablet ? 11 : 15;
           
           // Calculate normalized distance (0 = closest, 1 = farthest)
           const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
           
           // Calculate base scale factor (closer = smaller satellites)
-          // Scale from 0.4x to 1.2x based on distance
-          const baseScaleFactor = 0.4 + (normalizedDistance * 0.8); // Range from 0.4 to 1.2
+          // Mobile: Scale from 0.4x to 0.9x (larger for better visibility), Tablet: 0.25x to 0.8x, Desktop: 0.4x to 1.2x
+          const baseScaleFactor = isMobile 
+            ? 0.4 + (normalizedDistance * 0.5) 
+            : isTablet 
+            ? 0.25 + (normalizedDistance * 0.55)
+            : 0.4 + (normalizedDistance * 0.8);
           
           // Calculate dynamic radius (closer zoom = satellites closer to globe)
-          // Radius from 4.2 to 4.8 based on distance
-          const dynamicRadius = 4.2 + (normalizedDistance * 0.6); // Range from 4.2 to 4.8
+          // Mobile: 2.2 to 2.8 (very close), Tablet: 2.8 to 3.4, Desktop: 4.2 to 4.8
+          const dynamicRadius = isMobile
+            ? 2.2 + (normalizedDistance * 0.6)
+            : isTablet
+            ? 2.8 + (normalizedDistance * 0.6)
+            : 4.2 + (normalizedDistance * 0.6);
           
           // Debug logging (remove in production)
           if (Math.random() < 0.01) { // Only log occasionally to avoid spam
@@ -1151,8 +1182,26 @@ export default function GlobeComponent() {
         controls.autoRotateSpeed = 0.5;
         controls.enableZoom = true;
         controls.enablePan = false;
-        controls.minDistance = 3;
-        controls.maxDistance = 15;
+        
+        // Mobile-friendly zoom limits
+        if (isMobile) {
+          controls.minDistance = 2;
+          controls.maxDistance = 10;
+          controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
+        } else if (isTablet) {
+          controls.minDistance = 2.5;
+          controls.maxDistance = 11;
+          controls.autoRotateSpeed = 0.4;
+        } else {
+          controls.minDistance = 3;
+          controls.maxDistance = 15;
+        }
+        
+        // Mobile touch settings
+        controls.touches = {
+          ONE: THREE.TOUCH.ROTATE,
+          TWO: THREE.TOUCH.DOLLY_PAN
+        };
 
         // Add zoom event listener to immediately scale satellites
         controls.addEventListener('change', () => {
@@ -1273,14 +1322,31 @@ export default function GlobeComponent() {
         };
         animate();
 
-        // Handle resize
+        // Handle resize with mobile responsiveness
         const handleResize = () => {
           if (!containerRef.current) return;
           const width = containerRef.current.clientWidth;
           const height = containerRef.current.clientHeight;
+          
+          // Update camera aspect ratio
           camera.aspect = width / height;
           camera.updateProjectionMatrix();
+          
+          // Update renderer size
           renderer.setSize(width, height);
+          
+          // Recalculate mobile/tablet status
+          const newIsMobile = window.innerWidth < 768;
+          const newIsTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+          
+          // Adjust camera position if screen size changed
+          if (newIsMobile && !isMobile) {
+            camera.position.set(0, 0, 5);
+          } else if (newIsTablet && !isTablet) {
+            camera.position.set(0, 0, 6.5);
+          } else if (!newIsMobile && !newIsTablet && (isMobile || isTablet)) {
+            camera.position.set(0, 0, 8);
+          }
         };
 
         window.addEventListener("resize", handleResize);
@@ -1316,7 +1382,7 @@ export default function GlobeComponent() {
 
   return (
     <div
-      className="w-full h-screen flex items-center justify-center relative overflow-hidden"
+      className="w-full h-screen sm:h-screen md:h-screen lg:h-screen flex items-center justify-center relative overflow-hidden"
       style={{
         backgroundImage: 'url("/bg_image.png")',
         backgroundSize: "cover",
@@ -1335,12 +1401,12 @@ export default function GlobeComponent() {
       {/* Loading Animation */}
       {!isGlobeLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-          <div className="text-center">
-            <div className="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <h2 className="text-2xl font-bold text-white mb-2">
+          <div className="text-center px-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 sm:mb-6"></div>
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">
               Loading Galactic Garden
             </h2>
-            <p className="text-blue-300 text-lg">
+            <p className="text-blue-300 text-sm sm:text-base lg:text-lg">
               Preparing your cosmic journey...
             </p>
           </div>

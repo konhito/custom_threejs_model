@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight } from "lucide-react";
+import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
+import { useSearchParams, useRouter } from "next/navigation";
 
 // Global flag to prevent multiple 3D logo instances
 let logoInstanceCount = 0;
@@ -230,8 +231,85 @@ function Logo3D() {
   );
 }
 
+// Access Denied Component
+function AccessDenied() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Shield className="w-10 h-10 text-red-600" />
+        </div>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          Access Restricted
+        </h1>
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          This page is only accessible via scanned QR code. Please scan the QR code from the book to access this exclusive content.
+        </p>
+        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="flex items-center justify-center mb-2">
+            <QrCode className="w-5 h-5 text-gray-500 mr-2" />
+            <span className="text-sm font-medium text-gray-700">QR Code Required</span>
+          </div>
+          <p className="text-xs text-gray-500">
+            Look for the QR code in your copy of "Nahiara & the Guardians of the Flowers"
+          </p>
+        </div>
+        <Link
+          href="/"
+          className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
+        >
+          <Globe className="mr-2 w-4 h-4" />
+          Explore Public Archive
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function Landing() {
   const [language, setLanguage] = useState('en');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Auto-detect language based on browser settings
+  useEffect(() => {
+    const detectLanguage = () => {
+      try {
+        // Get browser language
+        const browserLang = navigator.language || navigator.languages?.[0] || 'en';
+        
+        // Extract primary language code (e.g., 'es' from 'es-ES')
+        const primaryLang = browserLang.split('-')[0].toLowerCase();
+        
+        // Check if Spanish is detected
+        if (primaryLang === 'es') {
+          setLanguage('es');
+        } else {
+          // Default to English for all other languages
+          setLanguage('en');
+        }
+        
+        // Store language preference in localStorage
+        localStorage.setItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
+      } catch (error) {
+        console.error('Language detection failed:', error);
+        // Fallback to English if detection fails
+        setLanguage('en');
+      }
+    };
+
+    // Check if language is already stored in localStorage
+    const storedLanguage = localStorage.getItem('nahiara_language');
+    if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'es')) {
+      setLanguage(storedLanguage);
+    } else {
+      // Auto-detect if no stored preference
+      detectLanguage();
+    }
+  }, []);
 
   const content = {
     en: {
@@ -322,6 +400,100 @@ export default function Landing() {
 
   const currentContent = content[language];
 
+  // Authentication logic
+  useEffect(() => {
+    const checkAuthentication = () => {
+      try {
+        // Check for QR code authentication parameter
+        const authParam = searchParams.get('auth');
+        const qrCode = searchParams.get('qr');
+        const token = searchParams.get('token');
+        
+        // Multiple authentication methods for flexibility
+        const validAuthCodes = [
+          'nahiara2024', // Primary QR code auth
+          'guardians',   // Alternative auth
+          'flowers',     // Another option
+          'aquamundi'    // Project name auth
+        ];
+        
+        const validQrCodes = [
+          'nahiara-qr-2024',
+          'guardians-qr',
+          'flowers-qr',
+          'aquamundi-qr'
+        ];
+        
+        const validTokens = [
+          'nahiara-token-2024',
+          'guardians-token',
+          'flowers-token',
+          'aquamundi-token'
+        ];
+        
+        // Check if any authentication method is valid
+        const isAuthValid = validAuthCodes.includes(authParam) || 
+                           validQrCodes.includes(qrCode) || 
+                           validTokens.includes(token);
+        
+        if (isAuthValid) {
+          setIsAuthenticated(true);
+          // Store authentication in sessionStorage for this session
+          sessionStorage.setItem('nahiara_authenticated', 'true');
+          sessionStorage.setItem('auth_timestamp', Date.now().toString());
+        } else {
+          // Check if user was previously authenticated in this session
+          const sessionAuth = sessionStorage.getItem('nahiara_authenticated');
+          const authTimestamp = sessionStorage.getItem('auth_timestamp');
+          
+          if (sessionAuth === 'true' && authTimestamp) {
+            // Check if session is still valid (24 hours)
+            const timeDiff = Date.now() - parseInt(authTimestamp);
+            const hoursDiff = timeDiff / (1000 * 60 * 60);
+            
+            if (hoursDiff < 24) {
+              setIsAuthenticated(true);
+            } else {
+              // Session expired, clear storage
+              sessionStorage.removeItem('nahiara_authenticated');
+              sessionStorage.removeItem('auth_timestamp');
+              setIsAuthenticated(false);
+            }
+          } else {
+            setIsAuthenticated(false);
+          }
+        }
+      } catch (error) {
+        console.error('Authentication check failed:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthentication();
+  }, [searchParams]);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+            Verifying Access...
+          </h2>
+          <p className="text-gray-600">Please wait while we verify your QR code access.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show access denied if not authenticated
+  if (!isAuthenticated) {
+    return <AccessDenied />;
+  }
+
   const handlePressKitDownload = () => {
     // Create a simple press kit content
     const pressKitContent = `
@@ -377,7 +549,10 @@ ${currentContent.vision.text}
       <div className="fixed top-6 right-6 z-50">
         <div className="bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg border border-green-200">
           <button
-            onClick={() => setLanguage('en')}
+            onClick={() => {
+              setLanguage('en');
+              localStorage.setItem('nahiara_language', 'en');
+            }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'en' 
                 ? 'bg-green-500 text-white shadow-md' 
@@ -387,7 +562,10 @@ ${currentContent.vision.text}
             EN
           </button>
           <button
-            onClick={() => setLanguage('es')}
+            onClick={() => {
+              setLanguage('es');
+              localStorage.setItem('nahiara_language', 'es');
+            }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'es' 
                 ? 'bg-green-500 text-white shadow-md' 
@@ -419,17 +597,31 @@ ${currentContent.vision.text}
               {currentContent.hero.tagline}
             </p>
             
-            {/* Welcome Card - Mobile Optimized */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-green-200 mb-6 max-w-2xl mx-auto">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3" style={{ fontFamily: 'Righteous, cursive', letterSpacing: '0.02em' }}>
-                {language === 'en' ? 'Welcome to the Digital World of Nahiara' : 'Bienvenido al Mundo Digital de Nahiara'}
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed" style={{ fontFamily: 'Quicksand, sans-serif', lineHeight: '1.6' }}>
+            {/* QR Code Access Success - Mobile Optimized */}
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 sm:p-6 shadow-sm border border-green-300 mb-6 max-w-2xl mx-auto">
+              <div className="flex items-center justify-center mb-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                  <QrCode className="w-4 h-4 text-green-600" />
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900" style={{ fontFamily: 'Righteous, cursive', letterSpacing: '0.02em' }}>
+                  {language === 'en' ? 'QR Code Access Verified!' : '¡Acceso QR Verificado!'}
+                </h3>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed text-center" style={{ fontFamily: 'Quicksand, sans-serif', lineHeight: '1.6' }}>
                 {language === 'en' 
-                  ? 'You\'ve discovered the magical universe behind the book. Explore the interactive 3D floral archive, learn about the story\'s ecosystem, and connect with the global community of flower guardians.'
-                  : 'Has descubierto el universo mágico detrás del libro. Explora el archivo floral 3D interactivo, conoce el ecosistema de la historia y conéctate con la comunidad global de guardianes de flores.'
+                  ? 'Welcome to the exclusive digital world of Nahiara! You\'ve successfully accessed this content via QR code. Explore the interactive 3D floral archive, learn about the story\'s ecosystem, and connect with the global community of flower guardians.'
+                  : '¡Bienvenido al mundo digital exclusivo de Nahiara! Has accedido exitosamente a este contenido mediante código QR. Explora el archivo floral 3D interactivo, conoce el ecosistema de la historia y conéctate con la comunidad global de guardianes de flores.'
                 }
               </p>
+              {/* Language Auto-Detection Indicator */}
+              <div className="mt-3 pt-3 border-t border-green-200">
+                <p className="text-xs text-green-600 text-center" style={{ fontFamily: 'Quicksand, sans-serif' }}>
+                  {language === 'en' 
+                    ? '🌐 Language auto-detected from your browser settings' 
+                    : '🌐 Idioma detectado automáticamente desde la configuración de tu navegador'
+                  }
+                </p>
+              </div>
             </div>
             
             {/* Mobile-First Buttons */}
