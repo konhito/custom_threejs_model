@@ -439,11 +439,14 @@ function LandingContent() {
                            validQrCodes.includes(qrCode) || 
                            validTokens.includes(token);
         
+        console.log('Auth check:', { authParam, qrCode, token, isAuthValid });
+        
         if (isAuthValid) {
           setIsAuthenticated(true);
           // Store authentication in sessionStorage for this session
           sessionStorage.setItem('nahiara_authenticated', 'true');
           sessionStorage.setItem('auth_timestamp', Date.now().toString());
+          console.log('Authentication successful');
         } else {
           // Check if user was previously authenticated in this session
           const sessionAuth = sessionStorage.getItem('nahiara_authenticated');
@@ -456,20 +459,24 @@ function LandingContent() {
             
             if (hoursDiff < 24) {
               setIsAuthenticated(true);
+              console.log('Session authentication successful');
             } else {
               // Session expired, clear storage
               sessionStorage.removeItem('nahiara_authenticated');
               sessionStorage.removeItem('auth_timestamp');
               setIsAuthenticated(false);
+              console.log('Session expired');
             }
           } else {
             setIsAuthenticated(false);
+            console.log('No authentication found');
           }
         }
       } catch (error) {
         console.error('Authentication check failed:', error);
         setIsAuthenticated(false);
       } finally {
+        console.log('Setting isLoading to false');
         setIsLoading(false);
       }
     };

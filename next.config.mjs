@@ -26,7 +26,7 @@ const nextConfig = {
         destination: '/landing',
         permanent: true,
       },
-      // No redirects for aquamundi.org - let it work normally
+      // No redirects for aquamundi.org - it should work normally
     ];
   },
 };
