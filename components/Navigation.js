@@ -177,7 +177,7 @@ export default function Navigation() {
                 </Link>
                 
                 {/* Tooltip */}
-                <div className="absolute left-full ml-3 px-3 py-2 bg-black/90 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[10000] min-w-[200px]">
+                <div className="absolute left-full ml-4 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-black/90 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-[10000] min-w-[200px] shadow-xl">
                   <div className="font-semibold mb-1">{item.name}</div>
                   <div className="text-xs text-gray-300 mb-2">{item.description}</div>
                   
@@ -198,7 +198,8 @@ export default function Navigation() {
                     </div>
                   )}
                   
-                  <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-black/90 rotate-45"></div>
+                  {/* Arrow pointing to the icon */}
+                  <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2 w-3 h-3 bg-black/90 rotate-45"></div>
                 </div>
               </div>
             );

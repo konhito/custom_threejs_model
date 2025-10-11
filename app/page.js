@@ -38,7 +38,7 @@ export default function Home() {
 
   // Show normal content for aquamundi.org
   return (
-    <main>
+    <main role="main" aria-label="Interactive 3D Globe of Sacred Flowers">
       <Navigation />
       <Globe />
     </main>

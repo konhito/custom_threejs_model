@@ -1,28 +1,58 @@
 import Navigation from "../../components/Navigation";
+import { generateMetadata, generateStructuredData } from "../../lib/seo";
+
+// Generate metadata for the about page
+export const metadata = generateMetadata({
+  title: "About AquaMundi - Mission & Purpose",
+  description: "Learn about AquaMundi's mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
+  keywords: ["about", "mission", "purpose", "biodiversity", "environmental education", "floral archive", "pollinator conservation"],
+  url: "/about",
+  type: "website",
+});
 
 export default function AboutPage() {
+  // Generate structured data for the about page
+  const structuredData = generateStructuredData({
+    type: "AboutPage",
+    name: "About AquaMundi",
+    description: "Learn about AquaMundi's mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
+    url: "/about",
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "About", url: "/about" }
+    ],
+  });
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
-      </div>
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       
-      <Navigation />
-      
-      <div className="relative pt-20 px-4 lg:px-8 pb-16">
-        <div className="max-w-7xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-20">
-            <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 leading-tight">
-              What is AquaMundi?
-            </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              The digital garden where nature meets technology
-            </p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <Navigation />
+        
+        <main className="relative pt-20 px-4 lg:px-8 pb-16">
+          <div className="max-w-7xl mx-auto">
+            {/* Hero Section */}
+            <header className="text-center mb-20">
+              <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 leading-tight">
+                What is AquaMundi?
+              </h1>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                The digital garden where nature meets technology
+              </p>
+            </header>
 
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-12 gap-8 mb-20">
@@ -91,19 +121,20 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Bottom Section - Full Width */}
-          <div className="text-center">
-            <div className="bg-gradient-to-r from-white/80 via-purple-50/80 to-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/30 hover:shadow-3xl transition-all duration-500 hover:scale-[1.01] relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative">
-                <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed italic font-medium">
-                  "AquaMundi is not just a website: it is a <span className="font-bold text-purple-600">living mantle</span> that unites science, culture, and hope, where each flower and pollinator remind us that the Earth blossoms in <span className="font-bold text-cyan-600">diversity</span>."
-                </p>
+            {/* Bottom Section - Full Width */}
+            <section className="text-center">
+              <div className="bg-gradient-to-r from-white/80 via-purple-50/80 to-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/30 hover:shadow-3xl transition-all duration-500 hover:scale-[1.01] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
+                <div className="relative">
+                  <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed italic font-medium">
+                    "AquaMundi is not just a website: it is a <span className="font-bold text-purple-600">living mantle</span> that unites science, culture, and hope, where each flower and pollinator remind us that the Earth blossoms in <span className="font-bold text-cyan-600">diversity</span>."
+                  </blockquote>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
-        </div>
+        </main>
       </div>
-    </div>
+    </>
   );
 }

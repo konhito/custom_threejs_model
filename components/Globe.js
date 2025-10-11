@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X, MapPin, Flower, Info, Rotate3D, Target } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Flower Detail Modal Component
 function FlowerDetailModal({ country, isVisible, onClose }) {
@@ -234,6 +235,10 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
           ? "bg-black/70 backdrop-blur-sm"
           : "bg-transparent pointer-events-none"
       }`}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="flower-modal-title"
+      aria-describedby="flower-modal-description"
     >
       <div
         className={`bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] sm:max-h-[95vh] md:max-h-[95vh] lg:max-h-[95vh] overflow-hidden border border-white/20 transition-all duration-500 transform ${
@@ -245,8 +250,9 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
           <button
             onClick={onClose}
             className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-10"
+            aria-label="Close flower details dialog"
           >
-            <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" aria-hidden="true" />
           </button>
 
           <div className="flex items-center space-x-3 sm:space-x-4 pr-12 sm:pr-0">
@@ -260,14 +266,14 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               <Flower className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: country.color }} />
             </div>
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1 truncate">
+              <h1 id="flower-modal-title" className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1 truncate">
                 {country.flowerName}
               </h1>
               <p className="text-sm sm:text-base lg:text-lg italic text-gray-600 mb-1 truncate">
                 {country.flowerScientificName}
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 flex items-center">
-                <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+              <p id="flower-modal-description" className="text-xs sm:text-sm text-gray-500 flex items-center">
+                <MapPin className="w-3 h-3 mr-1 flex-shrink-0" aria-hidden="true" />
                 <span className="truncate">National flower of {country.country}</span>
               </p>
             </div>
@@ -392,7 +398,7 @@ export default function GlobeComponent() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
-  const controlsRef = useRef(); // Add this line to store controls reference
+  const controlsRef = useRef();
 
   // Countries data array - India and USA only
   const countriesData = [
@@ -766,17 +772,17 @@ export default function GlobeComponent() {
           1000
         );
         
-        // Adjust camera position based on screen size
-        const isMobile = window.innerWidth < 768;
-        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-        
-        if (isMobile) {
-          camera.position.set(0, 0, 5); // Much closer for mobile
-        } else if (isTablet) {
-          camera.position.set(0, 0, 6.5); // Medium distance for tablet
-        } else {
-          camera.position.set(0, 0, 8); // Original distance for desktop
-        }
+         // Adjust camera position based on screen size
+         const isMobile = window.innerWidth < 768;
+         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+         
+         if (isMobile) {
+           camera.position.set(0, 0, 7); // Further back for smaller globe on mobile
+         } else if (isTablet) {
+           camera.position.set(0, 0, 6.5); // Medium distance for tablet
+         } else {
+           camera.position.set(0, 0, 8); // Original distance for desktop
+         }
         console.log("✅ Camera positioned at:", camera.position);
 
         // Create renderer
@@ -922,8 +928,8 @@ export default function GlobeComponent() {
               }
             });
 
-            // Add initial scale animation with mobile-friendly scaling
-            const targetScale = isMobile ? 2.2 : isTablet ? 2.8 : 4.0;
+             // Add initial scale animation with mobile-friendly scaling
+             const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
             globe.scale.setScalar(0.1);
             scene.add(globe);
             console.log("✅ Globe loaded successfully");
@@ -965,8 +971,8 @@ export default function GlobeComponent() {
           });
           const sphere = new THREE.Mesh(geometry, material);
 
-          // Add initial scale animation for fallback with mobile-friendly scaling
-          const targetScale = isMobile ? 2.2 : isTablet ? 2.8 : 4.0;
+           // Add initial scale animation for fallback with mobile-friendly scaling
+           const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
           sphere.scale.setScalar(0.1);
           scene.add(sphere);
           console.log("✅ Fallback globe added to scene");
@@ -1107,8 +1113,8 @@ export default function GlobeComponent() {
           ballGroup.add(ring);
             }
 
-            // Position the ball using the helper function with closer radius for mobile
-            const initialRadius = isMobile ? 2.5 : isTablet ? 3.0 : 4.5;
+             // Position the ball using the helper function with closer radius for mobile
+             const initialRadius = isMobile ? 2.0 : isTablet ? 3.0 : 4.5;
             const coords = calculate3DCoordinates(countryData.lat, countryData.lng, initialRadius);
             ballGroup.position.set(coords.x, coords.y, coords.z);
             ballGroup.userData = { 
@@ -1128,9 +1134,9 @@ export default function GlobeComponent() {
         const scaleSatellitesBasedOnZoom = (camera) => {
           const distance = camera.position.length();
           
-          // Mobile-friendly distance limits
-          const minDistance = isMobile ? 2 : isTablet ? 2.5 : 3;
-          const maxDistance = isMobile ? 10 : isTablet ? 11 : 15;
+           // Mobile-friendly distance limits
+           const minDistance = isMobile ? 3 : isTablet ? 2.5 : 3;
+           const maxDistance = isMobile ? 12 : isTablet ? 11 : 15;
           
           // Calculate normalized distance (0 = closest, 1 = farthest)
           const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
@@ -1143,13 +1149,13 @@ export default function GlobeComponent() {
             ? 0.25 + (normalizedDistance * 0.55)
             : 0.4 + (normalizedDistance * 0.8);
           
-          // Calculate dynamic radius (closer zoom = satellites closer to globe)
-          // Mobile: 2.2 to 2.8 (very close), Tablet: 2.8 to 3.4, Desktop: 4.2 to 4.8
-          const dynamicRadius = isMobile
-            ? 2.2 + (normalizedDistance * 0.6)
-            : isTablet
-            ? 2.8 + (normalizedDistance * 0.6)
-            : 4.2 + (normalizedDistance * 0.6);
+           // Calculate dynamic radius (closer zoom = satellites closer to globe)
+           // Mobile: 1.8 to 2.4 (balanced), Tablet: 2.8 to 3.4, Desktop: 4.2 to 4.8
+           const dynamicRadius = isMobile
+             ? 1.8 + (normalizedDistance * 0.6)
+             : isTablet
+             ? 2.8 + (normalizedDistance * 0.6)
+             : 4.2 + (normalizedDistance * 0.6);
           
           // Debug logging (remove in production)
           if (Math.random() < 0.01) { // Only log occasionally to avoid spam
@@ -1183,19 +1189,19 @@ export default function GlobeComponent() {
         controls.enableZoom = true;
         controls.enablePan = false;
         
-        // Mobile-friendly zoom limits
-        if (isMobile) {
-          controls.minDistance = 2;
-          controls.maxDistance = 10;
-          controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
-        } else if (isTablet) {
-          controls.minDistance = 2.5;
-          controls.maxDistance = 11;
-          controls.autoRotateSpeed = 0.4;
-        } else {
-          controls.minDistance = 3;
-          controls.maxDistance = 15;
-        }
+         // Mobile-friendly zoom limits
+         if (isMobile) {
+           controls.minDistance = 3;
+           controls.maxDistance = 12;
+           controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
+         } else if (isTablet) {
+           controls.minDistance = 2.5;
+           controls.maxDistance = 11;
+           controls.autoRotateSpeed = 0.4;
+         } else {
+           controls.minDistance = 3;
+           controls.maxDistance = 15;
+         }
         
         // Mobile touch settings
         controls.touches = {
@@ -1339,14 +1345,14 @@ export default function GlobeComponent() {
           const newIsMobile = window.innerWidth < 768;
           const newIsTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
           
-          // Adjust camera position if screen size changed
-          if (newIsMobile && !isMobile) {
-            camera.position.set(0, 0, 5);
-          } else if (newIsTablet && !isTablet) {
-            camera.position.set(0, 0, 6.5);
-          } else if (!newIsMobile && !newIsTablet && (isMobile || isTablet)) {
-            camera.position.set(0, 0, 8);
-          }
+           // Adjust camera position if screen size changed
+           if (newIsMobile && !isMobile) {
+             camera.position.set(0, 0, 7);
+           } else if (newIsTablet && !isTablet) {
+             camera.position.set(0, 0, 6.5);
+           } else if (!newIsMobile && !newIsTablet && (isMobile || isTablet)) {
+             camera.position.set(0, 0, 8);
+           }
         };
 
         window.addEventListener("resize", handleResize);
@@ -1381,28 +1387,47 @@ export default function GlobeComponent() {
   };
 
   return (
-    <div
+    <div 
       className="w-full h-screen sm:h-screen md:h-screen lg:h-screen flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: 'url("/bg_image.png")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      role="main"
+      aria-label="Interactive 3D Globe of Sacred Flowers"
     >
+      {/* Optimized Background Image */}
+      <Image
+        src="/bg_image.png"
+        alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
+        fill
+        priority
+        quality={85}
+        sizes="100vw"
+        className="object-cover"
+        placeholder="blur"
+        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+      />
       {/* Main globe container */}
       <div
         ref={containerRef}
         className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 ${
           isGlobeLoaded ? "opacity-100" : "opacity-0"
         }`}
+        role="img"
+        aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
+        tabIndex={0}
       />
 
       {/* Loading Animation */}
       {!isGlobeLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+        <div 
+          className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading interactive 3D globe"
+        >
           <div className="text-center px-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 sm:mb-6"></div>
+            <div 
+              className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 sm:mb-6"
+              aria-hidden="true"
+            ></div>
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">
               Loading Galactic Garden
             </h2>
