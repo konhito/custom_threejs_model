@@ -2,7 +2,7 @@
 const nextConfig = {
   async redirects() {
     return [
-      // Redirect from non-www to www with /landing
+      // Redirect from non-www asociacionnahiara.org to www with /landing
       {
         source: '/:path*',
         has: [
@@ -14,7 +14,7 @@ const nextConfig = {
         destination: 'https://www.asociacionnahiara.org/landing',
         permanent: true,
       },
-      // Ensure www domain root redirects to /landing
+      // Ensure www.asociacionnahiara.org domain root redirects to /landing
       {
         source: '/',
         has: [
@@ -26,6 +26,7 @@ const nextConfig = {
         destination: '/landing',
         permanent: true,
       },
+      // No redirects for aquamundi.org - let it work normally
     ];
   },
 };
