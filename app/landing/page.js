@@ -254,13 +254,15 @@ function AccessDenied() {
             Look for the QR code in your copy of "Nahiara & the Guardians of the Flowers"
           </p>
         </div>
-        <Link
-          href="/"
+        <a
+          href="https://www.aquamundi.org/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
         >
           <Globe className="mr-2 w-4 h-4" />
           Explore Public Archive
-        </Link>
+        </a>
       </div>
     </div>
   );
@@ -615,25 +617,20 @@ ${currentContent.vision.text}
                 }
               </p>
               {/* Language Auto-Detection Indicator */}
-              <div className="mt-3 pt-3 border-t border-green-200">
-                <p className="text-xs text-green-600 text-center" style={{ fontFamily: 'Quicksand, sans-serif' }}>
-                  {language === 'en' 
-                    ? '🌐 Language auto-detected from your browser settings' 
-                    : '🌐 Idioma detectado automáticamente desde la configuración de tu navegador'
-                  }
-                </p>
-              </div>
+             
             </div>
             
             {/* Mobile-First Buttons */}
             <div className="flex flex-col gap-3 max-w-sm mx-auto">
-              <Link
-                href="/"
+              <a
+                href="https://www.aquamundi.org/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
                 style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em', fontWeight: '400' }}
               >
                 {language === 'en' ? 'Explore 3D Archive' : 'Explorar Archivo 3D'}
-              </Link>
+              </a>
               <button
                 onClick={() => setShowContactModal(true)}
                 className="px-6 py-3 border border-green-600 text-green-600 font-medium rounded-lg hover:bg-green-50 transition-colors duration-200"
@@ -712,14 +709,16 @@ ${currentContent.vision.text}
                       : 'Explora las 195 flores nacionales en detalle 3D impresionante. Haz clic en cualquier flor para aprender sobre su significado cultural, estado de conservación y papel en la historia de Nahiara.'
                     }
                   </p>
-                  <Link
-                    href="/"
+                  <a
+                    href="https://www.aquamundi.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
                     style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em', fontWeight: '400' }}
                   >
                     {language === 'en' ? 'Start Exploring' : 'Comenzar a Explorar'}
                     <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
