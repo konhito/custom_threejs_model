@@ -106,7 +106,7 @@ export default function Navigation() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Globe className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-xl font-bold text-gray-800">AquaMundi</h2>
+              <h2 className="text-xl font-bold text-gray-800">International Association for the Defense of Flowers</h2>
             </div>
             
             <nav className="space-y-2">
@@ -195,7 +195,7 @@ export default function Navigation() {
                 
                 {/* Tooltip */}
                 <div className="absolute left-full ml-4 top-1/2 transform -translate-y-1/2 px-4 py-3 bg-black/90 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-[10000] min-w-[200px] shadow-xl">
-                  <div className="font-semibold mb-1">{item.name}</div>
+                  <div className="font-semibold mb-1">International Association for the Defense of Flowers</div>
                   <div className="text-xs text-gray-300 mb-2">{item.description}</div>
                   
                   {/* Sub-items in tooltip */}

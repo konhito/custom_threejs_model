@@ -1,7 +1,7 @@
 export async function GET() {
   const manifest = {
-    name: "AquaMundi - Sacred Flowers & Biodiversity Guardians",
-    short_name: "AquaMundi",
+    name: "International Association for the Defense of Flowers Proveneya & Nahiara",
+    short_name: "Defense of Flowers",
     description: "A cosmic journey through the world's most sacred flowers, connecting humanity with nature's wisdom and the pollinators that sustain life on Earth.",
     start_url: "/",
     display: "standalone",

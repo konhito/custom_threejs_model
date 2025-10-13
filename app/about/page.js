@@ -3,8 +3,8 @@ import { generateMetadata, generateStructuredData } from "../../lib/seo";
 
 // Generate metadata for the about page
 export const metadata = generateMetadata({
-  title: "About AquaMundi - Mission & Purpose",
-  description: "Learn about AquaMundi's mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
+  title: "About International Association for the Defense of Flowers - Mission & Purpose",
+  description: "Learn about the mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
   keywords: ["about", "mission", "purpose", "biodiversity", "environmental education", "floral archive", "pollinator conservation"],
   url: "/about",
   type: "website",
@@ -14,8 +14,8 @@ export default function AboutPage() {
   // Generate structured data for the about page
   const structuredData = generateStructuredData({
     type: "AboutPage",
-    name: "About AquaMundi",
-    description: "Learn about AquaMundi's mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
+    name: "About International Association for the Defense of Flowers",
+    description: "Learn about the mission to preserve floral and pollinator memory, unite communities through nature's beauty, and create a global archive of biodiversity.",
     url: "/about",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -47,7 +47,7 @@ export default function AboutPage() {
             {/* Hero Section */}
             <header className="text-center mb-20">
               <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 leading-tight">
-                What is AquaMundi?
+                What is the International Association for the Defense of Flowers?
               </h1>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 The digital garden where nature meets technology
@@ -65,7 +65,7 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
-                    AquaMundi is the <span className="font-semibold text-blue-600">digital garden of the planet</span>, where flowers and pollinators become ambassadors of Earth&apos;s biological and cultural diversity.
+                    Our association is the <span className="font-semibold text-blue-600">digital garden of the planet</span>, where flowers and pollinators become ambassadors of Earth&apos;s biological and cultural diversity.
                   </p>
                   <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
                     We preserve the floral and pollinator memory of all nations, bringing together <span className="font-semibold text-purple-600">science, art, and education</span> in one digital space.

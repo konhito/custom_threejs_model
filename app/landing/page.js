@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X, Info } from "lucide-react";
+import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X, Info, MapPin } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
@@ -102,19 +102,28 @@ function Logo3D() {
         // Load 3D logo
         const loader = new GLTFLoader();
         loader.load(
-          "/3dlogo.glb",
+          "/logo.glb",
           (gltf) => {
             const logo = gltf.scene;
             
-            // Center and scale the logo
+            // Center and scale the logo around the origin using a wrapper group
+            logo.updateMatrixWorld(true);
             const box = new THREE.Box3().setFromObject(logo);
             const center = box.getCenter(new THREE.Vector3());
             const size = box.getSize(new THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = 2.2 / maxDim;
+            const desiredSize = 2.2; // target size for the longest axis after scaling
 
-            logo.scale.multiplyScalar(scale);
-            logo.position.sub(center.multiplyScalar(scale));
+            // Shift model so its geometric center sits at the origin (0,0,0)
+            logo.position.sub(center);
+
+            // Wrap in a group so rotation occurs around origin (after recentering)
+            const logoGroup = new THREE.Group();
+            logoGroup.add(logo);
+
+            // Compute uniform scale and apply to the group (not the logo itself)
+            const scale = desiredSize / maxDim;
+            logoGroup.scale.setScalar(scale);
 
             // Enhance materials and enable shadows
             logo.traverse((child) => {
@@ -122,27 +131,25 @@ function Logo3D() {
                 child.castShadow = true;
                 child.receiveShadow = true;
                 
-                // Enhance material properties
                 if (child.material) {
                   child.material.metalness = 0.1;
                   child.material.roughness = 0.3;
                   child.material.envMapIntensity = 1.0;
-                  
-                  // Make materials more vibrant
                   if (child.material.color) {
                     child.material.color.multiplyScalar(1.5);
                   }
-                  
-                  // Ensure material is visible
                   child.material.needsUpdate = true;
                 }
               }
             });
 
-            scene.add(logo);
+            // Add to scene
+            scene.add(logoGroup);
 
-            // Position camera further back
-            camera.position.set(0, 0, 4);
+            // Position camera based on object size to keep it framed nicely
+            const fov = camera.fov * (Math.PI / 180);
+            const distance = (desiredSize * 0.5) / Math.tan(fov / 2) * 1.3; // add a little padding
+            camera.position.set(0, 0, distance);
             camera.lookAt(0, 0, 0);
 
             // Store references
@@ -152,15 +159,10 @@ function Logo3D() {
             // Hide loading and show 3D logo
             setIsLoading(false);
 
-            // Animation loop
+            // Animation loop - rotate the group so it spins around the true center
             const animate = () => {
               animationRef.current = requestAnimationFrame(animate);
-              
-              // Rotate the logo
-              if (logo) {
-                logo.rotation.y += 0.01;
-              }
-              
+              logoGroup.rotation.y += 0.01;
               renderer.render(scene, camera);
             };
             animate();
@@ -337,94 +339,10 @@ function QRCodeScanPage() {
         </h1>
         
         {/* Description */}
-        <p className="text-gray-600 mb-8 leading-relaxed">
+        <p className="text-gray-600 leading-relaxed">
           To access the exclusive digital world of Nahiara, please scan the QR code from your copy of 
           <span className="font-semibold text-green-600"> &ldquo;Nahiara & the Guardians of the Flowers&rdquo;</span>
         </p>
-
-        {/* Scanning Area */}
-        <div className="bg-gray-50 rounded-xl p-6 mb-6 border-2 border-dashed border-gray-300">
-          {isScanning ? (
-            <div className="text-center">
-              <div className="relative w-full max-w-sm mx-auto mb-4">
-                <video 
-                  ref={videoRef}
-                  className="w-full h-48 object-cover rounded-lg border-2 border-green-500"
-                  playsInline
-                />
-                <div className="absolute inset-0 border-2 border-green-500 rounded-lg pointer-events-none">
-                  <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-green-500"></div>
-                  <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-green-500"></div>
-                  <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-green-500"></div>
-                  <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-green-500"></div>
-                </div>
-              </div>
-              <p className="text-green-600 font-medium">Scanning QR Code...</p>
-              <p className="text-sm text-gray-500 mt-2">Please position the QR code within the camera view</p>
-              <button 
-                onClick={stopScanning}
-                className="mt-3 px-4 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors"
-              >
-                Stop Scanning
-              </button>
-            </div>
-          ) : (
-            <div className="text-center">
-              <div className="w-20 h-20 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center border-2 border-gray-200">
-                <QrCode className="w-10 h-10 text-gray-400" />
-              </div>
-              <p className="text-gray-600 font-medium">Position QR code here</p>
-              <p className="text-sm text-gray-500 mt-1">Use your device camera to scan</p>
-            </div>
-          )}
-        </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-center space-x-2">
-              <X className="w-5 h-5 text-red-600" />
-              <p className="text-red-800 text-sm">{error}</p>
-            </div>
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        <div className="space-y-3">
-          <button 
-            onClick={handleScan}
-            disabled={isScanning}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-6 rounded-lg font-medium hover:from-green-600 hover:to-emerald-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isScanning ? 'Scanning...' : 'Start Scanning'}
-          </button>
-          
-          <button 
-            onClick={handleManualAuth}
-            className="w-full bg-gray-100 text-gray-700 py-2 px-6 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200 text-sm"
-          >
-            I have the book but can&apos;t scan
-          </button>
-        </div>
-
-        {/* Help Text */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <div className="flex items-start space-x-3">
-            <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div className="text-left">
-              <p className="text-sm font-medium text-blue-800 mb-1">Need Help?</p>
-              <p className="text-xs text-blue-600">
-                Make sure you have good lighting and the QR code is clearly visible. 
-                The QR code should be found in the back cover of your book.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact Info */}
-        <div className="mt-4 text-xs text-gray-500">
-          <p>Don&apos;t have the book? <a href="mailto:asociacionnahiara@gmail.com" className="text-green-600 hover:underline">Contact us</a> for access.</p>
-        </div>
       </div>
     </div>
   );
@@ -473,7 +391,7 @@ function LandingContent() {
     
     try {
       // Create mailto link with form data
-      const subject = encodeURIComponent(contactForm.subject || (language === 'en' ? 'Contact from AquaMundi Website' : 'Contacto desde el sitio web de AquaMundi'));
+      const subject = encodeURIComponent(contactForm.subject || (language === 'en' ? 'Contact from International Association for the Defense of Flowers Website' : 'Contacto desde el sitio web de la Asociación Internacional para la Defensa de las Flores'));
       const body = encodeURIComponent(
         `${language === 'en' ? 'Name' : 'Nombre'}: ${contactForm.name}\n` +
         `${language === 'en' ? 'Email' : 'Correo'}: ${contactForm.email}\n\n` +
@@ -539,9 +457,9 @@ function LandingContent() {
   const content = {
     en: {
       hero: {
-        title: "Aqua Mundi",
-        subtitle: "Nahiara & the Guardians of the Flowers",
-        tagline: "\"Where every flower tells a story, and every story blooms into hope\"",
+        title: "International Association for the Defense of Flowers",
+        subtitle: "Proveneya & Nahiara",
+        tagline: "\"Where humanity blooms, nature is reborn.\" 🌸",
         cta: "Contact us"
       },
       description: "A literary saga and transmedia ecosystem that unites 195 national flowers and their pollinators through innovative formats: an illustrated book, an engaging card game, a comprehensive 3D floral archive, and interactive robotic exhibitions.",
@@ -570,20 +488,20 @@ function LandingContent() {
       },
       contact: {
         title: "Get in Touch",
-        email: "asociacionnahiara@gmail.com",
-        whatsapp: "+34 641 67 75 15",
-        social: "@Proveneya_and_nahiara"
+        email: "partnerships@asociacionnahiara.org",
+        phone: "+34 625 50 18 67",
+        location: "FLOR_∞ - 28.1235° N, 15.4363° W - Gran Canaria"
       },
       footer: {
-        copyright: "© 2024 Aqua Mundi - Nahiara & the Guardians of the Flowers",
-        association: "Proveneya Foundation"
+        copyright: "© 2025 International Association for the Defense of Flowers Proveneya & Nahiara",
+        association: "International Association for the defence of flowers Proveneya & Nahiara"
       }
     },
     es: {
       hero: {
-        title: "Aqua Mundi",
-        subtitle: "Nahiara y los Guardianes de las Flores",
-        tagline: "\"Donde cada flor cuenta una historia, y cada historia florece en esperanza\"",
+        title: "Asociación Internacional para la Defensa de las Flores",
+        subtitle: "Proveneya & Nahiara",
+        tagline: "\"Donde florece la humanidad, renace la naturaleza.\" 🌸",
         cta: "Contáctanos"
       },
       description: "Una saga literaria y ecosistema transmedia que une 195 flores nacionales y sus polinizadores a través de formatos innovadores: un libro ilustrado, un juego de cartas envolvente, un archivo floral 3D integral y exposiciones robóticas interactivas.",
@@ -612,13 +530,13 @@ function LandingContent() {
       },
       contact: {
         title: "Ponte en Contacto",
-        email: "asociacionnahiara@gmail.com",
-        whatsapp: "+34 641 67 75 15",
-        social: "@Proveneya_and_nahiara"
+        email: "partnerships@asociacionnahiara.org",
+        phone: "+34 625 50 18 67",
+        location: "FLOR_∞ - 28.1235° N, 15.4363° W - Gran Canaria"
       },
       footer: {
-        copyright: "© 2024 Aqua Mundi - Nahiara y los Guardianes de las Flores",
-        association: "Fundación Proveneya"
+        copyright: "© 2025 Asociación Internacional para la Defensa de las Flores Proveneya & Nahiara",
+        association: "Asociación Internacional para la defensa de las flores Proveneya & Nahiara"
       }
     }
   };
@@ -670,28 +588,36 @@ function LandingContent() {
           sessionStorage.setItem('auth_timestamp', Date.now().toString());
           console.log('Authentication successful');
         } else {
-          // Check if user was previously authenticated in this session
-          const sessionAuth = sessionStorage.getItem('nahiara_authenticated');
-          const authTimestamp = sessionStorage.getItem('auth_timestamp');
-          
-          if (sessionAuth === 'true' && authTimestamp) {
-            // Check if session is still valid (24 hours)
-            const timeDiff = Date.now() - parseInt(authTimestamp);
-            const hoursDiff = timeDiff / (1000 * 60 * 60);
-            
-            if (hoursDiff < 24) {
-              setIsAuthenticated(true);
-              console.log('Session authentication successful');
-            } else {
-              // Session expired, clear storage
-              sessionStorage.removeItem('nahiara_authenticated');
-              sessionStorage.removeItem('auth_timestamp');
-              setIsAuthenticated(false);
-              console.log('Session expired');
-            }
-          } else {
+          // If no auth parameter is present, clear any previous session
+          if (!authParam && !qrCode && !token) {
+            sessionStorage.removeItem('nahiara_authenticated');
+            sessionStorage.removeItem('auth_timestamp');
             setIsAuthenticated(false);
-            console.log('No authentication found');
+            console.log('No auth parameter - cleared session');
+          } else {
+            // Check if user was previously authenticated in this session
+            const sessionAuth = sessionStorage.getItem('nahiara_authenticated');
+            const authTimestamp = sessionStorage.getItem('auth_timestamp');
+            
+            if (sessionAuth === 'true' && authTimestamp) {
+              // Check if session is still valid (24 hours)
+              const timeDiff = Date.now() - parseInt(authTimestamp);
+              const hoursDiff = timeDiff / (1000 * 60 * 60);
+              
+              if (hoursDiff < 24) {
+                setIsAuthenticated(true);
+                console.log('Session authentication successful');
+              } else {
+                // Session expired, clear storage
+                sessionStorage.removeItem('nahiara_authenticated');
+                sessionStorage.removeItem('auth_timestamp');
+                setIsAuthenticated(false);
+                console.log('Session expired');
+              }
+            } else {
+              setIsAuthenticated(false);
+              console.log('No authentication found');
+            }
           }
         }
       } catch (error) {
@@ -729,8 +655,8 @@ function LandingContent() {
   const handlePressKitDownload = () => {
     // Create a simple press kit content
     const pressKitContent = `
-# Aqua Mundi - Press Kit
-## Nahiara & the Guardians of the Flowers
+# International Association for the Defense of Flowers - Press Kit
+## Proveneya & Nahiara
 
 ### Project Overview
 ${currentContent.description}
@@ -743,8 +669,8 @@ ${currentContent.description}
 
 ### Contact
 Email: ${currentContent.contact.email}
-WhatsApp: ${currentContent.contact.whatsapp}
-Social: ${currentContent.contact.social}
+Phone: ${currentContent.contact.phone}
+Location: ${currentContent.contact.location}
 
 ### Vision
 ${currentContent.vision.text}
@@ -1072,28 +998,21 @@ ${currentContent.vision.text}
             
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
               <MessageCircle className="w-8 h-8 mx-auto mb-4 text-gray-600" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>WhatsApp</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Phone</h3>
               <a 
-                href={`https://wa.me/${currentContent.contact.whatsapp.replace(/\D/g, '')}`}
+                href={`tel:${currentContent.contact.phone}`}
                 className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                {currentContent.contact.whatsapp}
+                {currentContent.contact.phone}
               </a>
             </div>
             
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <ExternalLink className="w-8 h-8 mx-auto mb-4 text-gray-600" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Social Media</h3>
-              <a 
-                href={`https://instagram.com/${currentContent.contact.social.replace('@', '')}`}
-                className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {currentContent.contact.social}
-              </a>
+              <MapPin className="w-8 h-8 mx-auto mb-4 text-gray-600" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Location</h3>
+              <p className="text-gray-600 text-sm">
+                {currentContent.contact.location}
+              </p>
             </div>
           </div>
         </div>
@@ -1104,15 +1023,14 @@ ${currentContent.vision.text}
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-16 h-16 mx-auto mb-6">
             <Image 
-              src="/logo1.png" 
-              alt="Aqua Mundi Logo" 
+              src="/NahiaraLogo.png" 
+              alt="International Association for the Defense of Flowers Proveneya & Nahiara Logo" 
               width={64}
               height={64}
               className="w-16 h-16 object-contain"
             />
           </div>
-          <p className="text-gray-300 text-sm mb-2" style={{ fontFamily: 'Source Sans Pro, sans-serif' }}>{currentContent.footer.copyright}</p>
-          <p className="text-gray-400 text-xs" style={{ fontFamily: 'Source Sans Pro, sans-serif' }}>{currentContent.footer.association}</p>
+          <p className="text-gray-300 text-sm" style={{ fontFamily: 'Source Sans Pro, sans-serif' }}>{currentContent.footer.copyright}</p>
         </div>
       </footer>
 
@@ -1211,7 +1129,7 @@ ${currentContent.vision.text}
                       value={contactForm.message}
                       onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                      placeholder={language === 'en' ? 'Tell us about your interest in AquaMundi...' : 'Cuéntanos sobre tu interés en AquaMundi...'}
+                      placeholder={language === 'en' ? 'Tell us about your interest in the Association...' : 'Cuéntanos sobre tu interés en la Asociación...'}
                     />
                   </div>
                   
@@ -1244,7 +1162,7 @@ ${currentContent.vision.text}
               <div className="space-y-4">
                 {/* Email Option */}
                 <a
-                  href={`mailto:${currentContent.contact.email}?subject=${encodeURIComponent(language === 'en' ? 'Contact from AquaMundi Website' : 'Contacto desde el sitio web de AquaMundi')}&body=${encodeURIComponent(language === 'en' ? 'Hello,\n\nI\'m interested in learning more about AquaMundi and the Nahiara project.\n\nBest regards,' : 'Hola,\n\nEstoy interesado en conocer más sobre AquaMundi y el proyecto Nahiara.\n\nSaludos cordiales,')}`}
+                  href={`mailto:${currentContent.contact.email}?subject=${encodeURIComponent(language === 'en' ? 'Contact from International Association for the Defense of Flowers Website' : 'Contacto desde el sitio web de la Asociación Internacional para la Defensa de las Flores')}&body=${encodeURIComponent(language === 'en' ? 'Hello,\n\nI\'m interested in learning more about the Association and the Nahiara project.\n\nBest regards,' : 'Hola,\n\nEstoy interesado en conocer más sobre la Asociación y el proyecto Nahiara.\n\nSaludos cordiales,')}`}
                   className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
                 >
                   <Mail className="w-6 h-6 text-green-600 mr-4" />
@@ -1256,35 +1174,17 @@ ${currentContent.vision.text}
                   </div>
                 </a>
 
-                {/* WhatsApp Option */}
+                {/* Phone Option */}
                 <a
-                  href={`https://wa.me/${currentContent.contact.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(language === 'en' ? 'Hello! I\'m interested in learning more about AquaMundi and the Nahiara project.' : '¡Hola! Estoy interesado en conocer más sobre AquaMundi y el proyecto Nahiara.')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`tel:${currentContent.contact.phone}`}
                   className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
                 >
                   <MessageCircle className="w-6 h-6 text-green-600 mr-4" />
                   <div>
                     <h4 className="font-semibold text-gray-900">
-                      {language === 'en' ? 'WhatsApp' : 'WhatsApp'}
+                      {language === 'en' ? 'Call Us' : 'Llámanos'}
                     </h4>
-                    <p className="text-sm text-gray-600">{currentContent.contact.whatsapp}</p>
-                  </div>
-                </a>
-
-                {/* Social Media Option */}
-                <a
-                  href={`https://instagram.com/${currentContent.contact.social.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center p-4 bg-pink-50 border border-pink-200 rounded-lg hover:bg-pink-100 transition-colors"
-                >
-                  <ExternalLink className="w-6 h-6 text-pink-600 mr-4" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      {language === 'en' ? 'Follow Us' : 'Síguenos'}
-                    </h4>
-                    <p className="text-sm text-gray-600">{currentContent.contact.social}</p>
+                    <p className="text-sm text-gray-600">{currentContent.contact.phone}</p>
                   </div>
                 </a>
               </div>
@@ -1293,8 +1193,8 @@ ${currentContent.vision.text}
               <div className="mt-6 p-4 bg-gray-50 rounded-lg">
                 <p className="text-sm text-gray-600 text-center">
                   {language === 'en' 
-                    ? 'We typically respond within 24 hours. Thank you for your interest in AquaMundi!'
-                    : 'Normalmente respondemos en 24 horas. ¡Gracias por tu interés en AquaMundi!'
+                    ? 'We typically respond within 24 hours. Thank you for your interest in International Association for the Defense of Flowers!'
+                    : 'Normalmente respondemos en 24 horas. ¡Gracias por tu interés en la Asociación Internacional para la Defensa de las Flores!'
                   }
                 </p>
               </div>
