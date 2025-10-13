@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X } from "lucide-react";
+import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X, Info } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
@@ -232,32 +232,96 @@ function Logo3D() {
   );
 }
 
-// Access Denied Component
+// QR Code Scan Page Component
 function QRCodeScanPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [error, setError] = useState(null);
+  const videoRef = useRef(null);
+  const qrScannerRef = useRef(null);
 
-  const handleScan = () => {
+  const handleScan = async () => {
     setIsScanning(true);
     setError(null);
     
-    // Simulate QR code scanning process
-    setTimeout(() => {
-      // For demo purposes, we'll simulate a successful scan
-      // In a real implementation, this would use a QR code scanner library
-      setScanResult('nahiara-qr-2024');
-      setIsScanning(false);
+    try {
+      // Dynamically import QR scanner
+      const QrScanner = (await import('qr-scanner')).default;
       
-      // Redirect to authenticated version
-      window.location.href = '/landing?auth=flowers';
-    }, 2000);
+      if (!videoRef.current) {
+        setError('Video element not found');
+        setIsScanning(false);
+        return;
+      }
+
+      // Create QR scanner instance
+      const qrScanner = new QrScanner(
+        videoRef.current,
+        (result) => {
+          console.log('QR Code detected:', result);
+          setScanResult(result.data);
+          qrScanner.stop();
+          setIsScanning(false);
+          
+          // Check if the QR code is valid
+          const validQrCodes = [
+            'nahiara-qr-2024',
+            'guardians-qr',
+            'flowers-qr',
+            'aquamundi-qr',
+            'https://www.asociacionnahiara.org/landing?auth=flowers',
+            'asociacionnahiara.org/landing?auth=flowers'
+          ];
+          
+          const isValid = validQrCodes.some(validCode => 
+            result.data.includes(validCode) || result.data === validCode
+          );
+          
+          if (isValid) {
+            // Redirect to authenticated version
+            window.location.href = '/landing?auth=flowers';
+          } else {
+            setError('Invalid QR code. Please scan the QR code from the book.');
+            setIsScanning(false);
+          }
+        },
+        {
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
+        }
+      );
+      
+      qrScannerRef.current = qrScanner;
+      await qrScanner.start();
+      
+    } catch (err) {
+      console.error('QR Scanner error:', err);
+      setError('Failed to start camera. Please check permissions and try again.');
+      setIsScanning(false);
+    }
+  };
+
+  const stopScanning = () => {
+    if (qrScannerRef.current) {
+      qrScannerRef.current.stop();
+      qrScannerRef.current = null;
+    }
+    setIsScanning(false);
   };
 
   const handleManualAuth = () => {
     // Allow manual authentication for testing
     window.location.href = '/landing?auth=flowers';
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (qrScannerRef.current) {
+        qrScannerRef.current.stop();
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center px-4">
@@ -282,9 +346,27 @@ function QRCodeScanPage() {
         <div className="bg-gray-50 rounded-xl p-6 mb-6 border-2 border-dashed border-gray-300">
           {isScanning ? (
             <div className="text-center">
-              <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="relative w-full max-w-sm mx-auto mb-4">
+                <video 
+                  ref={videoRef}
+                  className="w-full h-48 object-cover rounded-lg border-2 border-green-500"
+                  playsInline
+                />
+                <div className="absolute inset-0 border-2 border-green-500 rounded-lg pointer-events-none">
+                  <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-green-500"></div>
+                  <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-green-500"></div>
+                  <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-green-500"></div>
+                  <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-green-500"></div>
+                </div>
+              </div>
               <p className="text-green-600 font-medium">Scanning QR Code...</p>
               <p className="text-sm text-gray-500 mt-2">Please position the QR code within the camera view</p>
+              <button 
+                onClick={stopScanning}
+                className="mt-3 px-4 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors"
+              >
+                Stop Scanning
+              </button>
             </div>
           ) : (
             <div className="text-center">
@@ -296,6 +378,16 @@ function QRCodeScanPage() {
             </div>
           )}
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <X className="w-5 h-5 text-red-600" />
+              <p className="text-red-800 text-sm">{error}</p>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="space-y-3">
