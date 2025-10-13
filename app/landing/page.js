@@ -233,37 +233,106 @@ function Logo3D() {
 }
 
 // Access Denied Component
-function AccessDenied() {
+function QRCodeScanPage() {
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResult, setScanResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleScan = () => {
+    setIsScanning(true);
+    setError(null);
+    
+    // Simulate QR code scanning process
+    setTimeout(() => {
+      // For demo purposes, we'll simulate a successful scan
+      // In a real implementation, this would use a QR code scanner library
+      setScanResult('nahiara-qr-2024');
+      setIsScanning(false);
+      
+      // Redirect to authenticated version
+      window.location.href = '/landing?auth=flowers';
+    }, 2000);
+  };
+
+  const handleManualAuth = () => {
+    // Allow manual authentication for testing
+    window.location.href = '/landing?auth=flowers';
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Shield className="w-10 h-10 text-red-600" />
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center px-4">
+      <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+        {/* QR Code Icon */}
+        <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <QrCode className="w-12 h-12 text-green-600" />
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-          Access Restricted
+        
+        {/* Title */}
+        <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          Scan QR Code
         </h1>
-        <p className="text-gray-600 mb-6 leading-relaxed">
-          This page is only accessible via scanned QR code. Please scan the QR code from the book to access this exclusive content.
+        
+        {/* Description */}
+        <p className="text-gray-600 mb-8 leading-relaxed">
+          To access the exclusive digital world of Nahiara, please scan the QR code from your copy of 
+          <span className="font-semibold text-green-600"> &ldquo;Nahiara & the Guardians of the Flowers&rdquo;</span>
         </p>
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <div className="flex items-center justify-center mb-2">
-            <QrCode className="w-5 h-5 text-gray-500 mr-2" />
-            <span className="text-sm font-medium text-gray-700">QR Code Required</span>
-          </div>
-          <p className="text-xs text-gray-500">
-            Look for the QR code in your copy of &ldquo;Nahiara & the Guardians of the Flowers&rdquo;
-          </p>
+
+        {/* Scanning Area */}
+        <div className="bg-gray-50 rounded-xl p-6 mb-6 border-2 border-dashed border-gray-300">
+          {isScanning ? (
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-green-600 font-medium">Scanning QR Code...</p>
+              <p className="text-sm text-gray-500 mt-2">Please position the QR code within the camera view</p>
+            </div>
+          ) : (
+            <div className="text-center">
+              <div className="w-20 h-20 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center border-2 border-gray-200">
+                <QrCode className="w-10 h-10 text-gray-400" />
+              </div>
+              <p className="text-gray-600 font-medium">Position QR code here</p>
+              <p className="text-sm text-gray-500 mt-1">Use your device camera to scan</p>
+            </div>
+          )}
         </div>
-        <a
-          href="https://www.aquamundi.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
-        >
-          <Globe className="mr-2 w-4 h-4" />
-          Explore Public Archive
-        </a>
+
+        {/* Action Buttons */}
+        <div className="space-y-3">
+          <button 
+            onClick={handleScan}
+            disabled={isScanning}
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-6 rounded-lg font-medium hover:from-green-600 hover:to-emerald-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isScanning ? 'Scanning...' : 'Start Scanning'}
+          </button>
+          
+          <button 
+            onClick={handleManualAuth}
+            className="w-full bg-gray-100 text-gray-700 py-2 px-6 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200 text-sm"
+          >
+            I have the book but can&apos;t scan
+          </button>
+        </div>
+
+        {/* Help Text */}
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          <div className="flex items-start space-x-3">
+            <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <div className="text-left">
+              <p className="text-sm font-medium text-blue-800 mb-1">Need Help?</p>
+              <p className="text-xs text-blue-600">
+                Make sure you have good lighting and the QR code is clearly visible. 
+                The QR code should be found in the back cover of your book.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Info */}
+        <div className="mt-4 text-xs text-gray-500">
+          <p>Don&apos;t have the book? <a href="mailto:asociacionnahiara@gmail.com" className="text-green-600 hover:underline">Contact us</a> for access.</p>
+        </div>
       </div>
     </div>
   );
@@ -560,9 +629,9 @@ function LandingContent() {
     );
   }
 
-  // Show access denied if not authenticated
+  // Show QR code scan page if not authenticated
   if (!isAuthenticated) {
-    return <AccessDenied />;
+    return <QRCodeScanPage />;
   }
 
   const handlePressKitDownload = () => {
