@@ -5,7 +5,7 @@ export default function ImpactPage() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:px-8">
+      <div className="pt-20 px-4 lg:pl-24 lg:pr-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -25,7 +25,7 @@ export default function ImpactPage() {
                 Impact and Transparency
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Impact and Transparency are at the heart of AquaMundi's mission. Every action, every contribution, 
+                Impact and Transparency are at the heart of AquaMundi&apos;s mission. Every action, every contribution, 
                 is designed to create measurable, visible, and meaningful change.
               </p>
             </section>
@@ -70,7 +70,7 @@ export default function ImpactPage() {
                 <div className="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-xl border border-orange-200">
                   <h3 className="text-xl font-semibold text-orange-800 mb-3">Floral Economy</h3>
                   <p className="text-gray-700">
-                    Donation of printed books to vulnerable communities through the "Floral Economy."
+                    Donation of printed books to vulnerable communities through the &ldquo;Floral Economy.&rdquo;
                   </p>
                 </div>
                 
@@ -128,9 +128,9 @@ export default function ImpactPage() {
                 </div>
                 
                 <div className="bg-gradient-to-br from-lime-50 to-yellow-50 p-6 rounded-xl border border-lime-200">
-                  <h3 className="text-xl font-semibold text-lime-800 mb-3">Nahiara Measure</h3>
+                  <h3 className="text-xl font-semibold text-lime-800 mb-3">Araihan   Measure</h3>
                   <p className="text-gray-700">
-                    Educational and symbolic monitoring tool: the "Nahiara Measure."
+                    Educational and symbolic monitoring tool: the &ldquo;Araihan  Measure.&rdquo;
                   </p>
                 </div>
                 

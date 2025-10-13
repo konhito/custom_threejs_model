@@ -1,8 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { X, MapPin, Flower, Info, Rotate3D, Target } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Flower Detail Modal Component
 function FlowerDetailModal({ country, isVisible, onClose }) {
@@ -15,13 +18,6 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
     // Load Three.js and create 3D viewer
     const loadModel = async () => {
       try {
-        const THREE = await import("three");
-        const { GLTFLoader } = await import(
-          "three/examples/jsm/loaders/GLTFLoader.js"
-        );
-        const { OrbitControls } = await import(
-          "three/examples/jsm/controls/OrbitControls.js"
-        );
 
         if (!modelViewerRef.current) return;
 
@@ -401,7 +397,7 @@ export default function GlobeComponent() {
   const controlsRef = useRef();
 
   // Countries data array - India and USA only
-  const countriesData = [
+  const countriesData = useMemo(() => [
     {
     id: "IN_LOTUS",
     name: "Lotus",
@@ -702,7 +698,7 @@ export default function GlobeComponent() {
       size: 0.08,
       gltfPath: null, // Will use fallback flower
     }
-  ];
+  ], []);
 
   // Helper function to calculate 3D coordinates from lat/lng
   const calculate3DCoordinates = (lat, lng, radius = 4.5) => {
@@ -748,13 +744,6 @@ export default function GlobeComponent() {
 
     const loadGlobe = async () => {
       try {
-        const THREE = await import("three");
-        const { GLTFLoader } = await import(
-          "three/examples/jsm/loaders/GLTFLoader.js"
-        );
-        const { OrbitControls } = await import(
-          "three/examples/jsm/controls/OrbitControls.js"
-        );
 
         // Clear container
         containerRef.current.innerHTML = "";
@@ -1372,7 +1361,7 @@ export default function GlobeComponent() {
     };
 
     loadGlobe();
-  }, []);
+  }, [countriesData]);
 
   const closeModal = () => {
     setIsModalVisible(false);

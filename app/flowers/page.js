@@ -12,7 +12,7 @@ export default function FlowersPage() {
       
       <Navigation />
       
-      <div className="relative pt-20 px-4 lg:px-8 pb-16">
+      <div className="relative pt-20 px-4 lg:pl-24 lg:pr-8 pb-16">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-20">
@@ -101,7 +101,7 @@ export default function FlowersPage() {
                 <div className="flex items-start group/item">
                   <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-green-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-125 transition-transform duration-300"></div>
                   <span className="text-lg text-gray-700 leading-relaxed">
-                    Integration with AquaMundi's story
+                    Integration with AquaMundi&apos;s story
                   </span>
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function FlowersPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <p className="text-xl lg:text-2xl text-gray-700 leading-relaxed italic font-medium">
-                  "Through this approach, AquaMundi ensures that each national flower accurately reflects the identity of its country, offering an experience that unites <span className="font-bold text-indigo-600">science, culture, and poetry</span> in a single <span className="font-bold text-blue-600">digital garden</span>."
+                  &ldquo;Through this approach, AquaMundi ensures that each national flower accurately reflects the identity of its country, offering an experience that unites <span className="font-bold text-indigo-600">science, culture, and poetry</span> in a single <span className="font-bold text-blue-600">digital garden</span>.&rdquo;
                 </p>
               </div>
             </div>

@@ -42,7 +42,7 @@ export default function AboutPage() {
         
         <Navigation />
         
-        <main className="relative pt-20 px-4 lg:px-8 pb-16">
+        <main className="relative pt-20 px-4 lg:pl-24 lg:pr-8 pb-16">
           <div className="max-w-7xl mx-auto">
             {/* Hero Section */}
             <header className="text-center mb-20">
@@ -65,13 +65,13 @@ export default function AboutPage() {
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
-                    AquaMundi is the <span className="font-semibold text-blue-600">digital garden of the planet</span>, where flowers and pollinators become ambassadors of Earth's biological and cultural diversity.
+                    AquaMundi is the <span className="font-semibold text-blue-600">digital garden of the planet</span>, where flowers and pollinators become ambassadors of Earth&apos;s biological and cultural diversity.
                   </p>
                   <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
                     We preserve the floral and pollinator memory of all nations, bringing together <span className="font-semibold text-purple-600">science, art, and education</span> in one digital space.
                   </p>
                   <p className="text-lg lg:text-xl text-gray-700 leading-relaxed">
-                    It's a platform that unites communities, institutions, and individuals through <span className="font-semibold text-indigo-600">the beauty and fragility of nature</span>.
+                    It&apos;s a platform that unites communities, institutions, and individuals through <span className="font-semibold text-indigo-600">the beauty and fragility of nature</span>.
                   </p>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true"></div>
                 <div className="relative">
                   <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed italic font-medium">
-                    "AquaMundi is not just a website: it is a <span className="font-bold text-purple-600">living mantle</span> that unites science, culture, and hope, where each flower and pollinator remind us that the Earth blossoms in <span className="font-bold text-cyan-600">diversity</span>."
+                    &ldquo;AquaMundi is not just a website: it is a <span className="font-bold text-purple-600">living mantle</span> that unites science, culture, and hope, where each flower and pollinator remind us that the Earth blossoms in <span className="font-bold text-cyan-600">diversity</span>.&rdquo;
                   </blockquote>
                 </div>
               </div>

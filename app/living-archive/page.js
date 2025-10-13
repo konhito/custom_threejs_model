@@ -5,7 +5,7 @@ export default function LivingArchivePage() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:px-8">
+      <div className="pt-20 px-4 lg:pl-24 lg:pr-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -111,7 +111,7 @@ export default function LivingArchivePage() {
             {/* Features Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                What You'll Find Here
+                What You&apos;ll Find Here
               </h2>
               
               <div className="grid md:grid-cols-3 gap-6">

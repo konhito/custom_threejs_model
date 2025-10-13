@@ -1,5 +1,6 @@
 "use client";
 import Navigation from "../../../components/Navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -214,7 +215,7 @@ export default function PollinatorsGalleryPage() {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:px-8">
+      <div className="pt-20 px-4 lg:pl-24 lg:pr-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
@@ -230,7 +231,7 @@ export default function PollinatorsGalleryPage() {
               Pollinators gallery
             </h1>
             <p className="text-lg text-gray-700 max-w-3xl">
-              Discover the invisible guardians of life on Earth. This gallery showcases the diverse pollinators that keep our planet's biodiversity in balance, from tiny bees to magnificent hummingbirds.
+              Discover the invisible guardians of life on Earth. This gallery showcases the diverse pollinators that keep our planet&apos;s biodiversity in balance, from tiny bees to magnificent hummingbirds.
             </p>
           </div>
 
@@ -395,10 +396,10 @@ export default function PollinatorsGalleryPage() {
           <div className="mt-20 p-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl border border-amber-200">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Future vision</h3>
             <p className="text-gray-700 mb-4">
-              This gallery is the first step towards an interactive 3D pollinator experience. Soon, you'll be able to explore these magnificent creatures in three dimensions, discovering their connections with national flowers and understanding their vital role in our ecosystem.
+              This gallery is the first step towards an interactive 3D pollinator experience. Soon, you&apos;ll be able to explore these magnificent creatures in three dimensions, discovering their connections with national flowers and understanding their vital role in our ecosystem.
             </p>
             <p className="text-sm text-gray-600">
-              All images are sourced from free-to-use platforms and are properly attributed. This collection will continue to grow as we build our living archive of Earth's pollinators.
+              All images are sourced from free-to-use platforms and are properly attributed. This collection will continue to grow as we build our living archive of Earth&apos;s pollinators.
             </p>
           </div>
         </div>
@@ -419,9 +420,11 @@ function PollinatorCard({ pollinator, onView3D }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
       <div className="relative overflow-hidden">
-        <img 
+        <Image 
           src={pollinator.image} 
           alt={pollinator.name}
+          width={400}
+          height={192}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full">

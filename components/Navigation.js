@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target } from "lucide-react";
@@ -68,12 +68,27 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <>
       {/* Mobile menu button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-4 left-4 z-[9999] p-3 bg-black/30 backdrop-blur-sm rounded-full border border-white/40 hover:bg-black/50 transition-all duration-200 lg:hidden shadow-lg hover:shadow-xl"
+        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
       >
         {isOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
       </button>
@@ -83,7 +98,9 @@ export default function Navigation() {
         isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}>
         <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-        <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl border-r border-white/20 shadow-2xl">
+        <div className={`absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl border-r border-white/20 shadow-2xl transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}>
           <div className="p-6">
             <div className="flex items-center space-x-3 mb-8">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -158,8 +175,8 @@ export default function Navigation() {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden lg:block fixed left-6 top-1/2 transform -translate-y-1/2 z-[9999] animate-fade-in">
-        <nav className="bg-gradient-to-b from-black/30 to-black/20 backdrop-blur-xl rounded-2xl border border-white/40 p-4 space-y-2 shadow-2xl hover:bg-gradient-to-b hover:from-black/40 hover:to-black/30 transition-all duration-300 nav-glow">
+      <div className="hidden lg:block fixed left-4 top-1/2 transform -translate-y-1/2 z-[9999] animate-fade-in">
+        <nav className="bg-gradient-to-b from-black/30 to-black/20 backdrop-blur-xl rounded-2xl border border-white/40 p-3 space-y-2 shadow-2xl hover:bg-gradient-to-b hover:from-black/40 hover:to-black/30 transition-all duration-300 nav-glow">
           {navigationItems.map((item) => {
             const isActive = pathname === item.href || (item.subItems && item.subItems.some(sub => pathname === sub.href));
             return (

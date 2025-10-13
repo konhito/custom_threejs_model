@@ -7,7 +7,7 @@ export default function AraihanMeasurePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <Navigation />
       
-      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:px-8">
+      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:pl-24 lg:pr-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-8 sm:mb-12 text-center">

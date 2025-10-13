@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Rotate3D } from "lucide-react";
 
 export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true }) {
@@ -110,9 +110,9 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
     };
 
     load3D();
-  }, [type, size, autoRotate]);
+  }, [type, size, autoRotate, createPollinator]);
 
-  function createPollinator(THREE, type, size) {
+  const createPollinator = useCallback((THREE, type, size) => {
     const group = new THREE.Group();
 
     switch (type) {
@@ -133,7 +133,7 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
     }
 
     return group;
-  }
+  }, []);
 
   function createBee(THREE, group, size) {
     // Body

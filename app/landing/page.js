@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode } from "lucide-react";
+import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
+import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 
 // Global flag to prevent multiple 3D logo instances
@@ -251,7 +252,7 @@ function AccessDenied() {
             <span className="text-sm font-medium text-gray-700">QR Code Required</span>
           </div>
           <p className="text-xs text-gray-500">
-            Look for the QR code in your copy of "Nahiara & the Guardians of the Flowers"
+            Look for the QR code in your copy of &ldquo;Nahiara & the Guardians of the Flowers&rdquo;
           </p>
         </div>
         <a
@@ -274,8 +275,68 @@ function LandingContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+    subject: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && showContactModal) {
+        setShowContactModal(false);
+      }
+    };
+
+    if (showContactModal) {
+      document.addEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showContactModal]);
+
+  // Handle contact form submission
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Create mailto link with form data
+      const subject = encodeURIComponent(contactForm.subject || (language === 'en' ? 'Contact from AquaMundi Website' : 'Contacto desde el sitio web de AquaMundi'));
+      const body = encodeURIComponent(
+        `${language === 'en' ? 'Name' : 'Nombre'}: ${contactForm.name}\n` +
+        `${language === 'en' ? 'Email' : 'Correo'}: ${contactForm.email}\n\n` +
+        `${language === 'en' ? 'Message' : 'Mensaje'}: ${contactForm.message}`
+      );
+      
+      // Open email client
+      window.location.href = `mailto:${currentContent.contact.email}?subject=${subject}&body=${body}`;
+      
+      // Show success message
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setShowContactModal(false);
+      }, 2000);
+      
+      // Reset form
+      setContactForm({ name: '', email: '', message: '', subject: '' });
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Auto-detect language based on browser settings
   useEffect(() => {
@@ -348,8 +409,8 @@ function LandingContent() {
       },
       contact: {
         title: "Get in Touch",
-        email: "hello@aquamundi.org",
-        whatsapp: "+1 (555) 123-4567",
+        email: "asociacionnahiara@gmail.com",
+        whatsapp: "+34 641 67 75 15",
         social: "@Proveneya_and_nahiara"
       },
       footer: {
@@ -390,8 +451,8 @@ function LandingContent() {
       },
       contact: {
         title: "Ponte en Contacto",
-        email: "hola@aquamundi.org",
-        whatsapp: "+1 (555) 123-4567",
+        email: "asociacionnahiara@gmail.com",
+        whatsapp: "+34 641 67 75 15",
         social: "@Proveneya_and_nahiara"
       },
       footer: {
@@ -881,9 +942,11 @@ ${currentContent.vision.text}
       <footer className="bg-gray-900 py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-16 h-16 mx-auto mb-6">
-            <img 
+            <Image 
               src="/logo1.png" 
               alt="Aqua Mundi Logo" 
+              width={64}
+              height={64}
               className="w-16 h-16 object-contain"
             />
           </div>
@@ -891,6 +954,215 @@ ${currentContent.vision.text}
           <p className="text-gray-400 text-xs" style={{ fontFamily: 'Source Sans Pro, sans-serif' }}>{currentContent.footer.association}</p>
         </div>
       </footer>
+
+      {/* Contact Modal */}
+      {showContactModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowContactModal(false);
+            }
+          }}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                {language === 'en' ? 'Get in Touch' : 'Ponte en Contacto'}
+              </h3>
+              <button
+                onClick={() => setShowContactModal(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <p className="text-gray-600 mb-6 text-center">
+                {language === 'en' 
+                  ? 'We\'d love to hear from you! Choose how you\'d like to get in touch:'
+                  : '¡Nos encantaría saber de ti! Elige cómo te gustaría ponerte en contacto:'
+                }
+              </p>
+
+              {/* Contact Form */}
+              <form onSubmit={handleContactSubmit} className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-semibold text-gray-900 mb-4 text-center">
+                  {language === 'en' ? 'Send us a message' : 'Envíanos un mensaje'}
+                </h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      {language === 'en' ? 'Name' : 'Nombre'} *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      value={contactForm.name}
+                      onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder={language === 'en' ? 'Your name' : 'Tu nombre'}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      {language === 'en' ? 'Email' : 'Correo'} *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder={language === 'en' ? 'your@email.com' : 'tu@correo.com'}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                      {language === 'en' ? 'Subject' : 'Asunto'}
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      value={contactForm.subject}
+                      onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder={language === 'en' ? 'What is this about?' : '¿De qué se trata?'}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      {language === 'en' ? 'Message' : 'Mensaje'} *
+                    </label>
+                    <textarea
+                      id="message"
+                      required
+                      rows={4}
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                      placeholder={language === 'en' ? 'Tell us about your interest in AquaMundi...' : 'Cuéntanos sobre tu interés en AquaMundi...'}
+                    />
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting 
+                      ? (language === 'en' ? 'Opening email...' : 'Abriendo correo...')
+                      : (language === 'en' ? 'Send Message' : 'Enviar Mensaje')
+                    }
+                  </button>
+                </div>
+              </form>
+
+              {/* Divider */}
+              <div className="relative mb-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">
+                    {language === 'en' ? 'OR' : 'O'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Contact Options */}
+              <div className="space-y-4">
+                {/* Email Option */}
+                <a
+                  href={`mailto:${currentContent.contact.email}?subject=${encodeURIComponent(language === 'en' ? 'Contact from AquaMundi Website' : 'Contacto desde el sitio web de AquaMundi')}&body=${encodeURIComponent(language === 'en' ? 'Hello,\n\nI\'m interested in learning more about AquaMundi and the Nahiara project.\n\nBest regards,' : 'Hola,\n\nEstoy interesado en conocer más sobre AquaMundi y el proyecto Nahiara.\n\nSaludos cordiales,')}`}
+                  className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+                >
+                  <Mail className="w-6 h-6 text-green-600 mr-4" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900">
+                      {language === 'en' ? 'Send Email' : 'Enviar Correo'}
+                    </h4>
+                    <p className="text-sm text-gray-600">{currentContent.contact.email}</p>
+                  </div>
+                </a>
+
+                {/* WhatsApp Option */}
+                <a
+                  href={`https://wa.me/${currentContent.contact.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(language === 'en' ? 'Hello! I\'m interested in learning more about AquaMundi and the Nahiara project.' : '¡Hola! Estoy interesado en conocer más sobre AquaMundi y el proyecto Nahiara.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+                >
+                  <MessageCircle className="w-6 h-6 text-green-600 mr-4" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900">
+                      {language === 'en' ? 'WhatsApp' : 'WhatsApp'}
+                    </h4>
+                    <p className="text-sm text-gray-600">{currentContent.contact.whatsapp}</p>
+                  </div>
+                </a>
+
+                {/* Social Media Option */}
+                <a
+                  href={`https://instagram.com/${currentContent.contact.social.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-pink-50 border border-pink-200 rounded-lg hover:bg-pink-100 transition-colors"
+                >
+                  <ExternalLink className="w-6 h-6 text-pink-600 mr-4" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900">
+                      {language === 'en' ? 'Follow Us' : 'Síguenos'}
+                    </h4>
+                    <p className="text-sm text-gray-600">{currentContent.contact.social}</p>
+                  </div>
+                </a>
+              </div>
+
+              {/* Additional Info */}
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600 text-center">
+                  {language === 'en' 
+                    ? 'We typically respond within 24 hours. Thank you for your interest in AquaMundi!'
+                    : 'Normalmente respondemos en 24 horas. ¡Gracias por tu interés en AquaMundi!'
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {language === 'en' ? 'Email Opened!' : '¡Correo Abierto!'}
+            </h3>
+            <p className="text-gray-600 text-sm">
+              {language === 'en' 
+                ? 'Your email client should now be open with a pre-filled message. Just hit send!'
+                : 'Tu cliente de correo debería estar abierto con un mensaje pre-llenado. ¡Solo presiona enviar!'
+              }
+            </p>
+          </div>
+        </div>
+      )}
       </div>
     </>
   );

@@ -80,7 +80,7 @@ export default function PollinatorsPage() {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
       
-      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:px-8">
+      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:pl-24 lg:pr-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8 sm:mb-12 text-center">
@@ -88,7 +88,7 @@ export default function PollinatorsPage() {
               Pollinators
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed">
-              The invisible guardians of life on Earth. These essential creatures keep our planet's biodiversity in balance, pollinating the plants that feed us all.
+              The invisible guardians of life on Earth. These essential creatures keep our planet&apos;s biodiversity in balance, pollinating the plants that feed us all.
             </p>
           </div>
 
@@ -101,7 +101,7 @@ export default function PollinatorsPage() {
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed">
                   <p>
-                    In AquaMundi, pollinators hold a central place alongside national flowers, as they represent the bridge between nature, culture, and survival. These remarkable creatures are the unsung heroes that keep our planet's delicate balance intact.
+                    In AquaMundi, pollinators hold a central place alongside national flowers, as they represent the bridge between nature, culture, and survival. These remarkable creatures are the unsung heroes that keep our planet&apos;s delicate balance intact.
                   </p>
                   <p>
                     From the tiniest bee to the most magnificent hummingbird, each pollinator plays a vital role in the grand symphony of life, ensuring that future generations can continue to marvel at the beauty and abundance of our natural world.
@@ -164,7 +164,7 @@ his
                     </div>
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700">22% of North America's native pollinators at high risk of extinction</p>
+                      <p className="text-gray-700">22% of North America&apos;s native pollinators at high risk of extinction</p>
                     </div>
                   </div>
                 </div>
@@ -244,7 +244,7 @@ his
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-6 sm:mb-8">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
-                  The numbers don't lie
+                  The numbers don&apos;t lie
                   </h2>
                 <p className="text-sm sm:text-base lg:text-lg text-gray-700 max-w-2xl mx-auto">
                     Visual representation of the pollinator crisis from 2016 to 2025, showing the dramatic decline and urgent need for action.
@@ -455,7 +455,7 @@ his
                   Future vision
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-                  We're building a comprehensive living archive of Earth's pollinators, connecting them with national flowers and creating an interactive 3D experience.
+                  We&apos;re building a comprehensive living archive of Earth&apos;s pollinators, connecting them with national flowers and creating an interactive 3D experience.
                 </p>
               </div>
               

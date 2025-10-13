@@ -5,7 +5,7 @@ export default function EducationPage() {
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:px-8">
+      <div className="pt-20 px-4 lg:pl-24 lg:pr-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -55,7 +55,7 @@ export default function EducationPage() {
                 
                 <div className="space-y-6">
                   <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-200">
-                    <h3 className="text-xl font-semibold text-purple-800 mb-3">The Nahiara Measure</h3>
+                    <h3 className="text-xl font-semibold text-purple-800 mb-3">The Araihan Measure</h3>
                     <p className="text-gray-700">
                       A symbolic tool to evaluate the risk of disappearance of national flowers, linked to scientific and poetic indicators.
                     </p>
@@ -82,14 +82,14 @@ export default function EducationPage() {
                   <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-6 rounded-xl border border-pink-200">
                     <h3 className="text-xl font-semibold text-pink-800 mb-3">Floral Ambassadors</h3>
                     <p className="text-gray-700">
-                      A network of children, youth, and adults representing their country's flower in the international community.
+                      A network of children, youth, and adults representing their country&apos;s flower in the international community.
                     </p>
                   </div>
                   
                   <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-xl border border-indigo-200">
                     <h3 className="text-xl font-semibold text-indigo-800 mb-3">The Global Garden</h3>
                     <p className="text-gray-700">
-                      A virtual space for users to upload photos, drawings, or sculptures of their national flower ("Draw the Flower of Your Country").
+                      A virtual space for users to upload photos, drawings, or sculptures of their national flower (&ldquo;Draw the Flower of Your Country&rdquo;).
                     </p>
                   </div>
                 </div>
