@@ -7,4 +7,7 @@ export const metadata = {
   keywords: ["landing page", "sacred flowers", "biodiversity", "environmental education", "cultural heritage", "nature conservation"],
   url: "/landing",
   type: "website",
+  other: {
+    'google': 'notranslate'
+  }
 };
