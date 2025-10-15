@@ -990,7 +990,8 @@ ${currentContent.vision.text}
               <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Email</h3>
               <a 
                 href={`mailto:${currentContent.contact.email}`}
-                className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
+                className="text-gray-600 hover:text-gray-800 transition-colors text-sm notranslate"
+                translate="no"
               >
                 {currentContent.contact.email}
               </a>
@@ -1005,7 +1006,8 @@ ${currentContent.vision.text}
                 href={`https://wa.me/${currentContent.contact.phone.replace(/\s+/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-green-600 transition-colors text-sm flex items-center justify-center gap-1"
+                className="text-gray-600 hover:text-green-600 transition-colors text-sm flex items-center justify-center gap-1 notranslate"
+                translate="no"
               >
                 {currentContent.contact.phone}
               </a>
@@ -1174,7 +1176,7 @@ ${currentContent.vision.text}
                     <h4 className="font-semibold text-gray-900">
                       {language === 'en' ? 'Send Email' : 'Enviar Correo'}
                     </h4>
-                    <p className="text-sm text-gray-600">{currentContent.contact.email}</p>
+                    <p className="text-sm text-gray-600 notranslate" translate="no">{currentContent.contact.email}</p>
                   </div>
                 </a>
 
@@ -1192,7 +1194,7 @@ ${currentContent.vision.text}
                     <h4 className="font-semibold text-gray-900">
                       {language === 'en' ? 'WhatsApp' : 'WhatsApp'}
                     </h4>
-                    <p className="text-sm text-gray-600">{currentContent.contact.phone}</p>
+                    <p className="text-sm text-gray-600 notranslate" translate="no">{currentContent.contact.phone}</p>
                   </div>
                 </a>
               </div>
