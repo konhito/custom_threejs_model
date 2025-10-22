@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target } from "lucide-react";
+import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target, Users } from "lucide-react";
 
 const navigationItems = [
   {
@@ -61,6 +61,12 @@ const navigationItems = [
     href: "/araihan-measure",
     icon: Target,
     description: "Araihan Measure initiative"
+  },
+  {
+    name: "Professionals",
+    href: "/professionals",
+    icon: Users,
+    description: "Exclusive access for industry professionals"
   }
 ];
 
