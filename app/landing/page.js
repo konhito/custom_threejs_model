@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, QrCode, X, Info, MapPin, Phone } from "lucide-react";
+import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, X, Info, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
 
 // Global flag to prevent multiple 3D logo instances
 let logoInstanceCount = 0;
@@ -234,125 +233,9 @@ function Logo3D() {
   );
 }
 
-// QR Code Scan Page Component
-function QRCodeScanPage() {
-  const [isScanning, setIsScanning] = useState(false);
-  const [scanResult, setScanResult] = useState(null);
-  const [error, setError] = useState(null);
-  const videoRef = useRef(null);
-  const qrScannerRef = useRef(null);
-
-  const handleScan = async () => {
-    setIsScanning(true);
-    setError(null);
-    
-    try {
-      // Dynamically import QR scanner
-      const QrScanner = (await import('qr-scanner')).default;
-      
-      if (!videoRef.current) {
-        setError('Video element not found');
-        setIsScanning(false);
-        return;
-      }
-
-      // Create QR scanner instance
-      const qrScanner = new QrScanner(
-        videoRef.current,
-        (result) => {
-          console.log('QR Code detected:', result);
-          setScanResult(result.data);
-          qrScanner.stop();
-          setIsScanning(false);
-          
-          // Check if the QR code is valid
-          const validQrCodes = [
-            'nahiara-qr-2024',
-            'guardians-qr',
-            'flowers-qr',
-            'aquamundi-qr',
-            'https://www.asociacionnahiara.org/landing?auth=flowers',
-            'asociacionnahiara.org/landing?auth=flowers'
-          ];
-          
-          const isValid = validQrCodes.some(validCode => 
-            result.data.includes(validCode) || result.data === validCode
-          );
-          
-          if (isValid) {
-            // Redirect to authenticated version
-            window.location.href = '/landing?auth=flowers';
-          } else {
-            setError('Invalid QR code. Please scan the QR code from the book.');
-            setIsScanning(false);
-          }
-        },
-        {
-          highlightScanRegion: true,
-          highlightCodeOutline: true,
-        }
-      );
-      
-      qrScannerRef.current = qrScanner;
-      await qrScanner.start();
-      
-    } catch (err) {
-      console.error('QR Scanner error:', err);
-      setError('Failed to start camera. Please check permissions and try again.');
-      setIsScanning(false);
-    }
-  };
-
-  const stopScanning = () => {
-    if (qrScannerRef.current) {
-      qrScannerRef.current.stop();
-      qrScannerRef.current = null;
-    }
-    setIsScanning(false);
-  };
-
-  const handleManualAuth = () => {
-    // Allow manual authentication for testing
-    window.location.href = '/landing?auth=flowers';
-  };
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (qrScannerRef.current) {
-        qrScannerRef.current.stop();
-      }
-    };
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center px-4">
-      <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-        {/* QR Code Icon */}
-        <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <QrCode className="w-12 h-12 text-green-600" />
-        </div>
-        
-        {/* Title */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-          Scan QR Code
-        </h1>
-        
-        {/* Description */}
-        <p className="text-gray-600 leading-relaxed">
-          To access the exclusive digital world of Nahiara, please scan the QR code from your copy of 
-          <span className="font-semibold text-green-600"> &ldquo;Nahiara & the Guardians of the Flowers&rdquo;</span>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// Landing Content Component that uses useSearchParams
+// Landing Content Component
 function LandingContent() {
   const [language, setLanguage] = useState('en');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -362,8 +245,6 @@ function LandingContent() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -543,114 +424,6 @@ function LandingContent() {
 
   const currentContent = content[language];
 
-  // Authentication logic
-  useEffect(() => {
-    const checkAuthentication = () => {
-      try {
-        // Check for QR code authentication parameter
-        const authParam = searchParams.get('auth');
-        const qrCode = searchParams.get('qr');
-        const token = searchParams.get('token');
-        
-        // Multiple authentication methods for flexibility
-        const validAuthCodes = [
-          'nahiara2024', // Primary QR code auth
-          'guardians',   // Alternative auth
-          'flowers',     // Another option
-          'aquamundi'    // Project name auth
-        ];
-        
-        const validQrCodes = [
-          'nahiara-qr-2024',
-          'guardians-qr',
-          'flowers-qr',
-          'aquamundi-qr'
-        ];
-        
-        const validTokens = [
-          'nahiara-token-2024',
-          'guardians-token',
-          'flowers-token',
-          'aquamundi-token'
-        ];
-        
-        // Check if any authentication method is valid
-        const isAuthValid = validAuthCodes.includes(authParam) || 
-                           validQrCodes.includes(qrCode) || 
-                           validTokens.includes(token);
-        
-        console.log('Auth check:', { authParam, qrCode, token, isAuthValid });
-        
-        if (isAuthValid) {
-          setIsAuthenticated(true);
-          // Store authentication in sessionStorage for this session
-          sessionStorage.setItem('nahiara_authenticated', 'true');
-          sessionStorage.setItem('auth_timestamp', Date.now().toString());
-          console.log('Authentication successful');
-        } else {
-          // If no auth parameter is present, clear any previous session
-          if (!authParam && !qrCode && !token) {
-            sessionStorage.removeItem('nahiara_authenticated');
-            sessionStorage.removeItem('auth_timestamp');
-            setIsAuthenticated(false);
-            console.log('No auth parameter - cleared session');
-          } else {
-            // Check if user was previously authenticated in this session
-            const sessionAuth = sessionStorage.getItem('nahiara_authenticated');
-            const authTimestamp = sessionStorage.getItem('auth_timestamp');
-            
-            if (sessionAuth === 'true' && authTimestamp) {
-              // Check if session is still valid (24 hours)
-              const timeDiff = Date.now() - parseInt(authTimestamp);
-              const hoursDiff = timeDiff / (1000 * 60 * 60);
-              
-              if (hoursDiff < 24) {
-                setIsAuthenticated(true);
-                console.log('Session authentication successful');
-              } else {
-                // Session expired, clear storage
-                sessionStorage.removeItem('nahiara_authenticated');
-                sessionStorage.removeItem('auth_timestamp');
-                setIsAuthenticated(false);
-                console.log('Session expired');
-              }
-            } else {
-              setIsAuthenticated(false);
-              console.log('No authentication found');
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Authentication check failed:', error);
-        setIsAuthenticated(false);
-      } finally {
-        console.log('Setting isLoading to false');
-        setIsLoading(false);
-      }
-    };
-
-    checkAuthentication();
-  }, [searchParams]);
-
-  // Show loading state
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-            Verifying Access...
-          </h2>
-          <p className="text-gray-600">Please wait while we verify your QR code access.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Show QR code scan page if not authenticated
-  if (!isAuthenticated) {
-    return <QRCodeScanPage />;
-  }
 
   const handlePressKitDownload = () => {
     // Create a simple press kit content
@@ -754,26 +527,6 @@ ${currentContent.vision.text}
             <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: 'Crimson Text, serif', fontWeight: '400', fontStyle: 'italic' }}>
               {currentContent.hero.tagline}
             </p>
-            
-            {/* QR Code Access Success - Mobile Optimized */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 sm:p-6 shadow-sm border border-green-300 mb-6 max-w-2xl mx-auto">
-              <div className="flex items-center justify-center mb-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <QrCode className="w-4 h-4 text-green-600" />
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900" style={{ fontFamily: 'Righteous, cursive', letterSpacing: '0.02em' }}>
-                  {language === 'en' ? 'QR Code Access Verified!' : '¡Acceso QR Verificado!'}
-                </h3>
-              </div>
-              <p className="text-sm text-gray-600 leading-relaxed text-center" style={{ fontFamily: 'Quicksand, sans-serif', lineHeight: '1.6' }}>
-                {language === 'en' 
-                  ? 'Welcome to the exclusive digital world of Nahiara! You\'ve successfully accessed this content via QR code. Explore the interactive 3D floral archive, learn about the story\'s ecosystem, and connect with the global community of flower guardians.'
-                  : '¡Bienvenido al mundo digital exclusivo de Nahiara! Has accedido exitosamente a este contenido mediante código QR. Explora el archivo floral 3D interactivo, conoce el ecosistema de la historia y conéctate con la comunidad global de guardianes de flores.'
-                }
-              </p>
-              {/* Language Auto-Detection Indicator */}
-             
-            </div>
             
             {/* Mobile-First Buttons */}
             <div className="flex flex-col gap-3 max-w-sm mx-auto">
