@@ -128,10 +128,28 @@ export default function ImpactPage() {
                 </div>
                 
                 <div className="bg-gradient-to-br from-lime-50 to-yellow-50 p-6 rounded-xl border border-lime-200">
-                  <h3 className="text-xl font-semibold text-lime-800 mb-3">Araihan   Measure</h3>
-                  <p className="text-gray-700">
-                    Educational and symbolic monitoring tool: the &ldquo;Araihan  Measure.&rdquo;
+                  <h3 className="text-xl font-semibold text-lime-800 mb-3">Original Developments</h3>
+                  <p className="text-gray-700 mb-4">
+                    Among other entirely original developments of the project:
                   </p>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start">
+                      <span className="font-semibold mr-2">1.</span>
+                      <span>Nahiara Measure</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="font-semibold mr-2">2.</span>
+                      <span>Araihan Measure</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="font-semibold mr-2">3.</span>
+                      <span>PFNO Protocol</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="font-semibold mr-2">4.</span>
+                      <span>SAN Code</span>
+                    </li>
+                  </ul>
                 </div>
                 
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">

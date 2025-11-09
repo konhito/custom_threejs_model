@@ -55,7 +55,7 @@ export default function EducationPage() {
                 
                 <div className="space-y-6">
                   <div className="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-200">
-                    <h3 className="text-xl font-semibold text-purple-800 mb-3">The Araihan Measure</h3>
+                    <h3 className="text-xl font-semibold text-purple-800 mb-3">👉Nahiara Measurement</h3>
                     <p className="text-gray-700">
                       A symbolic tool to evaluate the risk of disappearance of national flowers, linked to scientific and poetic indicators.
                     </p>
