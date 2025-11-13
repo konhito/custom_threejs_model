@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target, Users } from "lucide-react";
+import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target, Users, ShoppingCart } from "lucide-react";
+import { cartStorage } from "../lib/api";
 
 const navigationItems = [
   {
@@ -72,7 +73,22 @@ const navigationItems = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const pathname = usePathname();
+
+  // Update cart count
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = cartStorage.get();
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      setCartCount(count);
+    };
+
+    updateCartCount();
+    // Update cart count when storage changes
+    const interval = setInterval(updateCartCount, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -115,6 +131,24 @@ export default function Navigation() {
               <h2 className="text-xl font-bold text-gray-800">International Association for the Defense of Flowers</h2>
             </div>
             
+            {/* Mobile Cart Button */}
+            {pathname !== '/cart' && (
+              <Link
+                href="/cart"
+                className="flex items-center justify-between p-4 mb-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <ShoppingCart className="w-5 h-5" />
+                  <span className="font-medium">Cart</span>
+                </div>
+                {cartCount > 0 && (
+                  <span className="w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {cartCount > 99 ? '99+' : cartCount}
+                  </span>
+                )}
+              </Link>
+            )}
+
             <nav className="space-y-2">
               {navigationItems.map((item) => {
                 const isActive = pathname === item.href || (item.subItems && item.subItems.some(sub => pathname === sub.href));
@@ -179,6 +213,25 @@ export default function Navigation() {
           </div>
         </div>
       </div>
+
+      {/* Floating Cart Button - Desktop */}
+      {pathname !== '/cart' && (
+        <Link
+          href="/cart"
+          className="hidden lg:flex fixed right-6 top-1/2 transform -translate-y-1/2 z-[9999] items-center justify-center w-14 h-14 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 hover:scale-110 transition-all duration-300 animate-float group"
+        >
+          <ShoppingCart className="w-6 h-6" />
+          {cartCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-scale-in border-2 border-white">
+              {cartCount > 99 ? '99+' : cartCount}
+            </span>
+          )}
+          <div className="absolute right-full mr-4 px-4 py-2 bg-black/90 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap">
+            View Cart ({cartCount} {cartCount === 1 ? 'item' : 'items'})
+            <div className="absolute left-full top-1/2 transform -translate-y-1/2 w-3 h-3 bg-black/90 rotate-45"></div>
+          </div>
+        </Link>
+      )}
 
       {/* Desktop Navigation */}
       <div className="hidden lg:block fixed left-4 top-1/2 transform -translate-y-1/2 z-[9999] animate-fade-in">

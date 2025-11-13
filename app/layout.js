@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig, generateStructuredData } from "../lib/seo";
 import { Analytics } from "@vercel/analytics/next";
+import GDPRConsentBanner from "../components/GDPRConsentBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -115,6 +116,7 @@ export default function RootLayout({ children }) {
       >
         {children}
         <Analytics />
+        <GDPRConsentBanner />
       </body>
     </html>
   );
