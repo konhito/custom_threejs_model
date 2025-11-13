@@ -101,7 +101,7 @@ export default function ContactAuthorPage() {
                 Send Your Message
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 {/* Message Type */}
                 <div>
                   <label htmlFor="type" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -109,14 +109,15 @@ export default function ContactAuthorPage() {
                   </label>
                   <select
                     id="type"
+                    name="type"
                     value={formData.type}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-gray-900"
                   >
-                    <option value="question">A Question</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="criticism">Constructive Criticism</option>
-                    <option value="idea">An Idea</option>
+                    <option value="question" className="text-gray-900">A Question</option>
+                    <option value="feedback" className="text-gray-900">Feedback</option>
+                    <option value="criticism" className="text-gray-900">Constructive Criticism</option>
+                    <option value="idea" className="text-gray-900">An Idea</option>
                   </select>
                 </div>
 
@@ -128,11 +129,13 @@ export default function ContactAuthorPage() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-gray-900 placeholder:text-gray-400"
                     placeholder="Enter your name"
+                    aria-required="true"
                   />
                 </div>
 
@@ -144,11 +147,13 @@ export default function ContactAuthorPage() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-gray-900 placeholder:text-gray-400"
                     placeholder="your@email.com"
+                    aria-required="true"
                   />
                 </div>
 
@@ -160,9 +165,10 @@ export default function ContactAuthorPage() {
                   <input
                     type="text"
                     id="subject"
+                    name="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-gray-900 placeholder:text-gray-400"
                     placeholder="Brief subject line"
                   />
                 </div>
@@ -174,29 +180,32 @@ export default function ContactAuthorPage() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     required
                     rows={8}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all resize-none"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all resize-none text-gray-900 placeholder:text-gray-400"
                     placeholder="Share your thoughts, questions, or feedback about the Nahiara Universe..."
+                    aria-required="true"
                   />
                 </div>
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  disabled={isSubmitting || !formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg flex items-center justify-center gap-3"
+                  aria-label="Send your message to the author"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
                       <span>Opening Email...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-5 h-5" />
+                      <Send className="w-5 h-5" aria-hidden="true" />
                       <span>Send Message</span>
                     </>
                   )}
