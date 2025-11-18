@@ -132,7 +132,7 @@ export default function Navigation() {
             </div>
             
             {/* Mobile Cart Button */}
-            {pathname !== '/cart' && (
+            {pathname !== '/cart' && pathname !== '/' && (
               <Link
                 href="/cart"
                 className="flex items-center justify-between p-4 mb-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
@@ -215,7 +215,7 @@ export default function Navigation() {
       </div>
 
       {/* Floating Cart Button - Desktop */}
-      {pathname !== '/cart' && (
+      {pathname !== '/cart' && pathname !== '/' && (
         <Link
           href="/cart"
           className="hidden lg:flex fixed right-6 top-1/2 transform -translate-y-1/2 z-[9999] items-center justify-center w-14 h-14 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 hover:scale-110 transition-all duration-300 animate-float group"
