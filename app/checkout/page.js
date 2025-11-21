@@ -283,7 +283,7 @@ export default function CheckoutPage() {
           is_digital: item.is_digital,
         })),
         gdpr_consent: formData.gdpr_consent,
-        marketing_consent: formData.marketing_consent,
+        marketing_consent: true,
       };
 
       const response = await checkoutAPI.create(checkoutData);
