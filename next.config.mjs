@@ -18,6 +18,13 @@ const nextConfig = {
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'aquamundi-glb-models.s3.ap-south-1.amazonaws.com',
+        pathname: '/**',
+      },
+    ],
   },
   
   // Compression
