@@ -40,6 +40,11 @@ export const metadata = {
   alternates: {
     canonical: siteConfig.url,
   },
+  icons: {
+    icon: '/logo1.png',
+    apple: '/logo1.png',
+    shortcut: '/logo1.png',
+  },
   category: "environment",
   classification: "Educational",
   other: {
@@ -75,8 +80,8 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Favicon and app icons */}
-        <link rel="icon" href="/NahiaraLogo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/NahiaraLogo.png" />
+        <link rel="icon" href="/logo1.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo1.png" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* Theme and browser config */}
