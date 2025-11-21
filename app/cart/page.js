@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ArrowLeft, Globe } from "lucide-react";
+import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ArrowLeft, Globe, Sparkles, Gift } from "lucide-react";
 import { cartStorage, formatCurrency, productsAPI } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
 import { useSession } from "../../hooks/useSession";
@@ -14,9 +14,65 @@ export default function CartPage() {
   const [currency, setCurrency] = useState('eur');
   const [loading, setLoading] = useState(true);
   const [detectedCountry, setDetectedCountry] = useState('');
+  const [stars, setStars] = useState([]);
+  const starIdRef = useRef(0);
+  const lastStarTime = useRef(0);
+  const lastMousePos = useRef({ x: 0, y: 0 });
+  const mouseStopTimeout = useRef(null);
   
   // Session tracking
   const { session, preferences, track } = useSession();
+
+  // Christmas cursor trail effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const now = Date.now();
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+      
+      const distX = currentX - lastMousePos.current.x;
+      const distY = currentY - lastMousePos.current.y;
+      const distance = Math.sqrt(distX * distX + distY * distY);
+      
+      if (distance > 5 && now - lastStarTime.current >= 150) {
+        lastStarTime.current = now;
+        
+        const newStar = {
+          id: starIdRef.current++,
+          x: currentX,
+          y: currentY,
+          size: Math.random() * 15 + 8,
+          rotation: Math.random() * 360,
+        };
+        
+        setStars(prev => {
+          const updated = [...prev, newStar];
+          return updated.length > 8 ? updated.slice(-8) : updated;
+        });
+        
+        setTimeout(() => {
+          setStars(prev => prev.filter(star => star.id !== newStar.id));
+        }, 1200);
+        
+        lastMousePos.current = { x: currentX, y: currentY };
+      }
+      
+      if (mouseStopTimeout.current) {
+        clearTimeout(mouseStopTimeout.current);
+      }
+      
+      mouseStopTimeout.current = setTimeout(() => {}, 100);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (mouseStopTimeout.current) {
+        clearTimeout(mouseStopTimeout.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     initializeCurrency();
@@ -140,35 +196,149 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen bg-gradient-to-br from-red-50 via-amber-50 to-green-50 relative overflow-hidden">
+        {/* Christmas Background */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute text-white text-opacity-60 animate-snow"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `-10%`,
+                fontSize: `${Math.random() * 20 + 10}px`,
+                animationDuration: `${Math.random() * 10 + 10}s`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            >
+              ❄
+            </div>
+          ))}
+        </div>
+
+        {/* Cursor Stars */}
+        <div className="fixed inset-0 pointer-events-none z-50">
+          {stars.map(star => (
+            <div
+              key={star.id}
+              className="absolute transition-all duration-300 ease-out"
+              style={{
+                left: star.x - star.size / 2,
+                top: star.y - star.size / 2,
+                width: star.size,
+                height: star.size,
+                animation: 'star-fade-smooth 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+              }}
+            >
+              <Sparkles 
+                className="text-amber-400" 
+                style={{ 
+                  width: '100%', 
+                  height: '100%',
+                  filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.9))',
+                  transform: `rotate(${star.rotation}deg)`,
+                }} 
+              />
+            </div>
+          ))}
+        </div>
+
         <Navigation />
         <div className="pt-32 pb-16 px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-            <p className="text-gray-600 mb-8">Start shopping to add items to your cart</p>
+            <div className="relative inline-block mb-6">
+              <ShoppingCart className="w-24 h-24 text-red-300 mx-auto" />
+              <Gift className="w-12 h-12 text-amber-500 absolute -top-2 -right-2 animate-bounce" />
+            </div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent mb-4">
+              🎄 Your Cart is Empty 🎄
+            </h2>
+            <p className="text-gray-700 mb-8 font-medium">Start your holiday shopping adventure!</p>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-green-600 text-white font-semibold rounded-lg hover:from-red-700 hover:to-green-700 transition-all shadow-lg"
             >
               <ArrowLeft className="w-5 h-5" />
-              Continue Shopping
+              Start Shopping
             </Link>
           </div>
         </div>
+        
+        <style jsx>{`
+          @keyframes snow {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) translateX(100px); opacity: 0; }
+          }
+          @keyframes star-fade-smooth {
+            0% { opacity: 0; transform: scale(0) rotate(0deg) translateY(0); }
+            20% { opacity: 1; transform: scale(1.2) rotate(72deg) translateY(-5px); }
+            50% { opacity: 0.9; transform: scale(1) rotate(180deg) translateY(-8px); }
+            80% { opacity: 0.4; transform: scale(0.8) rotate(288deg) translateY(-10px); }
+            100% { opacity: 0; transform: scale(0) rotate(360deg) translateY(-15px); }
+          }
+          .animate-snow { animation: snow linear infinite; will-change: transform, opacity; }
+        `}</style>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-amber-50 to-green-50 relative overflow-hidden">
+      {/* Christmas Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-white text-opacity-60 animate-snow"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `-10%`,
+              fontSize: `${Math.random() * 20 + 10}px`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          >
+            ❄
+          </div>
+        ))}
+      </div>
+
+      {/* Cursor Stars */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {stars.map(star => (
+          <div
+            key={star.id}
+            className="absolute transition-all duration-300 ease-out"
+            style={{
+              left: star.x - star.size / 2,
+              top: star.y - star.size / 2,
+              width: star.size,
+              height: star.size,
+              animation: 'star-fade-smooth 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            }}
+          >
+            <Sparkles 
+              className="text-amber-400" 
+              style={{ 
+                width: '100%', 
+                height: '100%',
+                filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.9))',
+                transform: `rotate(${star.rotation}deg)`,
+              }} 
+            />
+          </div>
+        ))}
+      </div>
+
       <Navigation />
       
       {/* Location & Currency - Top Right */}
       <div className="fixed top-4 right-8 z-40">
         {detectedCountry && (
-          <div className="flex items-center gap-1.5 text-xs text-gray-700 bg-white/80 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-green-200 shadow-md">
-            <Globe className="w-3.5 h-3.5 text-green-600" />
+          <div className="flex items-center gap-1.5 text-xs text-gray-700 bg-white/90 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border-2 border-amber-300 shadow-lg">
+            <Globe className="w-3.5 h-3.5 text-red-600" />
             <div className="flex flex-col">
               <span className="font-medium">Detected: {detectedCountry}</span>
               <span className="text-[10px] text-gray-500">
@@ -179,14 +349,17 @@ export default function CartPage() {
         )}
       </div>
 
-      <div className="pt-20 pb-16 px-4">
+      <div className="pt-20 pb-16 px-4 relative z-10">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-              Shopping Cart
-            </h1>
-            <p className="text-gray-600">{cart.length} {cart.length === 1 ? 'item' : 'items'}</p>
+          <div className="mb-8 text-center">
+            <div className="inline-flex items-center gap-2 mb-2">
+              <ShoppingCart className="w-8 h-8 text-red-600" />
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 via-amber-500 to-green-600 bg-clip-text text-transparent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                🎁 Shopping Cart
+              </h1>
+            </div>
+            <p className="text-gray-700 font-medium">{cart.length} {cart.length === 1 ? 'item' : 'items'} • Ready for checkout!</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -291,23 +464,42 @@ export default function CartPage() {
 
                 <Link
                   href="/checkout"
-                  className="w-full block text-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 transform hover:scale-[1.02]"
+                  className="w-full block text-center px-6 py-3 bg-gradient-to-r from-red-600 to-green-600 text-white font-bold rounded-lg hover:from-red-700 hover:to-green-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                 >
-                  Proceed to Checkout
+                  🎁 Proceed to Checkout
                   <ArrowRight className="w-5 h-5" />
                 </Link>
 
                 <Link
                   href="/shop"
-                  className="w-full block text-center mt-3 text-gray-600 hover:text-gray-900 transition-colors"
+                  className="w-full block text-center mt-3 text-gray-700 hover:text-red-600 transition-colors font-medium"
                 >
-                  Continue Shopping
+                  ← Continue Shopping
                 </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Christmas Styles */}
+      <style jsx>{`
+        @keyframes snow {
+          0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(110vh) translateX(100px); opacity: 0; }
+        }
+        @keyframes star-fade-smooth {
+          0% { opacity: 0; transform: scale(0) rotate(0deg) translateY(0); }
+          20% { opacity: 1; transform: scale(1.2) rotate(72deg) translateY(-5px); }
+          50% { opacity: 0.9; transform: scale(1) rotate(180deg) translateY(-8px); }
+          80% { opacity: 0.4; transform: scale(0.8) rotate(288deg) translateY(-10px); }
+          100% { opacity: 0; transform: scale(0) rotate(360deg) translateY(-15px); }
+        }
+        .animate-snow { animation: snow linear infinite; will-change: transform, opacity; }
+        * { scroll-behavior: smooth; }
+      `}</style>
     </div>
   );
 }

@@ -56,7 +56,7 @@ export default function AdminAnalyticsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600 mt-1">Track your business performance</p>
+          <p className="text-gray-900 mt-1">Track your business performance</p>
         </div>
         
         <select
@@ -88,7 +88,7 @@ export default function AdminAnalyticsPage() {
                   {metric.change}
                 </div>
               </div>
-              <h3 className="text-sm font-medium text-gray-600 mb-1">{metric.title}</h3>
+              <h3 className="text-sm font-medium text-gray-900 mb-1">{metric.title}</h3>
               <p className="text-2xl font-bold text-gray-900">{metric.value}</p>
             </div>
           );
@@ -100,14 +100,14 @@ export default function AdminAnalyticsPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Revenue Over Time</h2>
           <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-            <p className="text-gray-500">Chart visualization - Coming soon</p>
+            <p className="text-gray-900">Chart visualization - Coming soon</p>
           </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Orders by Status</h2>
           <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-            <p className="text-gray-500">Chart visualization - Coming soon</p>
+            <p className="text-gray-900">Chart visualization - Coming soon</p>
           </div>
         </div>
       </div>
@@ -127,12 +127,12 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Product Name {i}</p>
-                    <p className="text-sm text-gray-500">{50 - i * 8} units sold</p>
+                    <p className="text-sm text-gray-900">{50 - i * 8} units sold</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-gray-900">€{(1000 - i * 150).toFixed(2)}</p>
-                  <p className="text-sm text-gray-500">Revenue</p>
+                  <p className="text-sm text-gray-900">Revenue</p>
                 </div>
               </div>
             ))}

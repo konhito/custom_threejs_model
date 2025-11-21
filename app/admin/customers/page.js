@@ -88,12 +88,12 @@ export default function AdminCustomersPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Customers</h1>
-          <p className="text-gray-600 mt-1">Manage customer information and orders</p>
+          <p className="text-gray-900 mt-1">Manage customer information and orders</p>
         </div>
         
         <div className="text-right">
           <p className="text-3xl font-bold text-emerald-600">{customers.length}</p>
-          <p className="text-sm text-gray-600">Total Customers</p>
+          <p className="text-sm text-gray-900">Total Customers</p>
         </div>
       </div>
 
@@ -123,22 +123,22 @@ export default function AdminCustomersPage() {
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Customer
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Contact
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Location
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       GDPR
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Registered
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
@@ -154,23 +154,23 @@ export default function AdminCustomersPage() {
                             </div>
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">{customer.name}</div>
-                              <div className="text-xs text-gray-500">{customer.email}</div>
+                              <div className="text-xs text-gray-900">{customer.email}</div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex items-center text-sm text-gray-500">
+                          <div className="flex items-center text-sm text-gray-900">
                             <Mail className="w-4 h-4 mr-2" />
                             {customer.email}
                           </div>
                           {customer.phone && (
-                            <div className="flex items-center text-sm text-gray-500 mt-1">
+                            <div className="flex items-center text-sm text-gray-900 mt-1">
                               <Phone className="w-4 h-4 mr-2" />
                               {customer.phone}
                             </div>
                           )}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-500">
+                        <td className="px-6 py-4 text-sm text-gray-900">
                           {customer.shipping_address && (
                             <div className="flex items-start">
                               <MapPin className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
@@ -183,7 +183,7 @@ export default function AdminCustomersPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col gap-1">
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${customer.gdpr_consent ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${customer.gdpr_consent ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-900'}`}>
                               {customer.gdpr_consent ? '✓ Consented' : '○ Not Consented'}
                             </span>
                             {customer.marketing_consent && (
@@ -193,7 +193,7 @@ export default function AdminCustomersPage() {
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {new Date(customer.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -216,7 +216,7 @@ export default function AdminCustomersPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                      <td colSpan="6" className="px-6 py-12 text-center text-gray-900">
                         No customers found
                       </td>
                     </tr>
@@ -228,7 +228,7 @@ export default function AdminCustomersPage() {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-gray-900">
                   Showing {indexOfFirst + 1} to {Math.min(indexOfLast, filteredCustomers.length)} of {filteredCustomers.length} customers
                 </div>
                 <div className="flex gap-2">
@@ -262,11 +262,11 @@ export default function AdminCustomersPage() {
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">{selectedCustomer.name}</h2>
-                  <p className="text-gray-600 mt-1">{selectedCustomer.email}</p>
+                  <p className="text-gray-900 mt-1">{selectedCustomer.email}</p>
                 </div>
                 <button
                   onClick={() => setSelectedCustomer(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-900"
                 >
                   ✕
                 </button>
@@ -312,16 +312,16 @@ export default function AdminCustomersPage() {
                       <div key={order.id} className="flex justify-between items-center bg-gray-50 rounded-lg p-4">
                         <div>
                           <p className="font-medium">{order.order_number}</p>
-                          <p className="text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
+                          <p className="text-sm text-gray-900">{new Date(order.created_at).toLocaleDateString()}</p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold">€{order.total_amount}</p>
-                          <p className="text-sm text-gray-500 capitalize">{order.status}</p>
+                          <p className="text-sm text-gray-900 capitalize">{order.status}</p>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-500 text-center py-4">No orders yet</p>
+                    <p className="text-gray-900 text-center py-4">No orders yet</p>
                   )}
                 </div>
               </div>

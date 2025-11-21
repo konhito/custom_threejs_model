@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
             <Lock className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Nahiara Admin</h1>
-          <p className="text-gray-600 mt-2">Sign in to access the admin dashboard</p>
+          <p className="text-gray-900 mt-2">Sign in to access the admin dashboard</p>
         </div>
 
         {/* Login Form */}
@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -125,14 +125,14 @@ export default function AdminLoginPage() {
 
           {/* Additional Info */}
           <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-xs text-center text-gray-500">
+            <p className="text-xs text-center text-gray-900">
               Protected admin area. Unauthorized access is prohibited.
             </p>
           </div>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-600 mt-6">
+        <p className="text-center text-sm text-gray-900 mt-6">
           © 2025 Nahiara. All rights reserved.
         </p>
       </div>

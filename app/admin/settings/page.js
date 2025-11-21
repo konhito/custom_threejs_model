@@ -29,7 +29,7 @@ export default function AdminSettingsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600 mt-1">Manage your application settings</p>
+          <p className="text-gray-900 mt-1">Manage your application settings</p>
         </div>
         
         <button
@@ -51,7 +51,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Site Name
               </label>
               <input
@@ -61,7 +61,7 @@ export default function AdminSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Support Email
               </label>
               <input
@@ -71,7 +71,7 @@ export default function AdminSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Default Currency
               </label>
               <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
@@ -91,7 +91,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Admin Email
               </label>
               <input
@@ -102,7 +102,7 @@ export default function AdminSettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Change Password
               </label>
               <button className="w-full px-3 py-2 border border-emerald-600 text-emerald-600 rounded-lg hover:bg-emerald-50">
@@ -111,8 +111,8 @@ export default function AdminSettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700">Two-Factor Authentication</p>
-                <p className="text-xs text-gray-500">Add extra security</p>
+                <p className="text-sm font-medium text-gray-900">Two-Factor Authentication</p>
+                <p className="text-xs text-gray-900">Add extra security</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" />
@@ -130,7 +130,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Email Provider
               </label>
               <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
@@ -140,7 +140,7 @@ export default function AdminSettingsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 From Email
               </label>
               <input
@@ -151,8 +151,8 @@ export default function AdminSettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700">Order Notifications</p>
-                <p className="text-xs text-gray-500">Send email on new orders</p>
+                <p className="text-sm font-medium text-gray-900">Order Notifications</p>
+                <p className="text-xs text-gray-900">Send email on new orders</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" defaultChecked />
@@ -170,7 +170,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Stripe Mode
               </label>
               <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
@@ -179,7 +179,7 @@ export default function AdminSettingsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-900 mb-2">
                 Tax Rate (%)
               </label>
               <input
@@ -191,8 +191,8 @@ export default function AdminSettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700">Accept Payments</p>
-                <p className="text-xs text-gray-500">Enable payment processing</p>
+                <p className="text-sm font-medium text-gray-900">Accept Payments</p>
+                <p className="text-xs text-gray-900">Enable payment processing</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" defaultChecked />
@@ -211,15 +211,15 @@ export default function AdminSettingsPage() {
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-1">Backend Status</p>
+            <p className="text-sm text-gray-900 mb-1">Backend Status</p>
             <p className="text-lg font-semibold text-green-600">● Online</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-1">Database</p>
+            <p className="text-sm text-gray-900 mb-1">Database</p>
             <p className="text-lg font-semibold text-green-600">● Connected</p>
           </div>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-1">Redis Cache</p>
+            <p className="text-sm text-gray-900 mb-1">Redis Cache</p>
             <p className="text-lg font-semibold text-green-600">● Active</p>
           </div>
         </div>

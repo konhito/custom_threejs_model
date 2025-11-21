@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -8,7 +8,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
-import { ArrowLeft, Lock, CreditCard } from "lucide-react";
+import { ArrowLeft, Lock, CreditCard, Sparkles, Gift } from "lucide-react";
 import Link from "next/link";
 import { checkoutAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { useSession } from "../../hooks/useSession";
@@ -118,6 +118,11 @@ export default function CheckoutPage() {
   const [orderData, setOrderData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
   const [currency, setCurrency] = useState('eur');
+  const [stars, setStars] = useState([]);
+  const starIdRef = useRef(0);
+  const lastStarTime = useRef(0);
+  const lastMousePos = useRef({ x: 0, y: 0 });
+  const mouseStopTimeout = useRef(null);
   const [formData, setFormData] = useState({
     customer_name: '',
     customer_email: '',
@@ -140,6 +145,57 @@ export default function CheckoutPage() {
     gdpr_consent: false,
     marketing_consent: false,
   });
+
+  // Christmas cursor trail
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const now = Date.now();
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+      
+      const distX = currentX - lastMousePos.current.x;
+      const distY = currentY - lastMousePos.current.y;
+      const distance = Math.sqrt(distX * distX + distY * distY);
+      
+      if (distance > 5 && now - lastStarTime.current >= 150) {
+        lastStarTime.current = now;
+        
+        const newStar = {
+          id: starIdRef.current++,
+          x: currentX,
+          y: currentY,
+          size: Math.random() * 15 + 8,
+          rotation: Math.random() * 360,
+        };
+        
+        setStars(prev => {
+          const updated = [...prev, newStar];
+          return updated.length > 8 ? updated.slice(-8) : updated;
+        });
+        
+        setTimeout(() => {
+          setStars(prev => prev.filter(star => star.id !== newStar.id));
+        }, 1200);
+        
+        lastMousePos.current = { x: currentX, y: currentY };
+      }
+      
+      if (mouseStopTimeout.current) {
+        clearTimeout(mouseStopTimeout.current);
+      }
+      
+      mouseStopTimeout.current = setTimeout(() => {}, 100);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (mouseStopTimeout.current) {
+        clearTimeout(mouseStopTimeout.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Get currency from localStorage (client-side only)
@@ -261,26 +317,81 @@ export default function CheckoutPage() {
   const cart = cartStorage.get();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-amber-50 to-green-50 relative overflow-hidden">
+      {/* Christmas Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-white text-opacity-60 animate-snow"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `-10%`,
+              fontSize: `${Math.random() * 20 + 10}px`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          >
+            ❄
+          </div>
+        ))}
+      </div>
+
+      {/* Cursor Stars */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {stars.map(star => (
+          <div
+            key={star.id}
+            className="absolute transition-all duration-300 ease-out"
+            style={{
+              left: star.x - star.size / 2,
+              top: star.y - star.size / 2,
+              width: star.size,
+              height: star.size,
+              animation: 'star-fade-smooth 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            }}
+          >
+            <Sparkles 
+              className="text-amber-400" 
+              style={{ 
+                width: '100%', 
+                height: '100%',
+                filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.9))',
+                transform: `rotate(${star.rotation}deg)`,
+              }} 
+            />
+          </div>
+        ))}
+      </div>
+
       <Navigation />
       
-      <div className="pt-20 pb-16 px-4">
+      <div className="pt-20 pb-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
+          {/* Christmas Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-green-600 text-white px-4 py-2 rounded-full mb-4 shadow-xl animate-pulse">
+              <Gift className="w-5 h-5" />
+              <span className="font-bold text-sm">Secure Checkout</span>
+              <Lock className="w-5 h-5" />
+            </div>
+          </div>
+
           {/* Progress Steps */}
           <div className="mb-8">
             <div className="flex items-center justify-center gap-4">
-              <div className={`flex items-center gap-2 ${step >= 1 ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+              <div className={`flex items-center gap-2 ${step >= 1 ? 'text-red-600' : 'text-gray-400'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 1 ? 'bg-gradient-to-r from-red-600 to-green-600 text-white shadow-lg' : 'bg-gray-200'}`}>
                   1
                 </div>
-                <span className="font-medium">Customer Info</span>
+                <span className="font-semibold">Customer Info</span>
               </div>
-              <div className={`w-16 h-1 ${step >= 2 ? 'bg-green-600' : 'bg-gray-200'}`}></div>
-              <div className={`flex items-center gap-2 ${step >= 2 ? 'text-green-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+              <div className={`w-16 h-1 ${step >= 2 ? 'bg-gradient-to-r from-red-600 to-green-600' : 'bg-gray-200'}`}></div>
+              <div className={`flex items-center gap-2 ${step >= 2 ? 'text-red-600' : 'text-gray-400'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= 2 ? 'bg-gradient-to-r from-red-600 to-green-600 text-white shadow-lg' : 'bg-gray-200'}`}>
                   2
                 </div>
-                <span className="font-medium">Payment</span>
+                <span className="font-semibold">Payment</span>
               </div>
             </div>
           </div>

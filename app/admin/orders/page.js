@@ -60,7 +60,7 @@ export default function AdminOrdersPage() {
       cancelled: 'bg-red-100 text-red-800 border-red-200',
       failed: 'bg-red-100 text-red-800 border-red-200',
     };
-    return colors[status] || 'bg-gray-100 text-gray-800 border-gray-200';
+    return colors[status] || 'bg-gray-100 text-gray-900 border-gray-200';
   };
 
   const getStatusIcon = (status) => {
@@ -89,7 +89,7 @@ export default function AdminOrdersPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-600 mt-1">Manage and track all customer orders</p>
+          <p className="text-gray-900 mt-1">Manage and track all customer orders</p>
         </div>
         
         <button className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
@@ -144,22 +144,22 @@ export default function AdminOrdersPage() {
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Order
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Customer
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
@@ -170,15 +170,15 @@ export default function AdminOrdersPage() {
                       <tr key={order.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{order.order_number}</div>
-                          <div className="text-xs text-gray-500">{order.items?.length || 0} items</div>
+                          <div className="text-xs text-gray-900">{order.items?.length || 0} items</div>
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-sm text-gray-900">{order.customer_name}</div>
-                          <div className="text-xs text-gray-500">{order.customer_email}</div>
+                          <div className="text-xs text-gray-900">{order.customer_email}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">€{order.total_amount}</div>
-                          <div className="text-xs text-gray-500">{order.currency?.toUpperCase()}</div>
+                          <div className="text-xs text-gray-900">{order.currency?.toUpperCase()}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <select
@@ -193,7 +193,7 @@ export default function AdminOrdersPage() {
                             <option value="failed">Failed</option>
                           </select>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {new Date(order.created_at).toLocaleDateString()}
                           <div className="text-xs text-gray-400">
                             {new Date(order.created_at).toLocaleTimeString()}
@@ -211,7 +211,7 @@ export default function AdminOrdersPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                      <td colSpan="6" className="px-6 py-12 text-center text-gray-900">
                         No orders found
                       </td>
                     </tr>
@@ -223,7 +223,7 @@ export default function AdminOrdersPage() {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                <div className="text-sm text-gray-700">
+                <div className="text-sm text-gray-900">
                   Showing {indexOfFirstOrder + 1} to {Math.min(indexOfLastOrder, filteredOrders.length)} of {filteredOrders.length} orders
                 </div>
                 <div className="flex gap-2">
@@ -259,11 +259,11 @@ export default function AdminOrdersPage() {
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Order Details</h2>
-                  <p className="text-gray-600 mt-1">{selectedOrder.order_number}</p>
+                  <p className="text-gray-900 mt-1">{selectedOrder.order_number}</p>
                 </div>
                 <button
                   onClick={() => setSelectedOrder(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-900"
                 >
                   <XCircle className="w-6 h-6" />
                 </button>
@@ -303,7 +303,7 @@ export default function AdminOrdersPage() {
                     <div key={index} className="flex justify-between items-center bg-gray-50 rounded-lg p-4">
                       <div>
                         <p className="font-medium">{item.product_name}</p>
-                        <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                        <p className="text-sm text-gray-900">Quantity: {item.quantity}</p>
                       </div>
                       <p className="font-semibold">€{item.total_price}</p>
                     </div>
