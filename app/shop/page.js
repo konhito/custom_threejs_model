@@ -7,6 +7,7 @@ import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
+import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -202,6 +203,19 @@ export default function ShopPage() {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const getCartTotal = () => {
+    let total = 0;
+    cart.forEach(item => {
+      const product = products.find(p => p.id === item.product_id);
+      if (product) {
+        const priceField = item.is_digital ? `digital_price_${currency}` : `price_${currency}`;
+        const price = product[priceField] || 0;
+        total += price * item.quantity;
+      }
+    });
+    return total;
+  };
+
   // Skeleton loader component
   const ProductSkeleton = () => (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-red-100 animate-pulse">
@@ -326,6 +340,11 @@ export default function ShopPage() {
             ✨ Discover our magical collection of books and card games celebrating nature's beauty ✨
           </p>
         </div>
+      </div>
+
+      {/* Breadcrumb Navigation */}
+      <div className="max-w-7xl mx-auto px-4">
+        <ShopBreadcrumb />
       </div>
 
       {/* Products Grid */}
@@ -525,6 +544,28 @@ export default function ShopPage() {
               <p className="text-sm text-white/90">Perfect gift choice! ✨</p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Floating Cart Summary - Bottom */}
+      {cartCount > 0 && !showNotification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-fade-in">
+          <Link
+            href="/cart"
+            className="flex items-center gap-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-2xl shadow-2xl hover:shadow-green-500/50 hover:scale-105 transition-all duration-300 border-2 border-white/30 backdrop-blur-sm group"
+          >
+            <div className="relative">
+              <ShoppingCart className="w-6 h-6" />
+              <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white">
+                {cartCount > 99 ? '99+' : cartCount}
+              </span>
+            </div>
+            <div className="text-left">
+              <p className="font-bold text-sm">View Cart</p>
+              <p className="text-xs text-white/90">{formatCurrency(getCartTotal(), currency)}</p>
+            </div>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       )}
       

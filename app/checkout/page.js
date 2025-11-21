@@ -13,6 +13,7 @@ import Link from "next/link";
 import { checkoutAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
+import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 
 // Initialize Stripe (will be set from API response)
 let stripePromise = null;
@@ -368,6 +369,9 @@ export default function CheckoutPage() {
       
       <div className="pt-20 pb-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
+          {/* Breadcrumb Navigation */}
+          <ShopBreadcrumb />
+          
           {/* Christmas Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-green-600 text-white px-4 py-2 rounded-full mb-4 shadow-xl animate-pulse">

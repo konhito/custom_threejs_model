@@ -7,6 +7,7 @@ import { cartStorage, formatCurrency, productsAPI } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
+import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
@@ -351,6 +352,9 @@ export default function CartPage() {
 
       <div className="pt-20 pb-16 px-4 relative z-10">
         <div className="max-w-5xl mx-auto">
+          {/* Breadcrumb Navigation */}
+          <ShopBreadcrumb />
+          
           {/* Header */}
           <div className="mb-8 text-center">
             <div className="inline-flex items-center gap-2 mb-2">
@@ -472,9 +476,10 @@ export default function CartPage() {
 
                 <Link
                   href="/shop"
-                  className="w-full block text-center mt-3 text-gray-700 hover:text-red-600 transition-colors font-medium"
+                  className="w-full block text-center mt-3 px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-red-600 hover:text-red-600 hover:shadow-md transition-all flex items-center justify-center gap-2"
                 >
-                  ← Continue Shopping
+                  <ArrowLeft className="w-5 h-5" />
+                  Continue Shopping
                 </Link>
               </div>
             </div>
