@@ -1,76 +1,210 @@
+'use client';
+import { useState, useRef, useEffect } from 'react';
 import Navigation from "../../components/Navigation";
 import Link from "next/link";
-import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target, ExternalLink, Rotate3D } from "lucide-react";
+import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target, ExternalLink, Rotate3D, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Standard Bar Chart Component
+// Mobile-Friendly Bar Chart with Horizontal Slider
 function PollinatorDeclineChart() {
   const data = [
-    { label: "Wild flowering plants (2016)", percentage: 90, color: "#1e40af" },
-    { label: "Food crops (2016)", percentage: 75, color: "#3b82f6" },
-    { label: "Insects threatened (2025)", percentage: 40, color: "#dc2626" },
-    { label: "Annual decline (per decade)", percentage: 9, color: "#ef4444" },
-    { label: "US bee losses (2025)", percentage: 65, color: "#ea580c" },
-    { label: "Native pollinators at risk", percentage: 22, color: "#f97316" }
+    { label: "Wild flowering plants (2016)", percentage: 90, color: "#1e40af", category: "2016" },
+    { label: "Food crops (2016)", percentage: 75, color: "#3b82f6", category: "2016" },
+    { label: "Insects threatened (2025)", percentage: 40, color: "#dc2626", category: "2025" },
+    { label: "Annual decline (per decade)", percentage: 9, color: "#ef4444", category: "2025" },
+    { label: "US bee losses (2025)", percentage: 65, color: "#ea580c", category: "US" },
+    { label: "Native pollinators at risk", percentage: 22, color: "#f97316", category: "US" }
   ];
+
+  const scrollContainerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = direction === 'left' ? -200 : 200;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScroll);
+      return () => container.removeEventListener('scroll', checkScroll);
+    }
+  }, []);
 
   return (
     <div className="bg-white/95 rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-lg">
-      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
         Pollinator decline - Key figures
       </h3>
       
-      <div className="relative h-[28rem] sm:h-[32rem] lg:h-[36rem] pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-8">
-        {/* Grid Lines */}
-        <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-          {[100, 80, 60, 40, 20, 0].map((value) => (
-            <div key={value} className="flex items-center">
-              <div className="w-6 sm:w-8 lg:w-16 text-xs text-gray-400 font-medium pr-2 sm:pr-3 text-right">
-                {value}%
-              </div>
-              <div className="flex-1 border-t border-gray-200"></div>
-            </div>
-          ))}
-        </div>
+      {/* Mobile: Horizontal Slider */}
+      <div className="md:hidden">
+        <div className="relative">
+          {/* Scroll Buttons */}
+          {canScrollLeft && (
+            <button
+              onClick={() => scroll('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+          )}
+          {canScrollRight && (
+            <button
+              onClick={() => scroll('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
+          )}
 
-        {/* Bars */}
-        <div className="relative flex items-end justify-center space-x-3 sm:space-x-6 lg:space-x-12 h-full">
-          {data.map((item, index) => (
-            <div key={index} className="flex flex-col items-center relative z-10">
-              <div 
-                className="w-8 sm:w-12 lg:w-16 rounded-t-sm relative shadow-md hover:shadow-lg transition-shadow duration-200"
-                style={{ 
-                  height: `${(item.percentage / 100) * 28}rem`,
-                  backgroundColor: item.color 
-                }}
-              >
-                <div className="absolute -top-10 sm:-top-12 lg:-top-16 left-1/2 transform -translate-x-1/2 text-xs sm:text-sm font-bold text-gray-700 bg-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-200 shadow-sm max-w-14 sm:max-w-18 lg:max-w-24">
-                  {item.percentage}%
+          {/* Scrollable Container */}
+          <div
+            ref={scrollContainerRef}
+            className="overflow-x-auto hide-scrollbar snap-x snap-mandatory"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            <div className="flex space-x-4 px-8 py-4 min-w-max">
+              {data.map((item, index) => (
+                <div key={index} className="snap-center flex-shrink-0">
+                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 border border-gray-200 shadow-md w-[280px] h-[400px] flex flex-col">
+                    {/* Percentage Badge */}
+                    <div className="text-center mb-4">
+                      <div 
+                        className="inline-block px-6 py-3 rounded-full text-white font-bold text-3xl shadow-lg"
+                        style={{ backgroundColor: item.color }}
+                      >
+                        {item.percentage}%
+                      </div>
+                    </div>
+                    
+                    {/* Bar Container */}
+                    <div className="flex-1 flex flex-col justify-end items-center px-4">
+                      <div className="w-full bg-gray-100 rounded-lg overflow-hidden h-[200px] flex flex-col-reverse border border-gray-200">
+                        <div
+                          className="w-full transition-all duration-500 rounded-t-lg relative"
+                          style={{
+                            height: `${item.percentage}%`,
+                            backgroundColor: item.color
+                          }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Label */}
+                    <div className="mt-4 text-center">
+                      <p className="text-sm font-semibold text-gray-800 leading-tight">
+                        {item.label}
+                      </p>
+                      <span className="inline-block mt-2 px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-600">
+                        {item.category === "2016" ? "📊 2016 Data" : item.category === "2025" ? "⚠️ 2025 Crisis" : "🇺🇸 US Impact"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="flex justify-center mt-4 space-x-2">
+            {data.map((_, index) => (
+              <div key={index} className="w-2 h-2 bg-gray-300 rounded-full"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: Traditional Bar Chart */}
+      <div className="hidden md:block">
+        <div className="relative h-[32rem] lg:h-[36rem] pt-32 lg:pt-36 pb-8">
+          {/* Grid Lines */}
+          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+            {[100, 80, 60, 40, 20, 0].map((value) => (
+              <div key={value} className="flex items-center">
+                <div className="w-12 lg:w-16 text-xs text-gray-400 font-medium pr-3 text-right">
+                  {value}%
+                </div>
+                <div className="flex-1 border-t border-gray-200"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bars */}
+          <div className="relative flex items-end justify-center space-x-6 lg:space-x-12 h-full">
+            {data.map((item, index) => (
+              <div key={index} className="flex flex-col items-center relative z-10 group">
+                <div 
+                  className="w-16 lg:w-20 rounded-t-lg relative shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+                  style={{ 
+                    height: `${(item.percentage / 100) * 28}rem`,
+                    backgroundColor: item.color 
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-t-lg"></div>
+                  <div className="absolute -top-14 lg:-top-16 left-1/2 transform -translate-x-1/2 text-sm font-bold text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: item.color }}>
+                    {item.percentage}%
+                  </div>
+                </div>
+                <div className="mt-6 text-sm text-gray-600 text-center max-w-[120px] leading-tight font-medium">
+                  {item.label}
                 </div>
               </div>
-              <div className="mt-3 sm:mt-4 lg:mt-6 text-xs sm:text-sm text-gray-600 text-center max-w-14 sm:max-w-18 lg:max-w-24 leading-tight font-medium">
-                {item.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
       
+      {/* Legend */}
       <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-xs sm:text-sm text-gray-600">
           <div className="flex items-center space-x-2">
-            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded"></div>
+            <div className="w-4 h-4 bg-blue-600 rounded shadow-sm"></div>
             <span className="font-medium">2016 Data</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-red-600 rounded"></div>
+            <div className="w-4 h-4 bg-red-600 rounded shadow-sm"></div>
             <span className="font-medium">2025 Crisis</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 sm:w-4 h-3 sm:h-4 bg-orange-600 rounded"></div>
+            <div className="w-4 h-4 bg-orange-600 rounded shadow-sm"></div>
             <span className="font-medium">US Impact</span>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 }
@@ -111,7 +245,6 @@ export default function PollinatorsPage() {
             </div>
           </section>
 
-his 
           {/* NAHIARA Manifesto Section */}
           <section className="mb-12 sm:mb-16 lg:mb-20">
             <div className="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-red-200">
