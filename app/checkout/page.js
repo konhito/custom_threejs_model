@@ -425,10 +425,85 @@ export default function CheckoutPage() {
                     <span className="text-sm text-gray-700">Use same address for billing</span>
                   </label>
 
+                  {formData.use_same_address && (
+                    <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                      <p className="text-sm text-green-700">
+                        Billing address will be the same as your shipping address.
+                      </p>
+                    </div>
+                  )}
+
                   {!formData.use_same_address && (
                     <div className="space-y-4 mt-4">
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Billing Address</h3>
-                      {/* Similar fields for billing address */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Street Address *
+                        </label>
+                        <input
+                          type="text"
+                          name="billing_street"
+                          required={!formData.use_same_address}
+                          value={formData.billing_address.street}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            City *
+                          </label>
+                          <input
+                            type="text"
+                            name="billing_city"
+                            required={!formData.use_same_address}
+                            value={formData.billing_address.city}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Postal Code *
+                          </label>
+                          <input
+                            type="text"
+                            name="billing_postal_code"
+                            required={!formData.use_same_address}
+                            value={formData.billing_address.postal_code}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Country *
+                          </label>
+                          <input
+                            type="text"
+                            name="billing_country"
+                            required={!formData.use_same_address}
+                            value={formData.billing_address.country}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            State/Province
+                          </label>
+                          <input
+                            type="text"
+                            name="billing_state"
+                            value={formData.billing_address.state}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
