@@ -18,26 +18,6 @@ const nextConfig = {
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // Allow images from AWS S3 bucket (for Next.js 12 and below)
-    domains: [
-      'aquamundi-glb-models.s3.ap-south-1.amazonaws.com',
-      'aquamundi-glb-models.s3.amazonaws.com',
-    ],
-    // Allow images from AWS S3 bucket (for Next.js 13+)
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'aquamundi-glb-models.s3.ap-south-1.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'aquamundi-glb-models.s3.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
   },
   
   // Compression

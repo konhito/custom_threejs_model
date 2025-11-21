@@ -20,8 +20,15 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+
+  // Initialize sidebar state based on screen size (only once on mount)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSidebarOpen(window.innerWidth >= 1024);
+    }
+  }, []);
 
   useEffect(() => {
     // Check authentication
@@ -75,7 +82,9 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center justify-between h-16 px-6 bg-gray-800">
@@ -134,7 +143,9 @@ export default function AdminLayout({ children }) {
       </div>
 
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'ml-0'}`}>
+      <div className={`transition-all duration-300 relative z-10 ${
+        sidebarOpen ? 'lg:ml-64' : 'ml-0'
+      }`}>
         {/* Top Bar */}
         <div className="sticky top-0 z-40 h-16 bg-white border-b border-gray-200 flex items-center px-6">
           <button

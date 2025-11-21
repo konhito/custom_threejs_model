@@ -40,6 +40,15 @@ export const metadata = {
   alternates: {
     canonical: siteConfig.url,
   },
+  icons: {
+    icon: [
+      { url: '/logo1.png', sizes: 'any' },
+      { url: '/logo1.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo1.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/logo1.png',
+    shortcut: '/logo1.png',
+  },
   category: "environment",
   classification: "Educational",
   other: {
@@ -74,9 +83,12 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
-        {/* Favicon and app icons */}
-        <link rel="icon" href="/NahiaraLogo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/NahiaraLogo.png" />
+        {/* Favicon and app icons - Multiple formats for browser compatibility */}
+        <link rel="icon" href="/logo1.png" type="image/png" sizes="any" />
+        <link rel="icon" href="/logo1.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/logo1.png" type="image/png" sizes="16x16" />
+        <link rel="shortcut icon" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo1.png" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* Theme and browser config */}
