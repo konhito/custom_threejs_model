@@ -206,7 +206,7 @@ export default function TestFlowerPage() {
   }, [bgHex, viewMode]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-gray-900">
+    <div className="min-h-screen bg-slate-50 text-gray-900 overflow-x-hidden">
       <div className="max-w-6xl mx-auto px-4 py-10 space-y-8">
         <div className="flex items-center justify-between">
           <Link
@@ -229,8 +229,8 @@ export default function TestFlowerPage() {
 
         <div className="grid lg:grid-cols-[1.8fr_1fr] gap-8">
           <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
-            <div className="relative w-full h-[480px] rounded-xl overflow-hidden">
-              <div ref={canvasRef} className="w-full h-full" />
+            <div className="relative w-full h-[480px] rounded-xl overflow-hidden isolate">
+              <div ref={canvasRef} className="w-full h-full gpu-accelerated" />
               {!isLoaded && !loadError && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white">
                   <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mb-3" />

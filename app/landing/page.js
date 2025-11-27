@@ -476,37 +476,6 @@ ${currentContent.vision.text}
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-teal-200 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
         </div>
       </div>
-      {/* Language Toggle - Fixed Top Right */}
-      <div className="fixed top-6 right-6 z-50">
-        <div className="bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg border border-green-200">
-          <button
-            onClick={() => {
-              setLanguage('en');
-              localStorage.setItem('nahiara_language', 'en');
-            }}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              language === 'en' 
-                ? 'bg-green-500 text-white shadow-md' 
-                : 'text-gray-600 hover:text-green-500'
-            }`}
-          >
-            EN
-          </button>
-          <button
-            onClick={() => {
-              setLanguage('es');
-              localStorage.setItem('nahiara_language', 'es');
-            }}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              language === 'es' 
-                ? 'bg-green-500 text-white shadow-md' 
-                : 'text-gray-600 hover:text-green-500'
-            }`}
-          >
-            ES
-          </button>
-        </div>
-      </div>
 
       {/* Header / Hero Section - Mobile First */}
       <section className="relative py-12 px-4 bg-gradient-to-br from-green-50 to-emerald-100">

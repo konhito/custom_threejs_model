@@ -43,10 +43,11 @@ function CheckoutForm({ orderData, paymentData, onSuccess, onError }) {
         return;
       }
 
+      const successPath = `/order-success?order=${orderData.order_number}`;
       const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/order-success?order=${orderData.order_number}`,
+          return_url: `${window.location.origin}${successPath}`,
         },
         redirect: 'if_required',
       });

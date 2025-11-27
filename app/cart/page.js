@@ -20,7 +20,7 @@ export default function CartPage() {
   const lastStarTime = useRef(0);
   const lastMousePos = useRef({ x: 0, y: 0 });
   const mouseStopTimeout = useRef(null);
-  
+
   // Session tracking
   const { session, preferences, track } = useSession();
 
@@ -255,8 +255,8 @@ export default function CartPage() {
               🎄 Your Cart is Empty 🎄
             </h2>
             <p className="text-gray-700 mb-8 font-medium">Start your holiday shopping adventure!</p>
-            <Link
-              href="/shop"
+              <Link
+                href="/shop"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-green-600 text-white font-semibold rounded-lg hover:from-red-700 hover:to-green-700 transition-all shadow-lg"
             >
               <ArrowLeft className="w-5 h-5" />

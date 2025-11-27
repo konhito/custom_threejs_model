@@ -6,7 +6,6 @@ import { CheckCircle, Download, Mail, ArrowLeft, Home } from "lucide-react";
 import { ordersAPI, invoicesAPI, formatCurrency } from "../../lib/api";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
-
 function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
