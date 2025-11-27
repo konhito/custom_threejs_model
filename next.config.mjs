@@ -3,9 +3,6 @@ const nextConfig = {
   // Optimize production builds
   reactStrictMode: true,
   
-  // Enable SWC minification (faster than Terser)
-  swcMinify: true,
-  
   // Optimize images
   images: {
     domains: [
@@ -205,10 +202,17 @@ const nextConfig = {
 
   // Rewrites for API proxy (optional)
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    
+    // Only add rewrite if API URL is configured
+    if (!apiUrl) {
+      return [];
+    }
+    
     return [
       {
         source: '/api-proxy/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
+        destination: `${apiUrl}/api/:path*`,
       },
     ];
   },
@@ -236,9 +240,6 @@ const nextConfig = {
 
   // Page extensions
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-
-  // Optimize fonts
-  optimizeFonts: true,
 
   // Production source maps (disable for smaller builds)
   productionBrowserSourceMaps: false,
