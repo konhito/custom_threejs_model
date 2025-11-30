@@ -174,7 +174,7 @@ export default function AloneWithAuthorPage() {
           </div>
         </div>
 
-        <main className="relative pt-20 px-4 lg:pl-24 lg:pr-8 pb-16">
+        <main className="relative pt-20 px-4 lg:pr-24 lg:pl-8 pb-16">
           <div className="max-w-5xl mx-auto">
             {/* Hero Section */}
             <header className="text-center mb-16">

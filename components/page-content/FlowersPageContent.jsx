@@ -34,7 +34,7 @@ export default function FlowersPageContent({ content }) {
 
       <Navigation />
 
-      <div className="relative pt-20 px-4 lg:pl-24 lg:pr-8 pb-16">
+      <div className="relative pt-20 px-4 lg:pr-24 lg:pl-8 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h1 className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 leading-tight">

@@ -1,32 +1,45 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Globe, Heart, Zap, Shield, BookOpen, TrendingUp, Info, Target, Users, ShoppingCart } from "lucide-react";
+import { 
+  FaHome, 
+  FaInfoCircle, 
+  FaSeedling, 
+  FaBug, 
+  FaShieldAlt, 
+  FaGraduationCap, 
+  FaChartLine, 
+  FaArchive, 
+  FaBullseye, 
+  FaUsers,
+  FaShoppingCart
+} from "react-icons/fa";
 import { cartStorage } from "../lib/api";
+import { FloatingDock } from "./ui/floating-dock";
 
 const BASE_NAV_ITEMS = [
   {
     name: "Home",
     path: "/",
-    icon: Globe,
+    icon: FaHome,
     description: "Return to the main globe view"
   },
   {
     name: "What is AquaMundi?",
     path: "/about",
-    icon: Info,
+    icon: FaInfoCircle,
     description: "Mission and purpose"
   },
   {
     name: "National Flowers",
     path: "/flowers",
-    icon: Heart,
+    icon: FaSeedling,
     description: "Selection criteria and explanation"
   },
   {
     name: "Pollinators",
     path: "/pollinators",
-    icon: Zap,
+    icon: FaBug,
     description: "Introduction and gallery",
     subItems: [
       { name: "Gallery", path: "/pollinators/gallery", description: "Explore pollinator species" }
@@ -35,43 +48,42 @@ const BASE_NAV_ITEMS = [
   {
     name: "Guardians",
     path: "/guardians",
-    icon: Shield,
+    icon: FaShieldAlt,
     description: "Symbolic presentation"
   },
   {
     name: "Education & Community",
     path: "/education",
-    icon: BookOpen,
+    icon: FaGraduationCap,
     description: "Learning resources and community"
   },
   {
     name: "Impact & Transparency",
     path: "/impact",
-    icon: TrendingUp,
+    icon: FaChartLine,
     description: "Our impact and transparency"
   },
   {
     name: "The Living Archive",
     path: "/living-archive",
-    icon: BookOpen,
+    icon: FaArchive,
     description: "Core content of the NAHIARA universe"
   },
   {
     name: "Araihan Measure",
     path: "/araihan-measure",
-    icon: Target,
+    icon: FaBullseye,
     description: "Araihan Measure initiative"
   },
   {
     name: "Professionals",
     path: "/professionals",
-    icon: Users,
+    icon: FaUsers,
     description: "Exclusive access for industry professionals"
   }
 ];
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   
   // Since we're EN-only now, pathname comes from window.location
@@ -94,20 +106,6 @@ export default function Navigation() {
     const interval = setInterval(updateCartCount, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
 
   const normalizePath = (path) => {
     if (!path) return "/";
@@ -133,185 +131,27 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-[9999] p-3 bg-black/30 backdrop-blur-sm rounded-full border border-white/40 hover:bg-black/50 transition-colors duration-200 lg:hidden shadow-lg"
-        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-      >
-        {isOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
-      </button>
-
-      {/* Mobile Navigation */}
-      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
-        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      }`}>
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-        <div className={`absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl border-r border-white/20 shadow-2xl transform transition-transform duration-300 overflow-hidden ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}>
-          <div className="p-6 h-full overflow-y-auto overflow-x-hidden scrollbar-thin">
-            <div className="flex items-center space-x-3 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Globe className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-xl font-bold text-gray-800">AquaMundi</h2>
-            </div>
-            
-            {/* Mobile Cart Button */}
-            {!isCartPage && !isHomePage && (
-              <Link
-                href={cartHref}
-                className="flex items-center justify-between p-4 mb-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <ShoppingCart className="w-5 h-5" />
-                  <span className="font-medium">Cart</span>
-                </div>
-                {cartCount > 0 && (
-                  <span className="w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-                    {cartCount > 99 ? '99+' : cartCount}
-                  </span>
-                )}
-              </Link>
-            )}
-
-            <nav className="space-y-2">
-              {navigationItems.map((item) => {
-                const isActive =
-                  isPathActive(item.href) ||
-                  (item.subItems && item.subItems.some(sub => isPathActive(sub.href)));
-                return (
-                  <div key={item.name}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-200 ${
-                        isActive
-                          ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-300/50 shadow-md"
-                          : "hover:bg-gray-100/80 hover:shadow-sm"
-                      }`}
-                    >
-                      <item.icon className={`w-5 h-5 ${
-                        isActive ? "text-blue-600" : "text-gray-600"
-                      }`} />
-                      <div className="flex-1">
-                        <div className={`font-medium ${
-                          isActive ? "text-blue-800" : "text-gray-800"
-                        }`}>
-                          {item.name}
-                        </div>
-                        <div className="text-xs text-gray-500">{item.description}</div>
-                      </div>
-                    </Link>
-                    
-                    {/* Sub-items */}
-                    {item.subItems && (
-                      <div className="ml-6 space-y-1">
-                        {item.subItems.map((subItem) => {
-                          const isSubActive = isPathActive(subItem.href);
-                          return (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              onClick={() => setIsOpen(false)}
-                              className={`flex items-center space-x-3 p-2 rounded-lg transition-all duration-200 ${
-                                isSubActive
-                                  ? "bg-gradient-to-r from-blue-400/20 to-purple-400/20 border border-blue-200/50 shadow-sm"
-                                  : "hover:bg-gray-50/80"
-                              }`}
-                            >
-                              <div className="w-2 h-2 rounded-full bg-gray-400"></div>
-                              <div className="flex-1">
-                                <div className={`text-sm font-medium ${
-                                  isSubActive ? "text-blue-700" : "text-gray-700"
-                                }`}>
-                                  {subItem.name}
-                                </div>
-                                <div className="text-xs text-gray-500">{subItem.description}</div>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Cart Button - Desktop */}
-      {!isCartPage && !isHomePage && (
-        <Link
-          href={cartHref}
-          className="hidden lg:flex fixed right-6 top-1/2 transform -translate-y-1/2 z-[9998] items-center justify-center w-14 h-14 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 hover:scale-110 transition-all duration-300 animate-float group"
-        >
-          <ShoppingCart className="w-6 h-6" />
-          {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center animate-scale-in border-2 border-white">
-              {cartCount > 99 ? '99+' : cartCount}
-            </span>
-          )}
-          <div className="absolute right-full mr-4 px-4 py-2 bg-black/90 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap">
-            {`View Cart (${cartCount} ${cartCount === 1 ? 'item' : 'items'})`}
-            <div className="absolute left-full top-1/2 transform -translate-y-1/2 w-3 h-3 bg-black/90 rotate-45"></div>
-          </div>
-        </Link>
-      )}
-
-      {/* Desktop Navigation */}
-      <div className="hidden lg:block fixed left-4 top-1/2 -translate-y-1/2 z-[9999]">
-        <nav className="relative bg-black/25 backdrop-blur-xl rounded-2xl border border-white/30 p-3 space-y-2 nav-glow">
-          {navigationItems.map((item) => {
-            const isActive =
-              isPathActive(item.href) ||
-              (item.subItems && item.subItems.some(sub => isPathActive(sub.href)));
-            return (
-              <div key={item.name} className="relative group">
-                <Link
-                  href={item.href}
-                  className={`flex items-center justify-center w-12 h-12 rounded-xl transition-colors duration-150 ${
-                    isActive
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
-                      : "text-white hover:bg-white/20"
-                  }`}
-                >
-                  <item.icon className="w-5 h-5" />
-                </Link>
-                
-                {/* Tooltip */}
-                <div className="absolute left-full ml-4 top-1/2 -translate-y-1/2 px-4 py-3 bg-black/95 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150 pointer-events-none whitespace-nowrap z-[10001] min-w-[200px] shadow-xl">
-                  <div className="font-semibold mb-1">{item.name}</div>
-                  <div className="text-xs text-gray-300 mb-2">{item.description}</div>
-                  
-                  {/* Sub-items in tooltip */}
-                  {item.subItems && (
-                    <div className="space-y-1 pt-2 border-t border-gray-600">
-                      {item.subItems.map((subItem) => (
-                        <div key={subItem.name} className="text-xs">
-                          <Link 
-                            href={subItem.href}
-                            className="text-blue-300 hover:text-blue-200 transition-colors duration-150 pointer-events-auto"
-                          >
-                            {subItem.name}
-                          </Link>
-                          <div className="text-gray-400 text-xs">{subItem.description}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  
-                  {/* Arrow pointing to the icon */}
-                  <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-3 h-3 bg-black/95 rotate-45"></div>
-                </div>
-              </div>
-            );
-          })}
-        </nav>
-      </div>
+      {/* Navigation - Floating Dock (Desktop & Mobile) */}
+        <FloatingDock
+          items={[
+            ...navigationItems.map((item) => {
+              const IconComponent = item.icon;
+              return {
+                title: item.name,
+                icon: <IconComponent className="w-full h-full" />,
+                href: item.href,
+              };
+            }),
+            // Add cart button if not on cart or home page
+            ...(!isCartPage && !isHomePage ? [{
+              title: `Cart (${cartCount} ${cartCount === 1 ? 'item' : 'items'})`,
+              icon: <FaShoppingCart className="w-full h-full" />,
+              href: cartHref,
+            }] : []),
+          ]}
+          desktopClassName="fixed right-4 top-1/2 -translate-y-1/2 z-[9999] max-h-[85vh] overflow-y-auto overflow-x-visible scrollbar-thin"
+          mobileClassName="fixed bottom-4 right-4 z-[9999]"
+        />
     </>
   );
 }

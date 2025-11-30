@@ -742,7 +742,11 @@ export default function GlobeComponent() {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    let isLoaded = false; // Prevent multiple loads
+
     const loadGlobe = async () => {
+      if (isLoaded) return; // Prevent multiple loads
+      isLoaded = true;
       try {
 
         // Clear container
@@ -1357,10 +1361,52 @@ export default function GlobeComponent() {
         };
       } catch (error) {
         console.error("Error loading Three.js:", error);
+        isLoaded = false; // Allow retry on error
       }
     };
 
-    loadGlobe();
+    // Use Intersection Observer to load Globe only when it's about to be visible
+    // This ensures hero section loads first, then Globe loads in parallel
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoaded) {
+            loadGlobe();
+            observer.disconnect(); // Only load once
+          }
+        });
+      },
+      {
+        rootMargin: '300px', // Start loading 300px before it's visible
+        threshold: 0.01,
+      }
+    );
+
+    // Observe the container
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    // Also start loading if already visible (e.g., on small screens)
+    const checkVisibility = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight + 300;
+        if (isVisible && !isLoaded) {
+          loadGlobe();
+          observer.disconnect();
+        }
+      }
+    };
+
+    // Check immediately and after a short delay
+    checkVisibility();
+    const timeoutId = setTimeout(checkVisibility, 100);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeoutId);
+    };
   }, [countriesData]);
 
   const closeModal = () => {

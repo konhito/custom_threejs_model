@@ -214,7 +214,7 @@ export default function PollinatorsPage() {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
       
-      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:pl-24 lg:pr-8">
+      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:pr-24 lg:pl-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8 sm:mb-12 text-center">

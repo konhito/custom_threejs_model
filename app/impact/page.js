@@ -5,7 +5,7 @@ export default function ImpactPage() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50">
       <Navigation />
       
-      <div className="pt-20 px-4 lg:pl-24 lg:pr-8">
+      <div className="pt-20 px-4 lg:pr-24 lg:pl-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">

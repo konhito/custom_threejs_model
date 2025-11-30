@@ -1,8 +1,23 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense, lazy } from "react";
 import { useRouter } from "next/navigation";
-import Globe from "../components/Globe";
+import dynamic from "next/dynamic";
 import Navigation from "../components/Navigation";
+import { HeroSection } from "../components/HeroSection";
+
+// Lazy load Globe component - only load after hero section is visible
+// Using intersection observer in the component itself for better control
+const Globe = dynamic(() => import("../components/Globe"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600 text-sm">Preparing interactive globe...</p>
+      </div>
+    </div>
+  ),
+});
 
 export default function Home() {
   const router = useRouter();
@@ -38,9 +53,23 @@ export default function Home() {
 
   // Show normal content for aquamundi.org
   return (
-    <main role="main" aria-label="Interactive 3D Globe of Sacred Flowers">
+    <main role="main" aria-label="Interactive 3D Globe of Sacred Flowers" className="relative">
       <Navigation />
-      <Globe />
+      {/* Hero Section - Loads First */}
+      <HeroSection />
+      {/* Globe Section - Lazy Loaded */}
+      <div id="globe-section" className="relative w-full">
+        <Suspense fallback={
+          <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600 text-sm">Loading interactive globe...</p>
+            </div>
+          </div>
+        }>
+          <Globe />
+        </Suspense>
+      </div>
     </main>
   );
 }
