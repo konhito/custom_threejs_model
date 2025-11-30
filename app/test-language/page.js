@@ -105,7 +105,7 @@ export default function TestLanguagePage() {
                     <strong>{suggestedLanguage.toUpperCase()}</strong>.
                   </p>
                   <p className="text-orange-700 text-sm">
-                    When multi-language support is activated, you'll see content in your preferred language automatically!
+                    When multi-language support is activated, you&apos;ll see content in your preferred language automatically!
                   </p>
                 </div>
               )}

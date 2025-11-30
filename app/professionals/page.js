@@ -122,7 +122,7 @@ const ProfessionalsPage = () => {
                 <h3 className="text-sm font-semibold text-slate-800 mb-2">Secure Development in Progress</h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                   This area is currently under secure development with advanced authentication and security measures being implemented. 
-                  We're ensuring the highest level of protection for our professional materials.
+                  We&apos;re ensuring the highest level of protection for our professional materials.
                 </p>
               </div>
             </div>

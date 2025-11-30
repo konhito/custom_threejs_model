@@ -174,7 +174,7 @@ const AccessGate = ({ onAccessGranted, children }) => {
             <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-slate-700">
               <div className="text-center">
                 <p className="text-slate-300 mb-3 text-xs sm:text-sm">
-                  Don't have an access code?
+                  Don&apos;t have an access code?
                 </p>
                 <div className="bg-slate-700/30 rounded-xl p-3 sm:p-4 border border-slate-600">
                   <div className="flex items-center justify-center space-x-2 text-slate-200 mb-2">

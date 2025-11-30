@@ -69,7 +69,7 @@ export default function GDPRConsentBanner() {
               </h3>
               <p className="text-sm text-gray-700 mb-2">
                 We use cookies and session tracking to improve your experience, analyze site usage, 
-                and assist in our marketing efforts. By clicking "Accept All", you consent to our use of cookies 
+                and assist in our marketing efforts. By clicking &quot;Accept All&quot;, you consent to our use of cookies 
                 and session tracking. You can manage your preferences at any time.
               </p>
               <div className="flex flex-wrap gap-2 text-xs text-gray-600">

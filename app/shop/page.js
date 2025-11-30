@@ -337,7 +337,7 @@ export default function ShopPage() {
             Nahiara Holiday Store
           </h1>
           <p className="text-lg text-gray-800 mb-8 max-w-2xl mx-auto font-medium">
-            ✨ Discover our magical collection of books and card games celebrating nature's beauty ✨
+            ✨ Discover our magical collection of books and card games celebrating nature&apos;s beauty ✨
           </p>
         </div>
       </div>
@@ -523,7 +523,7 @@ export default function ShopPage() {
               <h3 className="text-2xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent mb-2">
                 🎄 Coming Soon! 🎄
               </h3>
-              <p className="text-gray-700 font-medium">We're preparing magical holiday gifts. Check back soon! ✨</p>
+              <p className="text-gray-700 font-medium">We&apos;re preparing magical holiday gifts. Check back soon! ✨</p>
             </div>
           </div>
         )}

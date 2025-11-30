@@ -69,7 +69,7 @@ const ComingSoonModal = () => {
                   </div>
                   
                   <p className="text-gray-700 mb-6 sm:mb-8 leading-relaxed text-sm sm:text-lg">
-                    This area is under secure development. We're implementing advanced authentication and security measures to ensure the highest level of protection for our professional materials.
+                    This area is under secure development. We&apos;re implementing advanced authentication and security measures to ensure the highest level of protection for our professional materials.
                   </p>
                   
                   <div className="bg-slate-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-slate-200">
