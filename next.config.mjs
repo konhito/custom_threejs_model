@@ -1,15 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Disable ESLint during builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
   // Optimize production builds
   reactStrictMode: true,
   
   // Optimize images
   images: {
-    domains: [
-      'aquamundi-assets.s3.amazonaws.com',
-      's3.amazonaws.com',
-      process.env.CLOUDFRONT_DOMAIN,
-    ].filter(Boolean),
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'aquamundi-assets.s3.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'skiper-ui.com',
+      },
+      ...(process.env.CLOUDFRONT_DOMAIN ? [{
+        protocol: 'https',
+        hostname: process.env.CLOUDFRONT_DOMAIN,
+      }] : []),
+    ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

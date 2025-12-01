@@ -45,6 +45,12 @@ const FloatingDockMobile = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+  
+  // Don't render if className includes 'hidden'
+  if (className?.includes('hidden')) {
+    return null;
+  }
+  
   return (
     <div className={cn("relative block lg:hidden", className)}>
       <AnimatePresence>

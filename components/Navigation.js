@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { 
   FaHome, 
@@ -16,6 +17,7 @@ import {
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { FloatingDock } from "./ui/floating-dock";
+import MobileSidebar from "./MobileSidebar";
 
 const BASE_NAV_ITEMS = [
   {
@@ -86,12 +88,8 @@ const BASE_NAV_ITEMS = [
 export default function Navigation() {
   const [cartCount, setCartCount] = useState(0);
   
-  // Since we're EN-only now, pathname comes from window.location
-  const [pathname, setPathname] = useState("/");
-  
-  useEffect(() => {
-    setPathname(window.location.pathname);
-  }, []);
+  // Use Next.js usePathname hook for proper pathname detection across all pages
+  const pathname = usePathname() || "/";
 
   // Update cart count
   useEffect(() => {
@@ -131,27 +129,30 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Navigation - Floating Dock (Desktop & Mobile) */}
-        <FloatingDock
-          items={[
-            ...navigationItems.map((item) => {
-              const IconComponent = item.icon;
-              return {
-                title: item.name,
-                icon: <IconComponent className="w-full h-full" />,
-                href: item.href,
-              };
-            }),
-            // Add cart button if not on cart or home page
-            ...(!isCartPage && !isHomePage ? [{
-              title: `Cart (${cartCount} ${cartCount === 1 ? 'item' : 'items'})`,
-              icon: <FaShoppingCart className="w-full h-full" />,
-              href: cartHref,
-            }] : []),
-          ]}
-          desktopClassName="fixed right-4 top-1/2 -translate-y-1/2 z-[9999] max-h-[85vh] overflow-y-auto overflow-x-visible scrollbar-thin"
-          mobileClassName="fixed bottom-4 right-4 z-[9999]"
-        />
+      {/* Desktop Navigation - Floating Dock */}
+      <FloatingDock
+        items={[
+          ...navigationItems.map((item) => {
+            const IconComponent = item.icon;
+            return {
+              title: item.name,
+              icon: <IconComponent className="w-full h-full" />,
+              href: item.href,
+            };
+          }),
+          // Add cart button if not on cart or home page
+          ...(!isCartPage && !isHomePage ? [{
+            title: `Cart (${cartCount} ${cartCount === 1 ? 'item' : 'items'})`,
+            icon: <FaShoppingCart className="w-full h-full" />,
+            href: cartHref,
+          }] : []),
+        ]}
+        desktopClassName="fixed right-4 top-1/2 -translate-y-1/2 z-[9999] max-h-[85vh] overflow-y-auto overflow-x-visible scrollbar-thin"
+        mobileClassName="hidden" // Hide the floating dock on mobile
+      />
+
+      {/* Mobile Navigation - Sidebar */}
+      <MobileSidebar />
     </>
   );
 }

@@ -14,6 +14,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import FaultyTerminal from '../../components/FaultyTerminal';
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -80,9 +81,32 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 relative">
+      {/* FaultyTerminal Background */}
+      <div style={{ width: '100%', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, opacity: 0.3 }}>
+        <FaultyTerminal
+          scale={1.5}
+          gridMul={[2, 1]}
+          digitSize={1.2}
+          timeScale={1}
+          pause={false}
+          scanlineIntensity={1}
+          glitchAmount={1}
+          flickerAmount={1}
+          noiseAmp={1}
+          chromaticAberration={0}
+          dither={0}
+          curvature={0}
+          tint="#ffffff"
+          mouseReact={true}
+          mouseStrength={0.5}
+          pageLoadAnimation={false}
+          brightness={1}
+        />
+      </div>
+      
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 bg-opacity-95 backdrop-blur-sm transform transition-transform duration-300 ease-in-out ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex flex-col h-full">
@@ -147,7 +171,7 @@ export default function AdminLayout({ children }) {
         sidebarOpen ? 'lg:ml-64' : 'ml-0'
       }`}>
         {/* Top Bar */}
-        <div className="sticky top-0 z-40 h-16 bg-white border-b border-gray-200 flex items-center px-6">
+        <div className="sticky top-0 z-40 h-16 bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200 flex items-center px-6">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="text-gray-500 hover:text-gray-700"
@@ -168,7 +192,7 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* Page Content */}
-        <main className="p-6">
+        <main className="p-6 relative z-10">
           {children}
         </main>
       </div>

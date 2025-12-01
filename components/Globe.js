@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { X, MapPin, Flower, Info, Rotate3D, Target } from "lucide-react";
+import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import GlobeLoader from "./GlobeLoader";
 
 // Flower Detail Modal Component
 function FlowerDetailModal({ country, isVisible, onClose }) {
@@ -226,159 +227,131 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${
+      className={`fixed inset-0 z-[100000] flex items-center justify-center p-4 sm:p-6 transition-all duration-500 ${
         isVisible
-          ? "bg-black/70 backdrop-blur-sm"
+          ? "bg-black/80 backdrop-blur-md"
           : "bg-transparent pointer-events-none"
       }`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="flower-modal-title"
       aria-describedby="flower-modal-description"
+      onClick={onClose}
     >
       <div
-        className={`bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-6xl w-full max-h-[95vh] sm:max-h-[95vh] md:max-h-[95vh] lg:max-h-[95vh] overflow-hidden border border-white/20 transition-all duration-500 transform ${
-          isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        className={`bg-white rounded-3xl shadow-2xl max-w-5xl w-full overflow-hidden transition-all duration-700 transform ${
+          isVisible ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-8"
         }`}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="relative p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-b border-white/10">
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-10"
-            aria-label="Close flower details dialog"
-          >
-            <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" aria-hidden="true" />
-          </button>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center transition-all duration-200 z-20 group"
+          aria-label="Close flower details dialog"
+        >
+          <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:rotate-90 transition-transform duration-300" aria-hidden="true" />
+        </button>
 
-          <div className="flex items-center space-x-3 sm:space-x-4 pr-12 sm:pr-0">
-            <div
-              className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0"
-              style={{
-                background: `linear-gradient(135deg, ${country.color}20, ${country.color}40)`,
-                border: `2px solid ${country.color}`,
-              }}
-            >
-              <Flower className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: country.color }} />
-            </div>
-            <div className="min-w-0 flex-1">
-              <h1 id="flower-modal-title" className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1 truncate">
-                {country.flowerName}
-              </h1>
-              <p className="text-sm sm:text-base lg:text-lg italic text-gray-600 mb-1 truncate">
-                {country.flowerScientificName}
-              </p>
-              <p id="flower-modal-description" className="text-xs sm:text-sm text-gray-500 flex items-center">
-                <MapPin className="w-3 h-3 mr-1 flex-shrink-0" aria-hidden="true" />
-                <span className="truncate">National flower of {country.country}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex flex-col lg:flex-row h-[calc(95vh-120px)]">
-          {/* 3D Model Viewer */}
-          <div className="lg:w-1/2 relative bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="flex flex-col lg:flex-row max-h-[90vh]">
+          {/* 3D Model Viewer - Left Side */}
+          <div className="lg:w-1/2 relative bg-gradient-to-br from-gray-50 to-gray-100">
             <div
               ref={modelViewerRef}
-              className="w-full h-48 sm:h-56 md:h-64 lg:h-full rounded-lg"
+              className="w-full h-64 sm:h-80 lg:h-[90vh] rounded-lg"
             />
 
             {!isModelLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full animate-spin flex items-center justify-center mx-auto mb-4">
-                    <Rotate3D className="w-6 h-6 text-white animate-pulse" />
+                  <div 
+                    className="w-16 h-16 rounded-full animate-spin flex items-center justify-center mx-auto mb-4"
+                    style={{
+                      background: `linear-gradient(135deg, ${country.color}40, ${country.color}80)`,
+                    }}
+                  >
+                    <Rotate3D className="w-8 h-8 animate-pulse" style={{ color: country.color }} />
                   </div>
                   <p className="text-lg font-medium text-gray-600">
-                    Loading 3D Model...
+                    Loading...
                   </p>
                 </div>
               </div>
             )}
 
-            <div className="absolute bottom-4 left-4 bg-black/20 backdrop-blur-sm rounded-lg p-2">
-              <p className="text-xs text-white">
-                Click and drag to rotate • Scroll to zoom
+            <div className="absolute bottom-4 left-4 bg-black/30 backdrop-blur-md rounded-full px-4 py-2">
+              <p className="text-xs text-white font-medium">
+                Drag to rotate • Scroll to zoom
               </p>
             </div>
           </div>
 
-          {/* Information Panel */}
-          <div className="lg:w-1/2 p-4 sm:p-6 overflow-y-auto">
-            <div className="space-y-4 sm:space-y-6">
-              {/* Country Info */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-4 rounded-xl">
-                  <h4 className="font-semibold text-gray-700 mb-1 text-xs sm:text-sm">
-                    Country
-                  </h4>
-                  <p className="text-base sm:text-lg font-bold text-blue-600">
-                    {country.country}
-                  </p>
+          {/* Information Panel - Right Side */}
+          <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 overflow-y-auto">
+            <div className="space-y-6">
+              {/* Header */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{
+                      backgroundColor: `${country.color}15`,
+                    }}
+                  >
+                    <Flower className="w-6 h-6" style={{ color: country.color }} />
+                  </div>
+                  <div className="flex-1">
+                    <h1 id="flower-modal-title" className="text-3xl sm:text-4xl font-bold text-gray-900">
+                      {country.flowerName}
+                    </h1>
+                  </div>
                 </div>
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 rounded-xl">
-                  <h4 className="font-semibold text-gray-700 mb-1 text-xs sm:text-sm">
-                    Population
-                  </h4>
-                  <p className="text-base sm:text-lg font-bold text-green-600">
-                    {country.population}
-                  </p>
-                </div>
-              </div>
-
-              {/* Flower Information */}
-              <div className="space-y-3 sm:space-y-4">
-                <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-4 sm:p-5 rounded-xl border border-pink-200/50">
-                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 flex items-center text-sm sm:text-base">
-                    <Flower
-                      className="w-4 h-4 mr-2 flex-shrink-0"
-                      style={{ color: country.color }}
-                    />
-                    Description
-                  </h4>
-                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                    {country.flowerDescription}
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-4 sm:p-5 rounded-xl">
-                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">
-                    Cultural Significance
-                  </h4>
-                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                    {country.culturalSignificance}
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 sm:p-5 rounded-xl">
-                  <h4 className="font-semibold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">
-                    Botanical Information
-                  </h4>
-                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                    {country.botanicalInfo}
-                  </p>
+                
+                <p className="text-lg sm:text-xl italic text-gray-500 font-light">
+                  {country.flowerScientificName}
+                </p>
+                
+                <div className="flex items-center gap-2 text-gray-600">
+                  <MapPin className="w-4 h-4" style={{ color: country.color }} />
+                  <span className="text-sm font-medium">National flower of {country.country}</span>
                 </div>
               </div>
 
-              {/* Additional Country Details */}
-              <div className="grid grid-cols-1 gap-2 sm:gap-3">
-                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Capital:</span>
-                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.capital}</span>
+              {/* Divider */}
+              <div 
+                className="h-px w-full"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${country.color}40, transparent)`,
+                }}
+              />
+
+              {/* Description */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+                  About
+                </h4>
+                <p className="text-gray-700 leading-relaxed text-base">
+                  {country.flowerDescription}
+                </p>
+              </div>
+
+              {/* Country Details */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Capital</p>
+                  <p className="text-base font-semibold text-gray-900">{country.capital}</p>
                 </div>
-                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Language:</span>
-                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.language}</span>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Language</p>
+                  <p className="text-base font-semibold text-gray-900">{country.language}</p>
                 </div>
-                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Currency:</span>
-                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.currency}</span>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</p>
+                  <p className="text-base font-semibold text-gray-900">{country.currency}</p>
                 </div>
-                <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
-                  <span className="font-medium text-gray-600 text-xs sm:text-sm">Continent:</span>
-                  <span className="text-gray-800 text-xs sm:text-sm text-right">{country.continent}</span>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Continent</p>
+                  <p className="text-base font-semibold text-gray-900">{country.continent}</p>
                 </div>
               </div>
             </div>
@@ -389,12 +362,18 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
   );
 }
 
-export default function GlobeComponent() {
+export default function GlobeComponent({ showOvalBorder = true, showBackground = true }) {
   const containerRef = useRef();
+  const fullscreenContainerRef = useRef();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const controlsRef = useRef();
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const rendererRef = useRef(null);
+  const normalCameraPosition = useRef({ x: 0, y: 0, z: 8 });
 
   // Countries data array - India and USA only
   const countriesData = useMemo(() => [
@@ -755,6 +734,7 @@ export default function GlobeComponent() {
         // Create scene
         const scene = new THREE.Scene();
         scene.background = null; // Make background transparent so CSS background shows
+        sceneRef.current = scene;
         console.log("✅ Scene created");
 
         // Create camera with mobile-friendly settings
@@ -764,19 +744,37 @@ export default function GlobeComponent() {
           0.1,
           1000
         );
+        cameraRef.current = camera;
         
          // Adjust camera position based on screen size
          const isMobile = window.innerWidth < 768;
          const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
          
-         if (isMobile) {
-           camera.position.set(0, 0, 7); // Further back for smaller globe on mobile
-         } else if (isTablet) {
-           camera.position.set(0, 0, 6.5); // Medium distance for tablet
-         } else {
-           camera.position.set(0, 0, 8); // Original distance for desktop
-         }
+         // Set initial camera position far for zoom-in effect
+         const targetDistance = isMobile ? 7 : isTablet ? 6.5 : 8;
+         const startDistance = isMobile ? 14 : isTablet ? 13 : 16;
+         
+         camera.position.set(0, 0, startDistance);
         console.log("✅ Camera positioned at:", camera.position);
+        
+        // Animate camera zoom in on load
+        const zoomDuration = 2000; // 2 seconds
+        const startTime = Date.now();
+        
+        const animateZoom = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / zoomDuration, 1);
+          const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+          
+          const currentDistance = startDistance + (targetDistance - startDistance) * easeProgress;
+          camera.position.z = currentDistance;
+          
+          if (progress < 1) {
+            requestAnimationFrame(animateZoom);
+          }
+        };
+        
+        animateZoom();
 
         // Create renderer
         const renderer = new THREE.WebGLRenderer({
@@ -790,6 +788,7 @@ export default function GlobeComponent() {
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha (transparent)
+        rendererRef.current = renderer;
         containerRef.current.appendChild(renderer.domElement);
 
         // Add balanced lighting
@@ -1040,17 +1039,17 @@ export default function GlobeComponent() {
             ballAnimation();
             }, 1000 + (index * 200)); // Staggered delay for each country
 
-              // Subtle 3-layer glow effect for better visual balance
+              // Enhanced 3-layer glow effect with stronger aura
               // Inner glow (closest to ball)
               const innerGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 1.3,
+                adjustedSize * 1.4,
             16,
             16
           );
               const innerGlowMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
                 transparent: true,
-                opacity: 0.25,
+                opacity: 0.45,
               });
               const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
               innerGlow.userData = { data: countryData };
@@ -1058,14 +1057,14 @@ export default function GlobeComponent() {
 
               // Middle glow
               const middleGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 1.8,
+                adjustedSize * 2.0,
                 16,
                 16
               );
               const middleGlowMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
             transparent: true,
-            opacity: 0.15,
+            opacity: 0.30,
           });
               const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
               middleGlow.userData = { data: countryData };
@@ -1073,31 +1072,31 @@ export default function GlobeComponent() {
 
               // Outer glow
               const outerGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 2.4,
+                adjustedSize * 2.8,
                 16,
                 16
               );
               const outerGlowMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
                 transparent: true,
-                opacity: 0.08,
+                opacity: 0.18,
               });
               const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
               outerGlow.userData = { data: countryData };
               ballGroup.add(outerGlow);
 
-            // Subtle ring effect for special countries
+            // Enhanced ring effect for special countries
             if (countryData.special) {
-              // Single elegant ring
+              // Single elegant ring with stronger glow
           const ringGeometry = new THREE.RingGeometry(
                 adjustedSize * 1.6,
-                adjustedSize * 1.9,
+                adjustedSize * 2.0,
             32
           );
           const ringMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
             transparent: true,
-            opacity: 0.3,
+            opacity: 0.5,
             side: THREE.DoubleSide,
           });
           const ring = new THREE.Mesh(ringGeometry, ringMaterial);
@@ -1123,13 +1122,23 @@ export default function GlobeComponent() {
           });
         }
 
+        // Cache for last distance to avoid unnecessary recalculations
+        let lastDistance = -1;
+        const DISTANCE_THRESHOLD = 0.1; // Only recalculate if distance changed by more than this
+        
         // Function to scale and reposition satellites based on camera distance (zoom level)
         const scaleSatellitesBasedOnZoom = (camera) => {
           const distance = camera.position.length();
           
-           // Mobile-friendly distance limits
+          // Only recalculate if distance changed significantly (optimization)
+          if (Math.abs(distance - lastDistance) < DISTANCE_THRESHOLD) {
+            return; // Skip recalculation if distance hasn't changed much
+          }
+          lastDistance = distance;
+          
+           // Mobile-friendly distance limits (expanded to support fullscreen)
            const minDistance = isMobile ? 3 : isTablet ? 2.5 : 3;
-           const maxDistance = isMobile ? 12 : isTablet ? 11 : 15;
+           const maxDistance = isMobile ? 20 : isTablet ? 19 : 22;
           
           // Calculate normalized distance (0 = closest, 1 = farthest)
           const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
@@ -1149,11 +1158,6 @@ export default function GlobeComponent() {
              : isTablet
              ? 2.8 + (normalizedDistance * 0.6)
              : 4.2 + (normalizedDistance * 0.6);
-          
-          // Debug logging (remove in production)
-          if (Math.random() < 0.01) { // Only log occasionally to avoid spam
-            console.log(`Zoom: ${distance.toFixed(1)}, Base Scale: ${baseScaleFactor.toFixed(2)}, Radius: ${dynamicRadius.toFixed(2)}`);
-          }
           
           // Apply scaling and repositioning to all ball groups
           ballGroups.forEach((ballGroup) => {
@@ -1179,27 +1183,27 @@ export default function GlobeComponent() {
         controls.enableDamping = true;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 0.5;
-        controls.enableZoom = true;
+        controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
         
-         // Mobile-friendly zoom limits
+         // Mobile-friendly zoom limits (set high enough to support fullscreen mode)
          if (isMobile) {
            controls.minDistance = 3;
-           controls.maxDistance = 12;
+           controls.maxDistance = 25; // High enough for fullscreen
            controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
          } else if (isTablet) {
            controls.minDistance = 2.5;
-           controls.maxDistance = 11;
+           controls.maxDistance = 24; // High enough for fullscreen
            controls.autoRotateSpeed = 0.4;
          } else {
            controls.minDistance = 3;
-           controls.maxDistance = 15;
+           controls.maxDistance = 28; // High enough for fullscreen
          }
         
-        // Mobile touch settings
+        // Mobile touch settings - disable zoom/dolly
         controls.touches = {
           ONE: THREE.TOUCH.ROTATE,
-          TWO: THREE.TOUCH.DOLLY_PAN
+          TWO: THREE.TOUCH.ROTATE // Changed from DOLLY_PAN to ROTATE to prevent zoom
         };
 
         // Add zoom event listener to immediately scale satellites
@@ -1207,7 +1211,7 @@ export default function GlobeComponent() {
           scaleSatellitesBasedOnZoom(camera);
         });
 
-        // Store controls reference so closeModal can access it
+        // Store controls reference so closeModal and fullscreen can access it
         controlsRef.current = controls;
 
         // Add click detection using raycasting
@@ -1215,8 +1219,12 @@ export default function GlobeComponent() {
         const mouse = new THREE.Vector2();
 
         const handleClick = (event) => {
-          // Get mouse position
-          const rect = containerRef.current.getBoundingClientRect();
+          // Prevent any zoom or control changes from click
+          event.preventDefault();
+          event.stopPropagation();
+          
+          // Get mouse position relative to the canvas/renderer element
+          const rect = renderer.domElement.getBoundingClientRect();
           mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
           mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
@@ -1239,8 +1247,15 @@ export default function GlobeComponent() {
             const countryData = clickedObject.userData.data;
 
             if (countryData) {
+              // Prevent fullscreen toggle when clicking on a flower
+              event.stopPropagation();
+              
               // Stop auto rotation
               controls.autoRotate = false;
+              
+              // Ensure zoom stays disabled
+              controls.enableZoom = false;
+              controls.enableDolly = false;
 
               // Show modal
               setSelectedCountry(countryData);
@@ -1258,8 +1273,10 @@ export default function GlobeComponent() {
         
         const handleMouseMove = (event) => {
           const mouse = new THREE.Vector2();
-          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+          // Use renderer element's bounding rect for accurate coordinates
+          const rect = renderer.domElement.getBoundingClientRect();
+          mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
           const raycaster = new THREE.Raycaster();
           raycaster.setFromCamera(mouse, camera);
@@ -1296,18 +1313,18 @@ export default function GlobeComponent() {
           // Update ball colors based on screen position
           updateBallColors(scene, camera, renderer);
           
-          // Add dynamic pulsing glow animation based on screen position
+          // Add dynamic pulsing glow animation with stronger effect
           const time = Date.now() * 0.001;
           scene.traverse((child) => {
             if (child.userData && child.userData.data && child.material && child.material.transparent) {
               // Only animate glow materials (not the main ball)
-              if (child.geometry.type === 'SphereGeometry' && child.material.opacity < 0.6) {
+              if (child.geometry.type === 'SphereGeometry' && child.material.opacity < 0.9) {
                 const ballGroup = child.parent;
                 if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
                   const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
                   
-                  // More pulsing for center satellites, less for edge satellites
-                  const pulseIntensity = 0.15 * (1 - distanceFromCenter); // 0.15 at center, 0 at edge
+                  // Stronger pulsing effect for better visibility
+                  const pulseIntensity = 0.25 * (1 - distanceFromCenter); // 0.25 at center, 0 at edge (increased from 0.15)
                   const pulseSpeed = 1.2 + (0.8 * (1 - distanceFromCenter)); // Faster pulse at center
                   
                   const pulse = Math.sin(time * pulseSpeed) * pulseIntensity + (1 - pulseIntensity);
@@ -1421,61 +1438,217 @@ export default function GlobeComponent() {
     }
   };
 
-  return (
-    <div 
-      className="w-full h-screen sm:h-screen md:h-screen lg:h-screen flex items-center justify-center relative overflow-hidden"
-      role="main"
-      aria-label="Interactive 3D Globe of Sacred Flowers"
-    >
-      {/* Optimized Background Image */}
-      <Image
-        src="/bg_image.png"
-        alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
-        fill
-        priority
-        quality={85}
-        sizes="100vw"
-        className="object-cover"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-      />
-      {/* Main globe container */}
-      <div
-        ref={containerRef}
-        className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 ${
-          isGlobeLoaded ? "opacity-100" : "opacity-0"
-        }`}
-        role="img"
-        aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
-        tabIndex={0}
-      />
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+  
+  // Handle fullscreen transitions
+  useEffect(() => {
+    if (!rendererRef.current || !cameraRef.current || !sceneRef.current) return;
+    
+    const handleFullscreenChange = () => {
+      const targetContainer = isFullscreen ? fullscreenContainerRef.current : containerRef.current;
+      if (!targetContainer) return;
+      
+      // Move canvas to correct container
+      if (!targetContainer.contains(rendererRef.current.domElement)) {
+        // Save current camera position when entering fullscreen
+        if (isFullscreen) {
+          normalCameraPosition.current = {
+            x: cameraRef.current.position.x,
+            y: cameraRef.current.position.y,
+            z: cameraRef.current.position.z
+          };
+        }
+        
+        targetContainer.appendChild(rendererRef.current.domElement);
+        
+        // Update renderer size
+        const width = isFullscreen ? window.innerWidth : targetContainer.clientWidth;
+        const height = isFullscreen ? window.innerHeight : targetContainer.clientHeight;
+        rendererRef.current.setSize(width, height);
+        
+        // Update camera
+        cameraRef.current.aspect = width / height;
+        cameraRef.current.updateProjectionMatrix();
+        
+        // Adjust camera distance
+        if (isFullscreen) {
+          cameraRef.current.position.set(0, 0, 18);
+        } else {
+          cameraRef.current.position.set(
+            normalCameraPosition.current.x,
+            normalCameraPosition.current.y,
+            normalCameraPosition.current.z
+          );
+        }
+        
+        // Render immediately
+        rendererRef.current.render(sceneRef.current, cameraRef.current);
+      }
+    };
+    
+    handleFullscreenChange();
+    
+    // ESC key handler
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isFullscreen]);
 
-      {/* Loading Animation */}
-      {!isGlobeLoaded && (
-        <div 
-          className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
-          role="status"
-          aria-live="polite"
-          aria-label="Loading interactive 3D globe"
-        >
-          <div className="text-center px-4">
-            <div 
-              className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 sm:mb-6"
-              aria-hidden="true"
-            ></div>
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2">
-              Loading Galactic Garden
-            </h2>
-            <p className="text-blue-300 text-sm sm:text-base lg:text-lg">
-              Preparing your cosmic journey...
-            </p>
-          </div>
+    // Simple fullscreen handler - just show/hide overlay with cloned canvas view
+    useEffect(() => {
+      const handleEsc = (e) => {
+        if (e.key === 'Escape' && isFullscreen) {
+          setIsFullscreen(false);
+        }
+      };
+      window.addEventListener('keydown', handleEsc);
+
+      // Manage body scroll
+      if (isFullscreen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    
+      return () => {
+        window.removeEventListener('keydown', handleEsc);
+        document.body.style.overflow = '';
+      };
+    }, [isFullscreen]);
+
+  return (
+    <>
+      {/* Fullscreen Overlay */}
+      {isFullscreen && (
+        <div className="fixed inset-0 z-[99999] bg-black">
+          {/* Background */}
+          {showBackground && (
+            <div className="absolute inset-0">
+              <Image
+                src="/bg_image.png"
+                alt="Galactic Garden Background"
+                fill
+                priority
+                quality={90}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
+          
+          {/* Close Button */}
+          <button
+            onClick={() => setIsFullscreen(false)}
+            className="absolute top-6 right-6 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50"
+            aria-label="Exit fullscreen"
+          >
+            <Minimize2 className="w-7 h-7 text-white" />
+          </button>
+          
+          {/* Globe Container */}
+          <div 
+            ref={fullscreenContainerRef}
+            className="absolute inset-0"
+            style={{ cursor: 'grab' }}
+          />
         </div>
       )}
+      
+      {/* Normal View */}
+      <div 
+        className="w-full h-full flex items-center justify-center relative group"
+        style={{
+          minHeight: '100%',
+          minWidth: '100%',
+        }}
+        role="main"
+        aria-label="Interactive 3D Globe of Sacred Flowers"
+      >
+        {/* Expand Button */}
+        <button
+          onClick={toggleFullscreen}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-0 group-hover:opacity-100"
+          aria-label="Enter fullscreen"
+        >
+          <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+        </button>
 
-      {/* UI Overlay */}
+        {/* Background Image */}
+        {showBackground && (
+            <Image
+              src="/bg_image.png"
+              alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
+              fill
+              priority
+              quality={85}
+              sizes="100vw"
+              className="object-cover"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            />
+          )}
+          
+          {/* Oval Border Frame */}
+          {showOvalBorder && (
+            <div 
+              className="absolute inset-0 flex items-center justify-center z-0"
+              style={{
+                clipPath: 'ellipse(85% 90% at 50% 50%)',
+              }}
+            >
+              {/* Decorative border */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  clipPath: 'ellipse(85% 90% at 50% 50%)',
+                  border: '3px solid rgba(255, 255, 255, 0.3)',
+                  borderRadius: '50%',
+                  boxShadow: 'inset 0 0 60px rgba(255, 255, 255, 0.1), 0 0 80px rgba(0, 0, 0, 0.2)',
+                }}
+              />
+            </div>
+          )}
 
-      {/* Instructions */}
+          {/* Main globe container */}
+          <div
+            ref={containerRef}
+            className={`w-full h-full cursor-pointer relative transition-opacity duration-1000 z-10 ${
+              isGlobeLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            style={showOvalBorder ? {
+              clipPath: 'ellipse(85% 90% at 50% 50%)',
+            } : {}}
+            role="img"
+            aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
+            tabIndex={0}
+            onClick={(e) => {
+              // Only toggle fullscreen if clicking on the canvas itself (not caught by flower click)
+              if (e.target === e.currentTarget || e.target.tagName === 'CANVAS') {
+                toggleFullscreen();
+              }
+            }}
+          />
+
+          {/* Loading Animation */}
+          {!isGlobeLoaded && (
+            <div 
+              className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
+              role="status"
+              aria-live="polite"
+              aria-label="Loading interactive 3D globe"
+            >
+              <GlobeLoader />
+            </div>
+          )}
+
+        </div>
 
       {/* Enhanced Flower Detail Modal */}
       {selectedCountry && (
@@ -1485,6 +1658,6 @@ export default function GlobeComponent() {
           onClose={closeModal}
         />
       )}
-    </div>
+    </>
   );
 }
