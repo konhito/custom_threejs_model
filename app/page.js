@@ -26,25 +26,13 @@ export default function Home() {
 
   // Handle page loading
   useEffect(() => {
-    // Simulate minimum loading time for better UX
+    // Minimum 2 second loading time for better UX
     const minLoadTime = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // 3 seconds minimum
-
-    // Also listen for when page is fully loaded
-    if (document.readyState === 'complete') {
-      setIsLoading(false);
-    } else {
-      window.addEventListener('load', () => {
-        setIsLoading(false);
-      });
-    }
+    }, 2000); // 2 seconds minimum
 
     return () => {
       clearTimeout(minLoadTime);
-      window.removeEventListener('load', () => {
-        setIsLoading(false);
-      });
     };
   }, []);
 

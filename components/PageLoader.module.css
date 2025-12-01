@@ -8,7 +8,6 @@
   align-items: center;
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
   backdrop-filter: blur(10px);
-  animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
   will-change: opacity, visibility;
   transform: translateZ(0);
 }
