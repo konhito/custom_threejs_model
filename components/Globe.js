@@ -373,7 +373,6 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
   const sceneRef = useRef(null);
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
-  const normalCameraPosition = useRef({ x: 0, y: 0, z: 8 });
 
   // Countries data array - India and USA only
   const countriesData = useMemo(() => [
@@ -1136,9 +1135,9 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           }
           lastDistance = distance;
           
-           // Mobile-friendly distance limits (expanded to support fullscreen)
+           // Mobile-friendly distance limits
            const minDistance = isMobile ? 3 : isTablet ? 2.5 : 3;
-           const maxDistance = isMobile ? 20 : isTablet ? 19 : 22;
+           const maxDistance = isMobile ? 12 : isTablet ? 11 : 15;
           
           // Calculate normalized distance (0 = closest, 1 = farthest)
           const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
@@ -1186,24 +1185,24 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
         
-         // Mobile-friendly zoom limits (set high enough to support fullscreen mode)
+         // Mobile-friendly zoom limits
          if (isMobile) {
            controls.minDistance = 3;
-           controls.maxDistance = 25; // High enough for fullscreen
+           controls.maxDistance = 12;
            controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
          } else if (isTablet) {
            controls.minDistance = 2.5;
-           controls.maxDistance = 24; // High enough for fullscreen
+           controls.maxDistance = 11;
            controls.autoRotateSpeed = 0.4;
          } else {
            controls.minDistance = 3;
-           controls.maxDistance = 28; // High enough for fullscreen
+           controls.maxDistance = 15;
          }
         
-        // Mobile touch settings - disable zoom/dolly
+        // Mobile touch settings
         controls.touches = {
           ONE: THREE.TOUCH.ROTATE,
-          TWO: THREE.TOUCH.ROTATE // Changed from DOLLY_PAN to ROTATE to prevent zoom
+          TWO: THREE.TOUCH.DOLLY_PAN
         };
 
         // Add zoom event listener to immediately scale satellites
@@ -1219,10 +1218,6 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         const mouse = new THREE.Vector2();
 
         const handleClick = (event) => {
-          // Prevent any zoom or control changes from click
-          event.preventDefault();
-          event.stopPropagation();
-          
           // Get mouse position relative to the canvas/renderer element
           const rect = renderer.domElement.getBoundingClientRect();
           mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -1252,10 +1247,6 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
               
               // Stop auto rotation
               controls.autoRotate = false;
-              
-              // Ensure zoom stays disabled
-              controls.enableZoom = false;
-              controls.enableDolly = false;
 
               // Show modal
               setSelectedCountry(countryData);
@@ -1441,147 +1432,141 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
-  
-  // Handle fullscreen transitions
+
+  // Handle ESC key to exit fullscreen
+  // Handle ESC key, move renderer between containers, and toggle zoom
   useEffect(() => {
-    if (!rendererRef.current || !cameraRef.current || !sceneRef.current) return;
-    
-    const handleFullscreenChange = () => {
-      const targetContainer = isFullscreen ? fullscreenContainerRef.current : containerRef.current;
-      if (!targetContainer) return;
-      
-      // Move canvas to correct container
-      if (!targetContainer.contains(rendererRef.current.domElement)) {
-        // Save current camera position when entering fullscreen
-        if (isFullscreen) {
-          normalCameraPosition.current = {
-            x: cameraRef.current.position.x,
-            y: cameraRef.current.position.y,
-            z: cameraRef.current.position.z
-          };
-        }
-        
-        targetContainer.appendChild(rendererRef.current.domElement);
-        
-        // Update renderer size
-        const width = isFullscreen ? window.innerWidth : targetContainer.clientWidth;
-        const height = isFullscreen ? window.innerHeight : targetContainer.clientHeight;
-        rendererRef.current.setSize(width, height);
-        
-        // Update camera
-        cameraRef.current.aspect = width / height;
-        cameraRef.current.updateProjectionMatrix();
-        
-        // Adjust camera distance
-        if (isFullscreen) {
-          cameraRef.current.position.set(0, 0, 18);
-        } else {
-          cameraRef.current.position.set(
-            normalCameraPosition.current.x,
-            normalCameraPosition.current.y,
-            normalCameraPosition.current.z
-          );
-        }
-        
-        // Render immediately
-        rendererRef.current.render(sceneRef.current, cameraRef.current);
-      }
-    };
-    
-    handleFullscreenChange();
-    
-    // ESC key handler
     const handleEsc = (e) => {
       if (e.key === 'Escape' && isFullscreen) {
         setIsFullscreen(false);
       }
     };
-    
     window.addEventListener('keydown', handleEsc);
+
+    // Enable/disable zoom based on fullscreen state
+    if (controlsRef.current) {
+      controlsRef.current.enableZoom = isFullscreen; // Enable zoom only in fullscreen
+      console.log(`🔍 Zoom ${isFullscreen ? 'enabled' : 'disabled'} (fullscreen: ${isFullscreen})`);
+    }
+
+    // Move the renderer to the correct container when fullscreen state changes
+    if (rendererRef.current) {
+      const targetContainer = isFullscreen ? fullscreenContainerRef.current : containerRef.current;
+      if (targetContainer && !targetContainer.contains(rendererRef.current.domElement)) {
+        // Remove from current container
+        if (rendererRef.current.domElement.parentNode) {
+          rendererRef.current.domElement.parentNode.removeChild(rendererRef.current.domElement);
+        }
+        // Add to new container
+        targetContainer.appendChild(rendererRef.current.domElement);
+        
+        // Update renderer size
+        const width = targetContainer.clientWidth;
+        const height = targetContainer.clientHeight;
+        if (cameraRef.current) {
+          cameraRef.current.aspect = width / height;
+          cameraRef.current.updateProjectionMatrix();
+        }
+        rendererRef.current.setSize(width, height);
+      }
+    }
+
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isFullscreen]);
-
-    // Simple fullscreen handler - just show/hide overlay with cloned canvas view
-    useEffect(() => {
-      const handleEsc = (e) => {
-        if (e.key === 'Escape' && isFullscreen) {
-          setIsFullscreen(false);
-        }
-      };
-      window.addEventListener('keydown', handleEsc);
-
-      // Manage body scroll
-      if (isFullscreen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    
-      return () => {
-        window.removeEventListener('keydown', handleEsc);
-        document.body.style.overflow = '';
-      };
-    }, [isFullscreen]);
 
   return (
     <>
       {/* Fullscreen Overlay */}
       {isFullscreen && (
-        <div className="fixed inset-0 z-[99999] bg-black">
-          {/* Background */}
-          {showBackground && (
-            <div className="absolute inset-0">
-              <Image
-                src="/bg_image.png"
-                alt="Galactic Garden Background"
-                fill
-                priority
-                quality={90}
-                sizes="100vw"
-                className="object-cover"
-              />
-            </div>
-          )}
-          
+        <div 
+          className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex items-center justify-center"
+          onClick={(e) => {
+            // Close fullscreen when clicking the background (not the globe)
+            if (e.target === e.currentTarget) {
+              setIsFullscreen(false);
+            }
+          }}
+        >
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-6 right-6 w-14 h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
             aria-label="Exit fullscreen"
           >
-            <Minimize2 className="w-7 h-7 text-white" />
+            <Minimize2 className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:scale-110 transition-transform" />
           </button>
-          
-          {/* Globe Container */}
-          <div 
-            ref={fullscreenContainerRef}
-            className="absolute inset-0"
-            style={{ cursor: 'grab' }}
-          />
+
+          {/* Fullscreen Globe Container */}
+          <div className="w-full h-full relative">
+            <div 
+              className="w-full h-full flex items-center justify-center relative"
+              role="main"
+              aria-label="Interactive 3D Globe of Sacred Flowers - Fullscreen Mode"
+            >
+              {/* Background Image */}
+              {showBackground && (
+                <Image
+                  src="/bg_image.png"
+                  alt="Galactic Garden Background"
+                  fill
+                  priority
+                  quality={85}
+                  sizes="100vw"
+                  className="object-cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                />
+              )}
+              
+              {/* Main globe container in fullscreen */}
+              <div
+                ref={fullscreenContainerRef}
+                className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 z-10 ${
+                  isGlobeLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                role="img"
+                aria-label="Interactive 3D globe showing national flowers from different countries"
+                tabIndex={0}
+              />
+
+              {/* Loading Animation */}
+              {!isGlobeLoaded && (
+                <div 
+                  className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Loading interactive 3D globe"
+                >
+                  <GlobeLoader />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
-      
-      {/* Normal View */}
-      <div 
-        className="w-full h-full flex items-center justify-center relative group"
-        style={{
-          minHeight: '100%',
-          minWidth: '100%',
-        }}
-        role="main"
-        aria-label="Interactive 3D Globe of Sacred Flowers"
-      >
-        {/* Expand Button */}
-        <button
-          onClick={toggleFullscreen}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-0 group-hover:opacity-100"
-          aria-label="Enter fullscreen"
-        >
-          <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-        </button>
 
-        {/* Background Image */}
-        {showBackground && (
+      {/* Normal View */}
+      {!isFullscreen && (
+        <div 
+          className="w-full h-full flex items-center justify-center relative group"
+          style={{
+            minHeight: '100%',
+            minWidth: '100%',
+          }}
+          role="main"
+          aria-label="Interactive 3D Globe of Sacred Flowers"
+        >
+          {/* Fullscreen Button Overlay */}
+          <button
+            onClick={toggleFullscreen}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-0 group-hover:opacity-100"
+            aria-label="Enter fullscreen"
+          >
+            <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </button>
+
+          {/* Background Image - Only show if showBackground is true (full page mode) */}
+          {showBackground && (
             <Image
               src="/bg_image.png"
               alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
@@ -1595,7 +1580,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
             />
           )}
           
-          {/* Oval Border Frame */}
+          {/* Oval Border Frame - Contains the globe (only if showOvalBorder is true) */}
           {showOvalBorder && (
             <div 
               className="absolute inset-0 flex items-center justify-center z-0"
@@ -1648,7 +1633,11 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
             </div>
           )}
 
+          {/* UI Overlay */}
+
+          {/* Instructions */}
         </div>
+      )}
 
       {/* Enhanced Flower Detail Modal */}
       {selectedCountry && (
