@@ -3,10 +3,35 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import GlobeLoader from "./GlobeLoader";
+
+// Three.js is loaded dynamically to avoid SSR issues
+let THREE = null;
+let GLTFLoader = null;
+let OrbitControls = null;
+
+// Promise to track Three.js loading
+let threeLoadPromise = null;
+
+async function loadThreeJS() {
+  if (THREE) return { THREE, GLTFLoader, OrbitControls };
+  
+  if (!threeLoadPromise) {
+    threeLoadPromise = (async () => {
+      const threeModule = await import("three");
+      const gltfModule = await import("three/examples/jsm/loaders/GLTFLoader.js");
+      const controlsModule = await import("three/examples/jsm/controls/OrbitControls.js");
+      
+      THREE = threeModule;
+      GLTFLoader = gltfModule.GLTFLoader;
+      OrbitControls = controlsModule.OrbitControls;
+      
+      return { THREE, GLTFLoader, OrbitControls };
+    })();
+  }
+  
+  return threeLoadPromise;
+}
 
 // Flower Detail Modal Component
 function FlowerDetailModal({ country, isVisible, onClose }) {
@@ -19,6 +44,8 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
     // Load Three.js and create 3D viewer
     const loadModel = async () => {
       try {
+        // Load Three.js dynamically
+        const { THREE, GLTFLoader, OrbitControls } = await loadThreeJS();
 
         if (!modelViewerRef.current) return;
 
@@ -726,6 +753,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       if (isLoaded) return; // Prevent multiple loads
       isLoaded = true;
       try {
+        // Load Three.js dynamically
+        const { THREE, GLTFLoader, OrbitControls } = await loadThreeJS();
 
         // Clear container
         containerRef.current.innerHTML = "";

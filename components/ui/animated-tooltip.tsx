@@ -52,8 +52,6 @@ export const AnimatedTooltip = ({
             animate={{
               opacity: 1,
               y: 0,
-              x: translateX,
-              rotate: rotate,
             }}
             exit={{ opacity: 0, y: 10, x: 0 }}
             style={{
