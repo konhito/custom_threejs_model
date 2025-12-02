@@ -16,9 +16,11 @@
   font-display: swap;
 }
 
+/* Force light theme only - ignore browser/system preferences */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  color-scheme: light only;
 }
 
 @theme inline {
@@ -38,13 +40,6 @@
         350% 50%,
         350% 50%;
     }
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
   }
 }
 
