@@ -1213,13 +1213,16 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.autoRotateSpeed = 0.5;
         controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
-        controls.enableRotate = true; // Enable rotation in normal view
+        // Disable rotation on mobile when not in fullscreen to prevent scroll interference
+        controls.enableRotate = !isMobile; // Disable on mobile, enable on desktop/tablet
         
          // Mobile-friendly zoom limits
          if (isMobile) {
            controls.minDistance = 3;
            controls.maxDistance = 12;
            controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
+           // Disable all interactions on mobile when not in fullscreen
+           controls.enableRotate = false;
          } else if (isTablet) {
            controls.minDistance = 2.5;
            controls.maxDistance = 11;
@@ -1229,11 +1232,18 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
            controls.maxDistance = 15;
          }
         
-        // Mobile touch settings
-        controls.touches = {
-          ONE: THREE.TOUCH.ROTATE,
-          TWO: THREE.TOUCH.DOLLY_PAN
-        };
+        // Mobile touch settings - disable touch controls on mobile when not in fullscreen
+        if (isMobile) {
+          controls.touches = {
+            ONE: THREE.TOUCH.NONE,
+            TWO: THREE.TOUCH.NONE
+          };
+        } else {
+          controls.touches = {
+            ONE: THREE.TOUCH.ROTATE,
+            TWO: THREE.TOUCH.DOLLY_PAN
+          };
+        }
 
         // Add zoom event listener to immediately scale satellites
         controls.addEventListener('change', () => {
@@ -1288,6 +1298,12 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
         // Add click listener
         renderer.domElement.addEventListener("click", handleClick);
+        
+        // On mobile when not in fullscreen, disable pointer events on the canvas to allow scrolling
+        if (isMobile) {
+          renderer.domElement.style.pointerEvents = 'none';
+          renderer.domElement.style.touchAction = 'none';
+        }
 
         // Add hover effect for balls
         let hoveredBall = null;
@@ -1473,10 +1489,30 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
     };
     window.addEventListener('keydown', handleEsc);
 
-    // Enable/disable zoom based on fullscreen state
+    // Enable/disable zoom and rotation based on fullscreen state and device type
     if (controlsRef.current) {
+      const isMobile = window.innerWidth < 768;
       controlsRef.current.enableZoom = isFullscreen; // Enable zoom only in fullscreen
-      console.log(`🔍 Zoom ${isFullscreen ? 'enabled' : 'disabled'} (fullscreen: ${isFullscreen})`);
+      
+      // On mobile: only enable rotation in fullscreen. On desktop/tablet: always enable rotation
+      if (isMobile) {
+        controlsRef.current.enableRotate = isFullscreen;
+        if (isFullscreen) {
+          controlsRef.current.touches = {
+            ONE: THREE.TOUCH.ROTATE,
+            TWO: THREE.TOUCH.DOLLY_PAN
+          };
+        } else {
+          controlsRef.current.touches = {
+            ONE: THREE.TOUCH.NONE,
+            TWO: THREE.TOUCH.NONE
+          };
+        }
+      } else {
+        controlsRef.current.enableRotate = true; // Always enable on desktop/tablet
+      }
+      
+      console.log(`🔍 Zoom ${isFullscreen ? 'enabled' : 'disabled'}, Rotate ${controlsRef.current.enableRotate ? 'enabled' : 'disabled'} (fullscreen: ${isFullscreen}, mobile: ${isMobile})`);
     }
 
     // Move the renderer to the correct container when fullscreen state changes
@@ -1498,6 +1534,19 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           cameraRef.current.updateProjectionMatrix();
         }
         rendererRef.current.setSize(width, height);
+      }
+      
+      // Update pointer events based on fullscreen state and device type
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        // On mobile: disable pointer events when not in fullscreen (to allow scrolling)
+        // Enable pointer events when in fullscreen (to allow interaction)
+        rendererRef.current.domElement.style.pointerEvents = isFullscreen ? 'auto' : 'none';
+        rendererRef.current.domElement.style.touchAction = isFullscreen ? 'auto' : 'none';
+      } else {
+        // On desktop/tablet: always enable pointer events
+        rendererRef.current.domElement.style.pointerEvents = 'auto';
+        rendererRef.current.domElement.style.touchAction = 'auto';
       }
     }
 
@@ -1582,14 +1631,18 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           style={{
             minHeight: '100%',
             minWidth: '100%',
+            // On mobile, ensure the container doesn't block scrolling
+            ...(typeof window !== 'undefined' && window.innerWidth < 768 ? {
+              touchAction: 'pan-y',
+            } : {})
           }}
           role="main"
           aria-label="Interactive 3D Globe of Sacred Flowers"
         >
-          {/* Fullscreen Button Overlay */}
+          {/* Fullscreen Button Overlay - Always visible on mobile, hover on desktop */}
           <button
             onClick={toggleFullscreen}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-0 group-hover:opacity-100"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
             aria-label="Enter fullscreen"
           >
             <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -1634,12 +1687,19 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           {/* Main globe container */}
           <div
             ref={containerRef}
-            className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 z-10 ${
+            className={`w-full h-full relative transition-opacity duration-1000 z-10 ${
               isGlobeLoaded ? "opacity-100" : "opacity-0"
             }`}
-            style={showOvalBorder ? {
-              clipPath: 'ellipse(85% 90% at 50% 50%)',
-            } : {}}
+            style={{
+              ...(showOvalBorder ? {
+                clipPath: 'ellipse(85% 90% at 50% 50%)',
+              } : {}),
+              // On mobile when not in fullscreen, allow touch events to pass through for scrolling
+              ...(typeof window !== 'undefined' && window.innerWidth < 768 && !isFullscreen ? {
+                pointerEvents: 'none',
+                touchAction: 'none',
+              } : {})
+            }}
             role="img"
             aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
             tabIndex={0}
