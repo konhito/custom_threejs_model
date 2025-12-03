@@ -1213,6 +1213,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.autoRotateSpeed = 0.5;
         controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
+        controls.enableRotate = true; // Enable rotation in normal view
         
          // Mobile-friendly zoom limits
          if (isMobile) {
@@ -1516,10 +1517,10 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
             }
           }}
         >
-          {/* Close Button */}
+          {/* Close Button - Left on mobile, right on desktop */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
+            className="absolute top-4 left-4 sm:top-6 sm:left-auto sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
             aria-label="Exit fullscreen"
           >
             <Minimize2 className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:scale-110 transition-transform" />
@@ -1633,7 +1634,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           {/* Main globe container */}
           <div
             ref={containerRef}
-            className={`w-full h-full cursor-pointer relative transition-opacity duration-1000 z-10 ${
+            className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 z-10 ${
               isGlobeLoaded ? "opacity-100" : "opacity-0"
             }`}
             style={showOvalBorder ? {
@@ -1642,12 +1643,6 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
             role="img"
             aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
             tabIndex={0}
-            onClick={(e) => {
-              // Only toggle fullscreen if clicking on the canvas itself (not caught by flower click)
-              if (e.target === e.currentTarget || e.target.tagName === 'CANVAS') {
-                toggleFullscreen();
-              }
-            }}
           />
 
           {/* Loading Animation */}
