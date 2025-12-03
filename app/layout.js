@@ -93,9 +93,37 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/logo1.png" />
         <link rel="manifest" href="/manifest.json" />
         
-        {/* Theme and browser config */}
-        <meta name="theme-color" content="#4a90e2" />
-        <meta name="msapplication-TileColor" content="#4a90e2" />
+        {/* Theme and browser config - Force light theme */}
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="color-scheme" content="light only" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Force light theme - prevent dark mode
+              (function() {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                document.documentElement.style.colorScheme = 'light only';
+                // Watch for any attempts to add dark class
+                const observer = new MutationObserver(function(mutations) {
+                  mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                      if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        document.documentElement.classList.add('light');
+                      }
+                    }
+                  });
+                });
+                observer.observe(document.documentElement, {
+                  attributes: true,
+                  attributeFilter: ['class']
+                });
+              })();
+            `,
+          }}
+        />
         
         {/* Structured Data */}
         <script

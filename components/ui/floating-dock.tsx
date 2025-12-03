@@ -113,7 +113,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseY.set(e.pageY)}
       onMouseLeave={() => mouseY.set(Infinity)}
       className={cn(
-        "hidden lg:flex flex-col items-center gap-2.5 rounded-2xl px-2 py-2.5 border border-gray-200/60 dark:border-neutral-700/60 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-xl shadow-xl",
+        "hidden lg:flex flex-col items-center gap-2.5 rounded-2xl px-2 py-2.5 border border-gray-200/60 bg-white/90 backdrop-blur-xl shadow-xl",
         className,
       )}
       style={{ overflow: 'visible' }}
@@ -186,8 +186,8 @@ function IconContainer({
           ref={ref}
           style={{ width, height, overflow: 'visible' }}
           className={cn(
-            "relative flex aspect-square items-center justify-center rounded-full transition-all duration-500 border border-gray-200/40 dark:border-neutral-700/40",
-            "hover:border-gray-300/50 dark:hover:border-neutral-600/50"
+            "relative flex aspect-square items-center justify-center rounded-full transition-all duration-500 border border-gray-200/40",
+            "hover:border-gray-300/50"
           )}
         >
           <motion.div
@@ -195,8 +195,8 @@ function IconContainer({
             className={cn(
               "flex items-center justify-center transition-colors duration-500",
               isActive 
-                ? "text-blue-600 dark:text-blue-400" 
-                : "text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "text-blue-600" 
+                : "text-gray-600 hover:text-gray-700"
             )}
           >
             {icon}
