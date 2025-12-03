@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import React from "react";
+import { AuroraBackground } from "./ui/aurora-background";
 import { ChevronDown } from "lucide-react";
 import { TypewriterEffect } from "./ui/typewriter-effect";
 
@@ -30,9 +31,9 @@ export function HeroSection() {
         </motion.a>
       </div>
 
-      {/* Hero Content with Hardcoded White Background */}
-      <div 
-        className="relative w-full h-full flex flex-col items-center justify-center"
+      {/* Hero Content with Aurora Background - Hardcoded White BG */}
+      <AuroraBackground 
+        className="bg-white"
         style={{ 
           backgroundColor: '#ffffff',
           background: '#ffffff'
@@ -94,7 +95,7 @@ export function HeroSection() {
             </div>
           </div>
         </motion.div>
-      </div>
+      </AuroraBackground>
       
       {/* Bouncing Scroll Indicator */}
       <motion.div 
