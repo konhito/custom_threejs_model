@@ -1,18 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Navigation from "../components/Navigation";
 import { HeroSection } from "../components/HeroSection";
-import LazyGlobe from "../components/LazyGlobe";
 import ImageGallery from "../components/ImageGallery";
 import CurvedLoop from "../components/CurvedLoop";
 import { BentoDemo } from "../components/BentoDemo";
 import Footer from "../components/Footer";
 import PageLoader from "../components/PageLoader";
+import GlobeLoader from "../components/GlobeLoader";
+
+// Lazy load Globe component
+const Globe = dynamic(() => import("../components/Globe"), {
+  ssr: false,
+  loading: () => <GlobeLoader />,
+});
 
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
 
   useEffect(() => {
     // Only redirect if we're on the asociacionnahiara.org domain
@@ -26,14 +34,36 @@ export default function Home() {
 
   // Handle page loading
   useEffect(() => {
-    // Minimum 2 second loading time for better UX
+    // Simulate minimum loading time for better UX
     const minLoadTime = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // 2 seconds minimum
+    }, 3000); // 3 seconds minimum
+
+    // Also listen for when page is fully loaded
+    if (document.readyState === 'complete') {
+      setIsLoading(false);
+    } else {
+      window.addEventListener('load', () => {
+        setIsLoading(false);
+      });
+    }
 
     return () => {
       clearTimeout(minLoadTime);
+      window.removeEventListener('load', () => {
+        setIsLoading(false);
+      });
     };
+  }, []);
+
+  // Handle globe loading
+  useEffect(() => {
+    // Small delay to ensure smooth loading
+    const timer = setTimeout(() => {
+      setIsGlobeLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Check if we should show the redirect screen or normal content
@@ -73,8 +103,8 @@ export default function Home() {
         <Navigation />
         {/* Hero Section - Loads First */}
         <HeroSection />
-        {/* Globe Section - Lazy Loaded with Rounded Rectangle Container */}
-        <div id="globe-section" className="relative w-full min-h-screen flex items-center justify-center py-8 md:py-12 bg-white">
+        {/* GIF Animation Section - Rounded Rectangle Container */}
+        <div id="globe-section" className="relative w-full min-h-screen flex items-center justify-center py-8 md:py-12 bg-transparent">
           {/* Large Rounded Rectangle Container for Globe */}
           <div 
             className="relative w-[95%] max-w-[1400px] h-[85vh] max-h-[900px] flex items-center justify-center rounded-[80px] md:rounded-[100px] lg:rounded-[120px]"
@@ -168,7 +198,7 @@ export default function Home() {
               }}
             />
             
-            {/* Globe inside rounded rectangle - Loads only when scrolled into view */}
+            {/* Interactive 3D Globe - Main landing page */}
             <div 
               className="absolute inset-[7px] rounded-[73px] md:rounded-[93px] lg:rounded-[113px] overflow-hidden z-10"
               style={{
@@ -176,13 +206,30 @@ export default function Home() {
                 height: 'calc(100% - 14px)',
               }}
             >
-              <LazyGlobe showOvalBorder={false} showBackground={true} />
+              {/* Show loader while globe is loading */}
+              {!isGlobeLoaded && (
+                <div 
+                  className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 z-20"
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Loading interactive globe"
+                >
+                  <GlobeLoader />
+                </div>
+              )}
+              
+              {/* Interactive 3D Globe Component */}
+              {isGlobeLoaded && (
+                <div className="w-full h-full">
+                  <Globe showOvalBorder={false} showBackground={true} />
+                </div>
+              )}
             </div>
           </div>
         </div>
         
         {/* Curved Loop Section - Below Globe */}
-        <div className="relative w-full bg-white py-4 md:py-8">
+        <div className="relative w-full bg-transparent py-4 md:py-8">
           <CurvedLoop 
             marqueeText="Explore ✦ Nations ✦ Through ✦ Blooming ✦ Stories ✦ AquaMundi ✦"
             speed={2}
@@ -194,7 +241,7 @@ export default function Home() {
         </div>
         
         {/* Image Gallery Section - Below Curved Loop */}
-        <div className="relative w-full bg-white">
+        <div className="relative w-full bg-transparent">
           <ImageGallery />
         </div>
 

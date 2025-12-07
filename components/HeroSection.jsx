@@ -31,12 +31,12 @@ export function HeroSection() {
         </motion.a>
       </div>
 
-      {/* Hero Content with Aurora Background - Hardcoded White BG */}
+      {/* Hero Content with Aurora Background - Transparent for Ghost Cursor */}
       <AuroraBackground 
-        className="bg-white"
+        className="bg-transparent"
         style={{ 
-          backgroundColor: '#ffffff',
-          background: '#ffffff'
+          backgroundColor: 'transparent',
+          background: 'transparent'
         }}
       >
         <motion.div

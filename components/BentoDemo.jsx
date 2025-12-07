@@ -68,7 +68,7 @@ const features = [
     Icon: Gamepad2,
     name: "Card Game",
     description: "Play and learn about flowers through an interactive card experience",
-    href: "/flowers",
+    href: "/game",
     cta: "Play Now",
     className: "col-span-3 lg:col-span-2",
     background: (

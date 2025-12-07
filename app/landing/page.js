@@ -4,6 +4,7 @@ import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2,
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
+import PageLoader from "../components/PageLoader";
 
 // Simple Logo Component (replaced 3D version to fix build issues)
 function Logo3D() {
@@ -33,6 +34,7 @@ function LandingContent() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -85,6 +87,30 @@ function LandingContent() {
       setIsSubmitting(false);
     }
   };
+
+  // Handle page loading
+  useEffect(() => {
+    // Simulate minimum loading time for better UX
+    const minLoadTime = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // 2 seconds minimum
+
+    // Also listen for when page is fully loaded
+    if (document.readyState === 'complete') {
+      setIsLoading(false);
+    } else {
+      window.addEventListener('load', () => {
+        setIsLoading(false);
+      });
+    }
+
+    return () => {
+      clearTimeout(minLoadTime);
+      window.removeEventListener('load', () => {
+        setIsLoading(false);
+      });
+    };
+  }, []);
 
   // Auto-detect language based on browser settings
   useEffect(() => {
@@ -255,7 +281,18 @@ ${currentContent.vision.text}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800&family=Josefin+Sans:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka+One:wght@400&family=Righteous:wght@400&family=Bangers:wght@400&family=Creepster:wght@400&family=Rubik:wght@300;400;500;600;700;800&family=Karla:wght@300;400;500;600;700&family=Archivo:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
-      <div className="min-h-screen bg-white text-gray-900 relative" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+      {/* Page Loader */}
+      <PageLoader isLoading={isLoading} />
+      
+      {/* Main Content with fade-in animation */}
+      <div 
+        className="min-h-screen bg-white text-gray-900 relative" 
+        style={{ 
+          fontFamily: 'Inter, system-ui, sans-serif',
+          opacity: isLoading ? 0 : 1,
+          transition: 'opacity 0.8s ease-in-out',
+        }}
+      >
       {/* Organic Background Pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full opacity-5">

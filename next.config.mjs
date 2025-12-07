@@ -86,13 +86,26 @@ const nextConfig = {
 
   // Webpack optimizations
   webpack: (config, { dev, isServer, webpack }) => {
-    if (isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        canvas: false,
-        fs: false,
-      };
+    // Make webpack available for plugins
+    if (!config.plugins) {
+      config.plugins = [];
+    }
+    // Handle Node.js modules that don't exist in browser
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+      fs: false,
+      encoding: false,
+      path: false,
+      stream: false,
+      crypto: false,
+      util: false,
+      net: false,
+      tls: false,
+      child_process: false,
+    };
 
+    if (isServer) {
       // Replace three.js and ogl with empty modules on server to prevent "self is not defined"
       config.resolve.alias = {
         ...config.resolve.alias,
@@ -100,7 +113,22 @@ const nextConfig = {
         'three/examples/jsm/loaders/GLTFLoader.js': false,
         'three/examples/jsm/controls/OrbitControls.js': false,
         'ogl': false,
+        'face-api.js': false, // Don't bundle face-api.js on server
       };
+    }
+    
+    // Ignore face-api.js server-side dependencies for client bundle
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+      };
+      
+      // Ignore problematic modules in face-api.js dependencies
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^(fs|path|encoding|stream|crypto|util|net|tls|child_process)$/,
+        })
+      );
     }
     
     // Production optimizations
