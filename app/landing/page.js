@@ -4,7 +4,7 @@ import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2,
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
-import PageLoader from "../components/PageLoader";
+import PageLoader from "../../components/PageLoader";
 
 // Simple Logo Component (replaced 3D version to fix build issues)
 function Logo3D() {
