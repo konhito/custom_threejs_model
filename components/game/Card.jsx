@@ -102,9 +102,9 @@ export default function Card({ card, isFlipped, onFlip, disabled, index = 0, tot
               className="object-contain p-2"
             />
             
-            {/* Card type badge with better styling */}
+            {/* Card type badge with better styling - Hidden on mobile */}
             {isFlipped && (
-              <div className={`absolute top-2 right-2 px-3 py-1.5 rounded-full text-white text-xs font-bold flex items-center gap-1.5 shadow-lg ${
+              <div className={`absolute top-2 right-2 px-3 py-1.5 rounded-full text-white text-xs font-bold items-center gap-1.5 shadow-lg hidden md:flex ${
                 card.type === "petal" ? "bg-gradient-to-r from-purple-500 to-pink-500" :
                 card.type === "minion" ? "bg-gradient-to-r from-red-500 to-orange-500" :
                 card.type === "guardian" ? "bg-gradient-to-r from-green-500 to-emerald-500" :

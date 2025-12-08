@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function AraihanGuide({ message, onAction, actionText, showAction, cardType, country, guardianData, isIntro }) {
+export default function AraihanGuide({ message, onAction, actionText, showAction, cardType, country, guardianData, isIntro, petalData }) {
   const [displayedMessage, setDisplayedMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -16,9 +16,20 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         // 2-3 words only for intro dialog
         return "Petal collected";
       } else {
-        // Full version for gameplay notification
-        const countryName = typeof country === 'string' ? country : (country?.country || country?.name || "flower");
-        return `You found a petal of the flower of ${countryName}. Well done, guardian!`;
+        // Educational phrases for each petal
+        const petalNumber = petalData?.petalNumber || 1;
+        const countryName = typeof country === 'string' ? country : (country?.country || country?.name || "this flower");
+        
+        const educationalPhrases = {
+          1: `Petal 1 collected! Each petal represents a part of ${countryName}'s natural heritage. Flowers are essential for biodiversity and ecosystem health.`,
+          2: `Petal 2 collected! Did you know that flowers help maintain the balance of nature? They provide food and shelter for many creatures.`,
+          3: `Petal 3 collected! Flowers are not just beautiful—they play a crucial role in pollination, helping plants reproduce and thrive.`,
+          4: `Petal 4 collected! National flowers like ${countryName}'s represent cultural identity and connection to the land. They tell stories of history and tradition.`,
+          5: `Petal 5 collected! Conservation of flowers protects entire ecosystems. When we protect flowers, we protect the pollinators and wildlife that depend on them.`,
+          6: `Petal 6 collected! You've collected all petals! Each petal you found teaches us about the importance of preserving our natural world for future generations.`
+        };
+        
+        return educationalPhrases[petalNumber] || `You found petal ${petalNumber} of the flower of ${countryName}. Well done, guardian!`;
       }
     } else if (cardType === "minion") {
       const minionName = guardianData?.name || "minion";
@@ -69,17 +80,24 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         setIsTyping(false);
         clearInterval(typeInterval);
       }
-    }, isIntro ? 25 : (showAction ? 30 : 20)); // Adjust typing speed based on message type
+    }, isIntro ? 25 : (showAction ? 30 : 20)); // Original typing speed - fast but readable
 
     return () => clearInterval(typeInterval);
   }, [finalMessage, showAction]);
 
-  // Auto-dismiss gameplay messages after 4 seconds (but not intro messages)
+  // Auto-dismiss gameplay messages after longer duration (but not intro messages)
+  // Calculate duration based on message length to ensure users can read it
   useEffect(() => {
     if (!showAction && !isIntro && finalMessage && !isTyping) {
+      // Show message for at least 10 seconds, plus 200ms per character for longer messages
+      // This gives plenty of time to read after fast typing
+      const minDisplayTime = 10000; // 10 seconds minimum
+      const charBasedTime = finalMessage.length * 200; // 200ms per character
+      const displayDuration = Math.max(minDisplayTime, charBasedTime);
+      
       const timer = setTimeout(() => {
         setIsVisible(false);
-      }, 4000);
+      }, displayDuration);
       return () => clearTimeout(timer);
     }
   }, [showAction, isIntro, finalMessage, isTyping]);
@@ -93,12 +111,12 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
 
   // For intro message at bottom left, show larger notification. For gameplay messages, show subtle notification
   if (isIntro) {
-    // Intro message - bottom left notification style
+    // Intro message - bottom left notification style - Mobile optimized
     return (
-      <div className="fixed bottom-4 left-4 right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-lg animate-fade-in">
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-4 md:p-5 flex items-start gap-3 md:gap-4">
-          {/* Araihan Character Image - Red Blob */}
-          <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0">
+      <div className="fixed bottom-4 left-2 sm:left-4 right-2 sm:right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-lg animate-fade-in">
+        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-3 sm:p-4 md:p-5 flex items-start gap-2 sm:gap-3 md:gap-4">
+          {/* Araihan Character Image - Red Blob - Mobile optimized */}
+          <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0">
             <svg
               width="56"
               height="56"
@@ -135,12 +153,12 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
             </svg>
           </div>
           
-          {/* Message and Action Button */}
-          <div className="flex-1 min-w-0 flex flex-col gap-3">
-            <p className="text-gray-800 text-sm md:text-base leading-relaxed break-words" style={{ 
+          {/* Message and Action Button - Mobile optimized */}
+          <div className="flex-1 min-w-0 flex flex-col gap-2 sm:gap-3">
+            <p className="text-gray-800 text-xs sm:text-sm md:text-base leading-relaxed break-words" style={{ 
               wordWrap: 'break-word',
               overflowWrap: 'break-word',
-              lineHeight: '1.6'
+              lineHeight: '1.5'
             }}>
               {displayedMessage}
               {isTyping && (
@@ -152,7 +170,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
             {onAction && actionText && !isTyping && (
               <button
                 onClick={onAction}
-                className="self-start px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                className="self-start px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
               >
                 {actionText}
               </button>
@@ -209,14 +227,14 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
     );
   }
 
-  // Gameplay messages - subtle notification style
+  // Gameplay messages - subtle notification style - Mobile optimized
   if (!isVisible) return null;
   
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-sm animate-fade-in">
-      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-3 md:p-4 flex items-start gap-3">
-        {/* Araihan Character Image - Red Blob */}
-        <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center flex-shrink-0">
+    <div className="fixed bottom-4 left-2 sm:left-4 right-2 sm:right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-sm animate-fade-in">
+      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-2.5 sm:p-3 md:p-4 flex items-start gap-2 sm:gap-3">
+        {/* Araihan Character Image - Red Blob - Mobile optimized */}
+        <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center flex-shrink-0">
           <svg
             width="48"
             height="48"
@@ -253,12 +271,12 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
           </svg>
         </div>
         
-        {/* Message */}
+        {/* Message - Mobile optimized */}
         <div className="flex-1 min-w-0">
-          <p className="text-gray-800 text-sm md:text-base leading-relaxed break-words" style={{ 
+          <p className="text-gray-800 text-xs sm:text-sm md:text-base leading-relaxed break-words" style={{ 
             wordWrap: 'break-word',
             overflowWrap: 'break-word',
-            lineHeight: '1.6'
+            lineHeight: '1.5'
           }}>
             {displayedMessage}
             {isTyping && (

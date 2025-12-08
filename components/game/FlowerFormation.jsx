@@ -5,16 +5,20 @@ import Image from "next/image";
 import CompleteFlower from "./CompleteFlower";
 import { getPetalPath } from "@/lib/gameData";
 
-export default function FlowerFormation({ country, onComplete }) {
-  const [stage, setStage] = useState("convergence"); // convergence, particles, flower, story
-  const [showFlower, setShowFlower] = useState(false);
-  const [showStory, setShowStory] = useState(false);
+export default function FlowerFormation({ country, onComplete, collectedPetals }) {
+  const [stage, setStage] = useState("convergence"); // convergence, assembled, completed
   const [petalPositions, setPetalPositions] = useState([]);
+  const [showAssembled, setShowAssembled] = useState(false);
+  const [cardsConnected, setCardsConnected] = useState(false);
 
   // Play sounds for different stages
   const playSound = (type) => {
     if (typeof window !== "undefined") {
       import("@/lib/soundUtils").then((module) => {
+        // Resume audio context if suspended (browser autoplay policy)
+        if (module.default.audioContext && module.default.audioContext.state === 'suspended') {
+          module.default.audioContext.resume();
+        }
         module.default.play(type);
       });
     }
@@ -24,42 +28,68 @@ export default function FlowerFormation({ country, onComplete }) {
     // Play flower complete sound when formation starts
     playSound("flower-complete");
     
-    // Initialize petal positions in a circle
+    // Get the container size
+    const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.8, 600) : 600;
+    const cardWidth = containerWidth / 3;
+    
+    // Initialize petal positions scattered around the screen
     const initialPositions = Array.from({ length: 6 }, (_, i) => {
       const angle = (i / 6) * Math.PI * 2;
+      const distance = Math.min(window?.innerWidth || 400, 500);
       return {
-        x: Math.cos(angle) * 150,
-        y: Math.sin(angle) * 150,
-        angle: angle,
-        scale: 1,
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        scale: 0.5,
+        opacity: 1,
+        rotation: Math.random() * 360,
       };
     });
     setPetalPositions(initialPositions);
 
-    // Stage 1: Petals converge to center (1.5 seconds)
+    // Stage 1: Petals fly to grid positions (2 seconds)
     const timer1 = setTimeout(() => {
-      setPetalPositions(Array.from({ length: 6 }, () => ({ x: 0, y: 0, scale: 0.3 })));
-      setStage("particles");
+      // Calculate grid positions: 2 rows x 3 columns
+      // Row 0: petals 1, 2, 3 (indices 0, 1, 2)
+      // Row 1: petals 4, 5, 6 (indices 3, 4, 5)
+      const finalPositions = Array.from({ length: 6 }, (_, i) => {
+        const row = Math.floor(i / 3); // 0 or 1
+        const col = i % 3; // 0, 1, or 2
+        
+        // Position relative to center of container
+        // Offset from center: col 0 = -1, col 1 = 0, col 2 = 1
+        // Offset from center: row 0 = -0.5, row 1 = 0.5
+        const xOffset = (col - 1) * cardWidth;
+        const yOffset = (row - 0.5) * cardWidth;
+        
+        return {
+          x: xOffset,
+          y: yOffset,
+          scale: 1,
+          opacity: 1,
+          rotation: 0,
+        };
+      });
+      
+      setPetalPositions(finalPositions);
+      setStage("assembled");
       playSound("petals-converge");
-    }, 1500);
+    }, 800);
 
-    // Stage 2: Particle animation (1.5 seconds)
+    // Stage 2: Cards merge together (remove borders/padding)
     const timer2 = setTimeout(() => {
-      setStage("flower");
-      setShowFlower(true);
+      setCardsConnected(true);
       playSound("flower-appear");
-    }, 3000);
+    }, 3500);
 
-    // Stage 3: Show flower and story (2 seconds)
+    // Stage 3: Switch to seamless grid view
     const timer3 = setTimeout(() => {
-      setStage("story");
-      setShowStory(true);
-    }, 5000);
+      setShowAssembled(true);
+    }, 4000);
 
-    // Stage 4: Complete (after story is shown)
+    // Stage 4: Complete - show collected petals page
     const timer4 = setTimeout(() => {
       onComplete();
-    }, 8000);
+    }, 6500);
 
     return () => {
       clearTimeout(timer1);
@@ -69,137 +99,177 @@ export default function FlowerFormation({ country, onComplete }) {
     };
   }, [onComplete]);
 
+  // Calculate container width for both animations and final grid
+  const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 800) : 600;
+  const petalWidth = containerWidth / 3;
+
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Petal Convergence Animation */}
-      {stage === "convergence" && (
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 to-emerald-100">
+      {/* Background particles for effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-purple-300/30 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 2}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Petal Convergence Animation - Cards flying together and merging */}
+      {!showAssembled && (
         <div className="absolute inset-0 flex items-center justify-center">
-          {petalPositions.map((pos, i) => (
-            <div
-              key={i}
-              className="absolute transition-all duration-1500 ease-out"
-              style={{
-                transform: `translate(${pos.x}px, ${pos.y}px) scale(${pos.scale})`,
-                width: "80px",
-                height: "80px",
-              }}
-            >
-              <Image
-                src={getPetalPath(country.folder, i + 1)}
-                alt={`Petal ${i + 1}`}
-                width={80}
-                height={80}
-                className="object-contain animate-petal-float"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              />
-            </div>
-          ))}
+          {petalPositions.map((pos, i) => {
+            const petalNum = i + 1;
+            
+            return (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(${pos.scale}) rotate(${pos.rotation}deg)`,
+                  width: `${petalWidth}px`,
+                  height: `${petalWidth}px`,
+                  opacity: pos.opacity || 1,
+                  transition: cardsConnected 
+                    ? 'all 0.5s ease-out' 
+                    : 'all 2.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  zIndex: 10 + i,
+                }}
+              >
+                <div 
+                  className="relative w-full h-full bg-white overflow-hidden"
+                  style={{
+                    borderRadius: cardsConnected ? '0px' : '12px',
+                    border: cardsConnected ? 'none' : '4px solid rgb(216, 180, 254)',
+                    boxShadow: cardsConnected 
+                      ? 'none' 
+                      : '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                    padding: cardsConnected ? '0' : '12px',
+                    transition: 'all 0.5s ease-out',
+                  }}
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={getPetalPath(country.folder, petalNum)}
+                      alt={`Petal ${petalNum}`}
+                      fill
+                      className={cardsConnected ? "object-cover" : "object-contain"}
+                      style={{
+                        transition: 'all 0.5s ease-out',
+                      }}
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {/* Particle Animation Background */}
-      {(stage === "particles" || stage === "flower") && (
-        <div className="absolute inset-0 overflow-hidden">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 bg-purple-400 rounded-full animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${1 + Math.random() * 2}s`,
-              }}
-            />
-          ))}
-          {Array.from({ length: 30 }).map((_, i) => (
-            <div
-              key={`sparkle-${i}`}
-              className="absolute w-1 h-1 bg-yellow-300 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: "pulse 1s ease-in-out infinite",
-                animationDelay: `${Math.random() * 1}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Flower Display */}
-      {showFlower && (
-        <div className="relative z-10 flex flex-col items-center animate-scale-in">
-          <div className="relative w-64 h-64 md:w-96 md:h-96 mb-8 flex items-center justify-center">
-            <CompleteFlower
-              country={country}
-              size={384}
-            />
+      {/* Assembled Flower - Perfect 2x3 Grid forming complete image */}
+      {showAssembled && stage === "assembled" && (
+        <div 
+          className="relative z-20 shadow-2xl overflow-hidden rounded-2xl border-8 border-purple-300"
+          style={{
+            width: containerWidth,
+            animation: 'scaleUp 0.8s ease-out',
+            background: 'white',
+          }}
+        >
+          {/* 2x3 Grid: No gaps, petals connect seamlessly */}
+          <div 
+            style={{ 
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateRows: 'repeat(2, 1fr)',
+              gap: 0,
+              lineHeight: 0,
+              fontSize: 0,
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6].map((petalNum) => (
+              <div
+                key={petalNum}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: '1/1',
+                  margin: 0,
+                  padding: 0,
+                  lineHeight: 0,
+                  fontSize: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <Image
+                  src={getPetalPath(country.folder, petalNum)}
+                  alt={`Petal ${petalNum}`}
+                  fill
+                  style={{
+                    objectFit: 'cover',
+                    display: 'block',
+                    margin: 0,
+                    padding: 0,
+                  }}
+                  priority
+                />
+              </div>
+            ))}
           </div>
           
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 text-center drop-shadow-lg">
-            {country.flowerName}
-          </h2>
-          <p className="text-xl md:text-2xl text-purple-200 italic text-center">
-            {country.flowerScientificName}
-          </p>
-        </div>
-      )}
-
-      {/* Story Display */}
-      {showStory && (
-        <div className="absolute inset-0 flex items-center justify-center z-20 px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-gradient-to-br from-white/20 to-purple-900/30 backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 border-white/20 shadow-2xl">
-              <p className="text-white text-lg md:text-xl leading-relaxed text-center">
-                {country.flowerDescription}
-              </p>
-            </div>
+          {/* Magical glow effect */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/30 via-pink-300/30 to-purple-300/30 animate-pulse" 
+                 style={{ mixBlendMode: 'overlay' }} />
           </div>
         </div>
       )}
 
-      {/* Araihan Character - Same design as in game */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <div className="relative group">
-          <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center flex-shrink-0 transition-all duration-500 animate-float">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 56 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
-              <path d="M28 40 Q20 38 18 32 Q16 26 20 24 Q18 22 22 20 Q26 18 28 22 Q30 18 34 20 Q38 22 36 24 Q40 26 38 32 Q36 38 28 40 Z" fill="#DC2626" />
-              <ellipse cx="28" cy="18" rx="10" ry="11" fill="#DC2626" />
-              <circle cx="24" cy="30" r="2.5" fill="#1F2937" opacity="0.7" />
-              <circle cx="32" cy="28" r="2" fill="#1F2937" opacity="0.7" />
-              <circle cx="26" cy="34" r="1.5" fill="#1F2937" opacity="0.6" />
-              <circle cx="24" cy="18" r="3" fill="#1F2937" />
-              <circle cx="32" cy="18" r="3" fill="#1F2937" />
-              <circle cx="24" cy="18" r="1.5" fill="#DC2626" />
-              <circle cx="32" cy="18" r="1.5" fill="#DC2626" />
-              <ellipse cx="28" cy="22" rx="3" ry="2" fill="#1F2937" opacity="0.6" />
-              <ellipse cx="16" cy="26" rx="2" ry="5" fill="#DC2626" transform="rotate(-30 16 26)" />
-              <ellipse cx="40" cy="26" rx="2" ry="5" fill="#DC2626" transform="rotate(30 40 26)" />
-              <ellipse cx="20" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(-20 20 36)" />
-              <ellipse cx="36" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(20 36 36)" />
-            </svg>
+      {/* Success message */}
+      {showAssembled && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 animate-bounce">
+          <div className="bg-white/90 backdrop-blur-sm px-8 py-4 rounded-full shadow-xl border-2 border-purple-300">
+            <p className="text-2xl font-bold text-purple-600">
+              🌸 Flower Restored! 🌸
+            </p>
           </div>
-          {/* Message Bubble */}
-          {(stage === "convergence" || stage === "particles" || stage === "flower") && (
-            <div className="absolute top-1/2 -translate-y-1/2 left-full ml-4 bg-purple-900/98 backdrop-blur-md rounded-xl px-4 py-3 animate-fade-in border-2 border-purple-400/60 shadow-2xl z-20 whitespace-nowrap max-w-[300px]">
-              <p className="text-white text-sm font-medium">
-                {stage === "convergence" && "The petals are coming together..."}
-                {stage === "particles" && "The magic is happening..."}
-                {stage === "flower" && `You restored the flower of ${country.country}. Here is its story…`}
-              </p>
-              <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-purple-900/98"></div>
-            </div>
-          )}
         </div>
-      </div>
+      )}
+
+      <style jsx>{`
+        @keyframes scaleUp {
+          0% {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-in;
+        }
+      `}</style>
     </div>
   );
 }

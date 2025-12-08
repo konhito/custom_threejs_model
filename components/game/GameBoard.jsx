@@ -4,78 +4,63 @@ import { useState, useEffect, useCallback } from "react";
 import Card from "./Card";
 import { minionTypes, guardianTypes, getPetalPath } from "@/lib/gameData";
 
-// Grid layout: exactly 12 cards
-const CARD_COUNT = 12; // Total cards in deck
+// Grid layout: exactly 8 cards (6 petals, 1 minion, 1 guardian)
+const CARD_COUNT = 8; // Total cards in deck
 const PETAL_COUNT = 6; // Number of petal cards needed
 
-// 20 CASINO-STYLE CARD PATTERNS
-// Each pattern is an array of 12 positions: 'P' = Petal, 'G' = Guardian, 'M' = Minion
-// Casino psychology: Hook with early wins, build tension, always winnable
+// CARD PATTERNS - Simplified and balanced
+// Each pattern is an array of 8 positions: 'P' = Petal, 'G' = Guardian, 'M' = Minion
+// Logic: Guardian appears before Minion to allow protection. Early petals hook players.
 const CARD_PATTERNS = [
-  // Pattern 1: Triple early win hook (3 petals first!)
-  ['P', 'P', 'P', 'G', 'M', 'P', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 1: Early petals, guardian early, minion late
+  ['P', 'P', 'P', 'G', 'P', 'P', 'M', 'P'],
   
-  // Pattern 2: Double early win + protection
-  ['P', 'P', 'G', 'M', 'P', 'P', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 2: Strong start, guardian mid, minion before last petal
+  ['P', 'P', 'G', 'P', 'P', 'M', 'P', 'P'],
   
-  // Pattern 3: Early win streak (4 petals in first 5!)
-  ['P', 'P', 'P', 'P', 'G', 'M', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 3: Guardian very early, minion late
+  ['P', 'G', 'P', 'P', 'P', 'M', 'P', 'P'],
   
-  // Pattern 4: Quick double + guardian save
-  ['P', 'P', 'G', 'M', 'G', 'P', 'M', 'P', 'G', 'M', 'P', 'P'],
+  // Pattern 4: Four petals first, then guardian, then minion
+  ['P', 'P', 'P', 'P', 'G', 'P', 'M', 'P'],
   
-  // Pattern 5: Strong start (3 petals, then protection)
-  ['P', 'P', 'P', 'G', 'P', 'M', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 5: Five petals, guardian late, minion very late
+  ['P', 'P', 'P', 'P', 'P', 'G', 'M', 'P'],
   
-  // Pattern 6: Early momentum builder
-  ['P', 'G', 'P', 'P', 'M', 'G', 'P', 'M', 'G', 'P', 'M', 'P'],
+  // Pattern 6: Balanced - petals, guardian, petals, minion, petals
+  ['P', 'P', 'P', 'G', 'P', 'M', 'P', 'P'],
   
-  // Pattern 7: Triple hook with early guardian
-  ['P', 'P', 'P', 'G', 'M', 'G', 'P', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 7: Early guardian protection setup
+  ['P', 'P', 'G', 'P', 'P', 'P', 'M', 'P'],
   
-  // Pattern 8: Double early + double protection
-  ['P', 'P', 'G', 'G', 'M', 'P', 'M', 'P', 'G', 'M', 'P', 'P'],
+  // Pattern 8: Guardian in middle, minion near end
+  ['P', 'P', 'P', 'P', 'G', 'M', 'P', 'P'],
   
-  // Pattern 9: Fast start (4 early petals)
-  ['P', 'P', 'P', 'P', 'G', 'M', 'P', 'G', 'M', 'G', 'M', 'P'],
+  // Pattern 9: Fast start with early protection
+  ['P', 'G', 'P', 'P', 'P', 'P', 'M', 'P'],
   
-  // Pattern 10: Balanced early wins
-  ['P', 'P', 'G', 'P', 'M', 'G', 'P', 'M', 'G', 'P', 'M', 'P'],
+  // Pattern 10: Guardian early, minion mid-game
+  ['P', 'P', 'G', 'P', 'M', 'P', 'P', 'P'],
   
-  // Pattern 11: Strong opening (3 petals, guardian, petal)
-  ['P', 'P', 'P', 'G', 'P', 'M', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 11: Three petals, guardian, two petals, minion, last petal
+  ['P', 'P', 'P', 'G', 'P', 'P', 'M', 'P'],
   
-  // Pattern 12: Early protection setup
-  ['P', 'G', 'P', 'P', 'M', 'G', 'P', 'M', 'G', 'P', 'M', 'P'],
+  // Pattern 12: Guardian second, minion sixth
+  ['P', 'G', 'P', 'P', 'P', 'M', 'P', 'P'],
   
-  // Pattern 13: Triple early + late tension
-  ['P', 'P', 'P', 'G', 'M', 'P', 'G', 'M', 'G', 'P', 'M', 'P'],
+  // Pattern 13: Four petals, guardian, minion, two petals
+  ['P', 'P', 'P', 'P', 'G', 'M', 'P', 'P'],
   
-  // Pattern 14: Double hook + double save
-  ['P', 'P', 'G', 'M', 'G', 'P', 'M', 'G', 'P', 'M', 'P', 'P'],
+  // Pattern 14: Early momentum with protection
+  ['P', 'P', 'P', 'G', 'P', 'M', 'P', 'P'],
   
-  // Pattern 15: Fast progress (early petals)
-  ['P', 'P', 'G', 'P', 'P', 'M', 'G', 'M', 'P', 'G', 'M', 'P'],
-  
-  // Pattern 16: Early wins with protection
-  ['P', 'G', 'P', 'P', 'G', 'M', 'P', 'M', 'G', 'P', 'M', 'P'],
-  
-  // Pattern 17: Strong opening sequence
-  ['P', 'P', 'P', 'G', 'M', 'P', 'G', 'P', 'M', 'G', 'M', 'P'],
-  
-  // Pattern 18: Early momentum (3 petals first 4)
-  ['P', 'P', 'P', 'G', 'M', 'G', 'P', 'M', 'P', 'G', 'M', 'P'],
-  
-  // Pattern 19: Double early + guardian chain
-  ['P', 'P', 'G', 'G', 'P', 'M', 'G', 'M', 'P', 'M', 'P', 'P'],
-  
-  // Pattern 20: Maximum early hook (4 petals in first 6!)
-  ['P', 'P', 'P', 'P', 'G', 'M', 'G', 'M', 'P', 'G', 'M', 'P'],
+  // Pattern 15: Guardian first, then petals, minion late
+  ['G', 'P', 'P', 'P', 'P', 'M', 'P', 'P'],
 ];
 
 // Track used patterns to avoid repeats
 let usedPatterns = new Set();
-let availablePatterns = [...Array(20).keys()]; // [0, 1, 2, ..., 19]
+let availablePatterns = [...Array(15).keys()]; // [0, 1, 2, ..., 14]
 
 export default function GameBoard({ country, petalsCollected, hasGuardian, onPetalCollected, onMinionRevealed, onGuardianActivated, onCardTypeChange, onPetalsCollectedUpdate }) {
   const [cards, setCards] = useState([]);
@@ -98,7 +83,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     
     // Reset if all patterns have been used
     if (availablePatterns.length === 0) {
-      availablePatterns = [...Array(20).keys()];
+      availablePatterns = [...Array(15).keys()];
       usedPatterns.clear();
     }
     
@@ -123,27 +108,24 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       });
     }
 
+    // Only create 1 minion and 1 guardian (simplified game)
     const minionCards = [];
-    for (let i = 0; i < 3; i++) {
-      const minion = minionTypes[i % minionTypes.length];
-      minionCards.push({
-        id: `minion-${i}`,
-        type: "minion",
-        image: minion.image,
-        minionData: minion,
-      });
-    }
+    const minion = minionTypes[Math.floor(Math.random() * minionTypes.length)];
+    minionCards.push({
+      id: `minion-0`,
+      type: "minion",
+      image: minion.image,
+      minionData: minion,
+    });
 
     const guardianCards = [];
-    for (let i = 0; i < 3; i++) {
-      const guardian = guardianTypes[i % guardianTypes.length];
-      guardianCards.push({
-        id: `guardian-${i}`,
-        type: "guardian",
-        image: guardian.image,
-        guardianData: guardian,
-      });
-    }
+    const guardian = guardianTypes[Math.floor(Math.random() * guardianTypes.length)];
+    guardianCards.push({
+      id: `guardian-0`,
+      type: "guardian",
+      image: guardian.image,
+      guardianData: guardian,
+    });
 
     // Build deck based on selected pattern
     const deck = [];
@@ -166,34 +148,38 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     const shuffledGuardians = shuffle(availableGuardians);
     
     let petalIndex = 0;
-    let minionIndex = 0;
-    let guardianIndex = 0;
+    let minionUsed = false;
+    let guardianUsed = false;
     
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < CARD_COUNT; i++) {
       const cardType = selectedPattern[i];
       
       if (cardType === 'P') {
         // Add petal card (cycle through all 6 petals)
         deck.push(shuffledPetals[petalIndex % PETAL_COUNT]);
         petalIndex++;
-      } else if (cardType === 'G') {
-        // Add guardian card (cycle through all 3 guardians)
-        deck.push(shuffledGuardians[guardianIndex % 3]);
-        guardianIndex++;
-      } else if (cardType === 'M') {
-        // Add minion card (cycle through all 3 minions)
-        deck.push(shuffledMinions[minionIndex % 3]);
-        minionIndex++;
+      } else if (cardType === 'G' && !guardianUsed) {
+        // Add guardian card (only 1 guardian)
+        deck.push(shuffledGuardians[0]);
+        guardianUsed = true;
+      } else if (cardType === 'M' && !minionUsed) {
+        // Add minion card (only 1 minion)
+        deck.push(shuffledMinions[0]);
+        minionUsed = true;
+      } else {
+        // If guardian/minion already used but pattern calls for it, add a petal instead
+        deck.push(shuffledPetals[petalIndex % PETAL_COUNT]);
+        petalIndex++;
       }
     }
 
-    // Verify we have exactly 12 cards
-    if (deck.length !== 12) {
+    // Verify we have exactly 8 cards
+    if (deck.length !== CARD_COUNT) {
       console.warn("Deck size mismatch, filling with remaining cards");
       const allCards = [...petalCards, ...minionCards, ...guardianCards];
       const usedIds = new Set(deck.map(c => c.id));
       const remaining = allCards.filter(c => !usedIds.has(c.id));
-      while (deck.length < 12 && remaining.length > 0) {
+      while (deck.length < CARD_COUNT && remaining.length > 0) {
         deck.push(remaining.shift());
       }
     }
@@ -237,7 +223,8 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       });
       setLastRevealedCard(card);
       setLastCardType("petal");
-      if (onCardTypeChange) onCardTypeChange("petal");
+      // Pass petal data for educational message
+      if (onCardTypeChange) onCardTypeChange("petal", { petalNumber: card.petalNumber, country: country });
     } else if (card.type === "minion") {
       // Play minion sound immediately when revealed
       playSound("minion");
@@ -293,6 +280,10 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     // Import sound manager dynamically to avoid SSR issues
     if (typeof window !== "undefined") {
       import("@/lib/soundUtils").then((module) => {
+        // Resume audio context if suspended (browser autoplay policy)
+        if (module.default.audioContext && module.default.audioContext.state === 'suspended') {
+          module.default.audioContext.resume();
+        }
         module.default.play(type);
       });
     }
@@ -300,46 +291,46 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
 
   return (
     <div className="w-full relative flex-1 flex flex-col overflow-visible">
-      {/* Game Status Bar - UNO Style */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-2 mb-2 md:mb-3 px-4 relative overflow-visible">
+      {/* Game Status Bar - UNO Style - Mobile Optimized */}
+      <div className="flex flex-col md:flex-row justify-center items-center gap-2 mb-2 md:mb-3 px-2 sm:px-4 relative overflow-visible mt-14 md:mt-0">
         {/* Petal Counter Card */}
-        <div className="bg-white border-2 border-purple-200 rounded-xl px-3 md:px-4 py-2 md:py-2.5 shadow-lg flex flex-col sm:flex-row items-center gap-2 md:gap-3 w-full max-w-md overflow-hidden">
-          <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-              <div className="text-xl md:text-2xl flex-shrink-0">🌸</div>
+        <div className="bg-white border-2 border-purple-200 rounded-xl px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 shadow-lg flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 md:gap-3 w-full max-w-md overflow-hidden">
+            <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-shrink-0">
+              <div className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🌸</div>
               <div className="flex flex-col min-w-0">
-                <div className="text-gray-600 text-[9px] md:text-[10px] font-medium whitespace-nowrap">Petals Collected</div>
-                <div className="text-black text-base md:text-lg font-bold whitespace-nowrap">
+                <div className="text-gray-600 text-[8px] sm:text-[9px] md:text-[10px] font-medium whitespace-nowrap">Petals Collected</div>
+                <div className="text-black text-sm sm:text-base md:text-lg font-bold whitespace-nowrap">
                   {petalsCollected} / {PETAL_COUNT}
                 </div>
               </div>
             </div>
-            <div className="flex gap-1 md:gap-1.5 flex-shrink-0">
+            <div className="flex gap-1 sm:gap-1 md:gap-1.5 flex-shrink-0">
               {Array.from({ length: PETAL_COUNT }).map((_, i) => (
                 <div
                   key={i}
-                  className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${
+                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${
                   i < petalsCollected
                     ? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-300 scale-110 shadow-lg ring-2 ring-purple-200"
                     : "bg-gray-100 border-gray-300 scale-100"
                 }`}
               >
                 {i < petalsCollected && (
-                  <span className="text-white text-xs md:text-sm">✓</span>
+                  <span className="text-white text-[10px] sm:text-xs md:text-sm">✓</span>
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Araihan Character - Outside the box, next to it */}
-        <div className="absolute right-0 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
+        {/* Araihan Character - Outside the box, next to it - Mobile optimized */}
+        <div className="absolute right-2 sm:right-4 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
           {/* Hover effect - glow ring outside the container */}
           <div className="absolute inset-0 rounded-full bg-red-500/0 group-hover:bg-red-500/20 transition-all duration-300 blur-md -z-10 scale-150 pointer-events-none"></div>
           
           <div className="relative group">
             {/* Animated SVG Creature Character - Red & Black, Non-Human */}
             <div 
-              className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer ${
+              className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer ${
                 lastRevealedCard 
                   ? "animate-bounce scale-110" 
                   : "animate-pulse-slow scale-100 animate-float group-hover:scale-110 group-hover:brightness-110"
@@ -348,6 +339,10 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                 // Click effect - trigger a bounce
                 if (typeof window !== "undefined") {
                   import("@/lib/soundUtils").then((module) => {
+                    // Resume audio context if suspended (browser autoplay policy)
+                    if (module.default.audioContext && module.default.audioContext.state === 'suspended') {
+                      module.default.audioContext.resume();
+                    }
                     module.default.play("flip");
                   });
                 }
@@ -418,13 +413,13 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
               </div>
             )}
 
-            {/* Brief Message Bubble - On the right side, expands horizontally, stays in screen */}
+            {/* Brief Message Bubble - Mobile optimized, positioned to avoid sidebar */}
             {(lastRevealedCard || hasGuardian) && (
-              <div className="absolute top-1/2 -translate-y-1/2 left-full ml-3 md:ml-4 bg-purple-900/98 backdrop-blur-md rounded-xl px-3 md:px-4 py-2 md:py-3 animate-fade-in border-2 border-purple-400/60 shadow-2xl z-[100] max-w-[calc(100vw-200px)] md:max-w-[400px]">
-                <p className="text-white text-xs md:text-sm font-medium break-words whitespace-normal" style={{
+              <div className="absolute top-1/2 -translate-y-1/2 left-full ml-2 sm:ml-3 md:ml-4 bg-purple-900/98 backdrop-blur-md rounded-lg sm:rounded-xl px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 animate-fade-in border-2 border-purple-400/60 shadow-2xl z-[100] max-w-[calc(100vw-140px)] sm:max-w-[calc(100vw-180px)] md:max-w-[400px]">
+                <p className="text-white text-[10px] sm:text-xs md:text-sm font-medium break-words whitespace-normal leading-tight sm:leading-normal" style={{
                   wordWrap: 'break-word',
                   overflowWrap: 'break-word',
-                  lineHeight: '1.5'
+                  lineHeight: '1.4'
                 }}>
                   {lastCardType === "petal" && "Wow petal card!"}
                   {lastCardType === "minion" && !hasGuardian && "Oh no minion!"}
@@ -442,18 +437,20 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         </div>
       </div>
 
-      {/* Help Button - Top Left */}
+      {/* Help Button - Top Left - Adjusted for mobile sidebar */}
       <button
         onClick={() => setShowHowToPlay(true)}
-        className="fixed top-20 left-4 md:top-24 md:left-6 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 z-[9998] text-2xl md:text-3xl font-bold"
+        className="fixed top-16 left-4 md:top-24 md:left-6 w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 z-[9997] text-xl md:text-3xl font-bold"
         aria-label="How to Play"
       >
         ?
       </button>
 
-      {/* Cards Grid - UNO Style Layout */}
-      <div className="flex justify-center items-start px-4 py-2 md:py-3 flex-1 overflow-visible">
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 w-full">
+      {/* Cards Grid - Playing Area Panel - Mobile Optimized (8 cards: 2x4 mobile, 4x2 desktop) */}
+      <div className="flex justify-center items-start px-2 sm:px-4 py-2 md:py-3 flex-1 overflow-visible pb-20 md:pb-4">
+        {/* Playing Area Panel - Clear visual container */}
+        <div className="w-full max-w-3xl bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 border-2 border-green-200/60 shadow-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 md:gap-3 w-full">
           {cards.map((card, index) => {
             const isFlipped = flippedCards.has(card.id);
             const totalCards = cards.length;
@@ -476,6 +473,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
               </div>
             );
           })}
+          </div>
         </div>
       </div>
 
@@ -564,10 +562,10 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                   <span className="text-2xl">💡</span> Tips
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
-                  <li>Guardian cards are your best defense - use them wisely!</li>
+                  <li>There's only 1 guardian and 1 minion in the deck - strategy matters!</li>
+                  <li>The guardian protects you from the minion - find the guardian before the minion appears</li>
                   <li>Watch for the guardian status indicator at the top when protection is active</li>
-                  <li>Each guardian has unique powers - check the text under the card when revealed</li>
-                  <li>Plan your strategy - sometimes it's better to wait for a guardian before revealing more cards</li>
+                  <li>Plan your strategy carefully - with only 8 cards, every choice counts!</li>
                 </ul>
               </div>
             </div>
