@@ -66,53 +66,22 @@ export default function Home() {
         });
       });
 
-      // Wait for all images to load (or timeout after 5 seconds)
-      await Promise.race([
-        Promise.all(imagePromises),
-        new Promise((resolve) => setTimeout(resolve, MIN_LOAD_TIME))
-      ]);
+      // Start loading all images in parallel (don't wait for them)
+      Promise.all(imagePromises).catch(() => {
+        // Ignore errors, continue loading
+      });
     };
 
     // Start preloading book covers immediately
     preloadBookCovers();
 
-    // Ensure minimum loading time of 5 seconds
-    const minLoadTime = setTimeout(() => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
-      
-      if (remaining > 0) {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, remaining);
-      } else {
-        setIsLoading(false);
-      }
+    // Always wait for minimum 5 seconds before hiding loader
+    const minLoadTimer = setTimeout(() => {
+      setIsLoading(false);
     }, MIN_LOAD_TIME);
 
-    // Also listen for when page is fully loaded (but respect minimum time)
-    const handleLoad = () => {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
-      
-      if (remaining > 0) {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, remaining);
-      } else {
-        setIsLoading(false);
-      }
-    };
-
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
-
     return () => {
-      clearTimeout(minLoadTime);
-      window.removeEventListener('load', handleLoad);
+      clearTimeout(minLoadTimer);
     };
   }, []);
 
