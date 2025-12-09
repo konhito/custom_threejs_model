@@ -11,13 +11,16 @@ const PageLoader = ({ isLoading }) => {
       <div className={styles.brandText}>
         AQUA MUNDI
       </div>
-      <div className={styles.gifContainer}>
-        <img
-          src="/giphy.gif"
-          alt="Loading animation"
-          className={styles.gifImage}
-          loading="eager"
-        />
+      <div className={styles.flower}>
+        <div className={`${styles.petal} ${styles.petal1}`} />
+        <div className={`${styles.petal} ${styles.petal2}`} />
+        <div className={`${styles.petal} ${styles.petal3}`} />
+        <div className={`${styles.petal} ${styles.petal4}`} />
+        <div className={`${styles.petal} ${styles.petal5}`} />
+        <div className={`${styles.petal} ${styles.petal6}`} />
+        <div className={`${styles.petal} ${styles.petal7}`} />
+        <div className={`${styles.petal} ${styles.petal8}`} />
+        <div className={styles.center} />
       </div>
     </div>
   );

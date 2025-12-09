@@ -12,24 +12,73 @@
   transform: translateZ(0);
 }
 
-.gifContainer {
-  width: min(420px, 80vw);
-  aspect-ratio: 1 / 1;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  border: 4px solid rgba(255, 255, 255, 0.8);
-  background: linear-gradient(135deg, #fef2f2, #eef2ff);
+.flower {
+  width: 300px;
+  height: 300px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  animation: rotateFlower 8s infinite ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.gifImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.petal {
+  position: absolute;
+  width: 35px;
+  height: 60px;
+  background: linear-gradient(180deg, #fcdbdf, #fd688d);
+  border-radius: 50%;
+  animation: changeColor 8s reverse infinite;
+}
+
+.petal1 {
+  transform: rotate(0deg) translateY(-50%);
+  animation-delay: 0.1s;
+}
+
+.petal2 {
+  transform: rotate(45deg) translateY(-50%);
+  animation-delay: 0.2s;
+}
+
+.petal3 {
+  transform: rotate(90deg) translateY(-50%);
+  animation-delay: 0.3s;
+}
+
+.petal4 {
+  transform: rotate(135deg) translateY(-50%);
+  animation-delay: 0.4s;
+}
+
+.petal5 {
+  transform: rotate(180deg) translateY(-50%);
+  animation-delay: 0.5s;
+}
+
+.petal6 {
+  transform: rotate(225deg) translateY(-50%);
+  animation-delay: 0.6s;
+}
+
+.petal7 {
+  transform: rotate(270deg) translateY(-50%);
+  animation-delay: 0.7s;
+}
+
+.petal8 {
+  transform: rotate(315deg) translateY(-50%);
+  animation-delay: 0.8s;
+}
+
+.center {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #f1d2d2;
+  border-radius: 50%;
 }
 
 .brandText {
@@ -43,6 +92,36 @@
   opacity: 0;
   transform: translateY(-30px) scale(0.8);
   animation: smoothTextReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes changeColor {
+  0% {
+    background: linear-gradient(180deg, #fcdbdf, #fd688d);
+  }
+  25% {
+    background: linear-gradient(180deg, #fcd2e3, #fa6094);
+  }
+  50% {
+    background: linear-gradient(180deg, #fabefc, #c34ec7);
+  }
+  75% {
+    background: linear-gradient(180deg, #f7d6d6, #fd6a6a);
+  }
+  100% {
+    background: linear-gradient(180deg, #fcd3fc, #e844f7);
+  }
+}
+
+@keyframes rotateFlower {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.5) rotate(360deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 @keyframes smoothTextReveal {
@@ -80,8 +159,19 @@
     letter-spacing: 0.15em;
   }
 
-  .gifContainer {
-    width: min(300px, 70vw);
+  .flower {
+    width: 200px;
+    height: 200px;
+  }
+
+  .petal {
+    width: 25px;
+    height: 45px;
+  }
+
+  .center {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -90,10 +180,6 @@
     font-size: 1.25rem;
     top: 1.5rem;
     letter-spacing: 0.1em;
-  }
-
-  .gifContainer {
-    width: min(250px, 75vw);
   }
 }
 
