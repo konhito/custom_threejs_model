@@ -10,6 +10,8 @@ export default function GameLoader({ onComplete }) {
   const onCompleteRef = useRef(onComplete);
   const completedRef = useRef(false);
   const startTimeRef = useRef(Date.now());
+  const MIN_DURATION = 4000; // Minimum loader display in ms
+  const MAX_DURATION = 8000; // Hard cap in ms
 
   // Update ref when onComplete changes
   useEffect(() => {
@@ -86,43 +88,46 @@ export default function GameLoader({ onComplete }) {
     // Start loading assets
     preloadAssets();
 
-    // GUARANTEED completion after 2 seconds minimum
-    const guaranteedComplete = setTimeout(() => {
-      if (!completedRef.current) {
-        completedRef.current = true;
-        onCompleteRef.current();
-      }
-    }, 2000);
-
-    // Maximum 4 seconds - force complete even if assets not loaded
+    // Maximum duration safeguard
     const maxTimeout = setTimeout(() => {
       if (!completedRef.current) {
         completedRef.current = true;
         onCompleteRef.current();
       }
-    }, 4000);
+    }, MAX_DURATION);
 
     return () => {
-      clearTimeout(guaranteedComplete);
       clearTimeout(maxTimeout);
     };
   }, []);
 
+  // Complete once assets are loaded AND minimum duration has passed
+  useEffect(() => {
+    if (!assetsLoaded || completedRef.current) return;
+
+    const elapsed = Date.now() - startTimeRef.current;
+    const remaining = Math.max(0, MIN_DURATION - elapsed);
+
+    const timer = setTimeout(() => {
+      if (!completedRef.current) {
+        completedRef.current = true;
+        onCompleteRef.current();
+      }
+    }, remaining);
+
+    return () => clearTimeout(timer);
+  }, [assetsLoaded]);
+
   return (
     <div className={styles.loaderWrapper}>
-      <div className={styles.brandText}>
-        Card Games
-      </div>
-      <div className={styles.flower}>
-        <div className={`${styles.petal} ${styles.petal1}`} />
-        <div className={`${styles.petal} ${styles.petal2}`} />
-        <div className={`${styles.petal} ${styles.petal3}`} />
-        <div className={`${styles.petal} ${styles.petal4}`} />
-        <div className={`${styles.petal} ${styles.petal5}`} />
-        <div className={`${styles.petal} ${styles.petal6}`} />
-        <div className={`${styles.petal} ${styles.petal7}`} />
-        <div className={`${styles.petal} ${styles.petal8}`} />
-        <div className={styles.center} />
+      <div className={styles.brandText}>Card Games</div>
+      <div className={styles.gifContainer}>
+        <img
+          src="/giphy.gif"
+          alt="Loading animation"
+          className={styles.gifImage}
+          loading="eager"
+        />
       </div>
     </div>
   );

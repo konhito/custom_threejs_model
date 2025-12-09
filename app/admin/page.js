@@ -18,6 +18,7 @@ export default function AdminDashboard() {
   const [recentOrders, setRecentOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateRange, setDateRange] = useState('30');
+  const [loadError, setLoadError] = useState(null);
 
   useEffect(() => {
     loadDashboardData();
@@ -26,7 +27,16 @@ export default function AdminDashboard() {
   const loadDashboardData = async () => {
     try {
       setIsLoading(true);
-      const response = await adminAPI.getDashboard();
+      setLoadError(null);
+
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(endDate.getDate() - parseInt(dateRange, 10));
+
+      const response = await adminAPI.getDashboard({
+        start_date: startDate.toISOString(),
+        end_date: endDate.toISOString(),
+      });
       
       if (response.success) {
         setStats(response.data.statistics);
@@ -34,9 +44,19 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Failed to load dashboard:', error);
+      setLoadError('Unable to load dashboard data. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const formatCurrency = (amount) => {
+    const value = Number(amount) || 0;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 2,
+    }).format(value);
   };
 
   const getStatusColor = (status) => {
@@ -65,32 +85,46 @@ export default function AdminDashboard() {
     );
   }
 
+  if (loadError) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+        <p className="text-red-600 font-semibold mb-3">{loadError}</p>
+        <button
+          onClick={loadDashboardData}
+          className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   const statCards = [
     {
       title: 'Total Revenue',
-      value: `€${stats?.total_revenue || '0.00'}`,
-      change: '+12.5%',
+      value: formatCurrency(stats?.total_revenue),
+      meta: `${stats?.completed_orders || 0} completed orders`,
       icon: DollarSign,
       color: 'bg-emerald-500',
     },
     {
       title: 'Total Orders',
       value: stats?.total_orders || '0',
-      change: '+8.2%',
+      meta: `Completed ${stats?.completed_orders || 0} • Pending ${stats?.pending_orders || 0} • Cancelled ${stats?.cancelled_orders || 0}`,
       icon: ShoppingCart,
       color: 'bg-blue-500',
     },
     {
       title: 'Total Customers',
       value: stats?.total_customers || '0',
-      change: '+15.3%',
+      meta: 'Active customers',
       icon: Users,
       color: 'bg-purple-500',
     },
     {
       title: 'Avg. Order Value',
-      value: `€${stats?.average_order_value || '0.00'}`,
-      change: '+5.1%',
+      value: formatCurrency(stats?.average_order_value),
+      meta: `Based on last ${dateRange} days`,
       icon: TrendingUp,
       color: 'bg-orange-500',
     },
@@ -126,7 +160,9 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-sm font-medium text-gray-900">{stat.title}</p>
                   <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-                  <p className="text-sm text-green-600 mt-2">{stat.change} from last period</p>
+                  {stat.meta && (
+                    <p className="text-sm text-gray-600 mt-2">{stat.meta}</p>
+                  )}
                 </div>
                 <div className={`${stat.color} p-3 rounded-lg`}>
                   <Icon className="w-6 h-6 text-white" />

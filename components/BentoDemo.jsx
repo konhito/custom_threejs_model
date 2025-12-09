@@ -419,7 +419,8 @@ export function BentoDemo() {
             respectReducedMotion={true}
             loop={true}
             loopDelay={0}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 notranslate"
+            translate="no"
             style={{ fontFamily: '"Press Start 2P", monospace' }}
           />
           <motion.p 

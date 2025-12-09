@@ -78,8 +78,11 @@ export default function RootLayout({ children }) {
   });
 
   return (
-    <html lang="en" className="light" style={{ colorScheme: 'light' }}>
+    <html lang="en" className="light notranslate" translate="no" style={{ colorScheme: 'light' }}>
       <head>
+        {/* Prevent browser translation */}
+        <meta name="google" content="notranslate" />
+        <meta httpEquiv="Content-Language" content="en" />
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

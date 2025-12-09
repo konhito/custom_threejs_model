@@ -11,8 +11,9 @@ export default function Footer() {
           {/* Left Side - AquaMundi Title and CircularText */}
           <div className="flex flex-col items-center lg:items-start w-full lg:w-auto">
             <h2 
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 lg:mb-8 text-center lg:text-left"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 lg:mb-8 text-center lg:text-left notranslate"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
+              translate="no"
             >
               AquaMundi
             </h2>
@@ -21,17 +22,18 @@ export default function Footer() {
             <div className="hidden sm:flex items-center justify-center lg:justify-start w-full mt-2">
               <div className="relative" style={{ width: '140px', height: '140px' }}>
                 <CircularText
-                  text="PROVENEYA & NAHIARA * "
+                  text="PROVENE & NIHAHA * "
                   spinDuration={20}
                   onHover="speedUp"
                   className="!text-white !w-[140px] !h-[140px]"
+                  translate="no"
                 />
               </div>
             </div>
             
             {/* Mobile Subtitle - Visible only on mobile */}
-            <p className="sm:hidden text-gray-400 text-sm text-center mt-2">
-              Proveneya & Nahiara
+            <p className="sm:hidden text-gray-400 text-sm text-center mt-2 notranslate" translate="no">
+              PROVENE & NIHAHA
             </p>
           </div>
 

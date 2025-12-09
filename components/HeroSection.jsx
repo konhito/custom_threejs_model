@@ -23,8 +23,9 @@ export function HeroSection() {
           style={{ willChange: 'opacity, transform' }}
         >
           <span 
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-900 font-normal relative inline-block"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-900 font-normal relative inline-block notranslate"
             style={{ fontFamily: '"Agustina Signature", "Great Vibes", "Dancing Script", cursive' }}
+            translate="no"
           >
             <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">A</span>quaMundi
           </span>

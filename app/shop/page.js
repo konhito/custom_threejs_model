@@ -216,6 +216,9 @@ export default function ShopPage() {
     return total;
   };
 
+  // Hide book products and prepare visible list
+  const visibleProducts = products.filter(product => product.type !== 'book');
+
   // Skeleton loader component
   const ProductSkeleton = () => (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-red-100 animate-pulse">
@@ -357,7 +360,7 @@ export default function ShopPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => {
+            {visibleProducts.map((product) => {
             // Get price based on currency
             const priceField = `price_${currency}`;
             const digitalPriceField = `digital_price_${currency}`;
@@ -514,7 +517,7 @@ export default function ShopPage() {
           </div>
         )}
 
-        {!loading && products.length === 0 && (
+        {!loading && visibleProducts.length === 0 && (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-red-100 via-amber-50 to-green-100 rounded-full flex items-center justify-center animate-pulse border-4 border-amber-300">

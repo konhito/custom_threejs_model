@@ -1566,10 +1566,10 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
             }
           }}
         >
-          {/* Close Button - Left on mobile, right on desktop */}
+          {/* Close Button - Left on both mobile and desktop */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 left-4 sm:top-6 sm:left-auto sm:right-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
+            className="absolute top-4 left-4 sm:top-6 sm:left-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
             aria-label="Exit fullscreen"
           >
             <Minimize2 className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:scale-110 transition-transform" />
@@ -1642,7 +1642,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           {/* Fullscreen Button Overlay - Always visible on mobile, hover on desktop */}
           <button
             onClick={toggleFullscreen}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+            className="absolute top-4 left-4 sm:top-6 sm:left-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
             aria-label="Enter fullscreen"
           >
             <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
