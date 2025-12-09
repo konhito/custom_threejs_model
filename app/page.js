@@ -32,27 +32,87 @@ export default function Home() {
     }
   }, [router]);
 
-  // Handle page loading
+  // Handle page loading with minimum 5 seconds and parallel book cover preloading
   useEffect(() => {
-    // Simulate minimum loading time for better UX
-    const minLoadTime = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000); // 3 seconds minimum
+    const startTime = Date.now();
+    const MIN_LOAD_TIME = 5000; // 5 seconds minimum
 
-    // Also listen for when page is fully loaded
-    if (document.readyState === 'complete') {
-      setIsLoading(false);
-    } else {
-      window.addEventListener('load', () => {
-        setIsLoading(false);
+    // Preload all book cover images in parallel
+    const preloadBookCovers = async () => {
+      const bookImages = [
+        "/books/Book-Cover---Vol1-Spanish-Spine.png",
+        "/books/1.png",
+        "/books/Book-Cover---Vol2-Spine.png",
+        "/books/2.png",
+        "/books/Book-Cover---Vol3-spine.png",
+        "/books/3.png",
+        "/books/Book-Cover---Vol4-Spine.png",
+        "/books/4.png",
+        "/books/Book-Cover---Vol5-Spine.png",
+        "/books/5.png",
+        "/books/Book-Cover---Vol6-Spine.png",
+        "/books/6.png",
+        "/books/Book-Cover---Vol7-Spanish-spine.png",
+        "/books/7.png",
+      ];
+
+      // Load all images in parallel
+      const imagePromises = bookImages.map((src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve; // Continue even if image fails
+          img.src = src;
+        });
       });
+
+      // Wait for all images to load (or timeout after 5 seconds)
+      await Promise.race([
+        Promise.all(imagePromises),
+        new Promise((resolve) => setTimeout(resolve, MIN_LOAD_TIME))
+      ]);
+    };
+
+    // Start preloading book covers immediately
+    preloadBookCovers();
+
+    // Ensure minimum loading time of 5 seconds
+    const minLoadTime = setTimeout(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
+      
+      if (remaining > 0) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, remaining);
+      } else {
+        setIsLoading(false);
+      }
+    }, MIN_LOAD_TIME);
+
+    // Also listen for when page is fully loaded (but respect minimum time)
+    const handleLoad = () => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_LOAD_TIME - elapsed);
+      
+      if (remaining > 0) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, remaining);
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
     }
 
     return () => {
       clearTimeout(minLoadTime);
-      window.removeEventListener('load', () => {
-        setIsLoading(false);
-      });
+      window.removeEventListener('load', handleLoad);
     };
   }, []);
 
