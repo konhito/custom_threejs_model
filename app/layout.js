@@ -42,13 +42,9 @@ export const metadata = {
     canonical: siteConfig.url,
   },
   icons: {
-    icon: [
-      { url: '/logo1.png', sizes: 'any' },
-      { url: '/logo1.png', sizes: '32x32', type: 'image/png' },
-      { url: '/logo1.png', sizes: '16x16', type: 'image/png' },
-    ],
-    apple: '/logo1.png',
+    icon: '/logo1.png',
     shortcut: '/logo1.png',
+    apple: '/logo1.png',
   },
   category: "environment",
   classification: "Educational",
@@ -88,12 +84,23 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
         
-        {/* Favicon and app icons - Multiple formats for browser compatibility */}
+        {/* Favicon and app icons - Multiple formats for browser compatibility - Override default favicon.ico */}
         <link rel="icon" href="/logo1.png" type="image/png" sizes="any" />
         <link rel="icon" href="/logo1.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/logo1.png" type="image/png" sizes="16x16" />
-        <link rel="shortcut icon" href="/logo1.png" />
+        <link rel="icon" href="/logo1.png" type="image/png" sizes="192x192" />
+        <link rel="icon" href="/logo1.png" type="image/png" sizes="512x512" />
+        <link rel="shortcut icon" href="/logo1.png" type="image/png" />
+        <link rel="alternate icon" href="/logo1.png" type="image/png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="/logo1.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/logo1.png" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* Theme and browser config - Force light theme */}

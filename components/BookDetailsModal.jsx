@@ -258,3 +258,4 @@ export const BookDetailsModal = ({ isOpen, onClose, tomeNumber, coverSrc, altTex
   );
 };
 
+

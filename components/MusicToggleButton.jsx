@@ -82,21 +82,33 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
         return;
       }
       
-      // Resume audio context if needed (browser autoplay policy)
+      // For mobile: Resume audio context on user interaction
       if (typeof window !== 'undefined') {
+        // Create or resume audio context
         if (window.AudioContext || window.webkitAudioContext) {
           const AudioContext = window.AudioContext || window.webkitAudioContext;
           try {
-            const testContext = new AudioContext();
-            if (testContext.state === 'suspended') {
-              await testContext.resume();
+            // Create a temporary context to unlock audio on mobile
+            const tempContext = new AudioContext();
+            if (tempContext.state === 'suspended') {
+              await tempContext.resume();
             }
-            testContext.close();
+            // Create a silent buffer to unlock audio on iOS
+            const buffer = tempContext.createBuffer(1, 1, 22050);
+            const source = tempContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(tempContext.destination);
+            source.start(0);
+            // Close after a brief moment
+            setTimeout(() => tempContext.close(), 100);
           } catch (e) {
             // Ignore context errors
           }
         }
       }
+      
+      // Small delay to ensure audio context is ready on mobile
+      await new Promise(resolve => setTimeout(resolve, 50));
       
       // Play the sound
       play();
@@ -107,10 +119,18 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
       setIsPlaying(false);
     }
   };
+  
+  // Handle touch events for mobile
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleClick(e);
+  };
 
   return (
     <motion.div
       onClick={handleClick}
+      onTouchStart={handleTouchStart}
       key="audio"
       initial={{ padding: "14px 14px" }}
       whileHover={{ padding: "18px 22px", scale: 1.05 }}
@@ -134,8 +154,8 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
         },
         padding: { duration: 0.3, type: "spring", stiffness: 300 },
       }}
-      className="bg-white/90 backdrop-blur-sm cursor-pointer rounded-full p-2 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow relative"
-      style={{ zIndex: 50 }}
+      className="bg-white/90 backdrop-blur-sm cursor-pointer rounded-full p-2 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow relative touch-manipulation"
+      style={{ zIndex: 50, WebkitTapHighlightColor: 'transparent' }}
     >
       {/* Subtle pulsing ring animation when not playing */}
       {!isPlaying && (
