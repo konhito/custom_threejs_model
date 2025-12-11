@@ -5,6 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 import PageLoader from "../../components/PageLoader";
+import { MusicToggleButton } from "../../components/MusicToggleButton";
 
 // Simple Logo Component (replaced 3D version to fix build issues)
 function Logo3D() {
@@ -570,6 +571,11 @@ ${currentContent.vision.text}
           </div>
         </div>
       </section>
+
+      {/* Music Toggle Button - Bottom Left */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <MusicToggleButton autoPlay={true} onLoadComplete={!isLoading} />
+      </div>
 
       {/* Footer */}
       <footer className="bg-gray-900 py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-8">

@@ -108,13 +108,59 @@ export default function TiltedCard({
           scale,
         }}
       >
+        {/* Animated glow effect */}
+        <motion.div
+          className="absolute inset-0 rounded-[15px] pointer-events-none"
+          animate={{
+            boxShadow: [
+              "0 0 20px rgba(16, 185, 129, 0.2)",
+              "0 0 40px rgba(16, 185, 129, 0.4)",
+              "0 0 20px rgba(16, 185, 129, 0.2)",
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        {/* Shimmer animation overlay */}
+        <motion.div
+          className="absolute inset-0 rounded-[15px] pointer-events-none overflow-hidden"
+          style={{
+            background: "linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%)",
+            backgroundSize: "200% 200%",
+          }}
+          animate={{
+            backgroundPosition: ["200% 0", "-200% 0"],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        
         <motion.img
           src={imageSrc}
           alt={altText}
-          className="absolute top-0 left-0 object-contain bg-white rounded-[15px] will-change-transform [transform:translateZ(0)]"
+          className="absolute top-0 left-0 object-contain bg-white rounded-[15px] will-change-transform [transform:translateZ(0)] relative z-10"
           style={{
             width: imageWidth,
             height: imageHeight,
+          }}
+          animate={{
+            filter: [
+              "brightness(1) contrast(1)",
+              "brightness(1.05) contrast(1.02)",
+              "brightness(1) contrast(1)",
+            ],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
           }}
         />
 

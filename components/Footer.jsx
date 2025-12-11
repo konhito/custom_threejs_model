@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import CircularText from './CircularText';
 
 export default function Footer() {
@@ -8,15 +9,26 @@ export default function Footer() {
     <footer className="relative w-full bg-black border-t border-gray-800 py-8 md:py-12 lg:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 md:gap-12 lg:gap-16">
-          {/* Left Side - AquaMundi Title and CircularText */}
+          {/* Left Side - Logo, AquaMundi Title and CircularText */}
           <div className="flex flex-col items-center lg:items-start w-full lg:w-auto">
-            <h2 
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 lg:mb-8 text-center lg:text-left notranslate"
-              style={{ fontFamily: '"Cormorant Garamond", serif' }}
-              translate="no"
-            >
-              AquaMundi
-            </h2>
+            {/* Logo and AquaMundi in one line */}
+            <div className="flex flex-row items-center gap-3 sm:gap-4 md:gap-5 mb-4 md:mb-6 lg:mb-8">
+              <Image
+                src="/logo1.png"
+                alt="AquaMundi Logo"
+                width={120}
+                height={120}
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain flex-shrink-0"
+                priority
+              />
+              <h2 
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white notranslate whitespace-nowrap"
+                style={{ fontFamily: '"Cormorant Garamond", serif' }}
+                translate="no"
+              >
+                AquaMundi
+              </h2>
+            </div>
             
             {/* CircularText below AquaMundi - Hidden on mobile, visible on tablet+ */}
             <div className="hidden sm:flex items-center justify-center lg:justify-start w-full mt-2">

@@ -10,6 +10,7 @@ import { BentoDemo } from "../components/BentoDemo";
 import Footer from "../components/Footer";
 import PageLoader from "../components/PageLoader";
 import GlobeLoader from "../components/GlobeLoader";
+import { MusicToggleButton } from "../components/MusicToggleButton";
 
 // Lazy load Globe component
 const Globe = dynamic(() => import("../components/Globe"), {
@@ -132,6 +133,11 @@ export default function Home() {
         <Navigation />
         {/* Hero Section - Loads First */}
         <HeroSection />
+        
+        {/* Music Toggle Button - Bottom Left */}
+        <div className="fixed bottom-6 left-6 z-50">
+          <MusicToggleButton autoPlay={true} onLoadComplete={!isLoading} />
+        </div>
         {/* GIF Animation Section - Rounded Rectangle Container */}
         <div id="globe-section" className="relative w-full min-h-screen flex items-center justify-center py-8 md:py-12 bg-transparent">
           {/* Large Rounded Rectangle Container for Globe */}

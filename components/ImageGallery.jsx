@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Shuffle from "./Shuffle";
 import TiltedCard from "./TiltedCard";
+import { BookDetailsSidePanel } from "./BookDetailsSidePanel";
 
 const mysterySpine = "/books/Book-Cover---Vol7-Spanish-spine.png";
 
@@ -18,48 +19,64 @@ const ImageGallery = () => {
       coverSrc: "/books/1.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo I",
       code: "Tomo I",
+      tomeNumber: 1,
+      isComingSoon: false,
     },
     {
       spineSrc: "/books/Book-Cover---Vol2-Spine.png",
       coverSrc: "/books/2.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo II",
       code: "Tomo II",
+      tomeNumber: 2,
+      isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol3-spine.png",
       coverSrc: "/books/3.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo III",
       code: "Tomo III",
+      tomeNumber: 3,
+      isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol4-Spine.png",
       coverSrc: "/books/4.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo IV",
       code: "Tomo IV",
+      tomeNumber: 4,
+      isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol5-Spine.png",
       coverSrc: "/books/5.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo V",
       code: "Tomo V",
+      tomeNumber: 5,
+      isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol6-Spine.png",
       coverSrc: "/books/6.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo VI",
       code: "Tomo VI",
+      tomeNumber: 6,
+      isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol7-Spanish-spine.png",
       coverSrc: "/books/7.png",
       alt: "Nahiara y los Guardianes de las Flores - Tomo VII",
       code: "Tomo VII",
+      tomeNumber: 7,
+      isComingSoon: true,
     },
     {
       spineSrc: mysterySpine,
       coverSrc: mysteryCover,
       alt: "Mystery Volume",
       code: "¿?",
+      tomeNumber: null,
+      isComingSoon: false,
     },
   ];
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -128,6 +145,7 @@ const ImageGallery = () => {
         />
       </div>
 
+      {/* Modal for All Books */}
       <AnimatePresence>
         {selectedIndex !== null && images[selectedIndex] && (
           <motion.div
@@ -142,31 +160,165 @@ const ImageGallery = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
-              className="relative max-w-3xl w-full"
+              className={`relative w-full ${
+                images[selectedIndex]?.isComingSoon 
+                  ? "max-w-6xl" 
+                  : "max-w-3xl"
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={() => setSelectedIndex(null)}
-                className="absolute -top-10 sm:-top-12 right-0 sm:right-0 px-3 sm:px-4 py-2 text-white/90 active:text-white text-sm sm:text-base font-semibold rounded-full bg-white/15 active:bg-white/25 transition touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-                aria-label="Close modal"
-              >
-                Close
-              </button>
-              <TiltedCard
-                imageSrc={images[selectedIndex].coverSrc}
-                altText={images[selectedIndex].alt}
-                captionText={images[selectedIndex].code}
-                containerHeight={isCoarsePointer ? "18rem" : "22rem"}
-                containerWidth="100%"
-                imageHeight={isCoarsePointer ? "18rem" : "22rem"}
-                imageWidth={isCoarsePointer ? "12rem" : "14rem"}
-                rotateAmplitude={12}
-                scaleOnHover={1.12}
-                showMobileWarning={false}
-                showTooltip={!isCoarsePointer}
-                disableTilt={isCoarsePointer}
-                displayOverlayContent={false}
-              />
+              {/* Coming Soon Books: TiltedCard + Side Panel */}
+              {images[selectedIndex]?.isComingSoon && images[selectedIndex]?.tomeNumber ? (
+                <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row max-h-[85vh] relative">
+                  {/* Close Button - Inside modal, top right */}
+                  <motion.button
+                    onClick={() => setSelectedIndex(null)}
+                    className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg border border-gray-200 transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center group"
+                    aria-label="Close modal"
+                    whileHover={{ 
+                      rotate: 90,
+                      scale: 1.1 
+                    }}
+                    whileTap={{ 
+                      rotate: 90,
+                      scale: 0.95 
+                    }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 17
+                    }}
+                  >
+                    <motion.svg 
+                      className="w-5 h-5 text-gray-700 group-hover:text-gray-900 transition-colors" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </motion.svg>
+                  </motion.button>
+                  
+                  {/* TiltedCard on Left */}
+                  <div 
+                    className="w-full lg:w-2/5 p-6 sm:p-8 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 to-teal-50 flex-shrink-0 relative overflow-hidden"
+                  >
+                    {/* Tiled text pattern background */}
+                    <div 
+                      className="absolute inset-0 opacity-[0.03] pointer-events-none select-none"
+                      style={{
+                        fontFamily: 'monospace',
+                        fontSize: '10px',
+                        color: 'rgba(16, 185, 129, 0.4)',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fill, 60px)',
+                        gridTemplateRows: 'repeat(auto-fill, 60px)',
+                        gap: '0',
+                        padding: '20px',
+                        lineHeight: '60px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {Array.from({ length: 200 }).map((_, i) => (
+                        <div key={i} style={{ 
+                          transform: `rotate(${Math.random() * 360}deg)`,
+                          opacity: Math.random() * 0.5 + 0.2,
+                        }}>
+                          {['COMING SOON', 'PRÓXIMAMENTE', 'SOON', '2025'][i % 4]}
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* COMING SOON Badge Above TiltedCard - Small Button Style */}
+                    <div className="mb-3 flex items-center justify-center relative z-10">
+                      <span className="text-xs sm:text-sm font-bold tracking-wider px-3 py-1 rounded-full border-2 border-emerald-600 text-emerald-600 bg-transparent" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.1em' }}>
+                        COMING SOON
+                      </span>
+                    </div>
+                    
+                    <div className="w-full h-full flex items-center justify-center relative z-10" style={{ pointerEvents: 'auto' }}>
+                      <TiltedCard
+                        imageSrc={images[selectedIndex].coverSrc}
+                        altText={images[selectedIndex].alt}
+                        captionText={images[selectedIndex].code}
+                        containerHeight={isCoarsePointer ? "18rem" : "22rem"}
+                        containerWidth="100%"
+                        imageHeight={isCoarsePointer ? "18rem" : "22rem"}
+                        imageWidth={isCoarsePointer ? "12rem" : "14rem"}
+                        rotateAmplitude={12}
+                        scaleOnHover={1.12}
+                        showMobileWarning={false}
+                        showTooltip={!isCoarsePointer}
+                        disableTilt={isCoarsePointer}
+                        displayOverlayContent={false}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Book Details Panel on Right - Scrollable */}
+                  <div className="w-full lg:w-3/5 p-6 sm:p-8 overflow-y-auto flex-shrink" style={{
+                    maxHeight: '85vh',
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#10b981 #f0fdf4'
+                  }}>
+                    <BookDetailsSidePanel
+                      tomeNumber={images[selectedIndex].tomeNumber}
+                      coverSrc={images[selectedIndex].coverSrc}
+                      altText={images[selectedIndex].alt}
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* Regular Books: Just TiltedCard */
+                <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 relative">
+                  {/* Close Button - Inside modal, top right */}
+                  <motion.button
+                    onClick={() => setSelectedIndex(null)}
+                    className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg border border-gray-200 transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center group"
+                    aria-label="Close modal"
+                    whileHover={{ 
+                      rotate: 90,
+                      scale: 1.1 
+                    }}
+                    whileTap={{ 
+                      rotate: 90,
+                      scale: 0.95 
+                    }}
+                    transition={{ 
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 17
+                    }}
+                  >
+                    <motion.svg 
+                      className="w-5 h-5 text-gray-700 group-hover:text-gray-900 transition-colors" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </motion.svg>
+                  </motion.button>
+                  
+                  <div style={{ pointerEvents: 'auto' }}>
+                    <TiltedCard
+                      imageSrc={images[selectedIndex].coverSrc}
+                      altText={images[selectedIndex].alt}
+                      captionText={images[selectedIndex].code}
+                      containerHeight={isCoarsePointer ? "18rem" : "22rem"}
+                      containerWidth="100%"
+                      imageHeight={isCoarsePointer ? "18rem" : "22rem"}
+                      imageWidth={isCoarsePointer ? "12rem" : "14rem"}
+                      rotateAmplitude={12}
+                      scaleOnHover={1.12}
+                      showMobileWarning={false}
+                      showTooltip={!isCoarsePointer}
+                      disableTilt={isCoarsePointer}
+                      displayOverlayContent={false}
+                    />
+                  </div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}
@@ -360,6 +512,7 @@ const HoverExpand_001 = ({
                     </motion.div>
                   )}
                 </AnimatePresence>
+
                 
                 {/* Red bottom bar - fixed position and height */}
                 <div
