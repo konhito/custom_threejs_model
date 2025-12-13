@@ -161,14 +161,14 @@ const ImageGallery = () => {
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
               className={`relative w-full ${
-                images[selectedIndex]?.isComingSoon 
+                images[selectedIndex]?.tomeNumber 
                   ? "max-w-6xl" 
                   : "max-w-3xl"
               }`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Coming Soon Books: TiltedCard + Side Panel */}
-              {images[selectedIndex]?.isComingSoon && images[selectedIndex]?.tomeNumber ? (
+              {/* Books with Tome Number: TiltedCard + Side Panel */}
+              {images[selectedIndex]?.tomeNumber ? (
                 <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row max-h-[85vh] relative">
                   {/* Close Button - Inside modal, top right */}
                   <motion.button
@@ -230,11 +230,13 @@ const ImageGallery = () => {
                     </div>
                     
                     {/* COMING SOON Badge Above TiltedCard - Small Button Style */}
-                    <div className="mb-3 flex items-center justify-center relative z-10">
-                      <span className="text-xs sm:text-sm font-bold tracking-wider px-3 py-1 rounded-full border-2 border-emerald-600 text-emerald-600 bg-transparent" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.1em' }}>
-                        COMING SOON
-                      </span>
-                    </div>
+                    {images[selectedIndex]?.isComingSoon && (
+                      <div className="mb-3 flex items-center justify-center relative z-10">
+                        <span className="text-xs sm:text-sm font-bold tracking-wider px-3 py-1 rounded-full border-2 border-emerald-600 text-emerald-600 bg-transparent" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.1em' }}>
+                          COMING SOON
+                        </span>
+                      </div>
+                    )}
                     
                     <div className="w-full h-full flex items-center justify-center relative z-10" style={{ pointerEvents: 'auto' }}>
                       <TiltedCard

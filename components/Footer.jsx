@@ -54,7 +54,7 @@ export default function Footer() {
             
             {/* Subtitle - Single line on all devices */}
             <p className="text-gray-400 text-xs sm:text-sm md:text-base text-center lg:text-left mt-2 notranslate whitespace-nowrap" translate="no">
-              PROVENE & NIHAHA
+              PROVENEYA & NAHIARA
             </p>
           </div>
 
