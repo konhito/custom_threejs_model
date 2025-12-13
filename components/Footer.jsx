@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import CircularText from './CircularText';
 
 export default function Footer() {
   const [userEmail, setUserEmail] = useState('');
@@ -53,21 +52,8 @@ export default function Footer() {
               </h2>
             </div>
             
-            {/* CircularText below AquaMundi - Hidden on mobile, visible on tablet+ */}
-            <div className="hidden sm:flex items-center justify-center lg:justify-start w-full mt-2">
-              <div className="relative" style={{ width: '140px', height: '140px' }}>
-                <CircularText
-                  text="PROVENE & NIHAHA * "
-                  spinDuration={20}
-                  onHover="speedUp"
-                  className="!text-white !w-[140px] !h-[140px]"
-                  translate="no"
-                />
-              </div>
-            </div>
-            
-            {/* Mobile Subtitle - Visible only on mobile */}
-            <p className="sm:hidden text-gray-400 text-sm text-center mt-2 notranslate" translate="no">
+            {/* Subtitle - Single line on all devices */}
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base text-center lg:text-left mt-2 notranslate whitespace-nowrap" translate="no">
               PROVENE & NIHAHA
             </p>
           </div>
