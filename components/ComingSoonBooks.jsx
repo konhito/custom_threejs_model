@@ -27,8 +27,8 @@ const ComingSoonBooks = () => {
       cover: "/books/1.png",
       spine: "/books/Book-Cover---Vol1-Spanish-Spine.png",
       prologue: {
-        en: "Before the war, there was a whisper. Before the legion, there was a secret. In a world that was beginning to forget, the flowers held the memory of what was to come. A shadow was lengthening, a faceless threat, and at the heart of it all, a first vision... the map of a battle for the planet's soul.",
-        es: "Antes de la guerra, hubo un susurro. Antes de la legión, hubo un secreto. En un mundo que empezaba a olvidar, las flores guardaban la memoria de lo que estaba por venir. Una sombra se alargaba, una amenaza sin rostro, y en el corazón de todos, una primera visión... el mapa de una batalla por el alma del planeta."
+        en: "Before the world learned how to forget, flowers kept the memory of the Earth. When silence began to spread and names started to fade, Nahiara was born. Not as a heroine, but as someone able to listen. Where others perceived nothing, she recognized signals, echoes, and warnings. This is the beginning of a journey that weaves memory, nature, and destiny. The first step of a saga where every flower matters and every memory can change the course of the world.",
+        es: "Antes de que el mundo aprendiera a olvidar, las flores guardaban la memoria de la Tierra. Cuando el silencio comenzó a extenderse y los nombres empezaron a borrarse, nació Nahiara. No como una heroína, sino como alguien capaz de escuchar. Allí donde otros no percibían nada, ella reconocía señales, ecos y advertencias. Este es el inicio de un viaje que une memoria, naturaleza y destino. El primer paso de una saga donde cada flor importa y cada recuerdo puede cambiar el rumbo del mundo."
       }
     },
     {
