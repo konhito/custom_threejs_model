@@ -19,6 +19,19 @@ const ComingSoonBooks = () => {
 
   const tomes = [
     {
+      id: 1,
+      title: {
+        en: "The First Bloom Vision",
+        es: "La Primera Visión del Florecer"
+      },
+      cover: "/books/1.png",
+      spine: "/books/Book-Cover---Vol1-Spanish-Spine.png",
+      prologue: {
+        en: "Before the war, there was a whisper. Before the legion, there was a secret. In a world that was beginning to forget, the flowers held the memory of what was to come. A shadow was lengthening, a faceless threat, and at the heart of it all, a first vision... the map of a battle for the planet's soul.",
+        es: "Antes de la guerra, hubo un susurro. Antes de la legión, hubo un secreto. En un mundo que empezaba a olvidar, las flores guardaban la memoria de lo que estaba por venir. Una sombra se alargaba, una amenaza sin rostro, y en el corazón de todos, una primera visión... el mapa de una batalla por el alma del planeta."
+      }
+    },
+    {
       id: 2,
       title: {
         en: "The Green Legion Awakens",
