@@ -315,8 +315,10 @@ function LandingContent() {
           setLanguage('en');
         }
         
-        // Store language preference in localStorage
-        localStorage.setItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
+        // Store language preference in localStorage (client-side only)
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
+        }
       } catch (error) {
         console.error('Language detection failed:', error);
         // Fallback to English if detection fails
@@ -324,8 +326,8 @@ function LandingContent() {
       }
     };
 
-    // Check if language is already stored in localStorage
-    const storedLanguage = localStorage.getItem('nahiara_language');
+    // Check if language is already stored in localStorage (client-side only)
+    const storedLanguage = typeof window !== 'undefined' ? localStorage.getItem('nahiara_language') : null;
     if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'es')) {
       setLanguage(storedLanguage);
     } else {
@@ -477,7 +479,9 @@ ${currentContent.vision.text}
           <button
             onClick={() => {
               setLanguage('en');
-              localStorage.setItem('nahiara_language', 'en');
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('nahiara_language', 'en');
+              }
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'en' 
@@ -490,7 +494,9 @@ ${currentContent.vision.text}
           <button
             onClick={() => {
               setLanguage('es');
-              localStorage.setItem('nahiara_language', 'es');
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('nahiara_language', 'es');
+              }
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'es' 

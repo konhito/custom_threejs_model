@@ -57,7 +57,7 @@ export default function AdminLayout({ children }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
       </div>
     );
@@ -81,7 +81,7 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 relative">
+    <div className="min-h-screen bg-white relative">
       {/* FaultyTerminal Background */}
       <div style={{ width: '100%', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, opacity: 0.3 }}>
         <FaultyTerminal

@@ -9,14 +9,16 @@ export default function GDPRConsentBanner() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Check if user has already consented
-    const consent = localStorage.getItem('nahiara_gdpr_consent');
-    if (!consent) {
-      // Show banner after a short delay
-      const timer = setTimeout(() => {
-        setShow(true);
-      }, 1000);
-      return () => clearTimeout(timer);
+    // Check if user has already consented (client-side only)
+    if (typeof window !== 'undefined') {
+      const consent = localStorage.getItem('nahiara_gdpr_consent');
+      if (!consent) {
+        // Show banner after a short delay
+        const timer = setTimeout(() => {
+          setShow(true);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }
     }
   }, []);
 
@@ -24,7 +26,9 @@ export default function GDPRConsentBanner() {
     setLoading(true);
     try {
       await updateGDPRConsent(true, true);
-      localStorage.setItem('nahiara_gdpr_consent', 'true');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('nahiara_gdpr_consent', 'true');
+      }
       setShow(false);
     } catch (error) {
       console.error('Error updating consent:', error);
@@ -37,7 +41,9 @@ export default function GDPRConsentBanner() {
     setLoading(true);
     try {
       await updateGDPRConsent(false, false);
-      localStorage.setItem('nahiara_gdpr_consent', 'false');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('nahiara_gdpr_consent', 'false');
+      }
       setShow(false);
     } catch (error) {
       console.error('Error updating consent:', error);
@@ -49,7 +55,9 @@ export default function GDPRConsentBanner() {
   const handleClose = () => {
     setShow(false);
     // Don't set consent, just hide banner
-    localStorage.setItem('nahiara_gdpr_consent', 'dismissed');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('nahiara_gdpr_consent', 'dismissed');
+    }
   };
 
   if (!show) return null;
