@@ -271,8 +271,8 @@ export default function MobileSidebar() {
               })}
             </nav>
 
-            {/* Footer - Books Button */}
-            {!isCartPage && !isHomePage && (
+            {/* Footer - Books Button (show on all pages except cart) */}
+            {!isCartPage && (
               <div className="px-4 py-4 border-t border-gray-200 bg-gray-50">
                 <Link
                   href="/shop"

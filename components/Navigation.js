@@ -141,8 +141,8 @@ export default function Navigation() {
               href: item.href,
             };
           }),
-          // Add book/shop button if not on cart or home page
-          ...(!isCartPage && !isHomePage ? [{
+          // Add book/shop button (show on all pages except cart)
+          ...(!isCartPage ? [{
             title: "Books",
             icon: <FaBook className="w-full h-full" />,
             href: "/shop",
