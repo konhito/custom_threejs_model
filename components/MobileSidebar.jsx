@@ -15,6 +15,7 @@ import {
   FaBullseye, 
   FaUsers,
   FaShoppingCart,
+  FaBook,
   FaTimes,
   FaBars,
   FaChevronRight
@@ -270,16 +271,16 @@ export default function MobileSidebar() {
               })}
             </nav>
 
-            {/* Footer - Cart Button */}
+            {/* Footer - Books Button */}
             {!isCartPage && !isHomePage && (
               <div className="px-4 py-4 border-t border-gray-200 bg-gray-50">
                 <Link
-                  href="/cart"
-                  className="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all"
+                  href="/shop"
+                  className="flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg hover:shadow-xl transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <FaShoppingCart className="w-5 h-5" />
-                    <span className="font-medium">View Cart</span>
+                    <FaBook className="w-5 h-5" />
+                    <span className="font-medium">View Books</span>
                   </div>
                   {cartCount > 0 && (
                     <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold">

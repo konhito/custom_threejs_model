@@ -1,13 +1,14 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Book, Gamepad2, Download, Plus, Globe, CheckCircle, Sparkles, Gift, ArrowRight } from "lucide-react";
+import { ShoppingCart, Gamepad2, Download, Globe, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
+import BookCard from "../../components/BookCard";
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -17,78 +18,9 @@ export default function ShopPage() {
   const [showNotification, setShowNotification] = useState(false);
   const [detectingLocation, setDetectingLocation] = useState(true);
   const [detectedCountry, setDetectedCountry] = useState('');
-  const [stars, setStars] = useState([]);
-  const starIdRef = useRef(0);
-  const lastStarTime = useRef(0);
-  const lastMousePos = useRef({ x: 0, y: 0 });
-  const isMouseMoving = useRef(false);
-  const mouseStopTimeout = useRef(null);
   
   // Session tracking
   const { session, preferences, track, updatePreferences } = useSession();
-
-  // Optimized Christmas cursor trail effect - only when mouse moves
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const now = Date.now();
-      const currentX = e.clientX;
-      const currentY = e.clientY;
-      
-      // Calculate distance moved
-      const distX = currentX - lastMousePos.current.x;
-      const distY = currentY - lastMousePos.current.y;
-      const distance = Math.sqrt(distX * distX + distY * distY);
-      
-      // Only create star if mouse moved at least 5 pixels and enough time has passed
-      if (distance > 5 && now - lastStarTime.current >= 150) {
-        lastStarTime.current = now;
-        
-        const newStar = {
-          id: starIdRef.current++,
-          x: currentX,
-          y: currentY,
-          size: Math.random() * 15 + 8,
-          opacity: 1,
-          rotation: Math.random() * 360,
-        };
-        
-        setStars(prev => {
-          // Limit to max 8 stars at once for performance
-          const updated = [...prev, newStar];
-          return updated.length > 8 ? updated.slice(-8) : updated;
-        });
-        
-        // Remove star after animation with smooth fade
-        setTimeout(() => {
-          setStars(prev => prev.filter(star => star.id !== newStar.id));
-        }, 1200);
-        
-        lastMousePos.current = { x: currentX, y: currentY };
-      }
-      
-      // Update mouse moving state
-      isMouseMoving.current = true;
-      
-      // Clear previous timeout
-      if (mouseStopTimeout.current) {
-        clearTimeout(mouseStopTimeout.current);
-      }
-      
-      // Set timeout to detect when mouse stops
-      mouseStopTimeout.current = setTimeout(() => {
-        isMouseMoving.current = false;
-      }, 100);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (mouseStopTimeout.current) {
-        clearTimeout(mouseStopTimeout.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     initializeCurrency();
@@ -216,8 +148,8 @@ export default function ShopPage() {
     return total;
   };
 
-  // Hide book products and prepare visible list
-  const visibleProducts = products.filter(product => product.type !== 'book');
+  // Show all products including books
+  const visibleProducts = products;
 
   // Skeleton loader component
   const ProductSkeleton = () => (
@@ -233,92 +165,33 @@ export default function ShopPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-amber-50 to-green-50 relative overflow-hidden">
-      {/* Light Snow Effect */}
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 relative overflow-hidden">
+      {/* Subtle background pattern */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Very Light Snowflakes */}
-        <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-snow"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `-10%`,
-                fontSize: `${Math.random() * 12 + 6}px`,
-                color: 'rgba(255, 255, 255, 0.4)',
-                textShadow: '0 0 3px rgba(255, 255, 255, 0.3)',
-                animationDuration: `${Math.random() * 15 + 15}s`,
-                animationDelay: `${Math.random() * 8}s`,
-              }}
-            >
-              ❄
-            </div>
-          ))}
-        </div>
+        {/* Gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-emerald-100/10 to-cyan-100/10 rounded-full blur-3xl" />
         
-        {/* Subtle Christmas Lights - Top Bar */}
-        <div className="absolute top-0 left-0 right-0 h-3 flex justify-around opacity-60">
-          {[...Array(25)].map((_, i) => (
-            <div
-              key={i}
-              className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{
-                backgroundColor: ['#ef4444', '#10b981', '#fbbf24'][i % 3],
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: '2s',
-                opacity: 0.7,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Cursor Trail Stars */}
-      <div className="fixed inset-0 pointer-events-none z-50">
-        {stars.map(star => (
-          <div
-            key={star.id}
-            className="absolute transition-all duration-300 ease-out"
-            style={{
-              left: star.x - star.size / 2,
-              top: star.y - star.size / 2,
-              width: star.size,
-              height: star.size,
-              animation: 'star-fade-smooth 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-            }}
-          >
-            <Sparkles 
-              className="text-amber-400" 
-              style={{ 
-                width: '100%', 
-                height: '100%',
-                filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 20px rgba(251, 191, 36, 0.5))',
-                transform: `rotate(${star.rotation}deg)`,
-                transition: 'all 0.3s ease-out',
-              }} 
-            />
-          </div>
-        ))}
       </div>
 
       <Navigation />
       
       {/* Location & Currency - Top Right */}
-      <div className="fixed top-4 right-8 z-40">
+      <div className="fixed top-20 right-4 z-40">
         {detectingLocation ? (
-          <div className="flex items-center gap-2 text-xs text-gray-600 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg border-2 border-amber-300 shadow-lg">
-            <div className="w-3 h-3 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
-            <span>Detecting...</span>
+          <div className="flex items-center gap-2 text-xs text-gray-600 bg-white/80 backdrop-blur-md px-3 py-2 rounded-xl border border-gray-200 shadow-sm">
+            <div className="w-3 h-3 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <span>Detecting location...</span>
           </div>
         ) : (
           detectedCountry && (
-            <div className="flex items-center gap-1.5 text-xs text-gray-700 bg-white/90 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border-2 border-amber-300 shadow-lg">
-              <Globe className="w-3.5 h-3.5 text-red-600" />
+            <div className="flex items-center gap-2 text-xs text-gray-700 bg-white/80 backdrop-blur-md px-3 py-2 rounded-xl border border-gray-200 shadow-sm">
+              <Globe className="w-4 h-4 text-emerald-600" />
               <div className="flex flex-col">
-                <span className="font-medium">Detected: {detectedCountry}</span>
+                <span className="font-medium">{detectedCountry}</span>
                 <span className="text-[10px] text-gray-500">
-                  Currency: {getCurrencySymbol(currency)} {getCurrencyName(currency)}
+                  {getCurrencySymbol(currency)} {getCurrencyName(currency)}
                 </span>
               </div>
             </div>
@@ -326,22 +199,43 @@ export default function ShopPage() {
         )}
       </div>
 
-      {/* Header */}
-      <div className="pt-20 pb-12 px-4 relative">
-        <div className="max-w-7xl mx-auto text-center">
-          {/* Christmas Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-green-600 text-white px-6 py-2 rounded-full mb-4 shadow-xl animate-bounce">
-            <Gift className="w-5 h-5" />
-            <span className="font-bold text-sm">🎄 Holiday Special Collection 🎄</span>
-            <Sparkles className="w-5 h-5" />
+      {/* Header - Modern & Clean */}
+      <div className="pt-24 pb-16 px-4 relative">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Subtle badge */}
+          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-1.5 rounded-full mb-6">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium">New Collection Available</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-red-600 via-amber-500 to-green-600 bg-clip-text text-transparent drop-shadow-lg" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-            Nahiara Holiday Store
+          {/* Main heading */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight">
+            Explore the{' '}
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
+              Nahiara Universe
+            </span>
           </h1>
-          <p className="text-lg text-gray-800 mb-8 max-w-2xl mx-auto font-medium">
-            ✨ Discover our magical collection of books and card games celebrating nature&apos;s beauty ✨
+          
+          {/* Subtitle */}
+          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Discover enchanting stories and games that celebrate the magic of nature and the wisdom of flowers.
           </p>
+          
+          {/* Stats/Features */}
+          <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-500">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+              <span>Free Shipping over €50</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+              <span>Digital Downloads Available</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+              <span>Secure Payment</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -374,6 +268,23 @@ export default function ShopPage() {
               return null;
             }
 
+            // Use BookCard for book products
+            if (product.type === 'book') {
+              return (
+                <BookCard
+                  key={product.id}
+                  product={product}
+                  price={price}
+                  digitalPrice={digitalPrice}
+                  hasDigital={hasDigital}
+                  currency={currency}
+                  formatCurrency={formatCurrency}
+                  onAddToCart={handleAddToCart}
+                />
+              );
+            }
+
+            // Default card for other product types (card games, etc.)
             return (
               <div
                 key={product.id}
@@ -412,11 +323,7 @@ export default function ShopPage() {
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      {product.type === 'book' ? (
-                        <Book className="w-24 h-24 text-red-400 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
-                      ) : (
-                        <Gamepad2 className="w-24 h-24 text-green-500 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
-                      )}
+                      <Gamepad2 className="w-24 h-24 text-green-500 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
                     </div>
                   )}
                   {/* Christmas overlay */}
@@ -433,12 +340,7 @@ export default function ShopPage() {
                     <h3 className="text-xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                       {product.name}
                     </h3>
-                    {product.type === 'book' && (
-                      <Book className="w-5 h-5 text-red-600 flex-shrink-0 ml-2" />
-                    )}
-                    {product.type === 'card_game' && (
-                      <Gamepad2 className="w-5 h-5 text-green-600 flex-shrink-0 ml-2" />
-                    )}
+                    <Gamepad2 className="w-5 h-5 text-green-600 flex-shrink-0 ml-2" />
                   </div>
 
                   <p className="text-gray-700 text-sm mb-4 line-clamp-2">
@@ -532,97 +434,48 @@ export default function ShopPage() {
         )}
       </div>
 
-      {/* Enhanced Christmas Notification */}
+      {/* Modern Notification */}
       {showNotification && (
-        <div className="fixed bottom-4 right-4 bg-gradient-to-r from-red-600 via-amber-500 to-green-600 text-white px-6 py-4 rounded-xl shadow-2xl z-50 animate-fade-in border-2 border-amber-400 backdrop-blur-sm">
+        <div className="fixed bottom-4 right-4 bg-white text-gray-900 px-5 py-4 rounded-2xl shadow-2xl z-50 animate-fade-in border border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/30 rounded-full flex items-center justify-center animate-bounce">
-              <Gift className="w-6 h-6" />
+            <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-emerald-600" />
             </div>
             <div>
-              <p className="font-bold text-lg flex items-center gap-2">
-                🎉 Added to cart! 
-                <Sparkles className="w-4 h-4 animate-pulse" />
-              </p>
-              <p className="text-sm text-white/90">Perfect gift choice! ✨</p>
+              <p className="font-semibold text-gray-900">Added to cart</p>
+              <p className="text-sm text-gray-500">Continue shopping or checkout</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Floating Cart Summary - Bottom */}
+      {/* Floating Cart Summary - Modern */}
       {cartCount > 0 && !showNotification && (
         <div className="fixed bottom-6 right-6 z-50 animate-fade-in">
           <Link
             href="/cart"
-            className="flex items-center gap-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-2xl shadow-2xl hover:shadow-green-500/50 hover:scale-105 transition-all duration-300 border-2 border-white/30 backdrop-blur-sm group"
+            className="flex items-center gap-4 bg-gray-900 text-white px-5 py-3 rounded-full shadow-2xl hover:bg-gray-800 hover:scale-105 transition-all duration-300 group"
           >
             <div className="relative">
-              <ShoppingCart className="w-6 h-6" />
-              <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center border-2 border-white">
+              <ShoppingCart className="w-5 h-5" />
+              <span className="absolute -top-2 -right-2 w-5 h-5 bg-emerald-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
             </div>
             <div className="text-left">
-              <p className="font-bold text-sm">View Cart</p>
-              <p className="text-xs text-white/90">{formatCurrency(getCartTotal(), currency)}</p>
+              <p className="font-semibold text-sm">{formatCurrency(getCartTotal(), currency)}</p>
             </div>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       )}
       
-      {/* Christmas Styles */}
+      {/* Modern Styles */}
       <style jsx>{`
-        @keyframes snow {
-          0% {
-            transform: translateY(-10vh) translateX(0) rotate(0deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.5;
-          }
-          90% {
-            opacity: 0.3;
-          }
-          100% {
-            transform: translateY(110vh) translateX(50px) rotate(360deg);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes star-fade-smooth {
-          0% {
-            opacity: 0;
-            transform: scale(0) rotate(0deg) translateY(0);
-          }
-          20% {
-            opacity: 1;
-            transform: scale(1.2) rotate(72deg) translateY(-5px);
-          }
-          50% {
-            opacity: 0.9;
-            transform: scale(1) rotate(180deg) translateY(-8px);
-          }
-          80% {
-            opacity: 0.4;
-            transform: scale(0.8) rotate(288deg) translateY(-10px);
-          }
-          100% {
-            opacity: 0;
-            transform: scale(0) rotate(360deg) translateY(-15px);
-          }
-        }
-        
-        .animate-snow {
-          animation: snow linear infinite;
-          will-change: transform, opacity;
-        }
-        
         @keyframes fade-in {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
@@ -631,22 +484,7 @@ export default function ShopPage() {
         }
         
         .animate-fade-in {
-          animation: fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* Smooth scrolling */
-        * {
-          scroll-behavior: smooth;
-        }
-        
-        /* GPU acceleration for animations */
-        .animate-star-fade,
-        .animate-snow,
-        .group:hover img,
-        .group:hover svg {
-          will-change: transform, opacity;
-          transform: translateZ(0);
-          backface-visibility: hidden;
+          animation: fade-in 0.3s ease-out;
         }
       `}</style>
     </div>

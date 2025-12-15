@@ -13,7 +13,8 @@ import {
   FaArchive, 
   FaBullseye, 
   FaUsers,
-  FaShoppingCart
+  FaShoppingCart,
+  FaBook
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { FloatingDock } from "./ui/floating-dock";
@@ -140,11 +141,11 @@ export default function Navigation() {
               href: item.href,
             };
           }),
-          // Add cart button if not on cart or home page
+          // Add book/shop button if not on cart or home page
           ...(!isCartPage && !isHomePage ? [{
-            title: `Cart (${cartCount} ${cartCount === 1 ? 'item' : 'items'})`,
-            icon: <FaShoppingCart className="w-full h-full" />,
-            href: cartHref,
+            title: "Books",
+            icon: <FaBook className="w-full h-full" />,
+            href: "/shop",
           }] : []),
         ]}
         desktopClassName="fixed right-4 top-1/2 -translate-y-1/2 z-[9999] max-h-[85vh] overflow-y-auto overflow-x-visible scrollbar-thin"
