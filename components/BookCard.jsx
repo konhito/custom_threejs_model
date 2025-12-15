@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ShoppingCart, Download, Star, Sparkles, BookOpen, Heart, Eye } from "lucide-react";
+import { ShoppingCart, Download, Sparkles, BookOpen, Heart, Eye, Award } from "lucide-react";
 
 export default function BookCard({ 
   product, 
@@ -95,7 +95,7 @@ export default function BookCard({
               animate={{ scale: 1 }}
               className="px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5"
             >
-              <Star className="w-3 h-3 fill-current" />
+              <Award className="w-3 h-3" />
               <span>Bestseller</span>
             </motion.div>
           </div>
@@ -198,20 +198,11 @@ export default function BookCard({
 
         {/* Content Section */}
         <div className="p-5 space-y-4">
-          {/* Category & Rating */}
-          <div className="flex items-center justify-between">
+          {/* Category */}
+          <div>
             <span className="px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-md uppercase tracking-wide">
               {product.type === 'book' ? 'Novel' : 'Card Game'}
             </span>
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  className={`w-3.5 h-3.5 ${i < 4 ? 'text-amber-400 fill-amber-400' : 'text-gray-300'}`} 
-                />
-              ))}
-              <span className="text-xs text-gray-500 ml-1">(4.8)</span>
-            </div>
           </div>
 
           {/* Title */}
@@ -223,26 +214,6 @@ export default function BookCard({
           <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
-
-          {/* Price Section */}
-          <div className="pt-2 border-t border-gray-100">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-xs text-gray-500 mb-0.5">Price</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {formatCurrency(price, currency)}
-                </p>
-              </div>
-              {hasDigital && !product.is_digital && (
-                <div className="text-right">
-                  <p className="text-xs text-emerald-600 mb-0.5">Digital</p>
-                  <p className="text-lg font-semibold text-emerald-600">
-                    {formatCurrency(digitalPrice, currency)}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Stock indicator */}
           {!product.is_digital && (
@@ -259,28 +230,37 @@ export default function BookCard({
             </div>
           )}
 
-          {/* Action Buttons */}
-          <div className="flex gap-2 pt-2">
+          {/* Action Buttons - Stacked for clarity */}
+          <div className="space-y-2 pt-2">
+            {/* Physical Book Button */}
             {!product.is_digital && product.stock_quantity > 0 && (
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onAddToCart(product, false)}
-                className="flex-1 px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                className="w-full px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-between"
               >
-                <ShoppingCart className="w-4 h-4" />
-                <span>Add to Cart</span>
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>Physical Book</span>
+                </div>
+                <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
               </motion.button>
             )}
+            
+            {/* Digital Book Button */}
             {hasDigital && (
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onAddToCart(product, true)}
-                className={`${!product.is_digital && product.stock_quantity > 0 ? 'w-12' : 'flex-1'} px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg hover:shadow-emerald-500/25 flex items-center justify-center gap-2`}
+                className="w-full px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg hover:shadow-emerald-500/25 flex items-center justify-between"
               >
-                <Download className="w-4 h-4" />
-                {(product.is_digital || product.stock_quantity === 0) && <span>Get Digital</span>}
+                <div className="flex items-center gap-2">
+                  <Download className="w-4 h-4" />
+                  <span>Digital eBook</span>
+                </div>
+                <span className="text-sm font-bold">{formatCurrency(digitalPrice, currency)}</span>
               </motion.button>
             )}
           </div>
