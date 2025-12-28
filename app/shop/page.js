@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Gamepad2, Download, Globe, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
+import { ShoppingCart, Gamepad2, Download, Globe, CheckCircle, Sparkles, ArrowRight,Gift } from "lucide-react";
 import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
 import { useSession } from "../../hooks/useSession";
