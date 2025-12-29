@@ -18,24 +18,34 @@ export function useSession() {
   const [preferences, setPreferences] = useState(null);
   const [loading, setLoading] = useState(true);
   const [initialized, setInitialized] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
 
   // Initialize session on mount
   useEffect(() => {
     async function init() {
       setLoading(true);
       try {
+        // Get session ID (only in browser)
+        setSessionId(getSessionId());
+        
         const sessionData = await initializeSession();
         if (sessionData) {
           setSession(sessionData);
           
           // Load preferences
-          const prefs = await getSessionPreferences();
-          if (prefs) {
-            setPreferences(prefs);
+          try {
+            const prefs = await getSessionPreferences();
+            if (prefs) {
+              setPreferences(prefs);
+            }
+          } catch (prefsError) {
+            // Silently ignore preferences error
+            console.warn('Could not load preferences:', prefsError.message);
           }
         }
       } catch (error) {
-        console.error('Error initializing session:', error);
+        // Silently handle network errors - app should still work without session
+        console.warn('Session initialization skipped:', error.message);
       } finally {
         setLoading(false);
         setInitialized(true);
@@ -94,7 +104,7 @@ export function useSession() {
     updateConsent,
     refreshSession,
     track,
-    sessionId: getSessionId(),
+    sessionId,
   };
 }
 

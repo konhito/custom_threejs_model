@@ -1,21 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import CompleteFlower from "./CompleteFlower";
 import { getPetalPath } from "@/lib/gameData";
 
-export default function FlowerFormation({ country, onComplete, collectedPetals }) {
-  const [stage, setStage] = useState("convergence"); // convergence, assembled, completed
-  const [petalPositions, setPetalPositions] = useState([]);
-  const [showAssembled, setShowAssembled] = useState(false);
-  const [cardsConnected, setCardsConnected] = useState(false);
+// SVG petal dimensions from the actual files (195.6 x 266.5)
+// The complete flower is a 3x2 grid = 586.8 x 533 total
+const PETAL_WIDTH = 195.6;
+const PETAL_HEIGHT = 266.5;
 
-  // Play sounds for different stages
+export default function FlowerFormation({ country, onComplete }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showFlower, setShowFlower] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [flowerSize, setFlowerSize] = useState({ width: 480, height: 435 });
+
+  // Play sounds
   const playSound = (type) => {
     if (typeof window !== "undefined") {
       import("@/lib/soundUtils").then((module) => {
-        // Resume audio context if suspended (browser autoplay policy)
         if (module.default.audioContext && module.default.audioContext.state === 'suspended') {
           module.default.audioContext.resume();
         }
@@ -24,253 +26,295 @@ export default function FlowerFormation({ country, onComplete, collectedPetals }
     }
   };
 
+  // Calculate flower size based on window
   useEffect(() => {
-    // Play flower complete sound when formation starts
-    playSound("flower-complete");
-    
-    // Get the container size
-    const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.8, 600) : 600;
-    const cardWidth = containerWidth / 3;
-    
-    // Initialize petal positions scattered around the screen
-    const initialPositions = Array.from({ length: 6 }, (_, i) => {
-      const angle = (i / 6) * Math.PI * 2;
-      const distance = Math.min(window?.innerWidth || 400, 500);
-      return {
-        x: Math.cos(angle) * distance,
-        y: Math.sin(angle) * distance,
-        scale: 0.5,
-        opacity: 1,
-        rotation: Math.random() * 360,
-      };
-    });
-    setPetalPositions(initialPositions);
-
-    // Stage 1: Petals fly to grid positions (2 seconds)
-    const timer1 = setTimeout(() => {
-      // Calculate grid positions: 2 rows x 3 columns
-      // Row 0: petals 1, 2, 3 (indices 0, 1, 2)
-      // Row 1: petals 4, 5, 6 (indices 3, 4, 5)
-      const finalPositions = Array.from({ length: 6 }, (_, i) => {
-        const row = Math.floor(i / 3); // 0 or 1
-        const col = i % 3; // 0, 1, or 2
-        
-        // Position relative to center of container
-        // Offset from center: col 0 = -1, col 1 = 0, col 2 = 1
-        // Offset from center: row 0 = -0.5, row 1 = 0.5
-        const xOffset = (col - 1) * cardWidth;
-        const yOffset = (row - 0.5) * cardWidth;
-        
-        return {
-          x: xOffset,
-          y: yOffset,
-          scale: 1,
-          opacity: 1,
-          rotation: 0,
-        };
-      });
-      
-      setPetalPositions(finalPositions);
-      setStage("assembled");
-      playSound("petals-converge");
-    }, 800);
-
-    // Stage 2: Cards merge together (remove borders/padding)
-    const timer2 = setTimeout(() => {
-      setCardsConnected(true);
-      playSound("flower-appear");
-    }, 3500);
-
-    // Stage 3: Switch to seamless grid view
-    const timer3 = setTimeout(() => {
-      setShowAssembled(true);
-    }, 4000);
-
-    // Stage 4: Complete - show collected petals page
-    const timer4 = setTimeout(() => {
-      onComplete();
-    }, 6500);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
+    const calculateSize = () => {
+      const maxWidth = Math.min(window.innerWidth * 0.85, 540);
+      // Maintain exact aspect ratio of 3 petals wide by 2 petals tall
+      // Total aspect ratio = (3 * 195.6) / (2 * 266.5) = 586.8 / 533 = 1.101
+      const totalAspectRatio = (3 * PETAL_WIDTH) / (2 * PETAL_HEIGHT);
+      const width = maxWidth;
+      const height = width / totalAspectRatio;
+      setFlowerSize({ width, height });
     };
-  }, [onComplete]);
+    
+    calculateSize();
+    window.addEventListener('resize', calculateSize);
+    return () => window.removeEventListener('resize', calculateSize);
+  }, []);
 
-  // Calculate container width for both animations and final grid
-  const containerWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 800) : 600;
-  const petalWidth = containerWidth / 3;
+  useEffect(() => {
+    // Preload all petal images
+    const loadImages = async () => {
+      const loadPromises = [];
+      for (let i = 1; i <= 6; i++) {
+        const img = new window.Image();
+        img.src = getPetalPath(country.folder, i);
+        loadPromises.push(
+          new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          })
+        );
+      }
+      await Promise.all(loadPromises);
+      setIsLoaded(true);
+      
+      // Play flower complete sound
+      playSound("flower-complete");
+      
+      // Show flower with animation after brief delay
+      setTimeout(() => {
+        setShowFlower(true);
+        playSound("flower-appear");
+      }, 300);
+      
+      // Show text content after flower appears
+      setTimeout(() => {
+        setShowContent(true);
+      }, 1200);
+    };
+
+    loadImages();
+  }, [country]);
+
+  const { width: flowerWidth, height: flowerHeight } = flowerSize;
+
+  const handleContinue = () => {
+    playSound("button-click");
+    onComplete();
+  };
 
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 to-emerald-100">
-      {/* Background particles for effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden">
+      {/* Beautiful gradient background */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, #fef9c3 0%, #fef3c7 25%, #fce7f3 50%, #f5f3ff 75%, #ecfdf5 100%)',
+        }}
+      />
+
+      {/* Soft animated particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 30 }).map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-purple-300/30 rounded-full animate-pulse"
+            className="absolute rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
+              width: `${4 + Math.random() * 8}px`,
+              height: `${4 + Math.random() * 8}px`,
+              background: ['#fcd34d', '#f9a8d4', '#c4b5fd', '#86efac'][Math.floor(Math.random() * 4)],
+              opacity: 0.4,
+              animation: `float-particle ${8 + Math.random() * 6}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 5}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Petal Convergence Animation - Cards flying together and merging */}
-      {!showAssembled && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          {petalPositions.map((pos, i) => {
-            const petalNum = i + 1;
-            
-            return (
-              <div
-                key={i}
-                className="absolute"
-                style={{
-                  left: '50%',
-                  top: '50%',
-                  transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(${pos.scale}) rotate(${pos.rotation}deg)`,
-                  width: `${petalWidth}px`,
-                  height: `${petalWidth}px`,
-                  opacity: pos.opacity || 1,
-                  transition: cardsConnected 
-                    ? 'all 0.5s ease-out' 
-                    : 'all 2.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  zIndex: 10 + i,
-                }}
-              >
-                <div 
-                  className="relative w-full h-full bg-white overflow-hidden"
-                  style={{
-                    borderRadius: cardsConnected ? '0px' : '12px',
-                    border: cardsConnected ? 'none' : '4px solid rgb(216, 180, 254)',
-                    boxShadow: cardsConnected 
-                      ? 'none' 
-                      : '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                    padding: cardsConnected ? '0' : '12px',
-                    transition: 'all 0.5s ease-out',
-                  }}
-                >
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={getPetalPath(country.folder, petalNum)}
-                      alt={`Petal ${petalNum}`}
-                      fill
-                      className={cardsConnected ? "object-cover" : "object-contain"}
-                      style={{
-                        transition: 'all 0.5s ease-out',
-                      }}
-                      priority
-                    />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+      {/* Golden light rays emanating from flower */}
+      {showFlower && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div
+              key={`ray-${i}`}
+              className="absolute left-1/2 top-1/2 origin-bottom"
+              style={{
+                width: '2px',
+                height: '150%',
+                background: 'linear-gradient(to top, rgba(251, 191, 36, 0.3) 0%, transparent 60%)',
+                transform: `translate(-50%, -100%) rotate(${i * 30}deg)`,
+                animation: 'ray-pulse 4s ease-in-out infinite',
+                animationDelay: `${i * 0.2}s`,
+              }}
+            />
+          ))}
         </div>
       )}
 
-      {/* Assembled Flower - Perfect 2x3 Grid forming complete image */}
-      {showAssembled && stage === "assembled" && (
+      {/* Main Content Container */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-4 py-8 max-w-2xl w-full">
+        
+        {/* The Restored Flower - Single Unified Element */}
         <div 
-          className="relative z-20 shadow-2xl overflow-hidden rounded-2xl border-8 border-purple-300"
+          className="relative mb-8"
           style={{
-            width: containerWidth,
-            animation: 'scaleUp 0.8s ease-out',
-            background: 'white',
+            opacity: showFlower ? 1 : 0,
+            transform: showFlower ? 'scale(1)' : 'scale(0.5)',
+            transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
           }}
         >
-          {/* 2x3 Grid: No gaps, petals connect seamlessly */}
+          {/* Soft glow behind flower */}
           <div 
-            style={{ 
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gridTemplateRows: 'repeat(2, 1fr)',
-              gap: 0,
-              lineHeight: 0,
-              fontSize: 0,
+            className="absolute -inset-8 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)',
+              animation: 'glow-pulse 3s ease-in-out infinite',
+            }}
+          />
+          
+          {/* Flower container with breathing animation */}
+          <div 
+            className="relative overflow-hidden rounded-2xl shadow-2xl"
+            style={{
+              width: `${flowerWidth}px`,
+              height: `${flowerHeight}px`,
+              animation: showFlower ? 'flower-breathe 4s ease-in-out infinite' : 'none',
+              boxShadow: '0 25px 80px -20px rgba(251, 191, 36, 0.5), 0 15px 40px -15px rgba(0, 0, 0, 0.2)',
             }}
           >
-            {[1, 2, 3, 4, 5, 6].map((petalNum) => (
-              <div
-                key={petalNum}
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  aspectRatio: '1/1',
-                  margin: 0,
-                  padding: 0,
-                  lineHeight: 0,
-                  fontSize: 0,
-                  overflow: 'hidden',
-                }}
-              >
-                <Image
+            {/* 6 petals positioned absolutely for pixel-perfect alignment */}
+            {/* Layout: Row 1 (petals 1,2,3) | Row 2 (petals 4,5,6) */}
+            {isLoaded && [1, 2, 3, 4, 5, 6].map((petalNum) => {
+              const row = Math.floor((petalNum - 1) / 3); // 0 or 1
+              const col = (petalNum - 1) % 3; // 0, 1, or 2
+              
+              // Use percentage-based positioning for sub-pixel accuracy
+              const leftPercent = (col / 3) * 100;
+              const topPercent = (row / 2) * 100;
+              
+              return (
+                <img
+                  key={petalNum}
                   src={getPetalPath(country.folder, petalNum)}
                   alt={`Petal ${petalNum}`}
-                  fill
+                  draggable={false}
                   style={{
-                    objectFit: 'cover',
+                    position: 'absolute',
+                    left: `${leftPercent}%`,
+                    top: `${topPercent}%`,
+                    width: '33.3334%',
+                    height: '50.01%', // Slight overlap to prevent gaps
                     display: 'block',
                     margin: 0,
                     padding: 0,
+                    border: 'none',
+                    imageRendering: 'auto',
+                    backfaceVisibility: 'hidden',
                   }}
-                  priority
                 />
-              </div>
-            ))}
-          </div>
-          
-          {/* Magical glow effect */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/30 via-pink-300/30 to-purple-300/30 animate-pulse" 
-                 style={{ mixBlendMode: 'overlay' }} />
+              );
+            })}
+            
+            {/* Subtle shimmer overlay */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%)',
+                animation: 'shimmer 3s ease-in-out infinite',
+              }}
+            />
           </div>
         </div>
-      )}
 
-      {/* Success message */}
-      {showAssembled && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 animate-bounce">
-          <div className="bg-white/90 backdrop-blur-sm px-8 py-4 rounded-full shadow-xl border-2 border-purple-300">
-            <p className="text-2xl font-bold text-purple-600">
-              🌸 Flower Restored! 🌸
+        {/* Message and CTA */}
+        <div 
+          className="text-center"
+          style={{
+            opacity: showContent ? 1 : 0,
+            transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.8s ease-out',
+          }}
+        >
+          {/* Flower name */}
+          <h2 className="text-3xl md:text-4xl font-bold text-purple-800 mb-2">
+            {country.flowerName}
+          </h2>
+          <p className="text-lg md:text-xl text-purple-600 mb-6 italic">
+            {country.country}
+          </p>
+          
+          {/* Main message */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-5 mb-8 shadow-lg border border-purple-100">
+            <p className="text-xl md:text-2xl font-medium text-gray-800">
+              🌸 Your flower has been restored and added to the garden 🌸
             </p>
           </div>
-        </div>
-      )}
 
+          {/* Continue Button */}
+          <button
+            onClick={handleContinue}
+            className="group relative px-10 py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white text-lg md:text-xl font-bold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+            style={{
+              animation: 'button-glow 2s ease-in-out infinite',
+            }}
+          >
+            {/* Button shine effect */}
+            <div 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+            />
+            <span className="relative z-10">Continue to next flower →</span>
+          </button>
+        </div>
+      </div>
+
+      {/* CSS Animations */}
       <style jsx>{`
-        @keyframes scaleUp {
+        @keyframes flower-breathe {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.02);
+          }
+        }
+
+        @keyframes glow-pulse {
+          0%, 100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes shimmer {
           0% {
-            transform: scale(0.8);
-            opacity: 0;
+            transform: translateX(-100%) rotate(0deg);
           }
           100% {
-            transform: scale(1);
-            opacity: 1;
+            transform: translateX(100%) rotate(0deg);
           }
         }
-        
-        @keyframes fade-in {
-          from {
-            opacity: 0;
+
+        @keyframes float-particle {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
           }
-          to {
-            opacity: 1;
+          25% {
+            transform: translateY(-20px) translateX(10px);
+          }
+          50% {
+            transform: translateY(-10px) translateX(-5px);
+          }
+          75% {
+            transform: translateY(-30px) translateX(5px);
           }
         }
-        
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-in;
+
+        @keyframes ray-pulse {
+          0%, 100% {
+            opacity: 0.2;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+
+        @keyframes button-glow {
+          0%, 100% {
+            box-shadow: 0 10px 40px -10px rgba(147, 51, 234, 0.5);
+          }
+          50% {
+            box-shadow: 0 15px 50px -10px rgba(147, 51, 234, 0.7);
+          }
         }
       `}</style>
     </div>
   );
 }
-

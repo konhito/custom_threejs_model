@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { X, Shield, Cookie } from 'lucide-react';
 import { updateGDPRConsent } from '../lib/session';
+import { safeGetItem, safeSetItem } from '../lib/storage';
 import Link from 'next/link';
 
 export default function GDPRConsentBanner() {
@@ -10,15 +11,13 @@ export default function GDPRConsentBanner() {
 
   useEffect(() => {
     // Check if user has already consented (client-side only)
-    if (typeof window !== 'undefined') {
-      const consent = localStorage.getItem('nahiara_gdpr_consent');
-      if (!consent) {
-        // Show banner after a short delay
-        const timer = setTimeout(() => {
-          setShow(true);
-        }, 1000);
-        return () => clearTimeout(timer);
-      }
+    const consent = safeGetItem('nahiara_gdpr_consent');
+    if (!consent) {
+      // Show banner after a short delay
+      const timer = setTimeout(() => {
+        setShow(true);
+      }, 1000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -26,9 +25,7 @@ export default function GDPRConsentBanner() {
     setLoading(true);
     try {
       await updateGDPRConsent(true, true);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('nahiara_gdpr_consent', 'true');
-      }
+      safeSetItem('nahiara_gdpr_consent', 'true');
       setShow(false);
     } catch (error) {
       console.error('Error updating consent:', error);
@@ -41,9 +38,7 @@ export default function GDPRConsentBanner() {
     setLoading(true);
     try {
       await updateGDPRConsent(false, false);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('nahiara_gdpr_consent', 'false');
-      }
+      safeSetItem('nahiara_gdpr_consent', 'false');
       setShow(false);
     } catch (error) {
       console.error('Error updating consent:', error);
@@ -55,9 +50,7 @@ export default function GDPRConsentBanner() {
   const handleClose = () => {
     setShow(false);
     // Don't set consent, just hide banner
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('nahiara_gdpr_consent', 'dismissed');
-    }
+    safeSetItem('nahiara_gdpr_consent', 'dismissed');
   };
 
   if (!show) return null;

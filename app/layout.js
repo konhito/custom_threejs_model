@@ -1,3 +1,6 @@
+// Fix broken localStorage before any other imports
+import "../lib/fix-localStorage";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig, generateStructuredData } from "../lib/seo";

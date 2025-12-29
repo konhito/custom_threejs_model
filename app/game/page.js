@@ -823,46 +823,64 @@ export default function GamePage() {
                 </div>
               </div>
 
-              {/* Collected Petals Showcase */}
+              {/* Restored Flower Showcase */}
               <div className="bg-white/90 backdrop-blur-lg border-4 border-purple-300 rounded-2xl md:rounded-3xl p-4 md:p-6 mb-4 md:mb-6 shadow-2xl"
                 style={{
                   animation: 'slideUp 0.8s ease-out 0.2s both',
                 }}
               >
                 <h3 className="text-xl md:text-2xl font-bold text-center mb-3 md:mb-4 text-purple-900 flex items-center justify-center gap-2">
-                  <span>✨</span> Your Collected Petals <span>✨</span>
+                  <span>✨</span> Your Restored Flower <span>✨</span>
                 </h3>
                 
-                <div className="grid grid-cols-3 gap-2 md:gap-4 max-w-3xl mx-auto mb-4 md:mb-5">
-                  {[1, 2, 3, 4, 5, 6].map((petalNum) => {
-                    const petalPath = getPetalPath(selectedCountry.folder, petalNum);
-                    return (
-                      <div
-                        key={petalNum}
-                        className="relative aspect-square rounded-lg md:rounded-xl overflow-hidden border-2 md:border-4 border-purple-300 shadow-lg md:shadow-xl bg-gradient-to-br from-white to-purple-50 group cursor-pointer"
-                        style={{
-                          animation: `slideUp 0.6s ease-out ${0.3 + petalNum * 0.1}s both, float ${2 + (petalNum % 3) * 0.5}s ease-in-out infinite ${petalNum * 0.2}s`,
-                        }}
-                      >
-                        {/* Petal Number Badge */}
-                        <div className="absolute top-1 right-1 md:top-2 md:right-2 bg-purple-600 text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center text-xs md:text-sm font-bold z-10 group-hover:scale-125 transition-transform">
-                          {petalNum}
-                        </div>
-                        
-                        {/* Sparkle on Hover */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/0 to-white/0 group-hover:via-yellow-200/50 group-hover:to-yellow-300/30 transition-all duration-300 pointer-events-none" />
-                        
-                        <div className="w-full h-full p-2 md:p-3 relative z-0">
-                          <Image
-                            src={petalPath}
-                            alt={`Petal ${petalNum}`}
-                            fill
-                            className="object-contain group-hover:scale-110 transition-transform duration-300"
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
+                {/* Assembled Flower - Pixel-perfect 3x2 layout */}
+                <div className="flex justify-center mb-4 md:mb-5">
+                  <div 
+                    className="relative overflow-hidden rounded-xl md:rounded-2xl shadow-2xl border-4 border-purple-200"
+                    style={{
+                      width: 'min(90vw, 420px)',
+                      aspectRatio: `${195.6 * 3} / ${266.5 * 2}`,
+                      animation: 'float 3s ease-in-out infinite',
+                    }}
+                  >
+                    {/* 6 petals positioned absolutely for seamless alignment */}
+                    {[1, 2, 3, 4, 5, 6].map((petalNum) => {
+                      const row = Math.floor((petalNum - 1) / 3);
+                      const col = (petalNum - 1) % 3;
+                      const leftPercent = (col / 3) * 100;
+                      const topPercent = (row / 2) * 100;
+                      return (
+                        <img
+                          key={petalNum}
+                          src={getPetalPath(selectedCountry.folder, petalNum)}
+                          alt={`Petal ${petalNum}`}
+                          draggable={false}
+                          style={{
+                            position: 'absolute',
+                            left: `${leftPercent}%`,
+                            top: `${topPercent}%`,
+                            width: '33.3334%',
+                            height: '50.01%',
+                            display: 'block',
+                            margin: 0,
+                            padding: 0,
+                            border: 'none',
+                            imageRendering: 'auto',
+                            backfaceVisibility: 'hidden',
+                          }}
+                        />
+                      );
+                    })}
+                    
+                    {/* Subtle shimmer overlay */}
+                    <div 
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%)',
+                        animation: 'shimmer 4s ease-in-out infinite',
+                      }}
+                    />
+                  </div>
                 </div>
 
                 {/* Completion Stats */}
@@ -1092,6 +1110,15 @@ export default function GamePage() {
                 }
                 100% {
                   background-position: 0% 50%;
+                }
+              }
+              
+              @keyframes shimmer {
+                0% {
+                  transform: translateX(-100%);
+                }
+                100% {
+                  transform: translateX(100%);
                 }
               }
               

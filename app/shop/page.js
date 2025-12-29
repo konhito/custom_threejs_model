@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Gamepad2, Download, Globe, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
+import { ShoppingCart, Gamepad2, Download, Globe, CheckCircle, Sparkles, ArrowRight, Gift } from "lucide-react";
 import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
+import { safeGetItem, safeSetItem } from "../../lib/storage";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
@@ -48,11 +49,11 @@ export default function ShopPage() {
     try {
       const detectedCurrency = await autoDetectCurrency();
       setCurrency(detectedCurrency);
-      const country = localStorage.getItem('nahiara_country_name') || '';
+      const country = safeGetItem('nahiara_country_name', '');
       setDetectedCountry(country);
     } catch (error) {
       console.error('Error detecting currency:', error);
-      const savedCurrency = localStorage.getItem('nahiara_currency') || 'eur';
+      const savedCurrency = safeGetItem('nahiara_currency', 'eur');
       setCurrency(savedCurrency);
     } finally {
       setDetectingLocation(false);
@@ -122,7 +123,7 @@ export default function ShopPage() {
   
   const handleCurrencyChange = async (newCurrency) => {
     setCurrency(newCurrency);
-    localStorage.setItem('nahiara_currency', newCurrency);
+    safeSetItem('nahiara_currency', newCurrency);
     
     // Update session preferences
     if (updatePreferences) {

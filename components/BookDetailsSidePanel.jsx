@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import { safeGetItem, safeSetItem } from "../lib/storage";
 
 const tomeData = {
   1: {
@@ -141,7 +142,7 @@ export const BookDetailsSidePanel = ({ tomeNumber }) => {
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language || navigator.languages?.[0] || 'en';
       const primaryLang = browserLang.split('-')[0].toLowerCase();
-      const storedLang = localStorage.getItem('nahiara_language');
+      const storedLang = safeGetItem('nahiara_language');
       setLanguage(storedLang === 'es' ? 'es' : (primaryLang === 'es' ? 'es' : 'en'));
     }
   }, []);
@@ -166,9 +167,7 @@ export const BookDetailsSidePanel = ({ tomeNumber }) => {
           <button
             onClick={() => {
               setLanguage('en');
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('nahiara_language', 'en');
-              }
+              safeSetItem('nahiara_language', 'en');
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
               language === 'en'
@@ -182,9 +181,7 @@ export const BookDetailsSidePanel = ({ tomeNumber }) => {
           <button
             onClick={() => {
               setLanguage('es');
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('nahiara_language', 'es');
-              }
+              safeSetItem('nahiara_language', 'es');
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
               language === 'es'

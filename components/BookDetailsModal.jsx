@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { safeGetItem, safeSetItem } from "../lib/storage";
 
 const tomeData = {
   1: {
@@ -87,7 +88,7 @@ export const BookDetailsModal = ({ isOpen, onClose, tomeNumber, coverSrc, altTex
     if (typeof window !== 'undefined') {
       const browserLang = navigator.language || navigator.languages?.[0] || 'en';
       const primaryLang = browserLang.split('-')[0].toLowerCase();
-      const storedLang = localStorage.getItem('nahiara_language');
+      const storedLang = safeGetItem('nahiara_language');
       setLanguage(storedLang === 'es' ? 'es' : (primaryLang === 'es' ? 'es' : 'en'));
     }
   }, []);
@@ -206,9 +207,7 @@ export const BookDetailsModal = ({ isOpen, onClose, tomeNumber, coverSrc, altTex
                         <button
                           onClick={() => {
                             setLanguage('en');
-                            if (typeof window !== 'undefined') {
-                              localStorage.setItem('nahiara_language', 'en');
-                            }
+                            safeSetItem('nahiara_language', 'en');
                           }}
                           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                             language === 'en'
@@ -222,9 +221,7 @@ export const BookDetailsModal = ({ isOpen, onClose, tomeNumber, coverSrc, altTex
                         <button
                           onClick={() => {
                             setLanguage('es');
-                            if (typeof window !== 'undefined') {
-                              localStorage.setItem('nahiara_language', 'es');
-                            }
+                            safeSetItem('nahiara_language', 'es');
                           }}
                           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                             language === 'es'

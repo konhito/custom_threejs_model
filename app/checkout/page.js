@@ -12,6 +12,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, Lock, CreditCard, Check, MapPin, User, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { checkoutAPI, cartStorage, formatCurrency } from "../../lib/api";
+import { safeGetItem } from "../../lib/storage";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
@@ -149,10 +150,8 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     // Get currency from localStorage (client-side only)
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
-      const storedCurrency = localStorage.getItem('nahiara_currency') || 'eur';
-      setCurrency(storedCurrency);
-    }
+    const storedCurrency = safeGetItem('nahiara_currency', 'eur');
+    setCurrency(storedCurrency);
 
     const cart = cartStorage.get();
     if (cart.length === 0) {

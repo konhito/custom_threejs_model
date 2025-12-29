@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ArrowLeft, Globe, Package, Sparkles, BookOpen } from "lucide-react";
 import { cartStorage, formatCurrency, productsAPI } from "../../lib/api";
 import { autoDetectCurrency, getCurrencySymbol, getCurrencyName } from "../../lib/geolocation";
+import { safeGetItem } from "../../lib/storage";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
@@ -44,16 +45,12 @@ export default function CartPage() {
     try {
       const detectedCurrency = await autoDetectCurrency();
       setCurrency(detectedCurrency);
-      if (typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
-        const country = localStorage.getItem('nahiara_country_name') || '';
-        setDetectedCountry(country);
-      }
+      const country = safeGetItem('nahiara_country_name', '');
+      setDetectedCountry(country);
     } catch (error) {
       console.error('Error detecting currency:', error);
-      if (typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
-        const savedCurrency = localStorage.getItem('nahiara_currency') || 'eur';
-        setCurrency(savedCurrency);
-      }
+      const savedCurrency = safeGetItem('nahiara_currency', 'eur');
+      setCurrency(savedCurrency);
     }
   };
 
@@ -61,9 +58,8 @@ export default function CartPage() {
   const loadCart = async () => {
     const cartItems = cartStorage.get();
     setCart(cartItems);
-    if (typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
-      setCurrency(localStorage.getItem('nahiara_currency') || 'eur');
-    }
+    const savedCurrency = safeGetItem('nahiara_currency', 'eur');
+    setCurrency(savedCurrency);
 
     // Load product details
     try {

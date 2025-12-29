@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Navigation from "../../components/Navigation";
 import { generateStructuredData } from "../../lib/seo";
+import { safeGetItem, safeSetItem } from "../../lib/storage";
 import { Mail, Heart, BookOpen, MapPin, GraduationCap, Sparkles, MessageCircle } from "lucide-react";
 
 export default function AloneWithAuthorPage() {
@@ -9,10 +10,10 @@ export default function AloneWithAuthorPage() {
 
   // Auto-detect language
   useEffect(() => {
-    const storedLanguage = localStorage.getItem('nahiara_language');
+    const storedLanguage = safeGetItem('nahiara_language');
     if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'es')) {
       setLanguage(storedLanguage);
-    } else {
+    } else if (typeof window !== 'undefined') {
       const browserLang = navigator.language || navigator.languages?.[0] || 'en';
       const primaryLang = browserLang.split('-')[0].toLowerCase();
       setLanguage(primaryLang === 'es' ? 'es' : 'en');
@@ -148,7 +149,7 @@ export default function AloneWithAuthorPage() {
             <button
               onClick={() => {
                 setLanguage('en');
-                localStorage.setItem('nahiara_language', 'en');
+                safeSetItem('nahiara_language', 'en');
               }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 language === 'en'
@@ -161,7 +162,7 @@ export default function AloneWithAuthorPage() {
             <button
               onClick={() => {
                 setLanguage('es');
-                localStorage.setItem('nahiara_language', 'es');
+                safeSetItem('nahiara_language', 'es');
               }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 language === 'es'

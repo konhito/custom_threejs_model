@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, X, Info, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { safeGetItem, safeSetItem } from "../../lib/storage";
 
 // Global flag to prevent multiple 3D logo instances
 let logoInstanceCount = 0;
@@ -316,9 +317,7 @@ function LandingContent() {
         }
         
         // Store language preference in localStorage (client-side only)
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
-        }
+        safeSetItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
       } catch (error) {
         console.error('Language detection failed:', error);
         // Fallback to English if detection fails
@@ -327,7 +326,7 @@ function LandingContent() {
     };
 
     // Check if language is already stored in localStorage (client-side only)
-    const storedLanguage = typeof window !== 'undefined' ? localStorage.getItem('nahiara_language') : null;
+    const storedLanguage = safeGetItem('nahiara_language');
     if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'es')) {
       setLanguage(storedLanguage);
     } else {
@@ -479,9 +478,7 @@ ${currentContent.vision.text}
           <button
             onClick={() => {
               setLanguage('en');
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('nahiara_language', 'en');
-              }
+              safeSetItem('nahiara_language', 'en');
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'en' 
@@ -494,9 +491,7 @@ ${currentContent.vision.text}
           <button
             onClick={() => {
               setLanguage('es');
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('nahiara_language', 'es');
-              }
+              safeSetItem('nahiara_language', 'es');
             }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               language === 'es' 
