@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Palette } from "lucide-react";
 import Link from "next/link";
+import { MusicToggleButton } from "../../components/MusicToggleButton";
 
 const FLOWER_DATA = {
-  commonName: "Russian Chamomile",
-  scientificName: "Matricaria chamomilla",
-  country: "Russia",
-  glbPath: "/Russia_Chamomile.glb",
+  commonName: "Carnation",
+  scientificName: "Dianthus caryophyllus",
+  country: "España (Spain)",
+  glbPath: "/Espana_Carnation.glb",
 };
 
 const BACKGROUND_HEX = "#E8E6DF"; // warm neutral chosen for testing
@@ -54,6 +55,9 @@ export default function TestFlowerPage() {
         const THREE = await import("three");
         const { GLTFLoader } = await import(
           "three/examples/jsm/loaders/GLTFLoader.js"
+        );
+        const { DRACOLoader } = await import(
+          "three/examples/jsm/loaders/DRACOLoader.js"
         );
         const { OrbitControls } = await import(
           "three/examples/jsm/controls/OrbitControls.js"
@@ -125,7 +129,15 @@ export default function TestFlowerPage() {
         ground.receiveShadow = true;
         scene.add(ground);
 
+        // Set up DRACOLoader for compressed GLB files
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath(
+          "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+        );
+        dracoLoader.setDecoderConfig({ type: "js" });
+
         const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
         loader.setCrossOrigin("anonymous");
         loader.load(
           FLOWER_DATA.glbPath,
@@ -207,6 +219,15 @@ export default function TestFlowerPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-gray-900 overflow-x-hidden">
+      {/* Music Toggle Button - Bottom Left */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <MusicToggleButton
+          src="/Folk Project (España).mp3"
+          autoPlay={true}
+          onLoadComplete={isLoaded}
+        />
+      </div>
+
       <div className="max-w-6xl mx-auto px-4 py-10 space-y-8">
         <div className="flex items-center justify-between">
           <Link
@@ -327,4 +348,3 @@ export default function TestFlowerPage() {
     </div>
   );
 }
-

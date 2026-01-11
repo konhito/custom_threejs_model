@@ -4,7 +4,11 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
 
-export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
+export const MusicToggleButton = ({
+  autoPlay = false,
+  onLoadComplete,
+  src = "/Matias - Aquamundi (Loopeable Version).mp3",
+}) => {
   const bars = 5;
 
   const getRandomHeights = () => {
@@ -16,7 +20,7 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
   const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
   const [soundError, setSoundError] = useState(null);
 
-  const [play, { pause, sound }] = useSound("/Matias - Aquamundi (Loopeable Version).mp3", {
+  const [play, { pause, sound }] = useSound(src, {
     loop: true,
     onplay: () => {
       setIsPlaying(true);
@@ -74,23 +78,23 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
   const handleClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     try {
       if (isPlaying) {
         pause();
         setIsPlaying(false);
         return;
       }
-      
+
       // For mobile: Resume audio context on user interaction
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         // Create or resume audio context
         if (window.AudioContext || window.webkitAudioContext) {
           const AudioContext = window.AudioContext || window.webkitAudioContext;
           try {
             // Create a temporary context to unlock audio on mobile
             const tempContext = new AudioContext();
-            if (tempContext.state === 'suspended') {
+            if (tempContext.state === "suspended") {
               await tempContext.resume();
             }
             // Create a silent buffer to unlock audio on iOS
@@ -106,20 +110,21 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
           }
         }
       }
-      
+
       // Small delay to ensure audio context is ready on mobile
-      await new Promise(resolve => setTimeout(resolve, 50));
-      
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
       // Play the sound
       play();
-      
     } catch (error) {
       console.error("Error playing sound:", error);
-      setSoundError("Could not play audio. Please check your browser settings.");
+      setSoundError(
+        "Could not play audio. Please check your browser settings."
+      );
       setIsPlaying(false);
     }
   };
-  
+
   // Handle touch events for mobile
   const handleTouchStart = (e) => {
     e.preventDefault();
@@ -137,9 +142,13 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
       whileTap={{ padding: "18px 22px", scale: 0.98 }}
       animate={{
         scale: isPlaying ? 1 : [1, 1.02, 1],
-        boxShadow: isPlaying 
+        boxShadow: isPlaying
           ? "0 4px 6px rgba(0,0,0,0.1)"
-          : ["0 4px 6px rgba(0,0,0,0.1)", "0 6px 12px rgba(16, 185, 129, 0.2)", "0 4px 6px rgba(0,0,0,0.1)"],
+          : [
+              "0 4px 6px rgba(0,0,0,0.1)",
+              "0 6px 12px rgba(16, 185, 129, 0.2)",
+              "0 4px 6px rgba(0,0,0,0.1)",
+            ],
       }}
       transition={{
         scale: {
@@ -155,7 +164,7 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
         padding: { duration: 0.3, type: "spring", stiffness: 300 },
       }}
       className="bg-white/90 backdrop-blur-sm cursor-pointer rounded-full p-2 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow relative touch-manipulation"
-      style={{ zIndex: 50, WebkitTapHighlightColor: 'transparent' }}
+      style={{ zIndex: 50, WebkitTapHighlightColor: "transparent" }}
     >
       {/* Subtle pulsing ring animation when not playing */}
       {!isPlaying && (
@@ -198,7 +207,7 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
             }}
           />
         ))}
-        
+
         {/* Error indicator */}
         {soundError && (
           <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-red-500 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">
@@ -209,4 +218,3 @@ export const MusicToggleButton = ({ autoPlay = false, onLoadComplete }) => {
     </motion.div>
   );
 };
-
