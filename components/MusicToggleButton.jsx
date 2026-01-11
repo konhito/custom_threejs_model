@@ -61,6 +61,16 @@ export const MusicToggleButton = ({
     }
   }, [autoPlay, hasAutoPlayed, onLoadComplete, play]);
 
+  // Cleanup: Stop the sound when component unmounts (e.g., navigating away from page)
+  useEffect(() => {
+    return () => {
+      if (sound) {
+        sound.stop();
+        sound.unload();
+      }
+    };
+  }, [sound]);
+
   useEffect(() => {
     if (isPlaying) {
       const waveformIntervalId = setInterval(() => {
