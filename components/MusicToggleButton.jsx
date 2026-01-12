@@ -59,7 +59,7 @@ export const MusicToggleButton = ({
   // Fade-in function for smooth volume increase
   const fadeIn = useCallback(() => {
     if (!sound || isFadingRef.current) return;
-    
+
     isFadingRef.current = true;
     const stepTime = fadeDuration / AUDIO_CONFIG.fadeSteps;
     const volumeStep = volume / AUDIO_CONFIG.fadeSteps;
@@ -84,36 +84,39 @@ export const MusicToggleButton = ({
   }, [sound, volume, fadeDuration]);
 
   // Fade-out function for smooth volume decrease
-  const fadeOut = useCallback((callback) => {
-    if (!sound) {
-      callback?.();
-      return;
-    }
-
-    isFadingRef.current = true;
-    const stepTime = fadeDuration / AUDIO_CONFIG.fadeSteps;
-    const currentVol = sound.volume();
-    const volumeStep = currentVol / AUDIO_CONFIG.fadeSteps;
-    let vol = currentVol;
-
-    // Clear any existing fade interval
-    if (fadeIntervalRef.current) {
-      clearInterval(fadeIntervalRef.current);
-    }
-
-    fadeIntervalRef.current = setInterval(() => {
-      vol = Math.max(vol - volumeStep, 0);
-      sound.volume(vol);
-      setCurrentVolume(vol);
-
-      if (vol <= 0) {
-        clearInterval(fadeIntervalRef.current);
-        fadeIntervalRef.current = null;
-        isFadingRef.current = false;
+  const fadeOut = useCallback(
+    (callback) => {
+      if (!sound) {
         callback?.();
+        return;
       }
-    }, stepTime);
-  }, [sound, fadeDuration]);
+
+      isFadingRef.current = true;
+      const stepTime = fadeDuration / AUDIO_CONFIG.fadeSteps;
+      const currentVol = sound.volume();
+      const volumeStep = currentVol / AUDIO_CONFIG.fadeSteps;
+      let vol = currentVol;
+
+      // Clear any existing fade interval
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+
+      fadeIntervalRef.current = setInterval(() => {
+        vol = Math.max(vol - volumeStep, 0);
+        sound.volume(vol);
+        setCurrentVolume(vol);
+
+        if (vol <= 0) {
+          clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = null;
+          isFadingRef.current = false;
+          callback?.();
+        }
+      }, stepTime);
+    },
+    [sound, fadeDuration]
+  );
 
   // Auto-play when loader completes with fade-in
   useEffect(() => {
@@ -150,7 +153,7 @@ export const MusicToggleButton = ({
         const stepTime = quickFadeTime / quickFadeSteps;
         let vol = sound.volume();
         const volumeStep = vol / quickFadeSteps;
-        
+
         const quickFade = setInterval(() => {
           vol = Math.max(vol - volumeStep, 0);
           try {
@@ -168,7 +171,7 @@ export const MusicToggleButton = ({
             }
           }
         }, stepTime);
-        
+
         // Fallback: ensure cleanup happens even if fade doesn't complete
         setTimeout(() => {
           clearInterval(quickFade);
