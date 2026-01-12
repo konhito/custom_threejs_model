@@ -106,9 +106,32 @@ export default function GamePage() {
   };
 
   const handleRestart = () => {
+    // Select a different random country
+    const getRandomDifferentCountry = () => {
+      if (countriesData.length <= 1) {
+        return countriesData[0]; // If only one country, return it
+      }
+      
+      // Filter out the current country and select a random one from the rest
+      const otherCountries = countriesData.filter(
+        country => country.id !== selectedCountry?.id
+      );
+      const randomIndex = Math.floor(Math.random() * otherCountries.length);
+      return otherCountries[randomIndex];
+    };
+    
+    const newCountry = getRandomDifferentCountry();
+    setSelectedCountry(newCountry);
+    
+    // Reset all game state
     setGameState("playing");
     setPetalsCollected(0);
     setHasGuardian(false);
+    setCollectedPetals([]);
+    setShowIntro(true);
+    setLastCardType(null);
+    setLastCardData(null);
+    setGameStarted(false);
   };
 
   const handleShare = async () => {
@@ -555,91 +578,170 @@ export default function GamePage() {
           />
         )}
 
-        {/* Golden Globe Animation */}
+        {/* Enhanced Golden Globe Animation */}
         {gameState === "globeAnimation" && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-            {/* Radial gradient background */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white overflow-hidden">
+            {/* Enhanced radial gradient background with animation */}
             <div className="absolute inset-0 bg-gradient-radial from-yellow-100 via-white to-gray-50" 
                  style={{
-                   background: 'radial-gradient(circle at center, rgba(253, 224, 71, 0.3) 0%, rgba(255, 255, 255, 1) 50%, rgba(249, 250, 251, 1) 100%)'
+                   background: 'radial-gradient(circle at center, rgba(253, 224, 71, 0.4) 0%, rgba(255, 255, 255, 1) 50%, rgba(249, 250, 251, 1) 100%)',
+                   animation: 'background-pulse 4s ease-in-out infinite'
                  }}
             />
             
-            {/* Golden Sparkles Around */}
-            {Array.from({ length: 40 }).map((_, i) => {
-              const angle = (i / 40) * Math.PI * 2;
-              const distance = 150 + Math.random() * 200;
+            {/* Enhanced golden light rays emanating from center */}
+            <div className="absolute inset-0 pointer-events-none">
+              {Array.from({ length: 24 }).map((_, i) => (
+                <div
+                  key={`ray-${i}`}
+                  className="absolute left-1/2 top-1/2 origin-bottom"
+                  style={{
+                    width: '3px',
+                    height: '200%',
+                    background: 'linear-gradient(to top, rgba(251, 191, 36, 0.4) 0%, rgba(251, 191, 36, 0.2) 40%, transparent 80%)',
+                    transform: `translate(-50%, -100%) rotate(${i * 15}deg)`,
+                    animation: 'ray-expand 3s ease-in-out infinite',
+                    animationDelay: `${i * 0.1}s`,
+                    filter: 'blur(1px)',
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Enhanced Golden Sparkles - More dynamic */}
+            {Array.from({ length: 60 }).map((_, i) => {
+              const angle = (i / 60) * Math.PI * 2;
+              const distance = 100 + Math.random() * 300;
+              const size = 2 + Math.random() * 6;
               return (
                 <div
                   key={`gold-sparkle-${i}`}
-                  className="absolute animate-pulse"
+                  className="absolute"
                   style={{
                     left: `calc(50% + ${Math.cos(angle) * distance}px)`,
                     top: `calc(50% + ${Math.sin(angle) * distance}px)`,
-                    animationDelay: `${Math.random() * 2}s`,
-                    animationDuration: `${1 + Math.random()}s`,
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    animation: `sparkle-twinkle ${1.5 + Math.random() * 2}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 3}s`,
                   }}
                 >
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full blur-sm" 
-                       style={{ boxShadow: '0 0 20px rgba(250, 204, 21, 0.8)' }} />
+                  <div 
+                    className="w-full h-full bg-yellow-400 rounded-full" 
+                    style={{ 
+                      boxShadow: `0 0 ${8 + Math.random() * 12}px rgba(250, 204, 21, ${0.6 + Math.random() * 0.4})`,
+                      filter: 'blur(0.5px)'
+                    }} 
+                  />
                 </div>
               );
             })}
 
-            {/* Main Golden Globe */}
-            <div className="relative z-10" style={{ animation: 'scaleIn 1s ease-out, float 3s ease-in-out infinite 1s' }}>
-              {/* Outer glow rings */}
-              <div className="absolute inset-0 -m-20">
-                <div className="w-full h-full rounded-full bg-yellow-400/20 animate-ping" 
+            {/* Floating flower petals effect */}
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={`petal-float-${i}`}
+                className="absolute text-2xl md:text-3xl"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `float-petal ${8 + Math.random() * 4}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  opacity: 0.3,
+                }}
+              >
+                🌸
+              </div>
+            ))}
+
+            {/* Main Golden Globe - Enhanced */}
+            <div className="relative z-10" style={{ animation: 'scaleInBounce 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), float 3s ease-in-out infinite 1.2s' }}>
+              {/* Enhanced outer glow rings - multiple layers */}
+              <div className="absolute inset-0 -m-24">
+                <div className="w-full h-full rounded-full bg-yellow-400/30 animate-ping" 
                      style={{ animationDuration: '2s' }} />
               </div>
+              <div className="absolute inset-0 -m-20">
+                <div className="w-full h-full rounded-full bg-yellow-300/25 animate-ping" 
+                     style={{ animationDuration: '2.3s', animationDelay: '0.2s' }} />
+              </div>
               <div className="absolute inset-0 -m-16">
-                <div className="w-full h-full rounded-full bg-yellow-300/30 animate-ping" 
-                     style={{ animationDuration: '2.5s', animationDelay: '0.3s' }} />
+                <div className="w-full h-full rounded-full bg-yellow-200/20 animate-ping" 
+                     style={{ animationDuration: '2.6s', animationDelay: '0.4s' }} />
+              </div>
+              
+              {/* Pulsing energy waves */}
+              <div className="absolute inset-0 -m-12">
+                <div className="w-full h-full rounded-full border-4 border-yellow-400/40"
+                     style={{ 
+                       animation: 'energy-wave 2s ease-out infinite',
+                       animationDelay: '0.5s'
+                     }} />
+              </div>
+              <div className="absolute inset-0 -m-8">
+                <div className="w-full h-full rounded-full border-4 border-yellow-300/30"
+                     style={{ 
+                       animation: 'energy-wave 2s ease-out infinite',
+                       animationDelay: '0.7s'
+                     }} />
               </div>
 
-              {/* Main Globe Container */}
+              {/* Main Globe Container - Enhanced */}
               <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80">
-                {/* Rotating golden ring */}
-                <div className="absolute inset-0 rounded-full border-4 border-yellow-400/50 animate-spin" 
-                     style={{ animationDuration: '8s' }} />
-                <div className="absolute inset-2 rounded-full border-4 border-yellow-300/30 animate-spin" 
-                     style={{ animationDuration: '6s', animationDirection: 'reverse' }} />
+                {/* Enhanced rotating golden rings */}
+                <div className="absolute inset-0 rounded-full border-4 border-yellow-400/60 animate-spin" 
+                     style={{ 
+                       animationDuration: '10s',
+                       filter: 'blur(1px)'
+                     }} />
+                <div className="absolute inset-1 rounded-full border-3 border-yellow-300/40 animate-spin" 
+                     style={{ 
+                       animationDuration: '8s', 
+                       animationDirection: 'reverse',
+                       filter: 'blur(0.5px)'
+                     }} />
+                <div className="absolute inset-2 rounded-full border-2 border-yellow-200/30 animate-spin" 
+                     style={{ 
+                       animationDuration: '6s',
+                       filter: 'blur(0.5px)'
+                     }} />
 
-                {/* Central Golden/White Globe */}
-                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-yellow-200 via-white to-yellow-100 shadow-2xl"
+                {/* Enhanced Central Golden/White Globe */}
+                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-yellow-200 via-white via-yellow-50 to-yellow-100 shadow-2xl"
                      style={{
-                       boxShadow: '0 0 60px rgba(250, 204, 21, 0.6), inset 0 0 60px rgba(255, 255, 255, 0.8)',
-                       animation: 'pulse 2s ease-in-out infinite'
+                       boxShadow: '0 0 80px rgba(250, 204, 21, 0.8), 0 0 120px rgba(251, 191, 36, 0.4), inset 0 0 80px rgba(255, 255, 255, 0.9)',
+                       animation: 'globe-pulse 2.5s ease-in-out infinite, globe-glow 3s ease-in-out infinite'
                      }}
                 >
-                  {/* Inner shine effect */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/50 to-transparent"
-                       style={{ animation: 'rotate 4s linear infinite' }} />
+                  {/* Enhanced inner shine effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/60 to-transparent"
+                       style={{ animation: 'rotate 5s linear infinite' }} />
                   
-                  {/* Center bright spot */}
-                  <div className="absolute top-1/4 left-1/4 w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/80 blur-xl" />
+                  {/* Multiple bright spots for depth */}
+                  <div className="absolute top-1/4 left-1/4 w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 blur-xl" />
+                  <div className="absolute bottom-1/3 right-1/3 w-12 h-12 md:w-16 md:h-16 rounded-full bg-yellow-100/60 blur-lg" />
                   
-                  {/* Sparkle points */}
-                  {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+                  {/* Enhanced sparkle points - more dynamic */}
+                  {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle, i) => (
                     <div
                       key={`sparkle-point-${i}`}
-                      className="absolute w-2 h-2 bg-yellow-300 rounded-full"
+                      className="absolute w-2.5 h-2.5 bg-yellow-300 rounded-full"
                       style={{
                         left: '50%',
                         top: '50%',
-                        transform: `rotate(${angle}deg) translateY(-${40 + (i % 2) * 10}px)`,
-                        animation: `pulse ${1.5 + (i % 3) * 0.5}s ease-in-out infinite`,
-                        animationDelay: `${i * 0.2}s`,
-                        boxShadow: '0 0 10px rgba(250, 204, 21, 0.8)'
+                        transform: `rotate(${angle}deg) translateY(-${45 + (i % 3) * 8}px)`,
+                        animation: `sparkle-pulse ${1.2 + (i % 4) * 0.3}s ease-in-out infinite`,
+                        animationDelay: `${i * 0.15}s`,
+                        boxShadow: '0 0 12px rgba(250, 204, 21, 1), 0 0 20px rgba(251, 191, 36, 0.6)'
                       }}
                     />
                   ))}
                 </div>
 
-                {/* Orbiting particles */}
-                {Array.from({ length: 12 }).map((_, i) => {
-                  const orbitAngle = (i / 12) * 360;
+                {/* Enhanced orbiting particles - multiple rings */}
+                {Array.from({ length: 16 }).map((_, i) => {
+                  const orbitAngle = (i / 16) * 360;
+                  const radius = 120 + (i % 2) * 20;
                   return (
                     <div
                       key={`orbit-${i}`}
@@ -648,31 +750,71 @@ export default function GamePage() {
                         left: '50%',
                         top: '50%',
                         transformOrigin: '0 0',
-                        animation: `orbit ${4 + (i % 3)}s linear infinite`,
-                        animationDelay: `${-i * 0.3}s`,
-                        boxShadow: '0 0 10px rgba(250, 204, 21, 0.6)'
+                        animation: `orbit ${5 + (i % 4)}s linear infinite`,
+                        animationDelay: `${-i * 0.25}s`,
+                        boxShadow: '0 0 12px rgba(250, 204, 21, 0.8), 0 0 20px rgba(251, 191, 36, 0.4)',
+                        filter: 'blur(0.5px)'
+                      }}
+                    />
+                  );
+                })}
+                
+                {/* Inner orbit ring */}
+                {Array.from({ length: 8 }).map((_, i) => {
+                  const orbitAngle = (i / 8) * 360;
+                  return (
+                    <div
+                      key={`inner-orbit-${i}`}
+                      className="absolute w-2 h-2 bg-yellow-300 rounded-full"
+                      style={{
+                        left: '50%',
+                        top: '50%',
+                        transformOrigin: '0 0',
+                        animation: `orbit-inner ${3 + (i % 2)}s linear infinite`,
+                        animationDelay: `${-i * 0.2}s`,
+                        animationDirection: 'reverse',
+                        boxShadow: '0 0 8px rgba(250, 204, 21, 0.6)'
                       }}
                     />
                   );
                 })}
               </div>
 
-              {/* Bottom text */}
-              <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                <p className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 bg-clip-text text-transparent animate-pulse">
-                  ✨ Flower Restored! ✨
-                </p>
+              {/* Enhanced bottom text with animation */}
+              <div className="absolute -bottom-20 md:-bottom-24 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                <div style={{ animation: 'text-appear 1s ease-out 0.8s both' }}>
+                  <p className="text-3xl md:text-4xl lg:text-5xl font-black bg-gradient-to-r from-yellow-600 via-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent"
+                     style={{
+                       backgroundSize: '200% 100%',
+                       animation: 'text-shimmer 3s ease-in-out infinite, text-glow 2s ease-in-out infinite',
+                       textShadow: '0 0 20px rgba(250, 204, 21, 0.5)',
+                       filter: 'drop-shadow(0 2px 4px rgba(250, 204, 21, 0.3))'
+                     }}>
+                    ✨ Flower Restored! ✨
+                  </p>
+                  {/* Subtitle */}
+                  <p className="text-sm md:text-base text-yellow-600 mt-2 font-semibold opacity-80"
+                     style={{ animation: 'fade-in-up 1s ease-out 1.2s both' }}>
+                    Added to your garden collection
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* CSS Animations */}
+            {/* Enhanced CSS Animations */}
             <style jsx>{`
-              @keyframes scaleIn {
-                from {
+              @keyframes scaleInBounce {
+                0% {
                   transform: scale(0);
                   opacity: 0;
                 }
-                to {
+                60% {
+                  transform: scale(1.15);
+                }
+                80% {
+                  transform: scale(0.95);
+                }
+                100% {
                   transform: scale(1);
                   opacity: 1;
                 }
@@ -683,7 +825,7 @@ export default function GamePage() {
                   transform: translateY(0px);
                 }
                 50% {
-                  transform: translateY(-20px);
+                  transform: translateY(-25px);
                 }
               }
 
@@ -704,404 +846,114 @@ export default function GamePage() {
                   transform: rotate(360deg) translateX(120px) rotate(-360deg);
                 }
               }
-            `}</style>
-          </div>
-        )}
 
-        {gameState === "completed" && selectedCountry && (
-          <div className="max-w-6xl mx-auto px-4 relative bg-gradient-to-br from-purple-50 via-pink-50 to-green-50 min-h-screen py-4 md:py-6 overflow-y-auto">
-            {/* Animated Background Particles */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {/* Floating Sparkles */}
-              {Array.from({ length: 15 }).map((_, i) => (
-                <div
-                  key={`sparkle-${i}`}
-                  className="absolute animate-pulse"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 3}s`,
-                    animationDuration: `${2 + Math.random() * 3}s`,
-                  }}
-                >
-                  <div 
-                    className="w-2 h-2 bg-yellow-300 rounded-full blur-sm"
-                    style={{
-                      boxShadow: '0 0 10px rgba(253, 224, 71, 0.8)',
-                    }}
-                  />
-                </div>
-              ))}
-              
-              {/* Confetti Rain */}
-              {Array.from({ length: 20 }).map((_, i) => {
-                const colors = ['#FF6B9D', '#C084FC', '#60A5FA', '#34D399', '#FBBF24'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                return (
-                  <div
-                    key={`confetti-${i}`}
-                    className="absolute w-3 h-3 opacity-70"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `-20px`,
-                      backgroundColor: color,
-                      borderRadius: Math.random() > 0.5 ? '50%' : '0',
-                      animation: `fall ${3 + Math.random() * 4}s linear infinite`,
-                      animationDelay: `${Math.random() * 5}s`,
-                      transform: `rotate(${Math.random() * 360}deg)`,
-                    }}
-                  />
-                );
-              })}
-            </div>
-
-            {/* Celebration Emojis with varied animations */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-              {Array.from({ length: 8 }).map((_, i) => {
-                const emojis = ['🎉', '🎊', '🌸', '🌺', '🌼', '✨', '💐', '🦋', '🌿'];
-                const emoji = emojis[i % emojis.length];
-                const angle = (i / 15) * Math.PI * 2;
-                const distance = 150 + Math.random() * 150;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                return (
-                  <div
-                    key={`emoji-${i}`}
-                    className="absolute text-3xl md:text-5xl"
-                    style={{
-                      left: `calc(50% + ${x}px)`,
-                      top: `calc(30% + ${y}px)`,
-                      transform: 'translate(-50%, -50%)',
-                      animation: `spin ${2 + Math.random() * 2}s ease-in-out infinite, bounce ${1 + Math.random()}s ease-in-out infinite`,
-                      animationDelay: `${i * 0.15}s`,
-                    }}
-                  >
-                    {emoji}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Magical Rays from Center */}
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div
-                  key={`ray-${i}`}
-                  className="absolute top-1/2 left-1/2 w-1 h-48 bg-gradient-to-t from-transparent via-yellow-300/40 to-transparent origin-bottom"
-                  style={{
-                    transform: `rotate(${i * 30}deg)`,
-                    animation: 'pulse 2s ease-in-out infinite',
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Main Content Card */}
-            <div className="relative z-20">
-              {/* Victory Banner */}
-              <div className="text-center mb-4 md:mb-6 animate-fade-in">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-2 md:mb-3 bg-gradient-to-r from-purple-600 via-pink-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg"
-                  style={{
-                    animation: 'slideDown 0.8s ease-out, pulse 2s ease-in-out infinite 1s',
-                  }}
-                >
-                  🌟 VICTORY! 🌟
-                </h1>
-                <p className="text-xl md:text-2xl font-bold text-purple-700 mb-1 md:mb-2">
-                  You Restored the Sacred Flower!
-                </p>
-                <p className="text-base md:text-lg text-gray-700 mb-2 md:mb-3">
-                  of <span className="font-bold text-green-700">{selectedCountry.country}</span>
-                </p>
-                
-                {/* Achievement Badge */}
-                <div className="inline-block bg-white rounded-full px-4 py-2 md:px-6 md:py-3 shadow-lg border-4 border-purple-300 animate-pulse">
-                  <p className="text-xs md:text-sm font-semibold text-purple-800">
-                    🏆 Guardian of Nature 🏆
-                  </p>
-                </div>
-              </div>
-
-              {/* Restored Flower Showcase */}
-              <div className="bg-white/90 backdrop-blur-lg border-4 border-purple-300 rounded-2xl md:rounded-3xl p-4 md:p-6 mb-4 md:mb-6 shadow-2xl"
-                style={{
-                  animation: 'slideUp 0.8s ease-out 0.2s both',
-                }}
-              >
-                <h3 className="text-xl md:text-2xl font-bold text-center mb-3 md:mb-4 text-purple-900 flex items-center justify-center gap-2">
-                  <span>✨</span> Your Restored Flower <span>✨</span>
-                </h3>
-                
-                {/* Assembled Flower - Pixel-perfect 3x2 layout */}
-                <div className="flex justify-center mb-4 md:mb-5">
-                  <div 
-                    className="relative overflow-hidden rounded-xl md:rounded-2xl shadow-2xl border-4 border-purple-200"
-                    style={{
-                      width: 'min(90vw, 420px)',
-                      aspectRatio: `${195.6 * 3} / ${266.5 * 2}`,
-                      animation: 'float 3s ease-in-out infinite',
-                    }}
-                  >
-                    {/* 6 petals positioned absolutely for seamless alignment */}
-                    {[1, 2, 3, 4, 5, 6].map((petalNum) => {
-                      const row = Math.floor((petalNum - 1) / 3);
-                      const col = (petalNum - 1) % 3;
-                      const leftPercent = (col / 3) * 100;
-                      const topPercent = (row / 2) * 100;
-                      return (
-                        <img
-                          key={petalNum}
-                          src={getPetalPath(selectedCountry.folder, petalNum)}
-                          alt={`Petal ${petalNum}`}
-                          draggable={false}
-                          style={{
-                            position: 'absolute',
-                            left: `${leftPercent}%`,
-                            top: `${topPercent}%`,
-                            width: '33.3334%',
-                            height: '50.01%',
-                            display: 'block',
-                            margin: 0,
-                            padding: 0,
-                            border: 'none',
-                            imageRendering: 'auto',
-                            backfaceVisibility: 'hidden',
-                          }}
-                        />
-                      );
-                    })}
-                    
-                    {/* Subtle shimmer overlay */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%)',
-                        animation: 'shimmer 4s ease-in-out infinite',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Completion Stats */}
-                <div className="grid grid-cols-3 gap-2 md:gap-3 max-w-2xl mx-auto mb-3 md:mb-4">
-                  <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg md:rounded-xl p-2 md:p-3 text-center border-2 border-purple-300">
-                    <div className="text-xl md:text-2xl font-black text-purple-700">6/6</div>
-                    <div className="text-xs font-semibold text-purple-600">Petals</div>
-                  </div>
-                  <div className="bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg md:rounded-xl p-2 md:p-3 text-center border-2 border-pink-300">
-                    <div className="text-xl md:text-2xl font-black text-pink-700">100%</div>
-                    <div className="text-xs font-semibold text-pink-600">Complete</div>
-                  </div>
-                  <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-lg md:rounded-xl p-2 md:p-3 text-center border-2 border-green-300">
-                    <div className="text-xl md:text-2xl font-black text-green-700">⭐</div>
-                    <div className="text-xs font-semibold text-green-600">Perfect!</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Flower Information Card */}
-              <div className="bg-gradient-to-br from-green-50 to-green-100 border-4 border-green-300 rounded-2xl md:rounded-3xl p-4 md:p-6 mb-4 md:mb-6 shadow-2xl"
-                style={{
-                  animation: 'slideUp 0.8s ease-out 0.4s both',
-                }}
-              >
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <span className="text-2xl md:text-3xl">🌺</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-green-900">
-                    {selectedCountry.flowerName}
-                  </h3>
-                </div>
-                <p className="text-base md:text-lg text-green-700 italic mb-2 md:mb-3 font-medium">
-                  {selectedCountry.flowerScientificName}
-                </p>
-                <div className="bg-white/60 backdrop-blur rounded-xl md:rounded-2xl p-3 md:p-4 border-2 border-green-200">
-                  <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-                    {selectedCountry.flowerDescription}
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-center pb-4 px-4">
-                {/* Play Again Button - Modern Glassmorphism */}
-                <button
-                  onClick={handleRestart}
-                  className="group relative w-full sm:w-auto overflow-hidden"
-                  style={{
-                    animation: 'slideUp 0.8s ease-out 0.6s both',
-                  }}
-                >
-                  {/* Animated gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-[length:200%_100%] animate-gradient" />
-                  
-                  {/* Glass overlay */}
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
-                  
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  </div>
-                  
-                  {/* Button content */}
-                  <div className="relative px-8 py-4 md:px-10 md:py-5 flex items-center justify-center gap-3 group-hover:scale-105 transition-transform duration-300">
-                    <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-white text-base md:text-lg font-bold tracking-wide">
-                      Play Again
-                    </span>
-                  </div>
-                  
-                  {/* Border glow */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors pointer-events-none" 
-                       style={{ borderRadius: '1rem' }} />
-                  
-                  {/* Shadow */}
-                  <div className="absolute inset-0 -z-10 blur-xl bg-purple-600/50 group-hover:bg-purple-600/70 transition-all duration-300 scale-95 group-hover:scale-100" 
-                       style={{ borderRadius: '1rem' }} />
-                </button>
-                
-                {/* Share Victory Button - Modern with Icon */}
-                <button
-                  onClick={handleShare}
-                  className="group relative w-full sm:w-auto overflow-hidden"
-                  style={{
-                    animation: 'slideUp 0.8s ease-out 0.7s both',
-                  }}
-                >
-                  {/* Animated gradient background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-600 bg-[length:200%_100%] animate-gradient" />
-                  
-                  {/* Glass overlay */}
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
-                  
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  </div>
-                  
-                  {/* Button content */}
-                  <div className="relative px-8 py-4 md:px-10 md:py-5 flex items-center justify-center gap-3 group-hover:scale-105 transition-transform duration-300">
-                    {isSharing ? (
-                      <>
-                        <svg className="w-5 h-5 md:w-6 md:h-6 animate-spin" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span className="text-white text-base md:text-lg font-bold tracking-wide">
-                          Creating...
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-                        </svg>
-                        <span className="text-white text-base md:text-lg font-bold tracking-wide">
-                          Share Victory
-                        </span>
-                      </>
-                    )}
-                  </div>
-                  
-                  {/* Border glow */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-white/20 group-hover:border-white/40 transition-colors pointer-events-none" 
-                       style={{ borderRadius: '1rem' }} />
-                  
-                  {/* Shadow */}
-                  <div className="absolute inset-0 -z-10 blur-xl bg-emerald-600/50 group-hover:bg-emerald-600/70 transition-all duration-300 scale-95 group-hover:scale-100" 
-                       style={{ borderRadius: '1rem' }} />
-                </button>
-              </div>
-              
-              {/* Share Info Badge */}
-              <div className="flex justify-center mb-4"
-                style={{
-                  animation: 'slideUp 0.8s ease-out 0.9s both',
-                }}
-              >
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-full px-4 py-2 shadow-lg">
-                  <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
-                  </svg>
-                  <span className="text-sm font-semibold text-blue-800">
-                    Play at <span className="font-mono">aquamundi.org/game</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Motivational Message */}
-              <div className="mt-8 text-center"
-                style={{
-                  animation: 'slideUp 0.8s ease-out 0.8s both',
-                }}
-              >
-                <p className="text-lg md:text-xl text-purple-800 font-semibold italic">
-                  "Every flower you restore brings life back to nature!" 🌍💚
-                </p>
-              </div>
-            </div>
-
-            {/* CSS Animations */}
-            <style jsx>{`
-              @keyframes fall {
+              @keyframes orbit-inner {
+                from {
+                  transform: rotate(0deg) translateX(80px) rotate(0deg);
+                }
                 to {
-                  transform: translateY(100vh) rotate(360deg);
-                  opacity: 0;
+                  transform: rotate(360deg) translateX(80px) rotate(-360deg);
                 }
               }
-              
-              @keyframes spin {
+
+              @keyframes globe-pulse {
                 0%, 100% {
-                  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                  transform: scale(1);
                 }
                 50% {
-                  transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+                  transform: scale(1.05);
                 }
               }
-              
-              @keyframes slideDown {
-                from {
-                  transform: translateY(-100px);
-                  opacity: 0;
+
+              @keyframes globe-glow {
+                0%, 100% {
+                  filter: brightness(1);
                 }
-                to {
-                  transform: translateY(0);
+                50% {
+                  filter: brightness(1.2);
+                }
+              }
+
+              @keyframes sparkle-pulse {
+                0%, 100% {
+                  opacity: 0.6;
+                  transform: rotate(var(--angle, 0deg)) translateY(var(--distance, -45px)) scale(1);
+                }
+                50% {
+                  opacity: 1;
+                  transform: rotate(var(--angle, 0deg)) translateY(var(--distance, -45px)) scale(1.3);
+                }
+              }
+
+              @keyframes sparkle-twinkle {
+                0%, 100% {
+                  opacity: 0.3;
+                  transform: scale(0.8);
+                }
+                50% {
+                  opacity: 1;
+                  transform: scale(1.2);
+                }
+              }
+
+              @keyframes ray-expand {
+                0%, 100% {
+                  opacity: 0.3;
+                  transform: translate(-50%, -100%) rotate(var(--angle, 0deg)) scaleY(1);
+                }
+                50% {
+                  opacity: 0.6;
+                  transform: translate(-50%, -100%) rotate(var(--angle, 0deg)) scaleY(1.2);
+                }
+              }
+
+              @keyframes energy-wave {
+                0% {
+                  opacity: 0.8;
+                  transform: scale(0.8);
+                }
+                100% {
+                  opacity: 0;
+                  transform: scale(1.5);
+                }
+              }
+
+              @keyframes background-pulse {
+                0%, 100% {
                   opacity: 1;
                 }
+                50% {
+                  opacity: 0.95;
+                }
               }
-              
-              @keyframes slideUp {
+
+              @keyframes float-petal {
+                0%, 100% {
+                  transform: translateY(0) translateX(0) rotate(0deg);
+                }
+                25% {
+                  transform: translateY(-30px) translateX(10px) rotate(90deg);
+                }
+                50% {
+                  transform: translateY(-20px) translateX(-5px) rotate(180deg);
+                }
+                75% {
+                  transform: translateY(-40px) translateX(5px) rotate(270deg);
+                }
+              }
+
+              @keyframes text-appear {
                 from {
-                  transform: translateY(50px);
                   opacity: 0;
+                  transform: translateY(20px);
                 }
                 to {
-                  transform: translateY(0);
                   opacity: 1;
-                }
-              }
-              
-              @keyframes float {
-                0%, 100% {
-                  transform: translateY(0px);
-                }
-                50% {
-                  transform: translateY(-10px);
-                }
-              }
-              
-              @keyframes bounce {
-                0%, 100% {
                   transform: translateY(0);
                 }
-                50% {
-                  transform: translateY(-20px);
-                }
               }
-              
-              @keyframes gradient {
+
+              @keyframes text-shimmer {
                 0% {
                   background-position: 0% 50%;
                 }
@@ -1112,18 +964,346 @@ export default function GamePage() {
                   background-position: 0% 50%;
                 }
               }
-              
-              @keyframes shimmer {
-                0% {
-                  transform: translateX(-100%);
+
+              @keyframes text-glow {
+                0%, 100% {
+                  filter: drop-shadow(0 2px 4px rgba(250, 204, 21, 0.3));
                 }
-                100% {
-                  transform: translateX(100%);
+                50% {
+                  filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.6));
                 }
               }
+
+              @keyframes fade-in-up {
+                from {
+                  opacity: 0;
+                  transform: translateY(10px);
+                }
+                to {
+                  opacity: 0.8;
+                  transform: translateY(0);
+                }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {gameState === "completed" && selectedCountry && (
+          <div className="fixed inset-0 z-50 overflow-y-auto"
+               style={{
+                 background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+               }}>
+            {/* Magical Starfield Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {/* Twinkling Stars */}
+              {Array.from({ length: 40 }).map((_, i) => (
+                <div
+                  key={`star-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    width: `${1 + Math.random() * 2}px`,
+                    height: `${1 + Math.random() * 2}px`,
+                    background: '#fff',
+                    opacity: 0.3 + Math.random() * 0.5,
+                    animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 2}s`,
+                  }}
+                />
+              ))}
               
-              .animate-gradient {
-                animation: gradient 3s ease infinite;
+              {/* Golden Floating Particles */}
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={`particle-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    width: `${4 + Math.random() * 6}px`,
+                    height: `${4 + Math.random() * 6}px`,
+                    background: 'radial-gradient(circle, #fbbf24 0%, #f59e0b 50%, transparent 70%)',
+                    opacity: 0.6,
+                    animation: `float-up ${6 + Math.random() * 4}s ease-in-out infinite`,
+                    animationDelay: `${Math.random() * 3}s`,
+                    boxShadow: '0 0 15px rgba(251, 191, 36, 0.5)',
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Main Content Container - Full Width */}
+            <div className="relative z-10 w-full max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 min-h-screen flex flex-col justify-center">
+
+              {/* Victory Title */}
+              <div className="text-center mb-6 md:mb-10"
+                   style={{ animation: 'fade-in-down 0.8s ease-out' }}>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-4 text-transparent bg-clip-text"
+                    style={{
+                      backgroundImage: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #fcd34d 50%, #f59e0b 75%, #fbbf24 100%)',
+                      backgroundSize: '200% 200%',
+                      animation: 'golden-shimmer 3s ease-in-out infinite',
+                      WebkitBackgroundClip: 'text',
+                    }}>
+                  VICTORY!
+                </h1>
+                <p className="text-xl md:text-2xl font-semibold text-amber-200 mb-2">
+                  You Restored the Sacred Flower
+                </p>
+                <p className="text-lg md:text-xl text-gray-300">
+                  of <span className="font-bold text-amber-400 text-3xl md:text-5xl lg:text-6xl">{selectedCountry.country}</span>
+                </p>
+              </div>
+
+              {/* Central Flower Showcase Card */}
+              <div className="relative mb-8 md:mb-12"
+                   style={{ animation: 'scale-in 0.8s ease-out 0.3s both' }}>
+                {/* Glow Ring Behind Flower */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-full h-full rounded-full"
+                       style={{
+                         background: 'radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 60%)',
+                         animation: 'pulse-glow 3s ease-in-out infinite',
+                       }} />
+                </div>
+                
+                {/* Flower Container - Full Width */}
+                <div className="relative bg-gradient-to-b from-gray-900/60 to-gray-800/60 backdrop-blur-xl rounded-3xl p-4 md:p-6 lg:p-8 border border-amber-500/20"
+                     style={{
+                       boxShadow: '0 0 80px rgba(251, 191, 36, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                     }}>
+                  {/* Flower Display - Larger */}
+                  <div className="flex justify-center mb-4 md:mb-6">
+                    <div 
+                      className="relative overflow-hidden rounded-2xl md:rounded-3xl"
+                      style={{
+                        width: 'min(90vw, 600px)',
+                        aspectRatio: `${195.6 * 3} / ${266.5 * 2}`,
+                        animation: 'flower-float 4s ease-in-out infinite',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gridTemplateRows: 'repeat(2, 1fr)',
+                        gap: '0px',
+                        lineHeight: 0,
+                        fontSize: 0,
+                        boxShadow: '0 30px 100px -25px rgba(251, 191, 36, 0.5), 0 0 50px rgba(251, 191, 36, 0.15)',
+                        border: '5px solid rgba(251, 191, 36, 0.5)',
+                        borderRadius: '24px',
+                      }}
+                    >
+                      {[1, 2, 3, 4, 5, 6].map((petalNum) => (
+                        <img
+                          key={petalNum}
+                          src={getPetalPath(selectedCountry.folder, petalNum)}
+                          alt={`Petal ${petalNum}`}
+                          draggable={false}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'block',
+                            margin: 0,
+                            padding: 0,
+                            border: 'none',
+                            objectFit: 'cover',
+                            imageRendering: 'auto',
+                            backfaceVisibility: 'hidden',
+                            lineHeight: 0,
+                            fontSize: 0,
+                          }}
+                        />
+                      ))}
+                      
+                      {/* Shimmer overlay */}
+                      <div 
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          background: 'linear-gradient(135deg, transparent 30%, rgba(251, 191, 36, 0.2) 50%, transparent 70%)',
+                          animation: 'shimmer 4s ease-in-out infinite',
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Flower Info */}
+                  <div className="text-center">
+                    <h3 className="text-2xl md:text-3xl font-bold text-amber-300 mb-1">
+                      {selectedCountry.flowerName}
+                    </h3>
+                    <p className="text-base md:text-lg text-amber-200/70 italic mb-4">
+                      {selectedCountry.flowerScientificName}
+                    </p>
+                    <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
+                      <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                        {selectedCountry.flowerDescription}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats Row */}
+              <div className="flex justify-center gap-3 md:gap-6 lg:gap-8 mb-8 md:mb-10"
+                   style={{ animation: 'fade-in-up 0.8s ease-out 0.5s both' }}>
+                {[
+                  { value: '6/6', label: 'Petals', icon: '🌸' },
+                  { value: '100%', label: 'Complete', icon: '✨' },
+                  { value: '⭐', label: 'Perfect', icon: '' },
+                ].map((stat, i) => (
+                  <div key={stat.label}
+                       className="text-center px-5 py-4 md:px-7 md:py-5 rounded-2xl bg-gradient-to-b from-amber-500/20 to-amber-600/10 border border-amber-500/30"
+                       style={{
+                         animation: `stat-pop 0.5s ease-out ${0.7 + i * 0.1}s both`,
+                         boxShadow: '0 8px 30px rgba(251, 191, 36, 0.15)',
+                       }}>
+                    <div className="text-2xl md:text-3xl font-black text-amber-300 mb-1">
+                      {stat.icon || stat.value}
+                    </div>
+                    <div className="text-xs md:text-sm font-semibold text-amber-200/70">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Achievement Badge */}
+              <div className="flex justify-center mb-8 md:mb-10"
+                   style={{ animation: 'fade-in-up 0.8s ease-out 0.7s both' }}>
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-full px-6 py-3 border border-amber-400/40"
+                     style={{
+                       boxShadow: '0 0 30px rgba(251, 191, 36, 0.2)',
+                       animation: 'badge-glow 2s ease-in-out infinite',
+                     }}>
+                  <span className="text-2xl">🏆</span>
+                  <span className="text-base md:text-lg font-bold text-amber-200">Guardian of Nature</span>
+                  <span className="text-2xl">🏆</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-8"
+                   style={{ animation: 'fade-in-up 0.8s ease-out 0.9s both' }}>
+                {/* Play Again Button */}
+                <button
+                  onClick={handleRestart}
+                  className="group relative w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                    boxShadow: '0 10px 40px rgba(245, 158, 11, 0.3)',
+                  }}
+                >
+                  <span className="flex items-center justify-center gap-3 text-gray-900">
+                    <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                    </svg>
+                    Play Again
+                  </span>
+                </button>
+                
+                {/* Share Button */}
+                <button
+                  onClick={handleShare}
+                  className="group relative w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:scale-105 border-2 border-amber-400/50 bg-transparent hover:bg-amber-500/10"
+                >
+                  <span className="flex items-center justify-center gap-3 text-amber-300">
+                    {isSharing ? (
+                      <>
+                        <svg className="w-5 h-5 md:w-6 md:h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Creating...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                        </svg>
+                        Share Victory
+                      </>
+                    )}
+                  </span>
+                </button>
+              </div>
+              
+              {/* Inspirational Quote & Website Link */}
+              <div className="text-center"
+                   style={{ animation: 'fade-in-up 0.8s ease-out 1.1s both' }}>
+                <p className="text-base md:text-lg text-gray-400 italic mb-4">
+                  "Every flower you restore brings life back to nature" 🌍
+                </p>
+                <div className="inline-flex items-center gap-2 text-gray-500 text-sm">
+                  <span>🔗</span>
+                  <span>aquamundi.org/game</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Enhanced CSS Animations */}
+            <style jsx>{`
+              @keyframes twinkle {
+                0%, 100% { opacity: 0.3; transform: scale(1); }
+                50% { opacity: 0.8; transform: scale(1.2); }
+              }
+              
+              @keyframes float-up {
+                0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+                50% { transform: translateY(-30px) translateX(10px); opacity: 0.9; }
+              }
+              
+              @keyframes bounce-in {
+                0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+                50% { transform: scale(1.2) rotate(10deg); }
+                100% { transform: scale(1) rotate(0deg); opacity: 1; }
+              }
+              
+              @keyframes float-gentle {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+              }
+              
+              @keyframes golden-shimmer {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+              }
+              
+              @keyframes fade-in-down {
+                from { transform: translateY(-30px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+              }
+              
+              @keyframes fade-in-up {
+                from { transform: translateY(30px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+              }
+              
+              @keyframes scale-in {
+                from { transform: scale(0.9); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+              }
+              
+              @keyframes pulse-glow {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.7; }
+              }
+
+              @keyframes flower-float {
+                0%, 100% { transform: translateY(0px) scale(1); }
+                50% { transform: translateY(-12px) scale(1.01); }
+              }
+              
+              @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+              }
+              
+              @keyframes stat-pop {
+                from { transform: scale(0.5) translateY(20px); opacity: 0; }
+                to { transform: scale(1) translateY(0); opacity: 1; }
+              }
+              
+              @keyframes badge-glow {
+                0%, 100% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.2); }
+                50% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.4); }
               }
             `}</style>
           </div>

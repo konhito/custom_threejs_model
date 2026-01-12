@@ -324,8 +324,11 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
 
         {/* Araihan Character - Outside the box, next to it - Mobile optimized */}
         <div className="absolute right-2 sm:right-4 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
-          {/* Hover effect - glow ring outside the container */}
-          <div className="absolute inset-0 rounded-full bg-red-500/0 group-hover:bg-red-500/20 transition-all duration-300 blur-md -z-10 scale-150 pointer-events-none"></div>
+          {/* Improved hover effect - subtle glow */}
+          <div className="absolute inset-0 rounded-full bg-red-500/0 group-hover:bg-red-500/10 transition-all duration-500 ease-out blur-lg -z-10 scale-125 pointer-events-none"
+               style={{
+                 animation: 'none',
+               }}></div>
           
           <div className="relative group">
             {/* Animated SVG Creature Character - Red & Black, Non-Human */}
@@ -399,9 +402,30 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                 <ellipse cx="20" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(-20 20 36)" />
                 <ellipse cx="36" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(20 36 36)" />
                 
-                {/* Glow effect when active - red glow */}
+                {/* Improved glow effect when active - subtle pulse */}
                 {lastRevealedCard && (
-                  <circle cx="28" cy="28" r="24" fill="#DC2626" opacity="0.15" className="animate-ping" />
+                  <>
+                    <circle 
+                      cx="28" 
+                      cy="28" 
+                      r="22" 
+                      fill="#DC2626" 
+                      opacity="0.1" 
+                      style={{
+                        animation: 'glow-pulse-smooth 2s ease-in-out infinite',
+                      }}
+                    />
+                    <circle 
+                      cx="28" 
+                      cy="28" 
+                      r="20" 
+                      fill="#DC2626" 
+                      opacity="0.08" 
+                      style={{
+                        animation: 'glow-pulse-smooth 2s ease-in-out infinite 0.3s',
+                      }}
+                    />
+                  </>
                 )}
               </svg>
             </div>

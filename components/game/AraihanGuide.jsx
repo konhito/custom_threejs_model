@@ -166,13 +166,23 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
               )}
             </p>
             
-            {/* Action Button */}
+            {/* Action Button - Nature-themed */}
             {onAction && actionText && !isTyping && (
               <button
                 onClick={onAction}
-                className="self-start px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                className="group relative self-start px-4 sm:px-6 py-2 sm:py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
               >
-                {actionText}
+                {/* Shine effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </div>
+                
+                {/* Button content with nature emojis */}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  <span className="text-sm">🌸</span>
+                  <span>{actionText}</span>
+                  <span className="text-sm">🌿</span>
+                </span>
               </button>
             )}
           </div>
@@ -213,13 +223,23 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
             </p>
           </div>
 
-          {/* Action Button */}
+          {/* Action Button - Nature-themed */}
           {showAction && onAction && actionText && (
             <button
               onClick={onAction}
-              className="w-full px-8 py-4 md:py-5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold text-lg md:text-xl rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex-shrink-0"
+              className="group relative w-full px-8 py-4 md:py-5 bg-green-600 hover:bg-green-700 text-white font-bold text-lg md:text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 flex-shrink-0 overflow-hidden"
             >
-              {actionText}
+              {/* Shine effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              </div>
+              
+              {/* Button content with nature emojis */}
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <span className="text-xl">🌸</span>
+                <span>{actionText}</span>
+                <span className="text-xl">🌿</span>
+              </span>
             </button>
           )}
         </div>
