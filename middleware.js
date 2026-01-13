@@ -44,9 +44,29 @@ export function middleware(request) {
     country = debugCountry;
   }
   
-  // Fallback detection for development/non-Vercel environments
+  // If Vercel geo isn't working, try to get country from CF-IPCountry header (Cloudflare)
   if (!country) {
-    // Try to detect from Accept-Language header as fallback
+    country = request.headers.get('CF-IPCountry') || request.headers.get('X-Vercel-IP-Country');
+  }
+  
+  // Fallback: Try to get timezone info from headers
+  if (!country) {
+    const timezone = request.headers.get('X-Vercel-IP-Timezone');
+    if (timezone) {
+      // Map some common timezones to countries
+      const timezoneToCountry = {
+        'Europe/Paris': 'FR',
+        'Europe/Madrid': 'ES',
+        'Asia/Shanghai': 'CN',
+        'America/New_York': 'US',
+        'Europe/London': 'GB'
+      };
+      country = timezoneToCountry[timezone];
+    }
+  }
+  
+  // Final fallback: Accept-Language header
+  if (!country) {
     const acceptLanguage = request.headers.get('accept-language') || '';
     const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase();
     
@@ -73,7 +93,10 @@ export function middleware(request) {
     manualLocale: manualLocale || 'none',
     geoCountry: request.geo?.country || 'none',
     geoRegion: request.geo?.region || 'none',
-    geoCity: request.geo?.city || 'none'
+    geoCity: request.geo?.city || 'none',
+    cfCountry: request.headers.get('CF-IPCountry') || 'none',
+    vercelCountry: request.headers.get('X-Vercel-IP-Country') || 'none',
+    vercelTimezone: request.headers.get('X-Vercel-IP-Timezone') || 'none'
   };
   
   // Use manual selection only if it exists and is valid, otherwise use IP detection
@@ -86,6 +109,9 @@ export function middleware(request) {
   response.headers.set('X-Debug-Locale', debugInfo.detectedLocale);
   response.headers.set('X-Debug-Geo-Country', debugInfo.geoCountry);
   response.headers.set('X-Debug-Manual', debugInfo.manualLocale);
+  response.headers.set('X-Debug-CF-Country', debugInfo.cfCountry);
+  response.headers.set('X-Debug-Vercel-Country', debugInfo.vercelCountry);
+  response.headers.set('X-Debug-Timezone', debugInfo.vercelTimezone);
   
   // Always set NEXT_LOCALE (this is what the app reads)
   response.cookies.set('NEXT_LOCALE', finalLocale, {

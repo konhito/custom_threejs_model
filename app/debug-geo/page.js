@@ -38,6 +38,9 @@ export default function DebugGeoPage() {
           locale: response.headers.get('X-Debug-Locale'),
           geoCountry: response.headers.get('X-Debug-Geo-Country'),
           manual: response.headers.get('X-Debug-Manual'),
+          cfCountry: response.headers.get('X-Debug-CF-Country'),
+          vercelCountry: response.headers.get('X-Debug-Vercel-Country'),
+          timezone: response.headers.get('X-Debug-Timezone'),
         });
       })
       .catch(err => console.log('Could not fetch debug headers:', err));
@@ -142,6 +145,18 @@ export default function DebugGeoPage() {
               <div className="flex justify-between">
                 <span className="font-medium text-gray-700">Manual Override:</span>
                 <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.manual || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">CF-IPCountry:</span>
+                <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.cfCountry || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">X-Vercel-IP-Country:</span>
+                <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.vercelCountry || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">Vercel Timezone:</span>
+                <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.timezone || 'Loading...'}</span>
               </div>
             </div>
           </div>
