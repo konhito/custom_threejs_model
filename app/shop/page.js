@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Sparkles,
   ArrowRight,
+  Gift,
 } from "lucide-react";
 import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import {
