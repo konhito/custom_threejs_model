@@ -35,12 +35,51 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  // Always prioritize IP-based detection first
-  const country = request.geo?.country || 'US';
+  // Get country from Vercel geo headers (production) or fallback methods
+  let country = request.geo?.country;
+  
+  // Development: Check for debug country cookie
+  const debugCountry = request.cookies.get('DEBUG_COUNTRY')?.value;
+  if (debugCountry && !country) {
+    country = debugCountry;
+  }
+  
+  // Fallback detection for development/non-Vercel environments
+  if (!country) {
+    // Try to detect from Accept-Language header as fallback
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const browserLang = acceptLanguage.split(',')[0]?.split('-')[0]?.toLowerCase();
+    
+    // Map browser language to country (rough approximation)
+    const langToCountry = {
+      'es': 'ES',
+      'fr': 'FR', 
+      'zh': 'CN',
+      'en': 'US'
+    };
+    
+    country = langToCountry[browserLang] || 'US';
+  }
+  
   const detectedLocale = countryToLocale[country] || defaultLocale;
   
   // Check if user has manually selected a language (temporary override)
   const manualLocale = request.cookies.get('LOCALE_MANUAL')?.value;
+  
+  // Debug logging (remove in production)
+  console.log('🌍 Middleware Debug:', {
+    pathname,
+    country,
+    detectedLocale,
+    manualLocale,
+    debugCountry,
+    acceptLanguage: request.headers.get('accept-language'),
+    geoHeaders: {
+      country: request.geo?.country,
+      region: request.geo?.region,
+      city: request.geo?.city,
+    }
+  });
   
   // Use manual selection only if it exists and is valid, otherwise use IP detection
   const finalLocale = (manualLocale && locales.includes(manualLocale)) ? manualLocale : detectedLocale;
@@ -59,6 +98,13 @@ export function middleware(request) {
     response.cookies.set('LOCALE_MANUAL', manualLocale, {
       path: '/',
       maxAge: 60 * 60 * 2, // 2 hours only - then revert to IP detection
+      sameSite: 'lax',
+    });
+  } else if (manualLocale) {
+    // Clear invalid or expired manual locale cookie
+    response.cookies.set('LOCALE_MANUAL', '', {
+      path: '/',
+      maxAge: 0,
       sameSite: 'lax',
     });
   }
