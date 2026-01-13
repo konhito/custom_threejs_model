@@ -14,80 +14,84 @@ import {
   FaBullseye, 
   FaUsers,
   FaShoppingCart,
-  FaBook
+  FaBook,
+  FaGlobe
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { FloatingDock } from "./ui/floating-dock";
 import MobileSidebar from "./MobileSidebar";
+import { useTranslation } from "../lib/useTranslation";
 
-const BASE_NAV_ITEMS = [
+// Navigation items with translation keys
+const getNavItems = (t) => [
   {
-    name: "Home",
+    name: t('nav.home'),
     path: "/",
     icon: FaHome,
-    description: "Return to the main globe view"
+    description: t('navDescriptions.home')
   },
   {
-    name: "What is AquaMundi?",
+    name: t('nav.about'),
     path: "/about",
     icon: FaInfoCircle,
-    description: "Mission and purpose"
+    description: t('navDescriptions.about')
   },
   {
-    name: "National Flowers",
+    name: t('nav.flowers'),
     path: "/flowers",
     icon: FaSeedling,
-    description: "Selection criteria and explanation"
+    description: t('navDescriptions.flowers')
   },
   {
-    name: "Pollinators",
+    name: t('nav.pollinators'),
     path: "/pollinators",
     icon: FaBug,
-    description: "Introduction and gallery",
+    description: t('navDescriptions.pollinators'),
     subItems: [
-      { name: "Gallery", path: "/pollinators/gallery", description: "Explore pollinator species" }
+      { name: t('nav.gallery'), path: "/pollinators/gallery", description: t('navDescriptions.pollinators') }
     ]
   },
   {
-    name: "Guardians",
+    name: t('nav.guardians'),
     path: "/guardians",
     icon: FaShieldAlt,
-    description: "Symbolic presentation"
+    description: t('navDescriptions.guardians')
   },
   {
-    name: "Education & Community",
+    name: t('nav.education'),
     path: "/education",
     icon: FaGraduationCap,
-    description: "Learning resources and community"
+    description: t('navDescriptions.education')
   },
   {
-    name: "Impact & Transparency",
+    name: t('nav.impact'),
     path: "/impact",
     icon: FaChartLine,
-    description: "Our impact and transparency"
+    description: t('navDescriptions.impact')
   },
   {
-    name: "The Living Archive",
+    name: t('nav.archive'),
     path: "/living-archive",
     icon: FaArchive,
-    description: "Core content of the NAHIARA universe"
+    description: t('navDescriptions.archive')
   },
   {
-    name: "Araihan Measure",
+    name: t('nav.araihan'),
     path: "/araihan-measure",
     icon: FaBullseye,
-    description: "Araihan Measure initiative"
+    description: t('navDescriptions.araihan')
   },
   {
-    name: "Professionals",
+    name: t('nav.professionals'),
     path: "/professionals",
     icon: FaUsers,
-    description: "Exclusive access for industry professionals"
+    description: t('navDescriptions.professionals')
   }
 ];
 
 export default function Navigation() {
   const [cartCount, setCartCount] = useState(0);
+  const { t, isLoading } = useTranslation();
   
   // Use Next.js usePathname hook for proper pathname detection across all pages
   const pathname = usePathname() || "/";
@@ -118,6 +122,9 @@ export default function Navigation() {
   const isCartPage = normalizePath(pathname) === "/cart";
   const isHomePage = normalizePath(pathname) === "/";
 
+  // Get navigation items with translations
+  const BASE_NAV_ITEMS = getNavItems(t);
+
   const navigationItems = BASE_NAV_ITEMS.map((item) => ({
     ...item,
     href: item.path,
@@ -143,7 +150,7 @@ export default function Navigation() {
           }),
           // Add book/shop button (show on all pages except cart)
           ...(!isCartPage ? [{
-            title: "Books",
+            title: t('nav.shop'),
             icon: <FaBook className="w-full h-full" />,
             href: "/shop",
           }] : []),

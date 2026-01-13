@@ -6,6 +6,7 @@ import { CheckCircle, Download, Mail, ArrowLeft, Home } from "lucide-react";
 import { ordersAPI, invoicesAPI, formatCurrency } from "../../lib/api";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
 function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -273,6 +274,8 @@ function OrderSuccessContent() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }

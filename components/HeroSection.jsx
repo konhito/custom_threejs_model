@@ -4,8 +4,33 @@ import React from "react";
 import { AuroraBackground } from "./ui/aurora-background";
 import { ChevronDown } from "lucide-react";
 import { TypewriterEffect } from "./ui/typewriter-effect";
+import { useTranslation } from "../lib/useTranslation";
 
 export function HeroSection() {
+  const { t, isLoading } = useTranslation();
+
+  // Get translated subtitle words
+  const getSubtitleWords = () => {
+    const subtitle = t('home.heroSubtitle');
+    if (subtitle === 'home.heroSubtitle') {
+      // Fallback if translation not loaded
+      return [
+        { text: "Where", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "nations", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "bloom", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "and", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "stories", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "unfold", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+      ];
+    }
+    
+    // Split translated subtitle into words
+    return subtitle.split(' ').map(word => ({
+      text: word,
+      className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
+    }));
+  };
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* AquaMundi Branding - Top Left */}
@@ -53,9 +78,9 @@ export function HeroSection() {
         >
           <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
             <h1 className="text-gray-900 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center uppercase tracking-tight mb-3 md:mb-4" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
-              Explore the World Through
+              {t('home.heroTitle')}
               <br />
-              Blooming Stories
+              {t('home.heroTitleLine2')}
             </h1>
             
             {/* Separator Line */}
@@ -64,32 +89,7 @@ export function HeroSection() {
             {/* Subtitle with cursive serif font and typewriter effect */}
             <div className="text-center w-full" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
               <TypewriterEffect
-                words={[
-                  {
-                    text: "Where",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                  {
-                    text: "nations",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                  {
-                    text: "bloom",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                  {
-                    text: "and",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                  {
-                    text: "stories",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                  {
-                    text: "unfold",
-                    className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
-                  },
-                ]}
+                words={getSubtitleWords()}
                 className="text-center"
                 cursorClassName="bg-gray-700"
               />
@@ -117,10 +117,10 @@ export function HeroSection() {
             }
           }}
           className="flex flex-col items-center justify-center text-gray-700 hover:text-gray-900 transition-colors duration-200 group animate-bounce-slow"
-          aria-label="Scroll down to see the globe"
+          aria-label={t('home.scrollToExplore')}
         >
           <span className="text-xs md:text-sm mb-2 font-medium opacity-70 group-hover:opacity-100 transition-opacity">
-            Scroll to explore
+            {t('home.scrollToExplore')}
           </span>
           <ChevronDown className="w-6 h-6 md:w-8 md:h-8 animate-bounce" />
         </button>
@@ -129,4 +129,3 @@ export function HeroSection() {
     </div>
   );
 }
-

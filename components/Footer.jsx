@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from '../lib/useTranslation';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer() {
   const [userEmail, setUserEmail] = useState('');
   const contactEmail = 'partnerships@asociacionnahiara.org';
+  const { t, locale } = useTranslation();
 
   const handleEmailSubmit = (e) => {
     e.preventDefault();
@@ -62,31 +65,31 @@ export default function Footer() {
           <div className="grid grid-cols-2 sm:flex sm:flex-row sm:flex-wrap gap-4 sm:gap-6 md:gap-8 lg:gap-12 text-gray-400 flex-1 w-full lg:w-auto">
             {/* Explore Section */}
             <div className="text-left w-full sm:w-auto">
-              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">Explore</h3>
+              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.explore')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
                   <Link href="/" className="hover:text-white transition-colors duration-200">
-                    Home
+                    {t('nav.home')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/about" className="hover:text-white transition-colors duration-200">
-                    What is AquaMundi?
+                    {t('nav.about')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/flowers" className="hover:text-white transition-colors duration-200">
-                    National Flowers
+                    {t('nav.flowers')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/pollinators" className="hover:text-white transition-colors duration-200">
-                    Pollinators
+                    {t('nav.pollinators')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/pollinators/gallery" className="hover:text-white transition-colors duration-200">
-                    Pollinator Gallery
+                    {t('nav.pollinatorGallery')}
                   </Link>
                 </li>
               </ul>
@@ -94,26 +97,26 @@ export default function Footer() {
 
             {/* Learn Section */}
             <div className="text-left w-full sm:w-auto">
-              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">Learn</h3>
+              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.learn')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
                   <Link href="/guardians" className="hover:text-white transition-colors duration-200">
-                    Guardians
+                    {t('nav.guardians')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/education" className="hover:text-white transition-colors duration-200">
-                    Education & Community
+                    {t('nav.education')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/impact" className="hover:text-white transition-colors duration-200">
-                    Impact & Transparency
+                    {t('nav.impact')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/living-archive" className="hover:text-white transition-colors duration-200">
-                    The Living Archive
+                    {t('nav.archive')}
                   </Link>
                 </li>
               </ul>
@@ -121,16 +124,16 @@ export default function Footer() {
 
             {/* Initiatives Section */}
             <div className="text-left w-full sm:w-auto">
-              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">Initiatives</h3>
+              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.initiatives')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
                   <Link href="/araihan-measure" className="hover:text-white transition-colors duration-200">
-                    Araihan Measure
+                    {t('nav.araihan')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/professionals" className="hover:text-white transition-colors duration-200">
-                    Professionals
+                    {t('nav.professionals')}
                   </Link>
                 </li>
               </ul>
@@ -138,19 +141,25 @@ export default function Footer() {
 
             {/* Legal Section */}
             <div className="text-left w-full sm:w-auto">
-              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">Legal</h3>
+              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.legal')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
                   <a href="#" className="hover:text-white transition-colors duration-200">
-                    Privacy Policy
+                    {t('footer.privacyPolicy')}
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:text-white transition-colors duration-200">
-                    Terms of Service
+                    {t('footer.termsOfService')}
                   </a>
                 </li>
               </ul>
+            </div>
+
+            {/* Language Section */}
+            <div className="text-left w-full sm:w-auto">
+              <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.language')}</h3>
+              <LanguageSwitcher currentLocale={locale} variant="footer" />
             </div>
           </div>
         </div>
@@ -158,13 +167,13 @@ export default function Footer() {
         {/* Contact Section - Minimal */}
         <div className="mt-2 sm:mt-3">
           <div className="max-w-md mx-auto px-2">
-            <p className="text-gray-500 text-xs text-center mb-2">Get in touch</p>
+            <p className="text-gray-500 text-xs text-center mb-2">{t('footer.getInTouch')}</p>
             <form onSubmit={handleEmailSubmit} className="flex gap-2">
               <input
                 type="email"
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.target.value)}
-                placeholder="Your email"
+                placeholder={t('footer.yourEmail')}
                 className="flex-1 px-3 sm:px-4 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
                 required
               />
@@ -172,7 +181,7 @@ export default function Footer() {
                 type="submit"
                 className="px-3 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors text-sm font-medium whitespace-nowrap"
               >
-                Send
+                {t('footer.send')}
               </button>
             </form>
           </div>

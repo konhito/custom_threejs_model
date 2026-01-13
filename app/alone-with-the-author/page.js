@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
 import { generateStructuredData } from "../../lib/seo";
 import { safeGetItem, safeSetItem } from "../../lib/storage";
 import { Mail, Heart, BookOpen, MapPin, GraduationCap, Sparkles, MessageCircle } from "lucide-react";
@@ -300,6 +301,8 @@ export default function AloneWithAuthorPage() {
             </div>
           </div>
         </main>
+        
+        <Footer />
       </div>
     </>
   );

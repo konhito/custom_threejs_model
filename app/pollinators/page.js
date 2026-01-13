@@ -1,18 +1,20 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
 import Link from "next/link";
 import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target, ExternalLink, Rotate3D, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "../../lib/useTranslation";
 
 // Mobile-Friendly Bar Chart with Horizontal Slider
-function PollinatorDeclineChart() {
+function PollinatorDeclineChart({ t }) {
   const data = [
-    { label: "Wild flowering plants (2016)", percentage: 90, color: "#1e40af", category: "2016" },
-    { label: "Food crops (2016)", percentage: 75, color: "#3b82f6", category: "2016" },
-    { label: "Insects threatened (2025)", percentage: 40, color: "#dc2626", category: "2025" },
-    { label: "Annual decline (per decade)", percentage: 9, color: "#ef4444", category: "2025" },
-    { label: "US bee losses (2025)", percentage: 65, color: "#ea580c", category: "US" },
-    { label: "Native pollinators at risk", percentage: 22, color: "#f97316", category: "US" }
+    { label: t('pollinators.ofCrops'), percentage: 75, color: "#3b82f6", category: "2016" },
+    { label: t('pollinators.depend'), percentage: 90, color: "#1e40af", category: "2016" },
+    { label: t('pollinators.evidence1'), percentage: 40, color: "#dc2626", category: "2025" },
+    { label: t('pollinators.evidence2'), percentage: 9, color: "#ef4444", category: "2025" },
+    { label: t('pollinators.evidence3'), percentage: 65, color: "#ea580c", category: "US" },
+    { label: t('pollinators.evidence4'), percentage: 22, color: "#f97316", category: "US" }
   ];
 
   const scrollContainerRef = useRef(null);
@@ -57,7 +59,7 @@ function PollinatorDeclineChart() {
   return (
     <div className="bg-white/95 rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-lg">
       <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
-        Pollinator decline - Key figures
+        {t('pollinators.chartTitle')}
       </h3>
       
       {/* Mobile: Horizontal Slider */}
@@ -124,7 +126,7 @@ function PollinatorDeclineChart() {
                         {item.label}
                       </p>
                       <span className="inline-block mt-2 px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-600">
-                        {item.category === "2016" ? "📊 2016 Data" : item.category === "2025" ? "⚠️ 2025 Crisis" : "🇺🇸 US Impact"}
+                        {item.category === "2016" ? t('pollinators.data2016') : item.category === "2025" ? t('pollinators.crisis2025') : t('pollinators.usImpact')}
                       </span>
                     </div>
                   </div>
@@ -187,15 +189,15 @@ function PollinatorDeclineChart() {
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-xs sm:text-sm text-gray-600">
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 bg-blue-600 rounded shadow-sm"></div>
-            <span className="font-medium">2016 Data</span>
+            <span className="font-medium">{t('pollinators.data2016')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 bg-red-600 rounded shadow-sm"></div>
-            <span className="font-medium">2025 Crisis</span>
+            <span className="font-medium">{t('pollinators.crisis2025')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 bg-orange-600 rounded shadow-sm"></div>
-            <span className="font-medium">US Impact</span>
+            <span className="font-medium">{t('pollinators.usImpact')}</span>
           </div>
         </div>
       </div>
@@ -210,6 +212,16 @@ function PollinatorDeclineChart() {
 }
 
 export default function PollinatorsPage() {
+  const { t, isLoading } = useTranslation();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
@@ -219,10 +231,10 @@ export default function PollinatorsPage() {
           {/* Header */}
           <div className="mb-8 sm:mb-12 text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Pollinators
+              {t('pollinators.pageTitle')}
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed">
-              The invisible guardians of life on Earth. These essential creatures keep our planet&apos;s biodiversity in balance, pollinating the plants that feed us all.
+              {t('pollinators.heroSubtitle')}
             </p>
           </div>
 
@@ -231,14 +243,14 @@ export default function PollinatorsPage() {
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-white/20">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 sm:mb-8">
-                  Guardians of biodiversity
+                  {t('pollinators.guardiansTitle')}
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed">
                   <p>
-                    In AquaMundi, pollinators hold a central place alongside national flowers, as they represent the bridge between nature, culture, and survival. These remarkable creatures are the unsung heroes that keep our planet&apos;s delicate balance intact.
+                    {t('pollinators.guardiansText1')}
                   </p>
                   <p>
-                    From the tiniest bee to the most magnificent hummingbird, each pollinator plays a vital role in the grand symphony of life, ensuring that future generations can continue to marvel at the beauty and abundance of our natural world.
+                    {t('pollinators.guardiansText2')}
                   </p>
                 </div>
               </div>
@@ -250,10 +262,10 @@ export default function PollinatorsPage() {
             <div className="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-red-200">
               <div className="text-center mb-8 sm:mb-10">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-800 mb-3 sm:mb-4">
-                  From decline to guardianship
+                  {t('pollinators.manifestoTitle')}
                 </h2>
                 <p className="text-lg sm:text-xl text-red-700 font-medium">
-                  A manifesto from the NAHIARA universe (2016 – 2025)
+                  {t('pollinators.manifestoSubtitle')}
                 </p>
               </div>
 
@@ -262,16 +274,16 @@ export default function PollinatorsPage() {
                 <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
                   <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
                     <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-100 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-600 font-bold text-sm sm:text-base">2016</span>
-                    The historic IPBES report
+                    {t('pollinators.ipbesReport')}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">90% of wild flowering plants depended on animal pollinators</p>
+                      <p className="text-gray-700">{t('pollinators.ipbesPoint1')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">More than 75% of global food crops required their intervention</p>
+                      <p className="text-gray-700">{t('pollinators.ipbesPoint2')}</p>
                     </div>
                   </div>
                 </div>
@@ -280,24 +292,24 @@ export default function PollinatorsPage() {
                 <div className="bg-red-100/80 rounded-2xl p-6 sm:p-8 border border-red-300">
                   <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
                     <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-200 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-700 font-bold text-sm sm:text-base">2025</span>
-                    The evidence is alarming
+                    {t('pollinators.evidence2025')}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700">Over 40% of global pollinating insects are highly threatened</p>
+                      <p className="text-gray-700">{t('pollinators.evidence1')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700">Terrestrial insect populations decline at ~9% per decade</p>
+                      <p className="text-gray-700">{t('pollinators.evidence2')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700">Managed bee colony losses in U.S. reached 60–70% in a single year</p>
+                      <p className="text-gray-700">{t('pollinators.evidence3')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-gray-700">22% of North America&apos;s native pollinators at high risk of extinction</p>
+                      <p className="text-gray-700">{t('pollinators.evidence4')}</p>
                     </div>
                   </div>
                 </div>
@@ -306,24 +318,24 @@ export default function PollinatorsPage() {
                 <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
                   <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
                     <Shield className="w-6 h-6 text-red-600 mr-3" />
-                    Institutional inertia
+                    {t('pollinators.institutionalInertia')}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">Fragmented initiatives that never reached global coordination</p>
+                      <p className="text-gray-700">{t('pollinators.inertia1')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">Short-term priorities that relegated biodiversity</p>
+                      <p className="text-gray-700">{t('pollinators.inertia2')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">Underestimation of pollinators as vital infrastructure</p>
+                      <p className="text-gray-700">{t('pollinators.inertia3')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">Resistance to move away from pesticide-intensive agriculture</p>
+                      <p className="text-gray-700">{t('pollinators.inertia4')}</p>
                     </div>
                   </div>
                 </div>
@@ -332,40 +344,40 @@ export default function PollinatorsPage() {
                 <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 sm:p-8 border border-amber-300">
                   <h3 className="text-xl sm:text-2xl font-bold text-amber-800 mb-4 sm:mb-6 flex items-center">
                     <Target className="w-6 h-6 text-amber-600 mr-3" />
-                    A call for the next decade
+                    {t('pollinators.callForAction')}
                   </h3>
                   <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-                    The NAHIARA thesis calls for urgent global action:
+                    {t('pollinators.callText')}
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
                     <div className="flex items-start space-x-3">
                       <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-                      <p className="text-gray-700">Integrate pollinator protection into national and food security policies</p>
+                      <p className="text-gray-700">{t('pollinators.action1')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-                      <p className="text-gray-700">Establish ecological corridors for species survival and mobility</p>
+                      <p className="text-gray-700">{t('pollinators.action2')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-                      <p className="text-gray-700">Transition agricultural systems toward regenerative models</p>
+                      <p className="text-gray-700">{t('pollinators.action3')}</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
-                      <p className="text-gray-700">Implement real-time global monitoring, accessible and transparent</p>
+                      <p className="text-gray-700">{t('pollinators.action4')}</p>
                     </div>
                     <div className="flex items-start space-x-3 sm:col-span-2">
                       <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
-                      <p className="text-gray-700">Embed pollinators into education and culture as living symbols of life</p>
+                      <p className="text-gray-700">{t('pollinators.action5')}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Conclusion Section */}
                 <div className="bg-red-50 rounded-2xl p-6 sm:p-8 border border-red-200 text-center">
-                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-3 sm:mb-4">Conclusion</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-3 sm:mb-4">{t('pollinators.conclusion')}</h3>
                   <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                    Protecting pollinators is not optional – it is a moral, ecological, and cultural duty. The coming decade will decide whether humanity chooses restoration or collapse.
+                    {t('pollinators.conclusionText')}
                   </p>
                 </div>
               </div>
@@ -377,14 +389,14 @@ export default function PollinatorsPage() {
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-6 sm:mb-8">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
-                  The numbers don&apos;t lie
+                  {t('pollinators.numbersTitle')}
                   </h2>
                 <p className="text-sm sm:text-base lg:text-lg text-gray-700 max-w-2xl mx-auto">
-                    Visual representation of the pollinator crisis from 2016 to 2025, showing the dramatic decline and urgent need for action.
+                    {t('pollinators.numbersSubtitle')}
                   </p>
                 </div>
                 
-                <PollinatorDeclineChart />
+                <PollinatorDeclineChart t={t} />
               </div>
             </section>
 
@@ -392,10 +404,10 @@ export default function PollinatorsPage() {
           <section className="mb-12 sm:mb-16 lg:mb-20">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                Guardians of biodiversity
+                {t('pollinators.guardiansTitle')}
                   </h2>
               <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-                From tiny bees to magnificent hummingbirds, these creatures form the foundation of our food web and ecosystem health.
+                {t('pollinators.guardiansText2')}
                   </p>
                 </div>
 
@@ -405,22 +417,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl">🐝</span>
                       </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Bees</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.bees')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  The most efficient pollinators, responsible for pollinating over 80% of flowering plants worldwide.
+                  {t('pollinators.beesDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Honeybees</span>
-                    <span className="font-semibold text-gray-800">Global</span>
+                    <span className="text-gray-600">{t('pollinators.honeybees')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.global')}</span>
                       </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Bumblebees</span>
-                    <span className="font-semibold text-gray-800">Temperate regions</span>
+                    <span className="text-gray-600">{t('pollinators.bumblebees')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.temperateRegions')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Solitary bees</span>
-                    <span className="font-semibold text-gray-800">Diverse habitats</span>
+                    <span className="text-gray-600">{t('pollinators.solitaryBees')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.diverseHabitats')}</span>
                       </div>
                     </div>
                   </div>
@@ -430,22 +442,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl">🐦</span>
                       </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Birds</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.birds')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  Hummingbirds, sunbirds, and other nectar-feeding birds pollinate tubular flowers with their long beaks.
+                  {t('pollinators.birdsDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Hummingbirds</span>
-                    <span className="font-semibold text-gray-800">Americas</span>
+                    <span className="text-gray-600">{t('pollinators.hummingbirds')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.americas')}</span>
                       </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Sunbirds</span>
-                    <span className="font-semibold text-gray-800">Africa, Asia</span>
+                    <span className="text-gray-600">{t('pollinators.sunbirds')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.africaAsia')}</span>
                       </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Honeyeaters</span>
-                    <span className="font-semibold text-gray-800">Australia</span>
+                    <span className="text-gray-600">{t('pollinators.honeyeaters')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.australia')}</span>
                       </div>
                     </div>
                   </div>
@@ -455,22 +467,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-purple-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl">🦋</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Butterflies & moths</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.butterflies')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  Beautiful pollinators that prefer flat, open flowers and are active during daylight hours.
+                  {t('pollinators.butterfliesDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Monarchs</span>
-                    <span className="font-semibold text-gray-800">North America</span>
+                    <span className="text-gray-600">{t('pollinators.monarchs')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.northAmerica')}</span>
                       </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Swallowtails</span>
-                    <span className="font-semibold text-gray-800">Global</span>
+                    <span className="text-gray-600">{t('pollinators.swallowtails')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.global')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Hawk moths</span>
-                    <span className="font-semibold text-gray-800">Night pollinators</span>
+                    <span className="text-gray-600">{t('pollinators.hawkMoths')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.nightPollinators')}</span>
                   </div>
                 </div>
               </div>
@@ -480,22 +492,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl">🦇</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Bats</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.bats')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers like agave and cacti.
+                  {t('pollinators.batsDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Lesser long-nosed</span>
-                    <span className="font-semibold text-gray-800">Mexico, US</span>
+                    <span className="text-gray-600">{t('pollinators.lesserLongNosed')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.mexicoUS')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Fruit bats</span>
-                    <span className="font-semibold text-gray-800">Tropical regions</span>
+                    <span className="text-gray-600">{t('pollinators.fruitBats')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.tropicalRegions')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Nectar bats</span>
-                    <span className="font-semibold text-gray-800">Desert ecosystems</span>
+                    <span className="text-gray-600">{t('pollinators.nectarBats')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.desertEcosystems')}</span>
                   </div>
                 </div>
               </div>
@@ -505,22 +517,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-2xl sm:text-3xl">🪲</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Beetles & other pollinators</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.beetles')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  Ancient pollinators that have been pollinating flowers for over 150 million years, including flies and wasps.
+                  {t('pollinators.beetlesDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Flower beetles</span>
-                    <span className="font-semibold text-gray-800">Global</span>
+                    <span className="text-gray-600">{t('pollinators.flowerBeetles')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.diverseSpecies')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Hoverflies</span>
-                    <span className="font-semibold text-gray-800">Bee mimics</span>
+                    <span className="text-gray-600">{t('pollinators.hoverflies')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.beeMimics')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Wasps</span>
-                    <span className="font-semibold text-gray-800">Diverse species</span>
+                    <span className="text-gray-600">{t('pollinators.wasps')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.diverseSpecies')}</span>
                   </div>
                 </div>
               </div>
@@ -530,22 +542,22 @@ export default function PollinatorsPage() {
                 <div className="w-16 sm:w-20 h-16 sm:h-20 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <Globe className="w-8 sm:w-10 h-8 sm:h-10 text-white" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">Global impact</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.globalImpactTitle')}</h3>
                 <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  Pollinators are essential for maintaining biodiversity and food security worldwide.
+                  {t('pollinators.globalImpactDesc')}
                 </p>
                 <div className="space-y-2 text-xs sm:text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Food production</span>
-                    <span className="font-semibold text-gray-800">75% of crops</span>
+                    <span className="text-gray-600">{t('pollinators.foodProduction')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.ofCrops')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Wild plants</span>
-                    <span className="font-semibold text-gray-800">90% depend</span>
+                    <span className="text-gray-600">{t('pollinators.wildPlants')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.depend')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Ecosystem health</span>
-                    <span className="font-semibold text-gray-800">Critical</span>
+                    <span className="text-gray-600">{t('pollinators.ecosystemHealth')}</span>
+                    <span className="font-semibold text-gray-800">{t('pollinators.critical')}</span>
                   </div>
                 </div>
               </div>
@@ -556,24 +568,24 @@ export default function PollinatorsPage() {
           <section className="mb-12 sm:mb-16 lg:mb-20">
             <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-amber-200 text-center">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                Take action today
+                {t('pollinators.takeAction')}
                 </h2>
               <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto">
-                Every small action counts. Plant native flowers, avoid pesticides, and support pollinator-friendly initiatives in your community.
+                {t('pollinators.takeActionText')}
                 </p>
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <Link 
                   href="/pollinators/gallery"
                   className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
                 >
-                  <span>Explore gallery</span>
+                  <span>{t('pollinators.exploreGallery')}</span>
                   <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
                 <Link 
                   href="/education"
                   className="inline-flex items-center space-x-2 bg-white/80 hover:bg-white text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 border border-amber-200"
                 >
-                  <span>Learn more</span>
+                  <span>{t('common.learnMore')}</span>
                   <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
               </div>
@@ -585,10 +597,10 @@ export default function PollinatorsPage() {
             <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-blue-200">
               <div className="text-center mb-6 sm:mb-8">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                  Future vision
+                  {t('pollinators.futureVision')}
                 </h2>
                 <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-                  We&apos;re building a comprehensive living archive of Earth&apos;s pollinators, connecting them with national flowers and creating an interactive 3D experience.
+                  {t('pollinators.futureVisionText')}
                 </p>
               </div>
               
@@ -597,30 +609,31 @@ export default function PollinatorsPage() {
                   <div className="w-12 sm:w-16 h-12 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <Globe className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Global coverage</h3>
-                  <p className="text-sm text-gray-600">Comprehensive database of pollinators from every continent and ecosystem</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.globalCoverage')}</h3>
+                  <p className="text-sm text-gray-600">{t('pollinators.globalCoverageDesc')}</p>
                 </div>
                 
                 <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
                   <div className="w-12 sm:w-16 h-12 sm:h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <Rotate3D className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">3D exploration</h3>
-                  <p className="text-sm text-gray-600">Interactive 3D models and virtual environments for immersive learning</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.exploration3D')}</h3>
+                  <p className="text-sm text-gray-600">{t('pollinators.exploration3DDesc')}</p>
                 </div>
                 
                 <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
                   <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <Heart className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Conservation focus</h3>
-                  <p className="text-sm text-gray-600">Data-driven insights to support pollinator conservation efforts worldwide</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.conservationFocus')}</h3>
+                  <p className="text-sm text-gray-600">{t('pollinators.conservationFocusDesc')}</p>
                 </div>
               </div>
               </div>
             </section>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

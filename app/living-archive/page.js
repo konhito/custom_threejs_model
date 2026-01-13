@@ -1,6 +1,19 @@
+"use client";
 import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
+import { useTranslation } from "../../lib/useTranslation";
 
 export default function LivingArchivePage() {
+  const { t, isLoading } = useTranslation();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
       <Navigation />
@@ -10,10 +23,10 @@ export default function LivingArchivePage() {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent mb-6">
-              The Living Archive
+              {t('nav.archive')}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Central Access Point for the Core Content of the NAHIARA Universe
+              {t('navDescriptions.archive')}
             </p>
           </div>
 
@@ -22,23 +35,20 @@ export default function LivingArchivePage() {
             {/* Introduction Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                Welcome to The Living Archive
+                {t('nav.archive')}
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                This page serves as the central access point for the core content of the NAHIARA universe, 
-                where knowledge, stories, and interactive experiences come together to preserve and celebrate 
-                our floral heritage.
+                {t('navDescriptions.archive')}
               </p>
             </section>
 
             {/* The Book Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                The Book of Flowers – Central Work of NAHIARA
+                {t('nav.archive')}
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                Immerse yourself in the complete NAHIARA experience through our comprehensive book, 
-                available in multiple formats to suit your reading preferences.
+                {t('navDescriptions.archive')}
               </p>
               
               <div className="grid md:grid-cols-2 gap-8">
@@ -46,12 +56,12 @@ export default function LivingArchivePage() {
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-3xl">📖</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-blue-800 mb-3">Chapter by Chapter</h3>
+                  <h3 className="text-2xl font-bold text-blue-800 mb-3">{t('nav.archive')}</h3>
                   <p className="text-gray-700 mb-6">
-                    Download individual chapters to explore specific aspects of the NAHIARA universe at your own pace.
+                    {t('navDescriptions.archive')}
                   </p>
                   <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                    Browse Chapters
+                    {t('common.viewAll')}
                   </button>
                 </div>
                 
@@ -59,12 +69,12 @@ export default function LivingArchivePage() {
                   <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-3xl">📚</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-green-800 mb-3">Complete Volume</h3>
+                  <h3 className="text-2xl font-bold text-green-800 mb-3">{t('nav.archive')}</h3>
                   <p className="text-gray-700 mb-6">
-                    Access the full NAHIARA experience in one comprehensive volume, perfect for deep immersion.
+                    {t('navDescriptions.archive')}
                   </p>
                   <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                    Download Full Volume
+                    {t('common.viewAll')}
                   </button>
                 </div>
               </div>
@@ -73,10 +83,10 @@ export default function LivingArchivePage() {
             {/* The Digital Card Game Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                The Digital Card Game
+                {t('nav.game')}
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                Experience the NAHIARA universe through interactive gameplay, available in both free and premium versions.
+                {t('navDescriptions.archive')}
               </p>
               
               <div className="grid md:grid-cols-2 gap-8">
@@ -84,12 +94,12 @@ export default function LivingArchivePage() {
                   <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-violet-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-3xl">🎮</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-purple-800 mb-3">Free Basic Version</h3>
+                  <h3 className="text-2xl font-bold text-purple-800 mb-3">{t('nav.game')}</h3>
                   <p className="text-gray-700 mb-6">
-                    Start your NAHIARA journey with the free basic version, featuring core gameplay mechanics and essential content.
+                    {t('navDescriptions.archive')}
                   </p>
                   <button className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
-                    Play Free Version
+                    {t('nav.game')}
                   </button>
                 </div>
                 
@@ -97,12 +107,12 @@ export default function LivingArchivePage() {
                   <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-3xl">⭐</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-orange-800 mb-3">Premium Full Experience</h3>
+                  <h3 className="text-2xl font-bold text-orange-800 mb-3">{t('nav.game')}</h3>
                   <p className="text-gray-700 mb-6">
-                    Unlock the complete NAHIARA experience with premium features, exclusive content, and enhanced gameplay.
+                    {t('navDescriptions.archive')}
                   </p>
                   <button className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
-                    Upgrade to Premium
+                    {t('common.learnMore')}
                   </button>
                 </div>
               </div>
@@ -111,7 +121,7 @@ export default function LivingArchivePage() {
             {/* Features Section */}
             <section className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 lg:p-12 shadow-lg">
               <h2 className="text-3xl lg:text-4xl font-bold text-amber-800 mb-6">
-                What You&apos;ll Find Here
+                {t('nav.archive')}
               </h2>
               
               <div className="grid md:grid-cols-3 gap-6">
@@ -119,9 +129,9 @@ export default function LivingArchivePage() {
                   <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">🌺</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">National Flowers</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{t('nav.flowers')}</h3>
                   <p className="text-gray-600 text-sm">
-                    Discover the cultural significance and natural beauty of flowers from around the world
+                    {t('navDescriptions.flowers')}
                   </p>
                 </div>
                 
@@ -129,9 +139,9 @@ export default function LivingArchivePage() {
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">🦋</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Pollinators</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{t('nav.pollinators')}</h3>
                   <p className="text-gray-600 text-sm">
-                    Learn about the vital role of pollinators in maintaining biodiversity and ecosystem health
+                    {t('navDescriptions.pollinators')}
                   </p>
                 </div>
                 
@@ -139,9 +149,9 @@ export default function LivingArchivePage() {
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-violet-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl">🛡️</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">Guardians</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{t('nav.guardians')}</h3>
                   <p className="text-gray-600 text-sm">
-                    Explore the symbolic entities that protect and preserve our floral heritage
+                    {t('navDescriptions.guardians')}
                   </p>
                 </div>
               </div>
@@ -150,23 +160,24 @@ export default function LivingArchivePage() {
             {/* Call to Action Section */}
             <section className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-8 lg:p-12 text-center text-white">
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-                Begin Your NAHIARA Journey
+                {t('nav.archive')}
               </h2>
               <p className="text-xl mb-8 opacity-90">
-                Choose your path to explore the living archive of our floral world
+                {t('navDescriptions.archive')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-white text-amber-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                  Explore The Book
+                  {t('common.viewAll')}
                 </button>
                 <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-amber-600 transition-colors">
-                  Play The Game
+                  {t('nav.game')}
                 </button>
               </div>
             </section>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

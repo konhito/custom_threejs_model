@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getPetalPath } from "@/lib/gameData";
+import { useTranslation } from "@/lib/useTranslation";
 
 // SVG petal dimensions from the actual files (195.6 x 266.5)
 // The complete flower is a 3x2 grid = 586.8 x 533 total
@@ -13,6 +14,7 @@ export default function FlowerFormation({ country, onComplete }) {
   const [showFlower, setShowFlower] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [flowerSize, setFlowerSize] = useState({ width: 480, height: 435 });
+  const { t } = useTranslation();
 
   // Play sounds
   const playSound = (type) => {
@@ -239,8 +241,8 @@ export default function FlowerFormation({ country, onComplete }) {
 
           {/* Main message */}
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 mb-4 shadow-lg border border-purple-100">
-            <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-800 whitespace-nowrap">
-              🌸 Your flower has been restored and added to the garden 🌸
+            <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-800">
+              🌸 {t('game.flowerRestored')} 🌸
             </p>
           </div>
 
@@ -255,7 +257,7 @@ export default function FlowerFormation({ country, onComplete }) {
             {/* Button shine effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-60 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
             <span className="relative z-10 drop-shadow-sm">
-              Continue to next flower →
+              {t('game.continueToNext')} →
             </span>
           </button>
         </div>

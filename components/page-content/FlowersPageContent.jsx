@@ -1,4 +1,5 @@
 import Navigation from "../Navigation";
+import Footer from "../Footer";
 
 export default function FlowersPageContent({ content }) {
   const criteriaCards = [
@@ -122,6 +123,8 @@ export default function FlowersPageContent({ content }) {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

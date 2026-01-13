@@ -3,7 +3,8 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2, Flower, Bot, ArrowRight, Shield, X, Info, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { safeGetItem, safeSetItem } from "../../lib/storage";
+import { useTranslation } from "../../lib/useTranslation";
+import Footer from "../../components/Footer";
 
 // Global flag to prevent multiple 3D logo instances
 let logoInstanceCount = 0;
@@ -235,7 +236,7 @@ function Logo3D() {
 
 // Landing Content Component
 function LandingContent() {
-  const [language, setLanguage] = useState('en');
+  const { t, locale, isLoading } = useTranslation();
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -245,6 +246,13 @@ function LandingContent() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  // Contact info (static, not translated)
+  const contactInfo = {
+    email: "partnerships@asociacionnahiara.org",
+    phone: "+34 625 50 18 67",
+    location: "FLOR_∞ - 28.1235° N, 15.4363° W - Gran Canaria"
+  };
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -272,15 +280,15 @@ function LandingContent() {
     
     try {
       // Create mailto link with form data
-      const subject = encodeURIComponent(contactForm.subject || (language === 'en' ? 'Contact from International Association for the Defense of Flowers Website' : 'Contacto desde el sitio web de la Asociación Internacional para la Defensa de las Flores'));
+      const subject = encodeURIComponent(contactForm.subject || t('footer.contactSubject'));
       const body = encodeURIComponent(
-        `${language === 'en' ? 'Name' : 'Nombre'}: ${contactForm.name}\n` +
-        `${language === 'en' ? 'Email' : 'Correo'}: ${contactForm.email}\n\n` +
-        `${language === 'en' ? 'Message' : 'Mensaje'}: ${contactForm.message}`
+        `${t('landing.name')}: ${contactForm.name}\n` +
+        `${t('landing.email')}: ${contactForm.email}\n\n` +
+        `${t('landing.message')}: ${contactForm.message}`
       );
       
       // Open email client
-      window.location.href = `mailto:${currentContent.contact.email}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`;
       
       // Show success message
       setShowSuccessMessage(true);
@@ -298,162 +306,41 @@ function LandingContent() {
     }
   };
 
-  // Auto-detect language based on browser settings
-  useEffect(() => {
-    const detectLanguage = () => {
-      try {
-        // Get browser language
-        const browserLang = navigator.language || navigator.languages?.[0] || 'en';
-        
-        // Extract primary language code (e.g., 'es' from 'es-ES')
-        const primaryLang = browserLang.split('-')[0].toLowerCase();
-        
-        // Check if Spanish is detected
-        if (primaryLang === 'es') {
-          setLanguage('es');
-        } else {
-          // Default to English for all other languages
-          setLanguage('en');
-        }
-        
-        // Store language preference in localStorage (client-side only)
-        safeSetItem('nahiara_language', primaryLang === 'es' ? 'es' : 'en');
-      } catch (error) {
-        console.error('Language detection failed:', error);
-        // Fallback to English if detection fails
-        setLanguage('en');
-      }
-    };
-
-    // Check if language is already stored in localStorage (client-side only)
-    const storedLanguage = safeGetItem('nahiara_language');
-    if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'es')) {
-      setLanguage(storedLanguage);
-    } else {
-      // Auto-detect if no stored preference
-      detectLanguage();
-    }
-  }, []);
-
-  const content = {
-    en: {
-      hero: {
-        title: "International Association for the Defense of Flowers",
-        subtitle: "Proveneya & Nahiara",
-        tagline: "\"Where humanity blooms, nature is reborn.\" 🌸",
-        cta: "Contact us"
-      },
-      description: "A literary saga and transmedia ecosystem that unites 195 national flowers and their pollinators through innovative formats: an illustrated book, an engaging card game, a comprehensive 3D floral archive, and interactive robotic exhibitions.",
-      formats: {
-        title: "Our Formats",
-        book: {
-          title: "Nahiara & the Guardians of the Flowers",
-          description: "An illustrated literary journey through the world's most beautiful flowers"
-        },
-        game: {
-          title: "Illustrated Card Game",
-          description: "Interactive gameplay celebrating global floral diversity"
-        },
-        archive: {
-          title: "3D Floral Archive",
-          description: "National flowers in high-quality glTF/STL formats"
-        },
-        exhibition: {
-          title: "Robotic Pollinators & Exhibitions",
-          description: "Museographic experiences bringing flowers to life"
-        }
-      },
-      vision: {
-        title: "International Vision",
-        text: "Connecting cultures through the universal language of flowers, raising awareness about biodiversity, and fostering institutional and editorial collaborations worldwide."
-      },
-      contact: {
-        title: "Get in Touch",
-        email: "partnerships@asociacionnahiara.org",
-        phone: "+34 625 50 18 67",
-        location: "FLOR_∞ - 28.1235° N, 15.4363° W - Gran Canaria"
-      },
-      footer: {
-        copyright: "© 2025 International Association for the Defense of Flowers Proveneya & Nahiara",
-        association: "International Association for the defence of flowers Proveneya & Nahiara"
-      }
-    },
-    es: {
-      hero: {
-        title: "Asociación Internacional para la Defensa de las Flores",
-        subtitle: "Proveneya & Nahiara",
-        tagline: "\"Donde florece la humanidad, renace la naturaleza.\" 🌸",
-        cta: "Contáctanos"
-      },
-      description: "Una saga literaria y ecosistema transmedia que une 195 flores nacionales y sus polinizadores a través de formatos innovadores: un libro ilustrado, un juego de cartas envolvente, un archivo floral 3D integral y exposiciones robóticas interactivas.",
-      formats: {
-        title: "Nuestros Formatos",
-        book: {
-          title: "Nahiara y los Guardianes de las Flores",
-          description: "Un viaje literario ilustrado por las flores más hermosas del mundo"
-        },
-        game: {
-          title: "Juego de Cartas Ilustrado",
-          description: "Jugabilidad interactiva celebrando la diversidad floral global"
-        },
-        archive: {
-          title: "Archivo Floral 3D",
-          description: "Flores nacionales en formatos glTF/STL de alta calidad"
-        },
-        exhibition: {
-          title: "Polinizadores Robóticos y Exposiciones",
-          description: "Experiencias museográficas que dan vida a las flores"
-        }
-      },
-      vision: {
-        title: "Visión Internacional",
-        text: "Conectando culturas a través del lenguaje universal de las flores, creando conciencia sobre la biodiversidad y fomentando colaboraciones institucionales y editoriales en todo el mundo."
-      },
-      contact: {
-        title: "Ponte en Contacto",
-        email: "partnerships@asociacionnahiara.org",
-        phone: "+34 625 50 18 67",
-        location: "FLOR_∞ - 28.1235° N, 15.4363° W - Gran Canaria"
-      },
-      footer: {
-        copyright: "© 2025 Asociación Internacional para la Defensa de las Flores Proveneya & Nahiara",
-        association: "Asociación Internacional para la defensa de las flores Proveneya & Nahiara"
-      }
-    }
-  };
-
-  const currentContent = content[language];
+  // Show loading state while translations are loading
+  if (isLoading) {
+    return <LandingLoading />;
+  }
 
 
   const handlePressKitDownload = () => {
     // Create a simple press kit content
     const pressKitContent = `
-# International Association for the Defense of Flowers - Press Kit
-## Proveneya & Nahiara
+# ${t('landing.heroTitle')} - Press Kit
+## ${t('landing.heroSubtitle')}
 
 ### Project Overview
-${currentContent.description}
+${t('landing.description')}
 
 ### Formats
-- 📖 ${currentContent.formats.book.title}
-- 🃏 ${currentContent.formats.game.title}
-- 🌸 ${currentContent.formats.archive.title}
-- 🤖 ${currentContent.formats.exhibition.title}
+- 📖 ${t('landing.bookTitle')}
+- 🃏 ${t('landing.gameTitle')}
+- 🌸 ${t('landing.archiveTitle')}
+- 🤖 ${t('landing.exhibitionTitle')}
 
 ### Contact
-Email: ${currentContent.contact.email}
-WhatsApp: ${currentContent.contact.phone}
-Location: ${currentContent.contact.location}
+Email: ${contactInfo.email}
+WhatsApp: ${contactInfo.phone}
+Location: ${contactInfo.location}
 
 ### Vision
-${currentContent.vision.text}
+${t('landing.visionText')}
     `;
     
     const blob = new Blob([pressKitContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `AquaMundi_PressKit_${language.toUpperCase()}.txt`;
+    a.download = `AquaMundi_PressKit_${locale.toUpperCase()}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -472,37 +359,7 @@ ${currentContent.vision.text}
           <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-teal-200 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
         </div>
       </div>
-      {/* Language Toggle - Fixed Top Right */}
-      <div className="fixed top-6 right-6 z-50">
-        <div className="bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg border border-green-200">
-          <button
-            onClick={() => {
-              setLanguage('en');
-              safeSetItem('nahiara_language', 'en');
-            }}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              language === 'en' 
-                ? 'bg-green-500 text-white shadow-md' 
-                : 'text-gray-600 hover:text-green-500'
-            }`}
-          >
-            EN
-          </button>
-          <button
-            onClick={() => {
-              setLanguage('es');
-              safeSetItem('nahiara_language', 'es');
-            }}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              language === 'es' 
-                ? 'bg-green-500 text-white shadow-md' 
-                : 'text-gray-600 hover:text-green-500'
-            }`}
-          >
-            ES
-          </button>
-        </div>
-      </div>
+      {/* Language Toggle removed - now in footer */}
 
       {/* Header / Hero Section - Mobile First */}
       <section className="relative py-12 px-4 bg-gradient-to-br from-green-50 to-emerald-100">
@@ -515,13 +372,13 @@ ${currentContent.vision.text}
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight" style={{ fontFamily: 'Orbitron, sans-serif', letterSpacing: '0.02em' }}>
-              {currentContent.hero.title}
+              {t('landing.heroTitle')}
             </h1>
             <h2 className="text-lg sm:text-xl md:text-2xl text-green-700 mb-4 font-medium" style={{ fontFamily: 'Exo 2, sans-serif', letterSpacing: '0.05em' }}>
-              {currentContent.hero.subtitle}
+              {t('landing.heroSubtitle')}
             </h2>
             <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: 'Crimson Text, serif', fontWeight: '400', fontStyle: 'italic' }}>
-              {currentContent.hero.tagline}
+              {t('landing.heroTagline')}
             </p>
             
             {/* Mobile-First Buttons */}
@@ -533,14 +390,14 @@ ${currentContent.vision.text}
                 className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors duration-200 text-center"
                 style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em', fontWeight: '400' }}
               >
-                {language === 'en' ? 'Explore 3D Archive' : 'Explorar Archivo 3D'}
+                {t('landing.explore3DArchive')}
               </a>
               <button
                 onClick={() => setShowContactModal(true)}
                 className="px-6 py-3 border border-green-600 text-green-600 font-medium rounded-lg hover:bg-green-50 transition-colors duration-200"
                 style={{ fontFamily: 'Comfortaa, cursive', letterSpacing: '0.02em', fontWeight: '500' }}
               >
-                {currentContent.hero.cta}
+                {t('landing.contactUs')}
               </button>
             </div>
           </div>
@@ -552,27 +409,24 @@ ${currentContent.vision.text}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em' }}>
-              {language === 'en' ? 'The Story Behind the Book' : 'La Historia Detrás del Libro'}
+              {t('landing.storyBehindBook')}
             </h2>
             <div className="w-16 h-1 bg-green-500 mx-auto"></div>
           </div>
           <div className="bg-green-50 rounded-xl p-4 sm:p-6 border border-green-200">
             <p className="text-base sm:text-lg text-gray-700 leading-relaxed text-center max-w-3xl mx-auto mb-4" style={{ fontFamily: 'Rubik, sans-serif', lineHeight: '1.7' }}>
-              {language === 'en' 
-                ? 'Nahiara & the Guardians of the Flowers is more than just a book—it\'s a gateway to a magical world where every national flower tells a story. Through this interactive digital experience, you can explore the 195 flowers that inspired the tale and discover the real-world connections between cultures, nature, and conservation.'
-                : 'Nahiara y los Guardianes de las Flores es más que un libro—es una puerta de entrada a un mundo mágico donde cada flor nacional cuenta una historia. A través de esta experiencia digital interactiva, puedes explorar las 195 flores que inspiraron el cuento y descubrir las conexiones del mundo real entre culturas, naturaleza y conservación.'
-              }
+              {t('landing.storyText')}
             </p>
             <div className="text-center">
               <div className="flex flex-wrap justify-center gap-2">
                 <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium" style={{ fontFamily: 'Fredoka One, cursive', fontWeight: '400' }}>
-                  {language === 'en' ? '📚 Literary Saga' : '📚 Saga Literaria'}
+                  {t('landing.literarySaga')}
                 </span>
                 <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium" style={{ fontFamily: 'Fredoka One, cursive', fontWeight: '400' }}>
-                  {language === 'en' ? '🌍 Global Impact' : '🌍 Impacto Global'}
+                  {t('landing.globalImpact')}
                 </span>
                 <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium" style={{ fontFamily: 'Fredoka One, cursive', fontWeight: '400' }}>
-                  {language === 'en' ? '🌸 195 Flowers' : '🌸 195 Flores'}
+                  {t('landing.flowers195')}
                 </span>
               </div>
             </div>
@@ -585,14 +439,11 @@ ${currentContent.vision.text}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em' }}>
-              {language === 'en' ? 'Continue Your Journey' : 'Continúa Tu Viaje'}
+              {t('landing.continueJourney')}
             </h2>
             <div className="w-16 h-1 bg-green-500 mx-auto"></div>
             <p className="text-base sm:text-lg text-gray-600 mt-4 max-w-2xl mx-auto" style={{ fontFamily: 'Karla, sans-serif' }}>
-              {language === 'en' 
-                ? 'The book is just the beginning. Explore the complete digital ecosystem of Nahiara\'s world.'
-                : 'El libro es solo el comienzo. Explora el ecosistema digital completo del mundo de Nahiara.'
-              }
+              {t('landing.journeyText')}
             </p>
           </div>
           
@@ -605,13 +456,10 @@ ${currentContent.vision.text}
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Archivo, sans-serif', letterSpacing: '0.02em' }}>
-                    {language === 'en' ? 'Interactive 3D Archive' : 'Archivo 3D Interactivo'}
+                    {t('landing.interactive3DArchive')}
                   </h3>
                   <p className="text-sm text-gray-600 leading-relaxed mb-4" style={{ fontFamily: 'Manrope, sans-serif', lineHeight: '1.6' }}>
-                    {language === 'en' 
-                      ? 'Explore all 195 national flowers in stunning 3D detail. Click on any flower to learn about its cultural significance, conservation status, and role in Nahiara\'s story.'
-                      : 'Explora las 195 flores nacionales en detalle 3D impresionante. Haz clic en cualquier flor para aprender sobre su significado cultural, estado de conservación y papel en la historia de Nahiara.'
-                    }
+                    {t('landing.archiveDesc2')}
                   </p>
                   <a
                     href="https://www.aquamundi.org/"
@@ -620,7 +468,7 @@ ${currentContent.vision.text}
                     className="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors duration-200"
                     style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.05em', fontWeight: '400' }}
                   >
-                    {language === 'en' ? 'Start Exploring' : 'Comenzar a Explorar'}
+                    {t('landing.startExploring')}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </a>
                 </div>
@@ -635,20 +483,17 @@ ${currentContent.vision.text}
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Archivo, sans-serif', letterSpacing: '0.02em' }}>
-                    {language === 'en' ? 'The Complete Saga' : 'La Saga Completa'}
+                    {t('landing.completeSaga')}
                   </h3>
                   <p className="text-sm text-gray-600 leading-relaxed mb-4" style={{ fontFamily: 'Manrope, sans-serif', lineHeight: '1.6' }}>
-                    {language === 'en' 
-                      ? 'Discover the full literary universe including the illustrated card game, robotic exhibitions, and educational resources that bring Nahiara\'s world to life.'
-                      : 'Descubre el universo literario completo incluyendo el juego de cartas ilustrado, exhibiciones robóticas y recursos educativos que dan vida al mundo de Nahiara.'
-                    }
+                    {t('landing.sagaDesc')}
                   </p>
                   <button
                     onClick={() => setShowContactModal(true)}
                     className="inline-flex items-center px-4 py-2 border border-blue-600 text-blue-600 text-sm font-medium rounded-lg hover:bg-blue-50 transition-colors duration-200"
                     style={{ fontFamily: 'Comfortaa, cursive', letterSpacing: '0.02em', fontWeight: '500' }}
                   >
-                    {language === 'en' ? 'Learn More' : 'Saber Más'}
+                    {t('landing.learnMore')}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </button>
                 </div>
@@ -663,26 +508,23 @@ ${currentContent.vision.text}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-              {language === 'en' ? 'Join the Global Community' : 'Únete a la Comunidad Global'}
+              {t('landing.joinGlobalCommunity')}
             </h2>
             <div className="w-24 h-1 bg-green-500 mx-auto"></div>
           </div>
           <div className="bg-green-50 rounded-2xl p-8 border border-green-200">
             <p className="text-lg text-gray-700 leading-relaxed text-center max-w-3xl mx-auto mb-6" style={{ fontFamily: 'Source Sans Pro, sans-serif', lineHeight: '1.7' }}>
-              {language === 'en' 
-                ? 'You\'re now part of a growing community of readers, educators, and conservationists who believe in the power of storytelling to connect cultures and protect biodiversity. Share your experience, connect with other flower guardians, and help us spread Nahiara\'s message around the world.'
-                : 'Ahora eres parte de una comunidad creciente de lectores, educadores y conservacionistas que creen en el poder de la narración para conectar culturas y proteger la biodiversidad. Comparte tu experiencia, conéctate con otros guardianes de flores y ayúdanos a difundir el mensaje de Nahiara por todo el mundo.'
-              }
+              {t('landing.communityText')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                🌍 {language === 'en' ? 'Global Community' : 'Comunidad Global'}
+                {t('landing.globalCommunity')}
               </span>
               <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                📚 {language === 'en' ? 'Educational Impact' : 'Impacto Educativo'}
+                {t('landing.educationalImpact')}
               </span>
               <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                🌸 {language === 'en' ? 'Conservation Focus' : 'Enfoque en Conservación'}
+                {t('landing.conservationFocus')}
               </span>
             </div>
           </div>
@@ -693,14 +535,11 @@ ${currentContent.vision.text}
       <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-            {language === 'en' ? 'Share Your Experience' : 'Comparte Tu Experiencia'}
+            {t('landing.shareExperience')}
           </h2>
           <div className="w-24 h-1 bg-green-500 mx-auto mb-8"></div>
           <p className="text-lg text-gray-700 mb-8 leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: 'Source Sans Pro, sans-serif', lineHeight: '1.7' }}>
-            {language === 'en' 
-              ? 'Help us spread Nahiara\'s message! Share your thoughts about the book, tag us in your posts, and connect with other readers around the world.'
-              : '¡Ayúdanos a difundir el mensaje de Nahiara! Comparte tus pensamientos sobre el libro, etiquétanos en tus publicaciones y conéctate con otros lectores alrededor del mundo.'
-            }
+            {t('landing.shareText')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -709,7 +548,7 @@ ${currentContent.vision.text}
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <MessageCircle className="mr-2 w-5 h-5" />
-              {language === 'en' ? 'Get in Touch' : 'Ponte en Contacto'}
+              {t('landing.getInTouch')}
             </button>
             <button
               onClick={handlePressKitDownload}
@@ -717,7 +556,7 @@ ${currentContent.vision.text}
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               <Download className="mr-2 w-5 h-5" />
-              {language === 'en' ? 'Download Resources' : 'Descargar Recursos'}
+              {t('landing.downloadResources')}
             </button>
           </div>
         </div>
@@ -728,7 +567,7 @@ ${currentContent.vision.text}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-              {currentContent.contact.title}
+              {t('landing.getInTouch')}
             </h2>
             <div className="w-24 h-1 bg-green-500 mx-auto"></div>
           </div>
@@ -738,11 +577,11 @@ ${currentContent.vision.text}
               <Mail className="w-8 h-8 mx-auto mb-4 text-gray-600" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Email</h3>
               <a 
-                href={`mailto:${currentContent.contact.email}`}
+                href={`mailto:${contactInfo.email}`}
                 className="text-gray-600 hover:text-gray-800 transition-colors text-sm notranslate"
                 translate="no"
               >
-                {currentContent.contact.email}
+                {contactInfo.email}
               </a>
             </div>
             
@@ -752,13 +591,13 @@ ${currentContent.vision.text}
               </svg>
               <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>WhatsApp</h3>
               <a 
-                href={`https://wa.me/${currentContent.contact.phone.replace(/\s+/g, '')}`}
+                href={`https://wa.me/${contactInfo.phone.replace(/\s+/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-green-600 transition-colors text-sm flex items-center justify-center gap-1 notranslate"
                 translate="no"
               >
-                {currentContent.contact.phone}
+                {contactInfo.phone}
               </a>
             </div>
             
@@ -766,28 +605,15 @@ ${currentContent.vision.text}
               <MapPin className="w-8 h-8 mx-auto mb-4 text-gray-600" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Location</h3>
               <p className="text-gray-600 text-sm">
-                {currentContent.contact.location}
+                {contactInfo.location}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 py-12 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="w-16 h-16 mx-auto mb-6">
-            <Image 
-              src="/NahiaraLogo.png" 
-              alt="International Association for the Defense of Flowers Proveneya & Nahiara Logo" 
-              width={64}
-              height={64}
-              className="w-16 h-16 object-contain"
-            />
-          </div>
-          <p className="text-gray-300 text-sm" style={{ fontFamily: 'Source Sans Pro, sans-serif' }}>{currentContent.footer.copyright}</p>
-        </div>
-      </footer>
+      {/* Footer - includes language switcher */}
+      <Footer />
 
       {/* Contact Modal */}
       {showContactModal && (
@@ -803,7 +629,7 @@ ${currentContent.vision.text}
             {/* Modal Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <h3 className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-                {language === 'en' ? 'Get in Touch' : 'Ponte en Contacto'}
+                {t('landing.getInTouch')}
               </h3>
               <button
                 onClick={() => setShowContactModal(false)}
@@ -816,22 +642,19 @@ ${currentContent.vision.text}
             {/* Modal Content */}
             <div className="p-6">
               <p className="text-gray-600 mb-6 text-center">
-                {language === 'en' 
-                  ? 'We\'d love to hear from you! Choose how you\'d like to get in touch:'
-                  : '¡Nos encantaría saber de ti! Elige cómo te gustaría ponerte en contacto:'
-                }
+                {t('landing.responseTime')}
               </p>
 
               {/* Contact Form */}
               <form onSubmit={handleContactSubmit} className="mb-6 p-4 bg-gray-50 rounded-lg">
                 <h4 className="font-semibold text-gray-900 mb-4 text-center">
-                  {language === 'en' ? 'Send us a message' : 'Envíanos un mensaje'}
+                  {t('landing.sendMessage')}
                 </h4>
                 
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Name' : 'Nombre'} *
+                      {t('landing.name')} *
                     </label>
                     <input
                       type="text"
@@ -840,13 +663,13 @@ ${currentContent.vision.text}
                       value={contactForm.name}
                       onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder={language === 'en' ? 'Your name' : 'Tu nombre'}
+                      placeholder={t('landing.yourName')}
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Email' : 'Correo'} *
+                      {t('landing.email')} *
                     </label>
                     <input
                       type="email"
@@ -855,13 +678,13 @@ ${currentContent.vision.text}
                       value={contactForm.email}
                       onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder={language === 'en' ? 'your@email.com' : 'tu@correo.com'}
+                      placeholder={t('landing.yourEmail')}
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Subject' : 'Asunto'}
+                      {t('landing.subject')}
                     </label>
                     <input
                       type="text"
@@ -869,13 +692,13 @@ ${currentContent.vision.text}
                       value={contactForm.subject}
                       onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder={language === 'en' ? 'What is this about?' : '¿De qué se trata?'}
+                      placeholder={t('landing.whatIsThisAbout')}
                     />
                   </div>
                   
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Message' : 'Mensaje'} *
+                      {t('landing.message')} *
                     </label>
                     <textarea
                       id="message"
@@ -884,7 +707,7 @@ ${currentContent.vision.text}
                       value={contactForm.message}
                       onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                      placeholder={language === 'en' ? 'Tell us about your interest in the Association...' : 'Cuéntanos sobre tu interés en la Asociación...'}
+                      placeholder={t('landing.tellUsAbout')}
                     />
                   </div>
                   
@@ -894,8 +717,8 @@ ${currentContent.vision.text}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting 
-                      ? (language === 'en' ? 'Opening email...' : 'Abriendo correo...')
-                      : (language === 'en' ? 'Send Message' : 'Enviar Mensaje')
+                      ? t('landing.openingEmail')
+                      : t('landing.sendMessageBtn')
                     }
                   </button>
                 </div>
@@ -908,7 +731,7 @@ ${currentContent.vision.text}
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="px-2 bg-white text-gray-500">
-                    {language === 'en' ? 'OR' : 'O'}
+                    {t('landing.or')}
                   </span>
                 </div>
               </div>
@@ -917,21 +740,21 @@ ${currentContent.vision.text}
               <div className="space-y-4">
                 {/* Email Option */}
                 <a
-                  href={`mailto:${currentContent.contact.email}?subject=${encodeURIComponent(language === 'en' ? 'Contact from International Association for the Defense of Flowers Website' : 'Contacto desde el sitio web de la Asociación Internacional para la Defensa de las Flores')}&body=${encodeURIComponent(language === 'en' ? 'Hello,\n\nI\'m interested in learning more about the Association and the Nahiara project.\n\nBest regards,' : 'Hola,\n\nEstoy interesado en conocer más sobre la Asociación y el proyecto Nahiara.\n\nSaludos cordiales,')}`}
+                  href={`mailto:${contactInfo.email}?subject=${encodeURIComponent(t('footer.contactSubject'))}`}
                   className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
                 >
                   <Mail className="w-6 h-6 text-green-600 mr-4" />
                   <div>
                     <h4 className="font-semibold text-gray-900">
-                      {language === 'en' ? 'Send Email' : 'Enviar Correo'}
+                      {t('landing.sendEmail')}
                     </h4>
-                    <p className="text-sm text-gray-600 notranslate" translate="no">{currentContent.contact.email}</p>
+                    <p className="text-sm text-gray-600 notranslate" translate="no">{contactInfo.email}</p>
                   </div>
                 </a>
 
                 {/* WhatsApp Option */}
                 <a
-                  href={`https://wa.me/${currentContent.contact.phone.replace(/\s+/g, '')}`}
+                  href={`https://wa.me/${contactInfo.phone.replace(/\s+/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center p-4 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
@@ -941,21 +764,11 @@ ${currentContent.vision.text}
                   </svg>
                   <div>
                     <h4 className="font-semibold text-gray-900">
-                      {language === 'en' ? 'WhatsApp' : 'WhatsApp'}
+                      {t('landing.whatsapp')}
                     </h4>
-                    <p className="text-sm text-gray-600 notranslate" translate="no">{currentContent.contact.phone}</p>
+                    <p className="text-sm text-gray-600 notranslate" translate="no">{contactInfo.phone}</p>
                   </div>
                 </a>
-              </div>
-
-              {/* Additional Info */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600 text-center">
-                  {language === 'en' 
-                    ? 'We typically respond within 24 hours. Thank you for your interest in International Association for the Defense of Flowers!'
-                    : 'Normalmente respondemos en 24 horas. ¡Gracias por tu interés en la Asociación Internacional para la Defensa de las Flores!'
-                  }
-                </p>
               </div>
             </div>
           </div>
@@ -972,13 +785,10 @@ ${currentContent.vision.text}
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {language === 'en' ? 'Email Opened!' : '¡Correo Abierto!'}
+              {t('landing.emailOpened')}
             </h3>
             <p className="text-gray-600 text-sm">
-              {language === 'en' 
-                ? 'Your email client should now be open with a pre-filled message. Just hit send!'
-                : 'Tu cliente de correo debería estar abierto con un mensaje pre-llenado. ¡Solo presiona enviar!'
-              }
+              {t('landing.emailOpenedText')}
             </p>
           </div>
         </div>
@@ -998,6 +808,27 @@ function LandingLoading() {
           Loading...
         </h2>
         <p className="text-gray-600">Please wait while we prepare your experience.</p>
+      </div>
+    </div>
+  );
+}
+
+// Loading with locale placeholder to avoid hydration mismatch
+function TranslatedLandingLoading() {
+  const { t, isLoading } = useTranslation();
+  
+  if (isLoading) {
+    return <LandingLoading />;
+  }
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+          {t('landing.loading')}
+        </h2>
+        <p className="text-gray-600">{t('landing.pleaseWait')}</p>
       </div>
     </div>
   );

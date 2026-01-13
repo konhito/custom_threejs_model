@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Card from "./Card";
 import { minionTypes, guardianTypes, getPetalPath } from "@/lib/gameData";
+import { useTranslation } from "@/lib/useTranslation";
 
 // Grid layout: exactly 8 cards (6 petals, 1 minion, 1 guardian)
 const CARD_COUNT = 8; // Total cards in deck
@@ -71,6 +72,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [collectedPetals, setCollectedPetals] = useState([]); // Track which petal cards were collected
   const [lastRevealedCard, setLastRevealedCard] = useState(null); // Track last revealed card for display
+  const { t } = useTranslation();
 
   // Initialize deck
   useEffect(() => {
@@ -509,7 +511,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4" onClick={() => setShowHowToPlay(false)}>
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">How to Play</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{t('game.howToPlay')}</h2>
               <button
                 onClick={() => setShowHowToPlay(false)}
                 className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 text-xl font-bold transition-colors"
@@ -521,75 +523,60 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
               {/* Objective */}
               <div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl"></span> Objective
+                  <span className="text-2xl">🎯</span> {t('game.objective')}
                 </h3>
                 <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                  Collect all 6 petals to restore the national flower! Click on cards to reveal them and build your collection.
+                  {t('game.collectAllPetals')}
                 </p>
               </div>
 
               {/* Card Types */}
               <div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🃏</span> Card Types
+                  <span className="text-2xl">🃏</span> {t('game.cards')}
                 </h3>
                 <div className="space-y-4">
                   <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-2xl">🌸</span>
-                      <h4 className="font-bold text-purple-900 text-lg">Petal Cards</h4>
+                      <h4 className="font-bold text-purple-900 text-lg">{t('game.petalCards')}</h4>
                     </div>
                     <p className="text-purple-800 text-sm md:text-base">
-                      Collect these to progress! You need all 6 petals to complete the flower.
+                      {t('game.petalCardsDesc')}
                     </p>
                   </div>
 
                   <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-2xl">👹</span>
-                      <h4 className="font-bold text-red-900 text-lg">Minion Cards</h4>
+                      <h4 className="font-bold text-red-900 text-lg">{t('game.minionCards')}</h4>
                     </div>
                     <p className="text-red-800 text-sm md:text-base">
-                      These are dangerous! If you reveal a minion without protection, you'll lose all collected petals and must start over.
+                      {t('game.minionCardsDesc')}
                     </p>
                   </div>
 
                   <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-2xl">🛡️</span>
-                      <h4 className="font-bold text-green-900 text-lg">Guardian Cards (Power Cards)</h4>
+                      <h4 className="font-bold text-green-900 text-lg">{t('game.guardianCards')}</h4>
                     </div>
                     <p className="text-green-800 text-sm md:text-base">
-                      Activate protection! When you reveal a guardian, it protects you from the next minion. The guardian's name and power will appear under the card.
+                      {t('game.guardianCardsDesc')}
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Gameplay */}
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🎮</span> Gameplay
-                </h3>
-                <ol className="list-decimal list-inside space-y-2 text-gray-700 text-base md:text-lg">
-                  <li>Click on any face-down card to reveal it</li>
-                  <li>Collect petal cards to progress toward your goal</li>
-                  <li>Use guardian cards to protect yourself from minions</li>
-                  <li>If a minion appears without protection, you lose all progress</li>
-                  <li>Collect all 6 petals to restore the flower!</li>
-                </ol>
-              </div>
-
               {/* Tips */}
               <div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">💡</span> Tips
+                  <span className="text-2xl">💡</span> {t('game.tips')}
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
-                  <li>There's only 1 guardian and 1 minion in the deck - strategy matters!</li>
-                  <li>The guardian protects you from the minion - find the guardian before the minion appears</li>
-                  <li>Watch for the guardian status indicator at the top when protection is active</li>
-                  <li>Plan your strategy carefully - with only 8 cards, every choice counts!</li>
+                  <li>{t('game.tip1')}</li>
+                  <li>{t('game.tip2')}</li>
+                  <li>{t('game.tip3')}</li>
                 </ul>
               </div>
             </div>

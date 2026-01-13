@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import PageLoader from "../components/PageLoader";
 import GlobeLoader from "../components/GlobeLoader";
 import { MusicToggleButton } from "../components/MusicToggleButton";
+import { useTranslation } from "../lib/useTranslation";
 
 // Lazy load Globe component
 const Globe = dynamic(() => import("../components/Globe"), {
@@ -22,6 +23,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
+  const { t, isLoading: isTranslationLoading } = useTranslation();
 
   useEffect(() => {
     // Only redirect if we're on the asociacionnahiara.org domain
@@ -266,7 +268,7 @@ export default function Home() {
         {/* Curved Loop Section - Below Globe */}
         <div className="relative w-full bg-transparent py-4 md:py-8">
           <CurvedLoop 
-            marqueeText="Explore ✦ Nations ✦ Through ✦ Blooming ✦ Stories ✦ AquaMundi ✦"
+            marqueeText={t('home.marqueeText')}
             speed={2}
             curveAmount={220}
             direction="left"

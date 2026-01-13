@@ -21,70 +21,72 @@ import {
   FaChevronRight
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
+import { useTranslation } from "../lib/useTranslation";
 
-const BASE_NAV_ITEMS = [
+// Navigation items with translation keys
+const getNavItems = (t) => [
   {
-    name: "Home",
+    name: t('nav.home'),
     path: "/",
     icon: FaHome,
-    description: "Return to the main globe view"
+    description: t('navDescriptions.home')
   },
   {
-    name: "What is AquaMundi?",
+    name: t('nav.about'),
     path: "/about",
     icon: FaInfoCircle,
-    description: "Mission and purpose"
+    description: t('navDescriptions.about')
   },
   {
-    name: "National Flowers",
+    name: t('nav.flowers'),
     path: "/flowers",
     icon: FaSeedling,
-    description: "Selection criteria and explanation"
+    description: t('navDescriptions.flowers')
   },
   {
-    name: "Pollinators",
+    name: t('nav.pollinators'),
     path: "/pollinators",
     icon: FaBug,
-    description: "Introduction and gallery",
+    description: t('navDescriptions.pollinators'),
     subItems: [
-      { name: "Gallery", path: "/pollinators/gallery", description: "Explore pollinator species" }
+      { name: t('nav.gallery'), path: "/pollinators/gallery", description: t('navDescriptions.pollinators') }
     ]
   },
   {
-    name: "Guardians",
+    name: t('nav.guardians'),
     path: "/guardians",
     icon: FaShieldAlt,
-    description: "Symbolic presentation"
+    description: t('navDescriptions.guardians')
   },
   {
-    name: "Education & Community",
+    name: t('nav.education'),
     path: "/education",
     icon: FaGraduationCap,
-    description: "Learning resources and community"
+    description: t('navDescriptions.education')
   },
   {
-    name: "Impact & Transparency",
+    name: t('nav.impact'),
     path: "/impact",
     icon: FaChartLine,
-    description: "Our impact and transparency"
+    description: t('navDescriptions.impact')
   },
   {
-    name: "The Living Archive",
+    name: t('nav.archive'),
     path: "/living-archive",
     icon: FaArchive,
-    description: "Core content of the NAHIARA universe"
+    description: t('navDescriptions.archive')
   },
   {
-    name: "Araihan Measure",
+    name: t('nav.araihan'),
     path: "/araihan-measure",
     icon: FaBullseye,
-    description: "Araihan Measure initiative"
+    description: t('navDescriptions.araihan')
   },
   {
-    name: "Professionals",
+    name: t('nav.professionals'),
     path: "/professionals",
     icon: FaUsers,
-    description: "Exclusive access for industry professionals"
+    description: t('navDescriptions.professionals')
   }
 ];
 
@@ -93,6 +95,10 @@ export default function MobileSidebar() {
   const [cartCount, setCartCount] = useState(0);
   const [pathname, setPathname] = useState("/");
   const [expandedItem, setExpandedItem] = useState(null);
+  const { t } = useTranslation();
+
+  // Get navigation items with translations
+  const BASE_NAV_ITEMS = getNavItems(t);
 
   useEffect(() => {
     setPathname(window.location.pathname);
@@ -280,7 +286,7 @@ export default function MobileSidebar() {
                 >
                   <div className="flex items-center gap-3">
                     <FaBook className="w-5 h-5" />
-                    <span className="font-medium">View Books</span>
+                    <span className="font-medium">{t('nav.shop')}</span>
                   </div>
                   {cartCount > 0 && (
                     <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold">

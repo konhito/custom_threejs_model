@@ -1,5 +1,6 @@
 "use client";
 import Navigation from "../../../components/Navigation";
+import Footer from "../../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D } from "lucide-react";
@@ -412,6 +413,8 @@ export default function PollinatorsGalleryPage() {
           onClose={() => setSelected3DModel(null)}
         />
       )}
+      
+      <Footer />
     </div>
   );
 }

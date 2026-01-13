@@ -17,99 +17,100 @@ import {
   Lightbulb,
   TreePine
 } from "lucide-react";
+import { useTranslation } from "../../lib/useTranslation";
 
-// Team member data
-const teamMembers = [
+// Team member data with translation keys
+const getTeamMembers = (t) => [
   {
-    name: "Founder & Visionary",
-    role: "Creative Director",
-    description: "Dedicated to preserving Earth's floral heritage through art and technology.",
+    name: t('about.founderRole'),
+    role: t('about.creativeDirector'),
+    description: t('about.founderDesc'),
     icon: Flower2,
     gradient: "from-rose-400 to-pink-500",
   },
   {
-    name: "Environmental Lead",
-    role: "Conservation Specialist",
-    description: "Bridging scientific research with community engagement for biodiversity.",
+    name: t('about.environmentalLead'),
+    role: t('about.conservationSpecialist'),
+    description: t('about.environmentalDesc'),
     icon: Leaf,
     gradient: "from-emerald-400 to-teal-500",
   },
   {
-    name: "Education Director",
-    role: "Learning Experience Designer",
-    description: "Creating immersive educational journeys through the world of pollinators.",
+    name: t('about.educationDirector'),
+    role: t('about.learningDesigner'),
+    description: t('about.educationDesc'),
     icon: BookOpen,
     gradient: "from-blue-400 to-indigo-500",
   },
   {
-    name: "Community Manager",
-    role: "Global Outreach Coordinator",
-    description: "Connecting guardians worldwide in our shared mission to protect nature.",
+    name: t('about.communityManager'),
+    role: t('about.outreachCoordinator'),
+    description: t('about.communityDesc'),
     icon: Users,
     gradient: "from-violet-400 to-purple-500",
   },
 ];
 
-// Core values data
-const coreValues = [
+// Core values data with translation keys
+const getCoreValues = (t) => [
   {
     icon: Heart,
-    title: "Passion for Nature",
-    description: "Every flower tells a story, every pollinator carries hope for our planet's future.",
+    title: t('about.passionForNature'),
+    description: t('about.passionDesc'),
     color: "text-rose-500",
     bgColor: "bg-rose-50",
     borderColor: "border-rose-200",
   },
   {
     icon: Globe2,
-    title: "Global Unity",
-    description: "Connecting communities across continents through the universal language of flowers.",
+    title: t('about.globalUnity'),
+    description: t('about.globalUnityDesc'),
     color: "text-blue-500",
     bgColor: "bg-blue-50",
     borderColor: "border-blue-200",
   },
   {
     icon: Lightbulb,
-    title: "Innovation",
-    description: "Merging technology with tradition to create new pathways for environmental awareness.",
+    title: t('about.innovation'),
+    description: t('about.innovationDesc'),
     color: "text-amber-500",
     bgColor: "bg-amber-50",
     borderColor: "border-amber-200",
   },
   {
     icon: Shield,
-    title: "Preservation",
-    description: "Safeguarding biodiversity through education, art, and community action.",
+    title: t('about.preservation'),
+    description: t('about.preservationDesc'),
     color: "text-emerald-500",
     bgColor: "bg-emerald-50",
     borderColor: "border-emerald-200",
   },
 ];
 
-// Timeline milestones
-const milestones = [
+// Timeline milestones with translation keys
+const getMilestones = (t) => [
   {
-    year: "Origin",
-    title: "A Dream Takes Root",
-    description: "The vision of creating a digital sanctuary for flowers and pollinators begins.",
+    year: t('about.origin'),
+    title: t('about.originTitle'),
+    description: t('about.originDesc'),
     icon: Sparkles,
   },
   {
-    year: "Growth",
-    title: "Building the Archive",
-    description: "Documenting national flowers and pollinators from countries around the world.",
+    year: t('about.growth'),
+    title: t('about.growthTitle'),
+    description: t('about.growthDesc'),
     icon: TreePine,
   },
   {
-    year: "Bloom",
-    title: "Community Flourishes",
-    description: "Guardians join from every continent, united in protecting biodiversity.",
+    year: t('about.bloom'),
+    title: t('about.bloomTitle'),
+    description: t('about.bloomDesc'),
     icon: Flower2,
   },
   {
-    year: "Future",
-    title: "Expanding Horizons",
-    description: "New educational tools, games, and immersive experiences on the horizon.",
+    year: t('about.future'),
+    title: t('about.futureTitle'),
+    description: t('about.futureDesc'),
     icon: Globe2,
   },
 ];
@@ -177,6 +178,21 @@ const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
 };
 
 export default function AboutPage() {
+  const { t, isLoading } = useTranslation();
+  
+  // Get translated data
+  const teamMembers = getTeamMembers(t);
+  const coreValues = getCoreValues(t);
+  const milestones = getMilestones(t);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
       {/* Aurora-inspired background */}
@@ -245,11 +261,7 @@ export default function AboutPage() {
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                The Digital Garden Where
-                <br />
-                <span className="text-gray-900">
-                  Nature Meets Technology
-                </span>
+                {t('about.heroTitle')}
               </h1>
 
               {/* Separator */}
@@ -259,7 +271,7 @@ export default function AboutPage() {
                 className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed italic"
                 style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
               >
-                Where nations bloom and stories unfold, preserving Earth&apos;s floral heritage for generations to come.
+                {t('about.heroSubtitle')}
               </p>
             </motion.div>
           </div>
@@ -286,19 +298,15 @@ export default function AboutPage() {
                       className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6"
                       style={{ fontFamily: '"Cormorant Garamond", serif' }}
                     >
-                      Our Mission
+                      {t('about.missionTitle')}
                     </h2>
                     
                     <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                      We connect communities, institutions, and individuals through the 
-                      <span className="font-semibold text-blue-600"> beauty and knowledge </span> 
-                      of flowers and pollinators, inspiring environmental awareness and fostering 
-                      international cooperation to protect our natural heritage.
+                      {t('about.missionText')}
                     </p>
                     
                     <p className="text-gray-600 leading-relaxed">
-                      Our association serves as the digital garden of the planet, where every bloom 
-                      becomes an ambassador of Earth&apos;s biological and cultural diversity.
+                      {t('about.missionText2')}
                     </p>
                     
                     {/* Decorative corner element */}
@@ -326,20 +334,15 @@ export default function AboutPage() {
                       className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6"
                       style={{ fontFamily: '"Cormorant Garamond", serif' }}
                     >
-                      Our Vision
+                      {t('about.visionTitle')}
                     </h2>
                     
                     <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                      We envision a world where 
-                      <span className="font-semibold text-purple-600"> science, art, and education </span> 
-                      converge in one digital space, preserving the floral and pollinator memory of 
-                      all nations for future generations.
+                      {t('about.visionText')}
                     </p>
                     
                     <p className="text-gray-600 leading-relaxed">
-                      AquaMundi is not just a website—it&apos;s a living mantle that unites science, 
-                      culture, and hope, where each flower and pollinator remind us that the Earth 
-                      blossoms in diversity.
+                      {t('about.visionText2')}
                     </p>
                     
                     {/* Decorative corner element */}
@@ -367,12 +370,11 @@ export default function AboutPage() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                Our Purpose
+                {t('about.purposeTitle')}
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mb-6" />
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Cultivating a global community dedicated to biodiversity preservation through 
-                innovation and connection.
+                {t('about.purposeSubtitle')}
               </p>
             </motion.div>
 
@@ -381,29 +383,29 @@ export default function AboutPage() {
               {[
                 {
                   icon: Globe2,
-                  title: "Universal Archive",
-                  description: "Building a comprehensive floral and pollinator archive accessible to everyone, documenting the botanical treasures of every nation.",
+                  title: t('about.universalArchive'),
+                  description: t('about.universalArchiveDesc'),
                   gradient: "from-blue-500 to-cyan-500",
                   delay: 0,
                 },
                 {
                   icon: BookOpen,
-                  title: "Environmental Education",
-                  description: "Sharing knowledge through digital tools, artistic expressions, and immersive learning experiences that inspire action.",
+                  title: t('about.environmentalEducation'),
+                  description: t('about.environmentalEducationDesc'),
                   gradient: "from-emerald-500 to-teal-500",
                   delay: 0.1,
                 },
                 {
                   icon: Users,
-                  title: "Global Community",
-                  description: "Creating a worldwide network of guardians united in their commitment to protecting biodiversity and natural heritage.",
+                  title: t('about.globalCommunity'),
+                  description: t('about.globalCommunityDesc'),
                   gradient: "from-purple-500 to-pink-500",
                   delay: 0.2,
                 },
                 {
                   icon: Heart,
-                  title: "Positive Impact",
-                  description: "Supporting transparency and meaningful change, with special focus on helping vulnerable communities connect with nature.",
+                  title: t('about.positiveImpact'),
+                  description: t('about.positiveImpactDesc'),
                   gradient: "from-rose-500 to-orange-500",
                   delay: 0.3,
                 },
@@ -458,11 +460,11 @@ export default function AboutPage() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                Our Core Values
+                {t('about.coreValuesTitle')}
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-purple-400 to-pink-400 mx-auto mb-6" />
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                The principles that guide every seed we plant in our digital garden.
+                {t('about.coreValuesSubtitle')}
               </p>
             </motion.div>
 
@@ -514,11 +516,11 @@ export default function AboutPage() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                Our Journey
+                {t('about.journeyTitle')}
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-teal-400 to-emerald-400 mx-auto mb-6" />
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                From a single seed of inspiration to a flourishing digital ecosystem.
+                {t('about.journeySubtitle')}
               </p>
             </motion.div>
 
@@ -583,11 +585,11 @@ export default function AboutPage() {
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                The Guardians
+                {t('about.teamTitle')}
               </h2>
               <div className="w-16 h-px bg-gradient-to-r from-emerald-400 to-teal-400 mx-auto mb-6" />
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Meet the passionate individuals nurturing our digital garden.
+                {t('about.teamSubtitle')}
               </p>
             </motion.div>
 
@@ -669,11 +671,7 @@ export default function AboutPage() {
                       className="text-xl sm:text-2xl lg:text-3xl text-gray-800 leading-relaxed mb-8 italic"
                       style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
                     >
-                      &ldquo;AquaMundi is not just a website: it is a 
-                      <span className="font-bold text-purple-600"> living mantle </span> 
-                      that unites science, culture, and hope, where each flower and pollinator remind us 
-                      that the Earth blossoms in 
-                      <span className="font-bold text-blue-600"> diversity</span>.&rdquo;
+                      &ldquo;{t('about.quoteText')}&rdquo;
                     </blockquote>
                     
                     <div className="flex items-center justify-center gap-4 mb-8">
@@ -686,7 +684,7 @@ export default function AboutPage() {
                       href="/flowers"
                       className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl hover:scale-105 transition-all duration-300"
                     >
-                      <span>Explore Our Garden</span>
+                      <span>{t('about.exploreGarden')}</span>
                       <Globe2 className="w-5 h-5" />
                     </a>
                   </div>

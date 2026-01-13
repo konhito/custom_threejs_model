@@ -22,6 +22,7 @@ import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 import BookCard from "../../components/BookCard";
+import Footer from "../../components/Footer";
 
 export default function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -538,6 +539,8 @@ export default function ShopPage() {
           animation: fade-in 0.3s ease-out;
         }
       `}</style>
+      
+      <Footer />
     </div>
   );
 }

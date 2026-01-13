@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import QRCodeAccessGate from "../../components/QRCodeAccessGate";
+import Footer from "../../components/Footer";
 import { Mail, MessageCircle, Send, Heart, BookOpen, Sparkles } from "lucide-react";
 
 export default function ContactAuthorPage() {
@@ -242,6 +243,8 @@ export default function ContactAuthorPage() {
             </div>
           </div>
         </main>
+        
+        <Footer />
       </div>
     </QRCodeAccessGate>
   );

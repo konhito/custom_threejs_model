@@ -16,6 +16,7 @@ import { safeGetItem } from "../../lib/storage";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
+import Footer from "../../components/Footer";
 
 // Initialize Stripe (will be set from API response)
 let stripePromise = null;
@@ -661,6 +662,8 @@ export default function CheckoutPage() {
           )}
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { safeGetItem } from "../../lib/storage";
 import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
+import Footer from "../../components/Footer";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
@@ -386,6 +387,8 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }

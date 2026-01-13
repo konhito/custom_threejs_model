@@ -10,6 +10,7 @@ import { countriesData, getPetalPath, getCardBackPath, minionTypes, guardianType
 import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 import GridScan from "../../components/GridScan";
+import { useTranslation } from "@/lib/useTranslation";
 
 export default function GamePage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +27,7 @@ export default function GamePage() {
   const [collectedPetals, setCollectedPetals] = useState([]); // Store collected petal cards
   const [showIntro, setShowIntro] = useState(true); // Show Araihan intro message
   const [isSharing, setIsSharing] = useState(false); // Share button loading state
+  const { t } = useTranslation();
 
   // Initialize with a random country or let user choose
   useEffect(() => {
@@ -527,11 +529,11 @@ export default function GamePage() {
       {/* Show only after clicking "Play Now" button, when on card page */}
       {showIntro && !isLoading && !showStartButton && gameState === "playing" && (
         <AraihanGuide
-          message="Hello, I am Araihan, loyal squire of Nahiara. Welcome to the Nahiara and the Guardians of the Flowers Game. I am a bit sleepy… and I love natural gummies: strawberries, raspberries, blackberries… But I don't like processed candies at all. Let's have fun together. Would you like to play with me?"
+          message={t('araihan.intro')}
           onAction={() => {
             setShowIntro(false);
           }}
-          actionText="Yes, let's play!"
+          actionText={t('game.yesLetsPlay')}
           showAction={false}
           isIntro={true}
         />
@@ -1046,13 +1048,13 @@ export default function GamePage() {
                       animation: 'golden-shimmer 3s ease-in-out infinite',
                       WebkitBackgroundClip: 'text',
                     }}>
-                  VICTORY!
+                  {t('game.victory')}
                 </h1>
                 <p className="text-xl md:text-2xl font-semibold text-amber-200 mb-2">
-                  You Restored the Sacred Flower
+                  {t('game.restoredFlower')}
                 </p>
                 <p className="text-lg md:text-xl text-gray-300">
-                  of <span className="font-bold text-amber-400 text-3xl md:text-5xl lg:text-6xl">{selectedCountry.country}</span>
+                  {t('game.of')} <span className="font-bold text-amber-400 text-3xl md:text-5xl lg:text-6xl">{selectedCountry.country}</span>
                 </p>
               </div>
 
@@ -1146,11 +1148,11 @@ export default function GamePage() {
               <div className="flex justify-center gap-3 md:gap-6 lg:gap-8 mb-8 md:mb-10"
                    style={{ animation: 'fade-in-up 0.8s ease-out 0.5s both' }}>
                 {[
-                  { value: '6/6', label: 'Petals', icon: '🌸' },
-                  { value: '100%', label: 'Complete', icon: '✨' },
-                  { value: '⭐', label: 'Perfect', icon: '' },
+                  { value: '6/6', labelKey: 'game.petals', icon: '🌸' },
+                  { value: '100%', labelKey: 'game.complete', icon: '✨' },
+                  { value: '⭐', labelKey: 'game.perfect', icon: '' },
                 ].map((stat, i) => (
-                  <div key={stat.label}
+                  <div key={stat.labelKey}
                        className="text-center px-5 py-4 md:px-7 md:py-5 rounded-2xl bg-gradient-to-b from-amber-500/20 to-amber-600/10 border border-amber-500/30"
                        style={{
                          animation: `stat-pop 0.5s ease-out ${0.7 + i * 0.1}s both`,
@@ -1159,7 +1161,7 @@ export default function GamePage() {
                     <div className="text-2xl md:text-3xl font-black text-amber-300 mb-1">
                       {stat.icon || stat.value}
                     </div>
-                    <div className="text-xs md:text-sm font-semibold text-amber-200/70">{stat.label}</div>
+                    <div className="text-xs md:text-sm font-semibold text-amber-200/70">{t(stat.labelKey)}</div>
                   </div>
                 ))}
               </div>
@@ -1173,7 +1175,7 @@ export default function GamePage() {
                        animation: 'badge-glow 2s ease-in-out infinite',
                      }}>
                   <span className="text-2xl">🏆</span>
-                  <span className="text-base md:text-lg font-bold text-amber-200">Guardian of Nature</span>
+                  <span className="text-base md:text-lg font-bold text-amber-200">{t('game.guardianOfNature')}</span>
                   <span className="text-2xl">🏆</span>
                 </div>
               </div>
@@ -1194,7 +1196,7 @@ export default function GamePage() {
                     <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-180 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                     </svg>
-                    Play Again
+                    {t('game.playAgain')}
                   </span>
                 </button>
                 
@@ -1210,14 +1212,14 @@ export default function GamePage() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Creating...
+                        {t('game.creating')}
                       </>
                     ) : (
                       <>
                         <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                         </svg>
-                        Share Victory
+                        {t('game.shareVictory')}
                       </>
                     )}
                   </span>
@@ -1228,11 +1230,11 @@ export default function GamePage() {
               <div className="text-center"
                    style={{ animation: 'fade-in-up 0.8s ease-out 1.1s both' }}>
                 <p className="text-base md:text-lg text-gray-400 italic mb-4">
-                  "Every flower you restore brings life back to nature" 🌍
+                  "{t('game.inspirationalQuote')}" 🌍
                 </p>
                 <div className="inline-flex items-center gap-2 text-gray-500 text-sm">
                   <span>🔗</span>
-                  <span>aquamundi.org/game</span>
+                  <span className="notranslate" translate="no">aquamundi.org/game</span>
                 </div>
               </div>
             </div>

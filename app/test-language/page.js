@@ -1,164 +1,218 @@
 "use client";
-import { useLanguageDetection } from "../../hooks/useLanguageDetection";
+import { useState, useEffect } from "react";
+import { useTranslation, getCurrentLocale, changeLanguage, locales } from "../../lib/useTranslation";
 import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer";
 
 export default function TestLanguagePage() {
-  const { 
-    country, 
-    suggestedLanguage, 
-    currentLanguage, 
-    isDetecting,
-    shouldSuggestLanguage 
-  } = useLanguageDetection();
+  const { t, locale, isLoading, messages } = useTranslation();
+  const [cookies, setCookies] = useState({});
+  const [refreshCount, setRefreshCount] = useState(0);
+
+  // Get all cookies
+  useEffect(() => {
+    const parseCookies = () => {
+      const cookieObj = {};
+      document.cookie.split('; ').forEach(cookie => {
+        const [name, value] = cookie.split('=');
+        if (name) cookieObj[name] = value;
+      });
+      setCookies(cookieObj);
+    };
+    
+    parseCookies();
+    const interval = setInterval(parseCookies, 1000);
+    return () => clearInterval(interval);
+  }, [refreshCount]);
+
+  const handleLanguageChange = (lang) => {
+    changeLanguage(lang);
+  };
+
+  const handleClearCookies = () => {
+    // Clear language-related cookies
+    document.cookie = 'NEXT_LOCALE=;path=/;max-age=0';
+    document.cookie = 'LOCALE_MANUAL=;path=/;max-age=0';
+    setRefreshCount(prev => prev + 1);
+    alert('Cookies cleared! Page will reload...');
+    setTimeout(() => window.location.reload(), 500);
+  };
 
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-24 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-24 px-4 pb-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">
-            Language Detection Test
+            🌍 Language Translation Test
           </h1>
 
-          {isDetecting ? (
+          {isLoading ? (
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Detecting your location...</p>
+              <p className="text-gray-600">Loading translations...</p>
             </div>
           ) : (
             <div className="space-y-6">
               {/* Current Status */}
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  Current Status
+                  📊 Current Status
                 </h2>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium text-gray-700">Your Country:</span>
-                    <span className="text-gray-900 font-mono text-lg">
-                      {country || "Unknown"}
+                    <span className="font-medium text-gray-700">Current Locale (from hook):</span>
+                    <span className="text-2xl font-bold text-blue-600">
+                      {locale.toUpperCase()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium text-gray-700">Suggested Language:</span>
-                    <span className="text-gray-900 font-mono text-lg">
-                      {suggestedLanguage.toUpperCase()}
+                    <span className="font-medium text-gray-700">getCurrentLocale():</span>
+                    <span className="text-lg font-mono text-gray-900">
+                      {getCurrentLocale()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="font-medium text-gray-700">Current Language:</span>
-                    <span className="text-gray-900 font-mono text-lg">
-                      {currentLanguage.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="font-medium text-gray-700">Should Suggest Other Language:</span>
-                    <span className={`text-lg font-semibold ${shouldSuggestLanguage ? 'text-orange-600' : 'text-green-600'}`}>
-                      {shouldSuggestLanguage ? "Yes" : "No"}
+                    <span className="font-medium text-gray-700">Messages Loaded:</span>
+                    <span className={`text-lg font-semibold ${messages ? 'text-green-600' : 'text-red-600'}`}>
+                      {messages ? '✅ Yes' : '❌ No'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Language System Info */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow-lg p-8">
+              {/* Cookie Status */}
+              <div className="bg-yellow-50 rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  System Information
+                  🍪 Cookie Values
                 </h2>
-                <div className="space-y-4 text-gray-700">
-                  <div className="bg-white rounded p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2">Current Mode</h3>
-                    <p>✅ English Only</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      All content is served in English. Multi-language support is ready but not activated.
-                    </p>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-2 border-b border-yellow-200">
+                    <span className="font-medium text-gray-700">NEXT_LOCALE:</span>
+                    <span className="text-lg font-mono text-gray-900 bg-yellow-100 px-3 py-1 rounded">
+                      {cookies.NEXT_LOCALE || '(not set)'}
+                    </span>
                   </div>
-                  
-                  <div className="bg-white rounded p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2">IP Detection</h3>
-                    <p>✅ Active</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Your location is detected via IP address for analytics and future language suggestions.
-                    </p>
+                  <div className="flex justify-between items-center py-2 border-b border-yellow-200">
+                    <span className="font-medium text-gray-700">LOCALE_MANUAL:</span>
+                    <span className="text-lg font-mono text-gray-900 bg-yellow-100 px-3 py-1 rounded">
+                      {cookies.LOCALE_MANUAL || '(not set)'}
+                    </span>
                   </div>
-                  
-                  <div className="bg-white rounded p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2">Supported Countries</h3>
-                    <p className="text-sm text-gray-600">
-                      <strong>Spanish:</strong> ES, MX, AR, CO, CL, PE, VE, EC, GT, CU, BO, DO, HN, PY, SV, NI, CR, PA, UY
-                    </p>
-                    <p className="text-sm text-gray-600 mt-2">
-                      <strong>English:</strong> All other countries (default)
-                    </p>
+                </div>
+                <button
+                  onClick={handleClearCookies}
+                  className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                >
+                  Clear Language Cookies
+                </button>
+              </div>
+
+              {/* Language Switcher Test */}
+              <div className="bg-green-50 rounded-lg shadow-lg p-8">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  🔄 Switch Language
+                </h2>
+                <div className="flex flex-wrap gap-3">
+                  {locales.map((lang) => (
+                    <button
+                      key={lang}
+                      onClick={() => handleLanguageChange(lang)}
+                      className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                        locale === lang
+                          ? 'bg-green-600 text-white shadow-lg scale-105'
+                          : 'bg-white text-gray-700 hover:bg-green-100 border border-gray-200'
+                      }`}
+                    >
+                      {lang === 'en' && '🇬🇧 English'}
+                      {lang === 'es' && '🇪🇸 Español'}
+                      {lang === 'zh' && '🇨🇳 中文'}
+                      {lang === 'fr' && '🇫🇷 Français'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Translation Test - Hero Section */}
+              <div className="bg-blue-50 rounded-lg shadow-lg p-8">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  🎯 Landing Page Hero Section (translated)
+                </h2>
+                <div className="space-y-4 bg-white p-6 rounded-lg">
+                  <div>
+                    <span className="text-sm text-gray-500">landing.heroTitle:</span>
+                    <p className="text-2xl font-bold text-gray-900">{t('landing.heroTitle')}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">landing.heroSubtitle:</span>
+                    <p className="text-xl text-green-700">{t('landing.heroSubtitle')}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">landing.heroTagline:</span>
+                    <p className="text-lg text-gray-600 italic">{t('landing.heroTagline')}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">landing.contactUs:</span>
+                    <p className="text-lg text-gray-700">{t('landing.contactUs')}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">landing.explore3DArchive:</span>
+                    <p className="text-lg text-gray-700">{t('landing.explore3DArchive')}</p>
                   </div>
                 </div>
               </div>
 
-              {/* What Happens in Future */}
-              {shouldSuggestLanguage && (
-                <div className="bg-orange-50 border-l-4 border-orange-500 rounded-lg shadow-lg p-8">
-                  <h2 className="text-2xl font-semibold text-orange-900 mb-4">
-                    🌍 Future Multi-Language Support
-                  </h2>
-                  <p className="text-orange-800 mb-4">
-                    Based on your location ({country}), we detected that you might prefer content in{" "}
-                    <strong>{suggestedLanguage.toUpperCase()}</strong>.
-                  </p>
-                  <p className="text-orange-700 text-sm">
-                    When multi-language support is activated, you&apos;ll see content in your preferred language automatically!
-                  </p>
+              {/* Other Translation Tests */}
+              <div className="bg-purple-50 rounded-lg shadow-lg p-8">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  📝 Other Translations
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">nav.home:</span>
+                    <p className="font-semibold">{t('nav.home')}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">nav.about:</span>
+                    <p className="font-semibold">{t('nav.about')}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">nav.flowers:</span>
+                    <p className="font-semibold">{t('nav.flowers')}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">common.loading:</span>
+                    <p className="font-semibold">{t('common.loading')}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">footer.explore:</span>
+                    <p className="font-semibold">{t('footer.explore')}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg">
+                    <span className="text-sm text-gray-500">language.currentLanguage:</span>
+                    <p className="font-semibold">{t('language.currentLanguage')}</p>
+                  </div>
                 </div>
-              )}
+              </div>
 
-              {/* Developer Info */}
+              {/* Instructions */}
               <div className="bg-gray-50 rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  For Developers
+                  📋 How to Test
                 </h2>
-                <div className="space-y-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Hook Usage:</h3>
-                    <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm">
-{`import { useLanguageDetection } from '../hooks/useLanguageDetection';
-
-const { country, suggestedLanguage, currentLanguage } = useLanguageDetection();`}
-                    </pre>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">API Endpoint:</h3>
-                    <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm">
-{`GET /api/detect-country
-
-Response:
-{
-  "country": "${country || 'XX'}",
-  "detected": ${!!country},
-  "suggestedLanguage": "${suggestedLanguage}"
-}`}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-
-              {/* Documentation Link */}
-              <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-semibold text-blue-900 mb-4">
-                  📚 Documentation
-                </h2>
-                <p className="text-blue-800 mb-4">
-                  For full documentation on the language system, see:
-                </p>
-                <ul className="list-disc list-inside text-blue-700 space-y-2">
-                  <li><code className="bg-blue-100 px-2 py-1 rounded">frontend/LANGUAGE_SYSTEM_README.md</code></li>
-                  <li><code className="bg-blue-100 px-2 py-1 rounded">backed/TRANSLATION_SYSTEM_GUIDE.md</code></li>
-                </ul>
+                <ol className="list-decimal list-inside space-y-2 text-gray-700">
+                  <li>Click any language button above to switch languages</li>
+                  <li>The page will reload with the new language</li>
+                  <li>Check that the Hero Section shows translated content</li>
+                  <li>Verify the cookies are set correctly</li>
+                  <li>Navigate to <a href="/landing" className="text-blue-600 underline">/landing</a> to see the actual landing page</li>
+                </ol>
               </div>
             </div>
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
-
