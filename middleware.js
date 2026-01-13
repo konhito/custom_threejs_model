@@ -66,25 +66,26 @@ export function middleware(request) {
   // Check if user has manually selected a language (temporary override)
   const manualLocale = request.cookies.get('LOCALE_MANUAL')?.value;
   
-  // Debug logging (remove in production)
-  console.log('🌍 Middleware Debug:', {
-    pathname,
+  // Add debug info to response headers (visible in Network tab)
+  const debugInfo = {
     country,
     detectedLocale,
-    manualLocale,
-    debugCountry,
-    acceptLanguage: request.headers.get('accept-language'),
-    geoHeaders: {
-      country: request.geo?.country,
-      region: request.geo?.region,
-      city: request.geo?.city,
-    }
-  });
+    manualLocale: manualLocale || 'none',
+    geoCountry: request.geo?.country || 'none',
+    geoRegion: request.geo?.region || 'none',
+    geoCity: request.geo?.city || 'none'
+  };
   
   // Use manual selection only if it exists and is valid, otherwise use IP detection
   const finalLocale = (manualLocale && locales.includes(manualLocale)) ? manualLocale : detectedLocale;
   
   const response = NextResponse.next();
+  
+  // Add debug headers (visible in Network tab)
+  response.headers.set('X-Debug-Country', debugInfo.country);
+  response.headers.set('X-Debug-Locale', debugInfo.detectedLocale);
+  response.headers.set('X-Debug-Geo-Country', debugInfo.geoCountry);
+  response.headers.set('X-Debug-Manual', debugInfo.manualLocale);
   
   // Always set NEXT_LOCALE (this is what the app reads)
   response.cookies.set('NEXT_LOCALE', finalLocale, {

@@ -7,6 +7,7 @@ export default function DebugGeoPage() {
   const { t, locale } = useTranslation();
   const [cookies, setCookies] = useState({});
   const [headers, setHeaders] = useState({});
+  const [debugHeaders, setDebugHeaders] = useState({});
 
   useEffect(() => {
     // Get all cookies
@@ -28,6 +29,18 @@ export default function DebugGeoPage() {
       languages: navigator.languages,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     });
+
+    // Fetch debug headers from a request
+    fetch(window.location.href, { method: 'HEAD' })
+      .then(response => {
+        setDebugHeaders({
+          country: response.headers.get('X-Debug-Country'),
+          locale: response.headers.get('X-Debug-Locale'),
+          geoCountry: response.headers.get('X-Debug-Geo-Country'),
+          manual: response.headers.get('X-Debug-Manual'),
+        });
+      })
+      .catch(err => console.log('Could not fetch debug headers:', err));
   }, []);
 
   const clearAllCookies = () => {
@@ -106,6 +119,31 @@ export default function DebugGeoPage() {
             >
               Clear All Language Cookies
             </button>
+          </div>
+
+          {/* Server Debug Info */}
+          <div className="bg-purple-50 rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              🔍 Server Detection (Middleware)
+            </h2>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">Detected Country:</span>
+                <span className="text-lg font-bold text-purple-600">{debugHeaders.country || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">Detected Locale:</span>
+                <span className="text-lg font-bold text-purple-600">{debugHeaders.locale || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">Vercel Geo Country:</span>
+                <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.geoCountry || 'Loading...'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">Manual Override:</span>
+                <span className="text-sm font-mono bg-purple-100 px-2 py-1 rounded">{debugHeaders.manual || 'Loading...'}</span>
+              </div>
+            </div>
           </div>
 
           {/* Client Info */}
