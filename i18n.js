@@ -1,7 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 import { cookies } from 'next/headers';
 
-export const locales = ['en', 'es', 'zh', 'fr'];
+export const locales = ['en', 'es', 'zh', 'fr', 'de'];
 export const defaultLocale = 'en';
 
 // Country to language mapping
@@ -32,7 +32,6 @@ export const countryToLocale = {
   'FR': 'fr', // France
   'CA': 'fr', // Canada (Quebec) - could be 'en' too
   'BE': 'fr', // Belgium
-  'CH': 'fr', // Switzerland
   'LU': 'fr', // Luxembourg
   'MC': 'fr', // Monaco
   'SN': 'fr', // Senegal
@@ -54,6 +53,13 @@ export const countryToLocale = {
   'HK': 'zh', // Hong Kong
   'MO': 'zh', // Macau
   'SG': 'zh', // Singapore (could be 'en' too)
+  
+  // German speaking countries
+  'DE': 'de', // Germany
+  'AT': 'de', // Austria
+  'LI': 'de', // Liechtenstein
+  // Note: Switzerland (CH) is split - French regions use 'fr', German regions use 'de'
+  // Defaulting CH to 'de' for now, can be refined based on region
   
   // Default to English for all other countries
 };

@@ -12,6 +12,75 @@ import PageLoader from "../components/PageLoader";
 import GlobeLoader from "../components/GlobeLoader";
 import { MusicToggleButton } from "../components/MusicToggleButton";
 import { useTranslation } from "../lib/useTranslation";
+import { detectLocationFromIP } from "../lib/geolocation";
+
+// Country to locale mapping
+const countryToLocale = {
+  // Spanish speaking countries (20)
+  'ES': 'es', // Spain
+  'MX': 'es', // Mexico
+  'AR': 'es', // Argentina
+  'CO': 'es', // Colombia
+  'CL': 'es', // Chile
+  'PE': 'es', // Peru
+  'VE': 'es', // Venezuela
+  'EC': 'es', // Ecuador
+  'GT': 'es', // Guatemala
+  'CU': 'es', // Cuba
+  'BO': 'es', // Bolivia
+  'DO': 'es', // Dominican Republic
+  'HN': 'es', // Honduras
+  'PY': 'es', // Paraguay
+  'SV': 'es', // El Salvador
+  'NI': 'es', // Nicaragua
+  'CR': 'es', // Costa Rica
+  'PA': 'es', // Panama
+  'UY': 'es', // Uruguay
+  'PR': 'es', // Puerto Rico
+  
+  // Chinese speaking countries/regions (5)
+  'CN': 'zh', // China
+  'TW': 'zh', // Taiwan
+  'HK': 'zh', // Hong Kong
+  'MO': 'zh', // Macau
+  'SG': 'zh', // Singapore
+  
+  // French speaking countries (16)
+  'FR': 'fr', // France
+  'BE': 'fr', // Belgium
+  'LU': 'fr', // Luxembourg
+  'MC': 'fr', // Monaco
+  'SN': 'fr', // Senegal
+  'CI': 'fr', // Ivory Coast
+  'ML': 'fr', // Mali
+  'BF': 'fr', // Burkina Faso
+  'NE': 'fr', // Niger
+  'TG': 'fr', // Togo
+  'BJ': 'fr', // Benin
+  'MG': 'fr', // Madagascar
+  'CM': 'fr', // Cameroon
+  'CD': 'fr', // DR Congo
+  'GA': 'fr', // Gabon
+  'HT': 'fr', // Haiti
+  
+  // German speaking countries (4)
+  'DE': 'de', // Germany
+  'AT': 'de', // Austria
+  'CH': 'de', // Switzerland
+  'LI': 'de', // Liechtenstein
+  
+  // English speaking countries (default)
+  'US': 'en', // United States
+  'GB': 'en', // United Kingdom
+  'AU': 'en', // Australia
+  'NZ': 'en', // New Zealand
+  'IE': 'en', // Ireland
+  'ZA': 'en', // South Africa
+  'CA': 'en', // Canada
+};
+
+// Default locale
+const defaultLocale = 'en';
 
 // Lazy load Globe component
 const Globe = dynamic(() => import("../components/Globe"), {
@@ -23,6 +92,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
+  const [localeReady, setLocaleReady] = useState(false);
   const { t, isLoading: isTranslationLoading } = useTranslation();
 
   useEffect(() => {
@@ -34,6 +104,58 @@ export default function Home() {
       }
     }
   }, [router]);
+
+  // Detect location during loader phase - clear old cookies and detect fresh
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const detectLocation = async () => {
+      try {
+        // Check if user manually selected a language (from footer dropdown)
+        const manualLocale = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('LOCALE_MANUAL='));
+        
+        if (manualLocale) {
+          // User manually selected - respect their choice, don't override
+          console.log('[Location Detection] Manual selection found, skipping IP detection');
+          setLocaleReady(true);
+          return;
+        }
+        
+        // Clear old NEXT_LOCALE cookie to start fresh
+        document.cookie = 'NEXT_LOCALE=;path=/;max-age=0;samesite=lax';
+        
+        console.log('[Location Detection] Starting fresh IP detection...');
+        
+        // Detect location from IP
+        const location = await detectLocationFromIP();
+        
+        if (location && location.country) {
+          const detectedLocale = countryToLocale[location.country] || defaultLocale;
+          
+          // Set fresh locale cookie
+          document.cookie = `NEXT_LOCALE=${detectedLocale};path=/;max-age=${60 * 60 * 24};samesite=lax`;
+          
+          console.log(`[Location Detection] Detected country: ${location.country}, Setting locale: ${detectedLocale}`);
+        } else {
+          // Set default locale if no country detected
+          document.cookie = `NEXT_LOCALE=${defaultLocale};path=/;max-age=${60 * 60 * 24};samesite=lax`;
+          console.log('[Location Detection] No country detected, using default: en');
+        }
+      } catch (error) {
+        console.error('[Location Detection] Failed:', error);
+        // Set default locale if detection fails
+        document.cookie = `NEXT_LOCALE=${defaultLocale};path=/;max-age=${60 * 60 * 24};samesite=lax`;
+      } finally {
+        // Mark locale as ready (detection complete)
+        setLocaleReady(true);
+      }
+    };
+
+    // Start detection immediately (runs in parallel with loader)
+    detectLocation();
+  }, []);
 
   // Handle page loading with minimum 5 seconds and parallel book cover preloading
   useEffect(() => {
@@ -88,6 +210,9 @@ export default function Home() {
     };
   }, []);
 
+  // Only show content when both loader time is done AND translations are ready
+  const showContent = !isLoading && !isTranslationLoading && localeReady;
+
   // Handle globe loading
   useEffect(() => {
     // Small delay to ensure smooth loading
@@ -120,14 +245,14 @@ export default function Home() {
   // Show normal content for aquamundi.org
   return (
     <>
-      {/* Page Loader */}
-      <PageLoader isLoading={isLoading} />
+      {/* Page Loader - show until loader done AND translations ready */}
+      <PageLoader isLoading={!showContent} />
       
       {/* Main Content with fade-in animation */}
       <div 
         className="relative min-h-screen bg-white"
         style={{
-          opacity: isLoading ? 0 : 1,
+          opacity: showContent ? 1 : 0,
           transition: 'opacity 0.8s ease-in-out',
         }}
       >
