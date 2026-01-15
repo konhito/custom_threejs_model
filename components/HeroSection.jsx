@@ -7,12 +7,12 @@ import { TypewriterEffect } from "./ui/typewriter-effect";
 import { useTranslation } from "../lib/useTranslation";
 
 export function HeroSection() {
-  const { t, isLoading } = useTranslation();
+  const { t, isLoading, locale } = useTranslation();
 
   // Get translated subtitle words
   const getSubtitleWords = () => {
     const subtitle = t('home.heroSubtitle');
-    if (subtitle === 'home.heroSubtitle') {
+    if (subtitle === 'home.heroSubtitle' || !subtitle) {
       // Fallback if translation not loaded
       return [
         { text: "Where", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
@@ -30,6 +30,9 @@ export function HeroSection() {
       className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
     }));
   };
+  
+  // Get subtitle words - memoize to avoid recalculation
+  const subtitleWords = getSubtitleWords();
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -88,8 +91,10 @@ export function HeroSection() {
             
             {/* Subtitle with cursive serif font and typewriter effect */}
             <div className="text-center w-full" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
+              {/* Key forces re-render when locale changes to restart animation fresh */}
               <TypewriterEffect
-                words={getSubtitleWords()}
+                key={`typewriter-${locale}`}
+                words={subtitleWords}
                 className="text-center"
                 cursorClassName="bg-gray-700"
               />

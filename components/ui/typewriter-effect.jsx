@@ -20,21 +20,27 @@ export const TypewriterEffect = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope, { once: true, margin: "-100px" });
+  
+  // Calculate total characters to ensure animation completes
+  const totalChars = wordsArray.reduce((acc, word) => acc + word.text.length + 1, 0);
+  
   useEffect(() => {
-    if (isInView) {
-      // Use requestAnimationFrame for smoother animation
-      requestAnimationFrame(() => {
+    if (isInView && scope.current) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
         animate("span", {
           display: "inline-block",
           opacity: 1,
         }, {
-          duration: 0.12,
-          delay: stagger(0.015),
+          duration: 0.1,
+          delay: stagger(0.02), // Slightly slower for longer texts
           ease: [0.25, 0.1, 0.25, 1],
         });
-      });
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
-  }, [isInView, animate]);
+  }, [isInView, animate, totalChars]);
 
   const renderWords = () => {
     return (
