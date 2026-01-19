@@ -121,6 +121,7 @@ export default function Navigation() {
   const homeHref = "/";
   const isCartPage = normalizePath(pathname) === "/cart";
   const isHomePage = normalizePath(pathname) === "/";
+  const isLandingPage = normalizePath(pathname) === "/landing";
 
   // Get navigation items with translations
   const BASE_NAV_ITEMS = getNavItems(t);
@@ -134,6 +135,11 @@ export default function Navigation() {
     })),
   }));
   const isPathActive = (target) => normalizePath(pathname) === normalizePath(target);
+
+  // Don't render navigation on landing page
+  if (isLandingPage) {
+    return null;
+  }
 
   return (
     <>
