@@ -4,7 +4,7 @@ import { Download, Mail, MessageCircle, ExternalLink, Globe, BookOpen, Gamepad2,
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "../../lib/useTranslation";
-import Footer from "../../components/Footer";
+// Footer removed from landing page - ends at Get in Touch section
 
 // Global flag to prevent multiple 3D logo instances
 let logoInstanceCount = 0;
@@ -612,8 +612,7 @@ ${t('landing.visionText')}
         </div>
       </section>
 
-      {/* Footer - includes language switcher */}
-      <Footer />
+      {/* Footer removed - landing page ends at Get in Touch section */}
 
       {/* Contact Modal */}
       {showContactModal && (

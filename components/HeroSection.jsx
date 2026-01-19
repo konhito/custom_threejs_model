@@ -9,7 +9,17 @@ import { useTranslation } from "../lib/useTranslation";
 export function HeroSection() {
   const { t, isLoading, locale } = useTranslation();
 
-  // Get translated subtitle words
+  // Define line breaks for each language on mobile
+  // Line 1: before "and", Line 2: "and" onwards
+  const mobileLineBreaks = {
+    en: { line1: "Where nations bloom", line2: "and stories unfold" },
+    es: { line1: "Donde las naciones florecen", line2: "y las historias sedespliegan" },
+    fr: { line1: "Où les nations fleurissent", line2: "et les histoires sedéploient" },
+    zh: { line1: "国家在此绽放", line2: "故事在此展开" },
+    de: { line1: "Wo Nationen erblühen", line2: "und Geschichten sich entfalten" },
+  };
+
+  // Get translated subtitle words for desktop (single line)
   const getSubtitleWords = () => {
     const subtitle = t('home.heroSubtitle');
     if (subtitle === 'home.heroSubtitle' || !subtitle) {
@@ -30,9 +40,25 @@ export function HeroSection() {
       className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light",
     }));
   };
+
+  // Get mobile subtitle lines (two lines for small screens)
+  const getMobileSubtitleLines = () => {
+    const lines = mobileLineBreaks[locale] || mobileLineBreaks.en;
+    return {
+      line1: lines.line1.split(' ').map(word => ({
+        text: word,
+        className: "text-gray-700 text-sm italic font-light",
+      })),
+      line2: lines.line2.split(' ').map(word => ({
+        text: word,
+        className: "text-gray-700 text-sm italic font-light",
+      })),
+    };
+  };
   
-  // Get subtitle words - memoize to avoid recalculation
+  // Get subtitle words
   const subtitleWords = getSubtitleWords();
+  const mobileSubtitle = getMobileSubtitleLines();
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -90,11 +116,29 @@ export function HeroSection() {
             <div className="w-12 sm:w-16 h-px bg-gray-900 mb-4 md:mb-6 mx-auto"></div>
             
             {/* Subtitle with cursive serif font and typewriter effect */}
-            <div className="text-center w-full" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
-              {/* Key forces re-render when locale changes to restart animation fresh */}
+            {/* Desktop: Single line */}
+            <div className="hidden sm:block text-center w-full" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
               <TypewriterEffect
-                key={`typewriter-${locale}`}
+                key={`typewriter-desktop-${locale}`}
                 words={subtitleWords}
+                className="text-center"
+                cursorClassName="bg-gray-700"
+              />
+            </div>
+            
+            {/* Mobile: Two lines for better readability */}
+            <div className="sm:hidden text-center w-full px-4" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
+              <div className="mb-1">
+                <TypewriterEffect
+                  key={`typewriter-mobile-line1-${locale}`}
+                  words={mobileSubtitle.line1}
+                  className="text-center"
+                  cursorClassName="hidden"
+                />
+              </div>
+              <TypewriterEffect
+                key={`typewriter-mobile-line2-${locale}`}
+                words={mobileSubtitle.line2}
                 className="text-center"
                 cursorClassName="bg-gray-700"
               />

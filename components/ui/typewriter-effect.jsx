@@ -68,17 +68,18 @@ export const TypewriterEffect = ({
                   {char}
                 </motion.span>
               ))}
+              {/* Add space after each word except the last */}
               {idx < wordsArray.length - 1 && (
                 <motion.span
                   initial={{}}
                   key={`space-${idx}`}
-                  className={cn(`opacity-0 hidden inline-block`, word.className)}
+                  className={cn(`opacity-0 hidden`, word.className)}
                   style={{ 
-                    width: '0.25em', 
                     willChange: 'opacity, display',
                     transform: 'translateZ(0)',
+                    width: '0.3em',
                   }}>
-                  {' '}
+                  &nbsp;
                 </motion.span>
               )}
             </React.Fragment>
