@@ -52,20 +52,20 @@ const FlowerLoader = () => {
           top: 110%;
           left: calc(50% - 16px);
           background: 
-            linear-gradient(90deg, #0000 12px, #f92033 0 22px, #0000 0 26px, #fdc98d 0 32px, #0000) bottom 26px left 50%,
-            linear-gradient(90deg, #0000 10px, #f92033 0 28px, #fdc98d 0 32px, #0000 0) bottom 24px left 50%,
-            linear-gradient(90deg, #0000 10px, #643700 0 16px, #fdc98d 0 20px, #000 0 22px, #fdc98d 0 24px, #000 0 26px, #f92033 0 32px, #0000 0) bottom 22px left 50%,
-            linear-gradient(90deg, #0000 8px, #643700 0 10px, #fdc98d 0 12px, #643700 0 14px, #fdc98d 0 20px, #000 0 22px, #fdc98d 0 28px, #f92033 0 32px, #0000 0) bottom 20px left 50%,
-            linear-gradient(90deg, #0000 8px, #643700 0 10px, #fdc98d 0 12px, #643700 0 16px, #fdc98d 0 22px, #000 0 24px, #fdc98d 0 30px, #f92033 0 32px, #0000 0) bottom 18px left 50%,
-            linear-gradient(90deg, #0000 8px, #643700 0 12px, #fdc98d 0 20px, #000 0 28px, #f92033 0 30px, #0000 0) bottom 16px left 50%,
-            linear-gradient(90deg, #0000 12px, #fdc98d 0 26px, #f92033 0 30px, #0000 0) bottom 14px left 50%,
-            linear-gradient(90deg, #fdc98d 6px, #f92033 0 14px, #222a87 0 16px, #f92033 0 22px, #222a87 0 24px, #f92033 0 28px, #0000 0 32px, #643700 0) bottom 12px left 50%,
-            linear-gradient(90deg, #fdc98d 6px, #f92033 0 16px, #222a87 0 18px, #f92033 0 24px, #f92033 0 26px, #0000 0 30px, #643700 0) bottom 10px left 50%,
-            linear-gradient(90deg, #0000 10px, #f92033 0 16px, #222a87 0 24px, #feee49 0 26px, #222a87 0 30px, #643700 0) bottom 8px left 50%,
-            linear-gradient(90deg, #0000 12px, #222a87 0 18px, #feee49 0 20px, #222a87 0 30px, #643700 0) bottom 6px left 50%,
-            linear-gradient(90deg, #0000 8px, #643700 0 12px, #222a87 0 30px, #643700 0) bottom 4px left 50%,
-            linear-gradient(90deg, #0000 6px, #643700 0 14px, #222a87 0 26px, #0000 0) bottom 2px left 50%,
-            linear-gradient(90deg, #0000 6px, #643700 0 10px, #0000 0) bottom 0px left 50%;
+            linear-gradient(90deg, #0000 12px, #ff69b4 0 22px, #0000 0 26px, #ffb6c1 0 32px, #0000) bottom 26px left 50%,
+            linear-gradient(90deg, #0000 10px, #ff69b4 0 28px, #ffb6c1 0 32px, #0000 0) bottom 24px left 50%,
+            linear-gradient(90deg, #0000 10px, #ff1493 0 16px, #ffb6c1 0 20px, #000 0 22px, #ffb6c1 0 24px, #000 0 26px, #ff69b4 0 32px, #0000 0) bottom 22px left 50%,
+            linear-gradient(90deg, #0000 8px, #ff1493 0 10px, #ffb6c1 0 12px, #ff1493 0 14px, #ffb6c1 0 20px, #000 0 22px, #ffb6c1 0 28px, #ff69b4 0 32px, #0000 0) bottom 20px left 50%,
+            linear-gradient(90deg, #0000 8px, #ff1493 0 10px, #ffb6c1 0 12px, #ff1493 0 16px, #ffb6c1 0 22px, #000 0 24px, #ffb6c1 0 30px, #ff69b4 0 32px, #0000 0) bottom 18px left 50%,
+            linear-gradient(90deg, #0000 8px, #ff1493 0 12px, #ffb6c1 0 20px, #000 0 28px, #ff69b4 0 30px, #0000 0) bottom 16px left 50%,
+            linear-gradient(90deg, #0000 12px, #ffb6c1 0 26px, #ff69b4 0 30px, #0000 0) bottom 14px left 50%,
+            linear-gradient(90deg, #ffb6c1 6px, #ff69b4 0 14px, #ff1493 0 16px, #ff69b4 0 22px, #ff1493 0 24px, #ff69b4 0 28px, #0000 0 32px, #ff1493 0) bottom 12px left 50%,
+            linear-gradient(90deg, #ffb6c1 6px, #ff69b4 0 16px, #ff1493 0 18px, #ff69b4 0 24px, #ff69b4 0 26px, #0000 0 30px, #ff1493 0) bottom 10px left 50%,
+            linear-gradient(90deg, #0000 10px, #ff69b4 0 16px, #ff1493 0 24px, #ffb6c1 0 26px, #ff1493 0 30px, #ff1493 0) bottom 8px left 50%,
+            linear-gradient(90deg, #0000 12px, #ff1493 0 18px, #ffb6c1 0 20px, #ff1493 0 30px, #ff1493 0) bottom 6px left 50%,
+            linear-gradient(90deg, #0000 8px, #ff1493 0 12px, #ff1493 0 30px, #ff1493 0) bottom 4px left 50%,
+            linear-gradient(90deg, #0000 6px, #ff1493 0 14px, #ff1493 0 26px, #0000 0) bottom 2px left 50%,
+            linear-gradient(90deg, #0000 6px, #ff1493 0 10px, #0000 0) bottom 0px left 50%;
           background-size: 34px 2px;
           background-repeat: no-repeat;
           animation: inherit;
