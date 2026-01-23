@@ -9,8 +9,8 @@ const FLOWER_DATA = {
   commonName: "Clavel / Carnation",
   scientificName: "Dianthus caryophyllus L.",
   country: "España (Spain)",
-  // S3 URL for GLB file - update with your actual S3 filename
-  glbPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb",
+  // Using proxy route to avoid CORS issues with S3
+  glbPath: `/api/glb-proxy?url=${encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb")}`,
   sanCode: "SAN-F-191998",
 };
 
