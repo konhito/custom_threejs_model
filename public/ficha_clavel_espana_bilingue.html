@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clavel de España - Spanish Carnation | Nahiara Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #c62828 0%, #d32f2f 50%, #e53935 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-toggle:hover {
+            background: white;
+            color: #c62828;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #c62828;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #c62828;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #b71c1c;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #c62828;
+        }
+        
+        .info-item strong {
+            color: #c62828;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .morphology-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .morphology-table th,
+        .morphology-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .morphology-table th {
+            background: #c62828;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .morphology-table tr:hover {
+            background: #ffebee;
+        }
+        
+        .san-code {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .san-code .code {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #b71c1c;
+            margin-bottom: 10px;
+        }
+        
+        .nahiara-measure {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .measure-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+        
+        .measure-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #c62828;
+        }
+        
+        .measure-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .cultural-significance {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .cultural-significance h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+        
+        .legend-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #7b1fa2;
+        }
+        
+        .legend-box h3 {
+            color: #7b1fa2;
+            margin-bottom: 15px;
+        }
+        
+        .synthesis {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .synthesis h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .lang-es, .lang-en {
+            display: block;
+        }
+        
+        .lang-en {
+            display: none;
+        }
+        
+        body.english .lang-es {
+            display: none;
+        }
+        
+        body.english .lang-en {
+            display: block;
+        }
+        
+        .flower-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nahiara-measure {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <button class="language-toggle" onclick="toggleLanguage()">
+                    <span class="lang-es">🇺🇸 English</span>
+                    <span class="lang-en">🇪🇸 Español</span>
+                </button>
+                <div class="flower-icon">🌸</div>
+                <h1>
+                    <span class="lang-es">Clavel</span>
+                    <span class="lang-en">Carnation</span>
+                </h1>
+                <div class="subtitle">
+                    <span class="lang-es"><em>Dianthus caryophyllus</em> L.</span>
+                    <span class="lang-en"><em>Dianthus caryophyllus</em> L.</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Datos Botánicos / Botanical Data -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🌱 1. DATOS BOTÁNICOS</span>
+                        <span class="lang-en">🌱 1. BOTANICAL DATA</span>
+                    </h2>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Nombre científico:</span>
+                                <span class="lang-en">Scientific name:</span>
+                            </strong>
+                            <em>Dianthus caryophyllus</em> L.
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Familia botánica:</span>
+                                <span class="lang-en">Botanical family:</span>
+                            </strong>
+                            Caryophyllaceae
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Nombres comunes:</span>
+                                <span class="lang-en">Common names:</span>
+                            </strong>
+                            <div>
+                                <strong>
+                                    <span class="lang-es">Español:</span>
+                                    <span class="lang-en">Spanish:</span>
+                                </strong> 
+                                <span class="lang-es">Clavel, Clavel común, Clavel de jardín</span>
+                                <span class="lang-en">Clavel, Clavel común, Clavel de jardín</span><br>
+                                <strong>
+                                    <span class="lang-es">Inglés:</span>
+                                    <span class="lang-en">English:</span>
+                                </strong> Carnation, Clove Pink, Gillyflower
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>
+                        <span class="lang-es">Morfología básica:</span>
+                        <span class="lang-en">Basic morphology:</span>
+                    </h3>
+                    
+                    <table class="morphology-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="lang-es">Característica</span>
+                                    <span class="lang-en">Characteristic</span>
+                                </th>
+                                <th>
+                                    <span class="lang-es">Descripción</span>
+                                    <span class="lang-en">Description</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Color</span>
+                                    <span class="lang-en">Color</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Amplia gama desde blanco hasta rojo intenso, rosa, amarillo</span>
+                                    <span class="lang-en">Wide range from white to deep red, pink, yellow</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Forma</span>
+                                    <span class="lang-en">Shape</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Flores solitarias o en cimas, muy fragantes, con 5 pétalos de bordes dentados</span>
+                                    <span class="lang-en">Solitary or clustered flowers, very fragrant, with 5 petals with toothed edges</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Tamaño</span>
+                                    <span class="lang-en">Size</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Planta de 40-80 cm de altura</span>
+                                    <span class="lang-en">Plant 40-80 cm tall</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Ciclo de vida</span>
+                                    <span class="lang-en">Life cycle</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Planta herbácea perenne</span>
+                                    <span class="lang-en">Perennial herbaceous plant</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Hábitat:</span>
+                                <span class="lang-en">Habitat:</span>
+                            </strong>
+                            <span class="lang-es">Jardines, cultivos ornamentales, naturalizado en áreas mediterráneas</span>
+                            <span class="lang-en">Gardens, ornamental crops, naturalized in Mediterranean areas</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Distribución:</span>
+                                <span class="lang-en">Distribution:</span>
+                            </strong>
+                            <span class="lang-es">Nativo de la región mediterránea, cultivado extensamente en España</span>
+                            <span class="lang-en">Native to the Mediterranean region, widely cultivated in Spain</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Datos Culturales / Cultural Data -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🏛️ 2. DATOS CULTURALES E HISTÓRICOS</span>
+                        <span class="lang-en">🏛️ 2. CULTURAL AND HISTORICAL DATA</span>
+                    </h2>
+                    
+                    <div class="cultural-significance">
+                        <h3>
+                            <span class="lang-es">Significado Cultural:</span>
+                            <span class="lang-en">Cultural Significance:</span>
+                        </h3>
+                        <p>
+                            <span class="lang-es">El Clavel es símbolo de <strong>amor verdadero, pasión, resistencia y determinación</strong>. Representa el carácter apasionado español y la belleza de la cultura mediterránea.</span>
+                            <span class="lang-en">The Carnation is a symbol of <strong>true love, passion, resistance and determination</strong>. It represents the passionate Spanish character and the beauty of Mediterranean culture.</span>
+                        </p>
+                    </div>
+                    
+                    <div class="legend-box">
+                        <h3>
+                            <span class="lang-es">📖 Origen Histórico:</span>
+                            <span class="lang-en">📖 Historical Origin:</span>
+                        </h3>
+                        <p>
+                            <span class="lang-es">La tradición del clavel en España se remonta a 1526, cuando el emperador Carlos I obsequió claveles a su esposa Isabel de Portugal, quien quedó encantada y mandó plantarlos en los jardines de la Alhambra.</span>
+                            <span class="lang-en">The tradition of the carnation in Spain dates back to 1526, when Emperor Charles I gave carnations to his wife Isabella of Portugal, who was delighted and ordered them to be planted in the gardens of the Alhambra.</span>
+                        </p>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Estatus nacional:</span>
+                                <span class="lang-en">National status:</span>
+                            </strong>
+                            <span class="lang-es">Flor nacional no oficial pero ampliamente reconocida.</span>
+                            <span class="lang-en">Unofficial but widely recognized national flower.</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Usos tradicionales:</span>
+                                <span class="lang-en">Traditional uses:</span>
+                            </strong>
+                            <span class="lang-es">Ornamental, ceremonial (bodas, bautizos), funerario, y parte integral del atuendo flamenco.</span>
+                            <span class="lang-en">Ornamental, ceremonial (weddings, baptisms), funereal, and an integral part of flamenco attire.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Datos de Conservación / Conservation Data -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🌍 3. DATOS DE CONSERVACIÓN</span>
+                        <span class="lang-en">🌍 3. CONSERVATION DATA</span>
+                    </h2>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Estado de conservación IUCN:</span>
+                                <span class="lang-en">IUCN conservation status:</span>
+                            </strong>
+                            <span class="lang-es">No evaluada (NE), pero considerada de Preocupación Menor en su rango nativo.</span>
+                            <span class="lang-en">Not Evaluated (NE), but considered Least Concern in its native range.</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Amenazas principales:</span>
+                                <span class="lang-en">Main threats:</span>
+                            </strong>
+                            <span class="lang-es">Pérdida de hábitat para especies silvestres, cambio climático, plagas y enfermedades en cultivos.</span>
+                            <span class="lang-en">Habitat loss for wild species, climate change, pests and diseases in crops.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Metadatos Nahiara -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🔮 4. METADATOS NAHIARA</span>
+                        <span class="lang-en">🔮 4. NAHIARA METADATA</span>
+                    </h2>
+                    
+                    <div class="san-code">
+                        <div class="code">SAN-F-191998</div>
+                        <div>
+                            <span class="lang-es">Código S.A.N. asignado</span>
+                            <span class="lang-en">Assigned S.A.N. Code</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Clasificación PFNO:</span>
+                                <span class="lang-en">PFNO Classification:</span>
+                            </strong>
+                            <span class="lang-es">[ ] No oficial pero culturalmente relevante</span>
+                            <span class="lang-en">[ ] Unofficial but culturally relevant</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Polinizador relevante:</span>
+                                <span class="lang-en">Relevant pollinator:</span>
+                            </strong>
+                            <span class="lang-es">Lepidópteros (mariposas y polillas)</span>
+                            <span class="lang-en">Lepidoptera (butterflies and moths)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medida Nahiara -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">📊 5. MEDIDA NAHIARA</span>
+                        <span class="lang-en">📊 5. NAHIARA MEASURE</span>
+                    </h2>
+                    
+                    <div class="nahiara-measure">
+                        <div class="measure-item">
+                            <div class="measure-value">19/25</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Valor Total<br>(Estable)</span>
+                                <span class="lang-en">Total Value<br>(Stable)</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">4/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Conservación</span>
+                                <span class="lang-en">Conservation</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">3/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Amenazas</span>
+                                <span class="lang-en">Threats</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">4/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Polinización</span>
+                                <span class="lang-en">Pollination</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">5/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Protección Cultural</span>
+                                <span class="lang-en">Cultural Protection</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">3/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Vulnerabilidad Climática</span>
+                                <span class="lang-en">Climate Vulnerability</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Síntesis Final -->
+                <div class="synthesis">
+                    <h3>
+                        <span class="lang-es">✅ SÍNTESIS FINAL NAHIARA</span>
+                        <span class="lang-en">✅ FINAL NAHIARA SYNTHESIS</span>
+                    </h3>
+                    <p>
+                        <span class="lang-es">El <em>Dianthus caryophyllus</em> se integra en el universo Nahiara con el código <strong>SAN-F-191998</strong>, evaluado con un nivel 19 (Estable) en la Medida Nahiara. Como flor nacional no oficial de España, el Clavel es un emblema de amor, pasión y resistencia. Su historia está ligada a la realeza española desde el siglo XVI y su presencia es indispensable en el flamenco, las festividades religiosas y la cultura popular. A pesar de las amenazas climáticas y de hábitat, su cultivo extensivo y su profundo arraigo cultural aseguran su permanencia como símbolo de la identidad española.</span>
+                        <span class="lang-en">The <em>Dianthus caryophyllus</em> integrates into the Nahiara universe with code <strong>SAN-F-191998</strong>, evaluated with a level 19 (Stable) in the Nahiara Measure. As the unofficial national flower of Spain, the Carnation is an emblem of love, passion and resistance. Its history is linked to Spanish royalty since the 16th century and its presence is indispensable in flamenco, religious festivities and popular culture. Despite climate and habitat threats, its extensive cultivation and deep cultural roots ensure its permanence as a symbol of Spanish identity.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleLanguage() {
+            document.body.classList.toggle('english');
+        }
+        
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease
+```

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lepidópteros - Lepidoptera | Nahiara Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #7b1fa2 0%, #8e24aa 50%, #9c27b0 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-toggle:hover {
+            background: white;
+            color: #7b1fa2;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #7b1fa2;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #7b1fa2;
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            color: #6a1b9a;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #7b1fa2;
+        }
+        
+        .info-item strong {
+            color: #7b1fa2;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .morphology-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .morphology-table th,
+        .morphology-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .morphology-table th {
+            background: #7b1fa2;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .morphology-table tr:hover {
+            background: #f3e5f5;
+        }
+        
+        .san-code {
+            background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .san-code .code {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        .araihan-measure {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .measure-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+        
+        .measure-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #7b1fa2;
+        }
+        
+        .measure-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .pollinator-role {
+            background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .pollinator-role h3 {
+            color: #5e35b1;
+            margin-bottom: 15px;
+        }
+        
+        .synthesis {
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .synthesis h3 {
+            color: #3949ab;
+            margin-bottom: 15px;
+        }
+        
+        .lang-es, .lang-en {
+            display: block;
+        }
+        
+        .lang-en {
+            display: none;
+        }
+        
+        body.english .lang-es {
+            display: none;
+        }
+        
+        body.english .lang-en {
+            display: block;
+        }
+        
+        .pollinator-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .araihan-measure {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <button class="language-toggle" onclick="toggleLanguage()">
+                    <span class="lang-es">🇺🇸 English</span>
+                    <span class="lang-en">🇪🇸 Español</span>
+                </button>
+                <div class="pollinator-icon">🦋</div>
+                <h1>
+                    <span class="lang-es">Lepidópteros</span>
+                    <span class="lang-en">Lepidoptera</span>
+                </h1>
+                <div class="subtitle">
+                    <span class="lang-es"><em>Lepidoptera</em> Linnaeus, 1758</span>
+                    <span class="lang-en"><em>Lepidoptera</em> Linnaeus, 1758</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Datos Biológicos / Biological Data -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🧬 1. DATOS BIOLÓGICOS</span>
+                        <span class="lang-en">🧬 1. BIOLOGICAL DATA</span>
+                    </h2>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Nombre científico:</span>
+                                <span class="lang-en">Scientific name:</span>
+                            </strong>
+                            <em>Lepidoptera</em> Linnaeus, 1758
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Familia:</span>
+                                <span class="lang-en">Family:</span>
+                            </strong>
+                            <span class="lang-es">Orden que agrupa a mariposas y polillas</span>
+                            <span class="lang-en">Order grouping butterflies and moths</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Nombres comunes:</span>
+                                <span class="lang-en">Common names:</span>
+                            </strong>
+                            <div>
+                                <strong>
+                                    <span class="lang-es">Español:</span>
+                                    <span class="lang-en">Spanish:</span>
+                                </strong> 
+                                <span class="lang-es">Lepidópteros, Mariposas, Polillas</span>
+                                <span class="lang-en">Lepidópteros, Mariposas, Polillas</span><br>
+                                <strong>
+                                    <span class="lang-es">Inglés:</span>
+                                    <span class="lang-en">English:</span>
+                                </strong> Lepidoptera, Butterflies, Moths
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>
+                        <span class="lang-es">Morfología básica:</span>
+                        <span class="lang-en">Basic morphology:</span>
+                    </h3>
+                    
+                    <table class="morphology-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="lang-es">Característica</span>
+                                    <span class="lang-en">Characteristic</span>
+                                </th>
+                                <th>
+                                    <span class="lang-es">Descripción</span>
+                                    <span class="lang-en">Description</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Color</span>
+                                    <span class="lang-en">Color</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Extremadamente variable, desde colores crípticos hasta patrones muy llamativos</span>
+                                    <span class="lang-en">Extremely variable, from cryptic colors to very striking patterns</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Forma</span>
+                                    <span class="lang-en">Shape</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Dos pares de alas membranosas cubiertas de escamas, espiritrompa para alimentarse</span>
+                                    <span class="lang-en">Two pairs of membranous wings covered with scales, proboscis for feeding</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Tamaño</span>
+                                    <span class="lang-en">Size</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Envergadura desde pocos milímetros hasta más de 30 cm</span>
+                                    <span class="lang-en">Wingspan from a few millimeters to over 30 cm</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>
+                                    <span class="lang-es">Ciclo de vida</span>
+                                    <span class="lang-en">Life cycle</span>
+                                </strong></td>
+                                <td>
+                                    <span class="lang-es">Metamorfosis completa: huevo, larva (oruga), pupa (crisálida) y adulto</span>
+                                    <span class="lang-en">Complete metamorphosis: egg, larva (caterpillar), pupa (chrysalis) and adult</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Hábitat:</span>
+                                <span class="lang-en">Habitat:</span>
+                            </strong>
+                            <span class="lang-es">Prácticamente todos los hábitats terrestres, desde desiertos hasta selvas tropicales y zonas alpinas</span>
+                            <span class="lang-en">Virtually all terrestrial habitats, from deserts to tropical rainforests and alpine zones</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Distribución:</span>
+                                <span class="lang-en">Distribution:</span>
+                            </strong>
+                            <span class="lang-es">Cosmopolita, presentes en todos los continentes excepto la Antártida</span>
+                            <span class="lang-en">Cosmopolitan, present on all continents except Antarctica</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rol como Polinizador / Role as Pollinator -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🐝 2. ROL COMO POLINIZADOR</span>
+                        <span class="lang-en">🐝 2. ROLE AS POLLINATOR</span>
+                    </h2>
+                    
+                    <div class="pollinator-role">
+                        <h3>
+                            <span class="lang-es">Relación con el Clavel:</span>
+                            <span class="lang-en">Relationship with the Carnation:</span>
+                        </h3>
+                        <p>
+                            <span class="lang-es">Los lepidópteros, especialmente las polillas esfíngidas, son polinizadores clave para flores con corolas largas y tubulares como el Clavel. Las polillas nocturnas se sienten atraídas por la intensa fragancia que el clavel emite durante la noche. Su larga espiritrompa les permite alcanzar el néctar profundo, inaccesible para otros insectos.</span>
+                            <span class="lang-en">Lepidoptera, especially hawkmoths, are key pollinators for flowers with long, tubular corollas like the Carnation. Nocturnal moths are attracted to the intense fragrance that the carnation emits at night. Their long proboscis allows them to reach the deep nectar, inaccessible to other insects.</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Datos de Conservación / Conservation Data -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🌍 3. DATOS DE CONSERVACIÓN</span>
+                        <span class="lang-en">🌍 3. CONSERVATION DATA</span>
+                    </h2>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Estado de conservación IUCN:</span>
+                                <span class="lang-en">IUCN conservation status:</span>
+                            </strong>
+                            <span class="lang-es">Variable. Muchas especies están en declive a nivel global.</span>
+                            <span class="lang-en">Variable. Many species are in decline globally.</span>
+                        </div>
+                        
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Amenazas principales:</span>
+                                <span class="lang-en">Main threats:</span>
+                            </strong>
+                            <span class="lang-es">Pérdida de hábitat, uso de pesticidas, contaminación lumínica y cambio climático.</span>
+                            <span class="lang-en">Habitat loss, pesticide use, light pollution and climate change.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Metadatos Araihan -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">🔮 4. METADATOS ARAIHAN</span>
+                        <span class="lang-en">🔮 4. ARAIHAN METADATA</span>
+                    </h2>
+                    
+                    <div class="san-code">
+                        <div class="code">SAN-P-12125</div>
+                        <div>
+                            <span class="lang-es">Código S.A.N. asignado</span>
+                            <span class="lang-en">Assigned S.A.N. Code</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>
+                                <span class="lang-es">Nivel de especialización:</span>
+                                <span class="lang-en">Specialization level:</span>
+                            </strong>
+                            <span class="lang-es">Generalista (aunque algunas especies son especialistas)</span>
+                            <span class="lang-en">Generalist (although some species are specialists)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medida Araihan -->
+                <div class="section">
+                    <h2>
+                        <span class="lang-es">📊 5. MEDIDA ARAIHAN</span>
+                        <span class="lang-en">📊 5. ARAIHAN MEASURE</span>
+                    </h2>
+                    
+                    <div class="araihan-measure">
+                        <div class="measure-item">
+                            <div class="measure-value">18/25</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Valor Total<br>(Estable)</span>
+                                <span class="lang-en">Total Value<br>(Stable)</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">3/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Abundancia</span>
+                                <span class="lang-en">Abundance</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">4/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Eficiencia</span>
+                                <span class="lang-en">Efficiency</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">3/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Resiliencia</span>
+                                <span class="lang-en">Resilience</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">4/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Interdependencia</span>
+                                <span class="lang-en">Interdependence</span>
+                            </div>
+                        </div>
+                        <div class="measure-item">
+                            <div class="measure-value">4/5</div>
+                            <div class="measure-label">
+                                <span class="lang-es">Vulnerabilidad</span>
+                                <span class="lang-en">Vulnerability</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Síntesis Final -->
+                <div class="synthesis">
+                    <h3>
+                        <span class="lang-es">✅ SÍNTESIS FINAL NAHIARA</span>
+                        <span class="lang-en">✅ FINAL NAHIARA SYNTHESIS</span>
+                    </h3>
+                    <p>
+                        <span class="lang-es">El orden <em>Lepidoptera</em> se integra en el universo Nahiara con el código <strong>SAN-P-12125</strong>, evaluado con un nivel 18 (Estable) en la Medida Araihan. Este diverso grupo de insectos, que incluye mariposas y polillas, desempeña un papel crucial como polinizadores en casi todos los ecosistemas terrestres. Su relación con flores como el Clavel, especialmente a través de las polillas esfíngidas, es un ejemplo de coevolución y especialización. Sin embargo, la fragilidad de sus poblaciones frente a la pérdida de hábitat, los pesticidas y la contaminación lumínica los convierte en un indicador sensible de la salud ambiental. Proteger a los lepidópteros es esencial para mantener la diversidad genética de las plantas y la estabilidad de las redes tróficas.</span>
+                        <span class="lang-en">The order <em>Lepidoptera</em> integrates into the Nahiara universe with code <strong>SAN-P-12125</strong>, evaluated with a level 18 (Stable) in the Araihan Measure. This diverse group of insects, which includes butterflies and moths, plays a crucial role as pollinators in almost all terrestrial ecosystems. Their relationship with flowers like the Carnation, especially through hawkmoths, is an example of co-evolution and specialization. However, the fragility of their populations in the face of habitat loss, pesticides and light pollution makes them a sensitive indicator of environmental health. Protecting lepidoptera is essential to maintain the genetic diversity of plants and the stability of food webs.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleLanguage() {
+            document.body.classList.toggle('english');
+        }
+        
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
