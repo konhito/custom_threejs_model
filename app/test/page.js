@@ -10,7 +10,7 @@ const FLOWER_DATA = {
   scientificName: "Dianthus caryophyllus L.",
   country: "España (Spain)",
   // S3 URL for GLB file - update with your actual S3 filename
-  glbPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/products/Espana_Carnation.glb",
+  glbPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb",
   sanCode: "SAN-F-191998",
 };
 
