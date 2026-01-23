@@ -9,7 +9,8 @@ const FLOWER_DATA = {
   commonName: "Clavel / Carnation",
   scientificName: "Dianthus caryophyllus L.",
   country: "España (Spain)",
-  glbPath: "/Espana_Carnation.glb",
+  // S3 URL for GLB file - update with your actual S3 filename
+  glbPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/products/Espana_Carnation.glb",
   sanCode: "SAN-F-191998",
 };
 
@@ -57,10 +58,19 @@ export default function TestFlowerPage() {
   const [bgHex, setBgHex] = useState(BACKGROUND_HEX);
   const [viewMode] = useState("side");
   const [lang, setLang] = useState("es"); // "es" | "en"
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure component is mounted on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Shared Three.js loader for a single canvas/model
   const useModelLoader = (canvasRef, glbPath, setLoaded, setError) => {
     useEffect(() => {
+      // Ensure we're in the browser
+      if (typeof window === "undefined") return;
+
       let renderer;
       let camera;
       let animationId;
@@ -83,7 +93,10 @@ export default function TestFlowerPage() {
           );
 
           const container = canvasRef.current;
-          if (!container) return;
+          if (!container) {
+            console.warn("Canvas container not found");
+            return;
+          }
 
           while (container.firstChild) {
             container.removeChild(container.firstChild);
@@ -241,16 +254,30 @@ export default function TestFlowerPage() {
 
   const isLoaded = isFlowerLoaded && isAntLoaded;
 
+  // Show loading state until mounted
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-slate-50 text-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <span className="text-sm text-gray-500">Loading page...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-gray-900 overflow-x-hidden">
       {/* Music Toggle Button - Bottom Left */}
-      <div className="fixed bottom-6 left-6 z-50">
-        <MusicToggleButton
-          src="/Folk Project (España).mp3"
-          autoPlay={true}
-          onLoadComplete={isLoaded}
-        />
-      </div>
+      {typeof window !== "undefined" && (
+        <div className="fixed bottom-6 left-6 z-50">
+          <MusicToggleButton
+            src="/Folk Project (España).mp3"
+            autoPlay={true}
+            onLoadComplete={isLoaded}
+          />
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
         {/* Top bar */}
