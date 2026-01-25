@@ -14,18 +14,160 @@ import {
   Search,
   Archive,
   Layers,
-  Sprout
+  Sprout,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { useTranslation } from "../../lib/useTranslation";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation as SwiperNavigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
-// Flower data
-const FLOWER_DATA = {
-  commonName: "Carnation",
-  scientificName: "Dianthus caryophyllus L.",
-  country: "España (Spain)",
-  glbPath: `/api/glb-proxy?url=${encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb")}`,
-  sanCode: "SAN-F-191998",
+// Helper function to create GLB path
+const createGLBPath = (countryName, flowerName) => {
+  const fileName = `${countryName}_${flowerName}.glb`;
+  return `/api/glb-proxy?url=${encodeURIComponent(`https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/${fileName}`)}`;
 };
+
+// Comprehensive flowers data array with all GLB links
+const FLOWERS_DATA = [
+  {
+    id: "ES_CARNATION",
+    commonName: "Carnation",
+    scientificName: "Dianthus caryophyllus L.",
+    country: "España (Spain)",
+    countryCode: "ES",
+    glbPath: createGLBPath("Espana", "Carnation"),
+    sanCode: "SAN-F-191998",
+    botanicalFamily: "Caryophyllaceae",
+    morphology: "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals and a height of 40‑80 cm.",
+    habitat: "Ornamental crops and Mediterranean gardens; native to the Mediterranean basin and widely cultivated in Spain.",
+    cultural: "The Carnation symbolizes true love, passion and resilience. Since the 16th century it has been linked to Spanish royalty and today is inseparable from flamenco, popular festivities and Mediterranean identity.",
+    conservation: "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat‑loss threats.",
+    nahiaraMeasure: "19 / 25 (Stable)",
+  },
+  {
+    id: "IN_LOTUS",
+    commonName: "Lotus",
+    scientificName: "Nelumbo nucifera",
+    country: "India",
+    countryCode: "IN",
+    glbPath: createGLBPath("India", "Lotus"),
+    sanCode: "SAN-F-191999",
+    botanicalFamily: "Nelumbonaceae",
+    morphology: "Large, fragrant pink or white flowers with broad, floating leaves. Aquatic perennial plant that can live for over 1,000 years.",
+    habitat: "Ponds, lakes, and slow-moving rivers throughout India and Southeast Asia.",
+    cultural: "Sacred in Hinduism and Buddhism, the lotus represents divine beauty, purity, and spiritual awakening. It rises from muddy waters to bloom magnificently, symbolizing the journey from darkness to light.",
+    conservation: "The lotus is India's national flower with strong cultural and religious significance. Nahiara Measure: 22 / 25 (Stable).",
+    nahiaraMeasure: "22 / 25 (Stable)",
+  },
+  {
+    id: "PK_JASMINE",
+    commonName: "Jasmine",
+    scientificName: "Jasminum officinale",
+    country: "Pakistan",
+    countryCode: "PK",
+    glbPath: createGLBPath("Pakistan", "Jasmine"),
+    sanCode: "SAN-F-192000",
+    botanicalFamily: "Oleaceae",
+    morphology: "Small, white, star-shaped flowers with a sweet, intoxicating fragrance. Climbing or trailing shrub.",
+    habitat: "Gardens, parks, and cultivated areas throughout Pakistan and South Asia.",
+    cultural: "Jasmine holds a special place in Pakistani culture, often used in religious ceremonies and traditional celebrations. It symbolizes purity, grace, beauty, and spiritual purity.",
+    conservation: "The jasmine is Pakistan's national flower with strong cultural protection. Nahiara Measure: 20 / 25 (Stable).",
+    nahiaraMeasure: "20 / 25 (Stable)",
+  },
+  {
+    id: "PE_CANTUTA",
+    commonName: "Cantuta",
+    scientificName: "Cantua buxifolia",
+    country: "Peru",
+    countryCode: "PE",
+    glbPath: createGLBPath("Peru", "Cantuta"),
+    sanCode: "SAN-F-192001",
+    botanicalFamily: "Polemoniaceae",
+    morphology: "Tubular flowers in shades of red, pink, and yellow. Shrub or small tree native to the Andes.",
+    habitat: "High-altitude Andean regions, between 2,000 and 3,500 meters above sea level.",
+    cultural: "The cantuta is Peru's national flower, symbolizing the beauty and resilience of the Andean people. It represents the connection between nature and culture in the highlands.",
+    conservation: "The cantuta is Peru's national flower with strong cultural significance. Nahiara Measure: 21 / 25 (Stable).",
+    nahiaraMeasure: "21 / 25 (Stable)",
+  },
+  {
+    id: "TZ_CLOVE",
+    commonName: "Clove",
+    scientificName: "Syzygium aromaticum",
+    country: "Tanzania",
+    countryCode: "TZ",
+    glbPath: createGLBPath("Tanzania", "Clove"),
+    sanCode: "SAN-F-192002",
+    botanicalFamily: "Myrtaceae",
+    morphology: "Small, aromatic flower buds that are dried and used as a spice. Evergreen tree with glossy leaves.",
+    habitat: "Tropical regions, particularly Zanzibar and Pemba islands in Tanzania.",
+    cultural: "The clove is Tanzania's national flower, symbolizing the country's rich spice heritage and natural abundance. It represents the connection between people and the land.",
+    conservation: "The clove is Tanzania's national flower with economic and cultural importance. Nahiara Measure: 19 / 25 (Stable).",
+    nahiaraMeasure: "19 / 25 (Stable)",
+  },
+  {
+    id: "NI_SACUANJOCHE",
+    commonName: "Sacuanjoche",
+    scientificName: "Plumeria rubra",
+    country: "Nicaragua",
+    countryCode: "NI",
+    glbPath: createGLBPath("Nicaragua", "Sacuanjoche"),
+    sanCode: "SAN-F-192003",
+    botanicalFamily: "Apocynaceae",
+    morphology: "Fragrant, waxy flowers in white, pink, yellow, or red. Deciduous tree with thick, succulent branches.",
+    habitat: "Tropical and subtropical regions, gardens, and coastal areas throughout Central America.",
+    cultural: "The sacuanjoche is Nicaragua's national flower, symbolizing beauty, grace, and spiritual enlightenment. It represents the country's tropical beauty and cultural richness.",
+    conservation: "The sacuanjoche is Nicaragua's national flower with strong cultural significance. Nahiara Measure: 20 / 25 (Stable).",
+    nahiaraMeasure: "20 / 25 (Stable)",
+  },
+  {
+    id: "JM_LIGNUM_VITAE",
+    commonName: "Lignum Vitae",
+    scientificName: "Guaiacum officinale",
+    country: "Jamaica",
+    countryCode: "JM",
+    glbPath: createGLBPath("Jamaica", "LignumVitae"),
+    sanCode: "SAN-F-192004",
+    botanicalFamily: "Zygophyllaceae",
+    morphology: "Small, blue to purple flowers with five petals. Slow-growing evergreen tree with very hard wood.",
+    habitat: "Dry coastal forests and limestone areas in the Caribbean, particularly Jamaica.",
+    cultural: "The lignum vitae is Jamaica's national flower, symbolizing strength, endurance, and the island's natural heritage.",
+    conservation: "The lignum vitae is Jamaica's national flower. Nahiara Measure: 18 / 25 (Vulnerable).",
+    nahiaraMeasure: "18 / 25 (Vulnerable)",
+  },
+  {
+    id: "SC_THISTLE",
+    commonName: "Thistle",
+    scientificName: "Cirsium vulgare",
+    country: "Escocia (Scotland)",
+    countryCode: "GB-SCT",
+    glbPath: createGLBPath("Escocia", "Thistle"),
+    sanCode: "SAN-F-192005",
+    botanicalFamily: "Asteraceae",
+    morphology: "Purple or pink flower heads with spiny leaves and stems. Biennial or perennial herb.",
+    habitat: "Meadows, grasslands, and disturbed areas throughout Scotland and the British Isles.",
+    cultural: "The thistle is Scotland's national flower, symbolizing resilience, protection, and the Scottish spirit. According to legend, it helped defend Scotland from Norse invaders.",
+    conservation: "The thistle is Scotland's national flower with strong cultural identity. Nahiara Measure: 20 / 25 (Stable).",
+    nahiaraMeasure: "20 / 25 (Stable)",
+  },
+  {
+    id: "DE_CORNFLOWER",
+    commonName: "Cornflower",
+    scientificName: "Centaurea cyanus",
+    country: "Alemania (Germany)",
+    countryCode: "DE",
+    glbPath: createGLBPath("Alemania", "Cornflower"),
+    sanCode: "SAN-F-192006",
+    botanicalFamily: "Asteraceae",
+    morphology: "Bright blue flower heads with delicate, fringed petals. Annual herbaceous plant.",
+    habitat: "Fields, meadows, and roadsides throughout Europe, particularly Germany.",
+    cultural: "The cornflower is Germany's national flower, symbolizing simplicity, modesty, and the German countryside. It was historically associated with Prussian culture.",
+    conservation: "The cornflower is Germany's national flower. Nahiara Measure: 19 / 25 (Stable).",
+    nahiaraMeasure: "19 / 25 (Stable)",
+  },
+];
 
 const BACKGROUND_HEX = "#E8E6DF";
 const VIEW_OPTION = {
@@ -159,7 +301,7 @@ const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
 };
 
 // Flower 3D Model Viewer Component
-function Flower3DViewer({ t }) {
+function Flower3DViewer({ flower, t, isActive = false }) {
   const flowerCanvasRef = useRef(null);
   const [isFlowerLoaded, setIsFlowerLoaded] = useState(false);
   const [flowerError, setFlowerError] = useState(null);
@@ -169,9 +311,9 @@ function Flower3DViewer({ t }) {
     setIsMounted(true);
   }, []);
 
-  // Three.js loader for flower GLB model
+  // Three.js loader for flower GLB model - lazy load when slide becomes active
   useEffect(() => {
-    if (typeof window === "undefined" || !isMounted) return;
+    if (typeof window === "undefined" || !isMounted || !isActive || !flower.glbPath) return;
 
     let renderer;
     let camera;
@@ -272,7 +414,7 @@ function Flower3DViewer({ t }) {
         loader.setDRACOLoader(dracoLoader);
         loader.setCrossOrigin("anonymous");
         loader.load(
-          FLOWER_DATA.glbPath,
+          flower.glbPath,
           (gltf) => {
             const model = gltf.scene;
             model.traverse((node) => {
@@ -346,7 +488,7 @@ function Flower3DViewer({ t }) {
     return () => {
       cleanupFns.forEach((fn) => fn());
     };
-  }, [isMounted]);
+  }, [isMounted, isActive, flower.glbPath]);
 
   if (!isMounted) {
     return (
@@ -372,34 +514,36 @@ function Flower3DViewer({ t }) {
               className="text-3xl lg:text-4xl font-bold text-gray-900"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
-              {FLOWER_DATA.commonName}
+              {flower.commonName}
             </h2>
             <p className="text-sm text-gray-600 italic">
-              <em>{FLOWER_DATA.scientificName}</em>
+              <em>{flower.scientificName}</em>
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              {FLOWER_DATA.country}
+              {flower.country}
             </p>
           </div>
         </div>
 
         {/* 3D Viewer */}
-        <div className="relative w-full h-[500px] rounded-2xl overflow-hidden isolate mb-6">
-          <div ref={flowerCanvasRef} className="w-full h-full gpu-accelerated" />
-          {!isFlowerLoaded && !flowerError && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
-              <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mb-3" />
-              <span className="text-sm text-gray-500">
-                {t('common.loading') || "Loading 3D model..."}
-              </span>
-            </div>
-          )}
-          {flowerError && (
-            <div className="absolute inset-0 grid place-content-center bg-red-50 text-red-500 text-sm font-medium text-center px-4">
-              {flowerError}
-            </div>
-          )}
-        </div>
+        {flower.glbPath && (
+          <div className="relative w-full h-[500px] rounded-2xl overflow-hidden isolate mb-6">
+            <div ref={flowerCanvasRef} className="w-full h-full gpu-accelerated" />
+            {!isFlowerLoaded && !flowerError && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
+                <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mb-3" />
+                <span className="text-sm text-gray-500">
+                  {t('common.loading') || "Loading 3D model..."}
+                </span>
+              </div>
+            )}
+            {flowerError && (
+              <div className="absolute inset-0 grid place-content-center bg-red-50 text-red-500 text-sm font-medium text-center px-4">
+                {flowerError}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Flower Information */}
         <div className="space-y-6">
@@ -414,27 +558,27 @@ function Flower3DViewer({ t }) {
                   {t('flowers.scientificName') || "Scientific name"}
                 </div>
                 <div className="text-gray-800">
-                  <em>{FLOWER_DATA.scientificName}</em>
+                  <em>{flower.scientificName}</em>
                 </div>
               </div>
               <div className="bg-white/80 rounded-lg px-3 py-2 border-l-4 border-rose-500">
                 <div className="text-[11px] font-semibold text-rose-700 uppercase mb-1">
                   {t('flowers.botanicalFamily') || "Botanical family"}
                 </div>
-                <div className="text-gray-800">Caryophyllaceae</div>
+                <div className="text-gray-800">{flower.botanicalFamily}</div>
               </div>
               <div className="text-xs text-gray-700 space-y-1 mt-3">
                 <p>
                   <span className="font-semibold">
                     {t('flowers.basicMorphology') || "Basic morphology:"}
                   </span>{" "}
-                  {t('flowers.carnationMorphology') || "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals and a height of 40‑80 cm."}
+                  {flower.morphology}
                 </p>
                 <p>
                   <span className="font-semibold">
                     {t('flowers.habitatDistribution') || "Habitat & distribution:"}
                   </span>{" "}
-                  {t('flowers.carnationHabitat') || "Ornamental crops and Mediterranean gardens; native to the Mediterranean basin and widely cultivated in Spain."}
+                  {flower.habitat}
                 </p>
               </div>
             </div>
@@ -446,17 +590,17 @@ function Flower3DViewer({ t }) {
               {t('flowers.culturalSignificance') || "2-5. CULTURE, CONSERVATION & NAHIARA MEASURE"}
             </h3>
             <p className="text-gray-800 text-sm leading-relaxed mb-3">
-              {t('flowers.carnationCulture') || "The Carnation symbolizes true love, passion and resilience. Since the 16th century it has been linked to Spanish royalty and today is inseparable from flamenco, popular festivities and Mediterranean identity."}
+              {flower.cultural}
             </p>
             <p className="text-gray-800 text-sm leading-relaxed">
-              {t('flowers.carnationConservation') || "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat‑loss threats."}
+              {flower.conservation}
             </p>
             <div className="mt-4 text-xs text-gray-600">
               <p>
-                <span className="font-mono font-semibold">S.A.N.:</span> {FLOWER_DATA.sanCode}
+                <span className="font-mono font-semibold">S.A.N.:</span> {flower.sanCode}
               </p>
               <p>
-                {t('flowers.nahiaraMeasure') || "Nahiara Measure: 19 / 25 (Stable)"}
+                {t('flowers.nahiaraMeasure') || "Nahiara Measure:"} {flower.nahiaraMeasure}
               </p>
             </div>
           </div>
@@ -483,6 +627,15 @@ export default function FlowersPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
+      <style jsx>{`
+        .flowers-swiper .swiper-slide {
+          opacity: 0.3;
+          transition: opacity 0.3s;
+        }
+        .flowers-swiper .swiper-slide-active {
+          opacity: 1;
+        }
+      `}</style>
       {/* Aurora-inspired background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Main aurora gradient */}
@@ -611,7 +764,7 @@ export default function FlowersPage() {
           </div>
         </section>
 
-        {/* Flower 3D Viewer Section - In the middle */}
+        {/* Flowers 3D Viewer Section - In the middle */}
         <section className="px-4 sm:px-6 lg:px-8 mb-24">
           <div className="max-w-5xl mx-auto">
             <motion.div
@@ -620,7 +773,36 @@ export default function FlowersPage() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <Flower3DViewer t={t} />
+              <div className="relative">
+                <Swiper
+                  modules={[SwiperNavigation]}
+                  navigation={{
+                    nextEl: '.swiper-button-next-flowers',
+                    prevEl: '.swiper-button-prev-flowers',
+                  }}
+                  spaceBetween={30}
+                  slidesPerView={1}
+                  className="flowers-swiper"
+                >
+                  {FLOWERS_DATA.map((flower, index) => (
+                    <SwiperSlide key={flower.id}>
+                      <Flower3DViewer 
+                        flower={flower} 
+                        t={t}
+                        isActive={true}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                
+                {/* Custom Navigation Buttons */}
+                <button className="swiper-button-prev-flowers absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-4 lg:-translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
+                </button>
+                <button className="swiper-button-next-flowers absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-4 lg:translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
+                </button>
+              </div>
             </motion.div>
           </div>
         </section>
