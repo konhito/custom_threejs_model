@@ -286,7 +286,19 @@
     "exploration3D": "Exploración 3D",
     "exploration3DDesc": "Modelos 3D interactivos y entornos virtuales para aprendizaje inmersivo",
     "conservationFocus": "Enfoque en conservación",
-    "conservationFocusDesc": "Información basada en datos para apoyar los esfuerzos de conservación de polinizadores en todo el mundo"
+    "conservationFocusDesc": "Información basada en datos para apoyar los esfuerzos de conservación de polinizadores en todo el mundo",
+    "biologicalData": "1. DATOS BIOLÓGICOS",
+    "scientificName": "Nombre científico",
+    "group": "Grupo",
+    "socialInsects": "Insectos sociales (Orden Hymenoptera)",
+    "basicMorphology": "Morfología básica:",
+    "antMorphology": "Cuerpo dividido en cabeza, tórax y abdomen, antenas acodadas y fuerte aparato mandibular; tamaño de pocos milímetros a 1–2 cm.",
+    "habitatDistribution": "Hábitat y distribución:",
+    "antHabitat": "Presente en casi todos los ecosistemas terrestres, especialmente en suelos, bordes de caminos y jardines.",
+    "pollinatorRole": "2‑5. ROL POLINIZADOR, CONSERVACIÓN Y MEDIDA ARAIHAN",
+    "antRole": "Las hormigas visitan las flores atraídas por el néctar y las sustancias azucaradas de los pétalos. Aunque suelen considerarse polinizadores secundarios frente a lepidópteros o abejas, favorecen el contacto con el polen en la base de la flor.",
+    "antConservation": "El conjunto de hormigas polinizadoras se evalúa con una Medida Araihan estimada de 18/25: alta eficiencia local y fuerte interdependencia ecológica, pero vulnerable a pesticidas, pérdida de hábitat y cambios en el microclima del suelo.",
+    "araihanMeasure": "Medida Araihan: 18 / 25 (Estable)"
   },
 
   "guardians": {
@@ -320,6 +332,7 @@
     "functionTitle": "Función en AquaMundi",
     "functionText": "La página de Guardianes permite a los visitantes:",
     "function1": "Ver cada flor nacional y su Guardián correspondiente",
+    "exploreFlowers": "Explorar Flores",
     "function2": "Explorar las diferentes legiones de Guardianes y sus propósitos",
     "function3": "Comprender la conexión simbólica entre la naturaleza y la memoria cultural",
     "function4": "Descubrir el papel protector de los Guardianes en la preservación del patrimonio floral"
@@ -679,6 +692,21 @@
     "closingScience": "espécimen botánico",
     "closingMiddle": "—es una ",
     "closingGarden": "historia viviente",
-    "closingAfter": " esperando ser descubierta y compartida con el mundo."
+    "closingAfter": " esperando ser descubierta y compartida con el mundo.",
+    "botanicalData": "1. DATOS BOTÁNICOS",
+    "scientificName": "Nombre científico",
+    "botanicalFamily": "Familia botánica",
+    "basicMorphology": "Morfología básica:",
+    "carnationMorphology": "Amplia gama cromática (blanco, rosa, rojo, amarillo), flores muy fragantes con pétalos dentados y porte de 40‑80 cm.",
+    "habitatDistribution": "Hábitat y distribución:",
+    "carnationHabitat": "Cultivos ornamentales y jardines mediterráneos; nativo de la cuenca mediterránea y muy extendido en España.",
+    "culturalSignificance": "2‑5. CULTURA, CONSERVACIÓN Y MEDIDA NAHIARA",
+    "carnationCulture": "El Clavel simboliza amor verdadero, pasión y resistencia. Desde el siglo XVI está ligado a la realeza española y hoy es inseparable del flamenco, las fiestas populares y la identidad mediterránea.",
+    "carnationConservation": "Aunque no es flor nacional oficial, su peso cultural y su cultivo extensivo le otorgan una Medida Nahiara estable (19/25), con buena protección cultural pero expuesto a amenazas de clima y pérdida de hábitat.",
+    "nahiaraMeasure": "Medida Nahiara: 19 / 25 (Estable)",
+    "selectionCriteriaTitle": "Nuestros Criterios de Selección",
+    "selectionCriteriaSubtitle": "Cada flor se elige cuidadosamente basándose en estos principios fundamentales",
+    "selectionMethodology": "Nuestra metodología rigurosa garantiza la precisión y autenticidad cultural",
+    "exploreGlobe": "Explorar el Globo"
   }
 }

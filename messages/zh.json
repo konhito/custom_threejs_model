@@ -286,7 +286,19 @@
     "exploration3D": "3D探索",
     "exploration3DDesc": "用于沉浸式学习的互动3D模型和虚拟环境",
     "conservationFocus": "保护重点",
-    "conservationFocusDesc": "数据驱动的洞察力支持全球传粉者保护工作"
+    "conservationFocusDesc": "数据驱动的洞察力支持全球传粉者保护工作",
+    "biologicalData": "1. 生物学数据",
+    "scientificName": "学名",
+    "group": "类群",
+    "socialInsects": "社会性昆虫（膜翅目）",
+    "basicMorphology": "基本形态：",
+    "antMorphology": "身体分为头部、胸部和腹部，触角呈肘状，具有强壮的颚；大小从几毫米到1-2厘米。",
+    "habitatDistribution": "栖息地与分布：",
+    "antHabitat": "存在于几乎所有陆地生态系统中，特别是土壤、道路边缘和花园。",
+    "pollinatorRole": "2-5. 传粉者角色、保护与Araihan测量",
+    "antRole": "蚂蚁被花蜜和花瓣上的含糖分泌物吸引而访问花朵。虽然通常被认为是与鳞翅目或蜜蜂相比的次要传粉者，但它们促进了花粉在花基部的接触。",
+    "antConservation": "蚂蚁传粉者群体获得的估计Araihan测量值为18/25：局部效率高，生态相互依存性强，但易受杀虫剂、栖息地丧失和土壤微气候变化的影响。",
+    "araihanMeasure": "Araihan测量：18 / 25（稳定）"
   },
 
   "guardians": {
@@ -320,6 +332,7 @@
     "functionTitle": "在AquaMundi中的功能",
     "functionText": "守护者页面允许访问者：",
     "function1": "查看每朵国花及其对应的守护者",
+    "exploreFlowers": "探索花朵",
     "function2": "探索不同的守护者军团及其目的",
     "function3": "理解自然与文化记忆之间的象征性联系",
     "function4": "发现守护者在保护花卉遗产中的保护作用"
@@ -679,6 +692,21 @@
     "closingScience": "植物标本",
     "closingMiddle": "——它是一个",
     "closingGarden": "活的故事",
-    "closingAfter": "，等待被发现并与世界分享。"
+    "closingAfter": "，等待被发现并与世界分享。",
+    "botanicalData": "1. 植物学数据",
+    "scientificName": "学名",
+    "botanicalFamily": "植物科",
+    "basicMorphology": "基本形态：",
+    "carnationMorphology": "广泛的色彩范围（白色、粉色、红色、黄色），高度芳香的花朵，带有锯齿状花瓣，高度为40-80厘米。",
+    "habitatDistribution": "栖息地与分布：",
+    "carnationHabitat": "观赏作物和地中海花园；原产于地中海盆地，在西班牙广泛种植。",
+    "culturalSignificance": "2-5. 文化、保护与Nahiara测量",
+    "carnationCulture": "康乃馨象征着真爱、激情和韧性。自16世纪以来，它与西班牙皇室联系在一起，今天与弗拉门戈、民间节日和地中海身份密不可分。",
+    "carnationConservation": "虽然不是官方国花，但其文化分量和广泛种植使其获得了稳定的Nahiara测量值（19/25），具有强大的文化保护，但面临气候和栖息地丧失的威胁。",
+    "nahiaraMeasure": "Nahiara测量：19 / 25（稳定）",
+    "selectionCriteriaTitle": "我们的选择标准",
+    "selectionCriteriaSubtitle": "每朵花都是根据这些基本原则精心选择的",
+    "selectionMethodology": "我们严格的方法论确保准确性和文化真实性",
+    "exploreGlobe": "探索地球"
   }
 }

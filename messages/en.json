@@ -286,7 +286,19 @@
     "exploration3D": "3D exploration",
     "exploration3DDesc": "Interactive 3D models and virtual environments for immersive learning",
     "conservationFocus": "Conservation focus",
-    "conservationFocusDesc": "Data-driven insights to support pollinator conservation efforts worldwide"
+    "conservationFocusDesc": "Data-driven insights to support pollinator conservation efforts worldwide",
+    "biologicalData": "1. BIOLOGICAL DATA",
+    "scientificName": "Scientific name",
+    "group": "Group",
+    "socialInsects": "Social insects (Order Hymenoptera)",
+    "basicMorphology": "Basic morphology:",
+    "antMorphology": "Body divided into head, thorax and abdomen, elbowed antennae and strong mandibles; size from a few millimetres to 1–2 cm.",
+    "habitatDistribution": "Habitat & distribution:",
+    "antHabitat": "Present in almost all terrestrial ecosystems, especially soils, path edges and gardens.",
+    "pollinatorRole": "2-5. POLLINATOR ROLE, CONSERVATION & ARAIHAN MEASURE",
+    "antRole": "Ants visit flowers attracted by nectar and sugary exudates on the petals. Although often considered secondary pollinators compared to lepidoptera or bees, they promote contact with pollen at the base of the flower.",
+    "antConservation": "Ant pollinator guilds receive an estimated Araihan Measure of 18/25: high local efficiency and strong ecological interdependence, yet vulnerable to pesticides, habitat loss and changes in soil micro‑climate.",
+    "araihanMeasure": "Araihan Measure: 18 / 25 (Stable)"
   },
 
   "guardians": {
@@ -320,6 +332,7 @@
     "functionTitle": "Function in AquaMundi",
     "functionText": "The Guardians page allows visitors to:",
     "function1": "See each national flower and its corresponding Guardian",
+    "exploreFlowers": "Explore Flowers",
     "function2": "Explore the different Guardian legions and their purposes",
     "function3": "Understand the symbolic connection between nature and cultural memory",
     "function4": "Discover the protective role of Guardians in preserving floral heritage"
@@ -679,6 +692,21 @@
     "closingScience": "botanical specimen",
     "closingMiddle": "—it's a ",
     "closingGarden": "living story",
-    "closingAfter": " waiting to be discovered and shared with the world."
+    "closingAfter": " waiting to be discovered and shared with the world.",
+    "botanicalData": "1. BOTANICAL DATA",
+    "scientificName": "Scientific name",
+    "botanicalFamily": "Botanical family",
+    "basicMorphology": "Basic morphology:",
+    "carnationMorphology": "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals and a height of 40‑80 cm.",
+    "habitatDistribution": "Habitat & distribution:",
+    "carnationHabitat": "Ornamental crops and Mediterranean gardens; native to the Mediterranean basin and widely cultivated in Spain.",
+    "culturalSignificance": "2-5. CULTURE, CONSERVATION & NAHIARA MEASURE",
+    "carnationCulture": "The Carnation symbolizes true love, passion and resilience. Since the 16th century it has been linked to Spanish royalty and today is inseparable from flamenco, popular festivities and Mediterranean identity.",
+    "carnationConservation": "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat‑loss threats.",
+    "nahiaraMeasure": "Nahiara Measure: 19 / 25 (Stable)",
+    "selectionCriteriaTitle": "Our Selection Criteria",
+    "selectionCriteriaSubtitle": "Each flower is carefully chosen based on these fundamental principles",
+    "selectionMethodology": "Our rigorous methodology ensures accuracy and cultural authenticity",
+    "exploreGlobe": "Explore the Globe"
   }
 }

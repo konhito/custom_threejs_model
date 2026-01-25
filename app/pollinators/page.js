@@ -1,212 +1,409 @@
-'use client';
-import { useState, useRef, useEffect } from 'react';
+"use client";
+
+import { motion } from "motion/react";
+import { useState, useRef, useEffect } from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
-import Link from "next/link";
-import { ArrowRight, Heart, Zap, Globe, BookOpen, AlertTriangle, TrendingDown, Shield, Users, Target, ExternalLink, Rotate3D, ChevronLeft, ChevronRight } from "lucide-react";
+import { 
+  Globe2, 
+  Sparkles, 
+  Bug,
+  TrendingDown,
+  Target
+} from "lucide-react";
 import { useTranslation } from "../../lib/useTranslation";
+import Link from "next/link";
 
-// Mobile-Friendly Bar Chart with Horizontal Slider
-function PollinatorDeclineChart({ t }) {
-  const data = [
-    { label: t('pollinators.ofCrops'), percentage: 75, color: "#3b82f6", category: "2016" },
-    { label: t('pollinators.depend'), percentage: 90, color: "#1e40af", category: "2016" },
-    { label: t('pollinators.evidence1'), percentage: 40, color: "#dc2626", category: "2025" },
-    { label: t('pollinators.evidence2'), percentage: 9, color: "#ef4444", category: "2025" },
-    { label: t('pollinators.evidence3'), percentage: 65, color: "#ea580c", category: "US" },
-    { label: t('pollinators.evidence4'), percentage: 22, color: "#f97316", category: "US" }
-  ];
+// Ant pollinator data
+const POLLINATOR_DATA = {
+  commonName: "Ant",
+  scientificName: "Formicidae sp.",
+  roleEn: "Ground pollinator associated with flowers",
+  roleEs: "Polinizador terrestre asociado a las flores",
+  sanCode: "SAN-P-ANT001",
+  glbPath: "/ant.glb",
+};
 
-  const scrollContainerRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+const BACKGROUND_HEX = "#E8E6DF";
+const VIEW_OPTION = {
+  id: "side",
+  label: "Side View",
+  camera: { position: [0, 1.5, 3], lookAt: [0, 0, 0] },
+  controls: {
+    minPolar: Math.PI / 3.2,
+    maxPolar: Math.PI / 1.8,
+    autoRotate: true,
+    autoRotateSpeed: 0.8,
+  },
+};
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+// Floating floral decoration component
+const FloralDecoration = ({ className, delay = 0 }) => (
+  <motion.div
+    className={`absolute pointer-events-none ${className}`}
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ delay, duration: 1, ease: "easeOut" }}
+  >
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="petalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="rgba(147, 197, 253, 0.3)" />
+          <stop offset="50%" stopColor="rgba(196, 181, 253, 0.2)" />
+          <stop offset="100%" stopColor="rgba(249, 168, 212, 0.3)" />
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#glow)" className="animate-float">
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)"/>
+        <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)"/>
+      </g>
+    </svg>
+  </motion.div>
+);
 
-  const checkScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+// Glowing orb decoration
+const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
+  const sizeClasses = {
+    sm: "w-24 h-24",
+    md: "w-40 h-40",
+    lg: "w-64 h-64",
+    xl: "w-96 h-96",
   };
-
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -200 : 200;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      setTimeout(checkScroll, 300);
-    }
+  
+  const colorClasses = {
+    blue: "from-blue-400/20 via-indigo-300/10 to-transparent",
+    purple: "from-purple-400/20 via-violet-300/10 to-transparent",
+    pink: "from-pink-400/20 via-rose-300/10 to-transparent",
+    teal: "from-teal-400/20 via-cyan-300/10 to-transparent",
+    emerald: "from-emerald-400/20 via-green-300/10 to-transparent",
+    amber: "from-amber-400/20 via-yellow-300/10 to-transparent",
+    rainbow: "from-blue-400/15 via-purple-400/15 to-pink-400/15",
   };
-
-  useEffect(() => {
-    checkScroll();
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', checkScroll);
-      return () => container.removeEventListener('scroll', checkScroll);
-    }
-  }, []);
 
   return (
-    <div className="bg-white/95 rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-lg">
-      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
-        {t('pollinators.chartTitle')}
-      </h3>
+    <motion.div
+      className={`absolute rounded-full bg-gradient-radial ${colorClasses[color]} ${sizeClasses[size]} blur-3xl pointer-events-none ${className}`}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay, duration: 1.5, ease: "easeOut" }}
+    />
+  );
+};
+
+// Ant 3D Model Viewer Component
+function Ant3DViewer({ t }) {
+  const antCanvasRef = useRef(null);
+  const [isAntLoaded, setIsAntLoaded] = useState(false);
+  const [antError, setAntError] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Three.js loader for ant GLB model
+  useEffect(() => {
+    if (typeof window === "undefined" || !isMounted) return;
+
+    let renderer;
+    let camera;
+    let animationId;
+    const cleanupFns = [];
+
+    setIsAntLoaded(false);
+    setAntError(null);
+
+    const loadModel = async () => {
+      try {
+        const THREE = await import("three");
+        const { GLTFLoader } = await import(
+          "three/examples/jsm/loaders/GLTFLoader.js"
+        );
+        const { DRACOLoader } = await import(
+          "three/examples/jsm/loaders/DRACOLoader.js"
+        );
+        const { OrbitControls } = await import(
+          "three/examples/jsm/controls/OrbitControls.js"
+        );
+
+        const container = antCanvasRef.current;
+        if (!container) {
+          console.warn("Canvas container not found");
+          return;
+        }
+
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(BACKGROUND_HEX);
+
+        const viewSettings = VIEW_OPTION;
+
+        camera = new THREE.PerspectiveCamera(
+          45,
+          container.clientWidth / container.clientHeight,
+          0.1,
+          100
+        );
+        camera.position.set(...viewSettings.camera.position);
+        camera.lookAt(
+          viewSettings.camera.lookAt[0],
+          viewSettings.camera.lookAt[1],
+          viewSettings.camera.lookAt[2]
+        );
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.setSize(container.clientWidth, container.clientHeight, false);
+        renderer.domElement.style.width = "100%";
+        renderer.domElement.style.height = "100%";
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+        renderer.shadowMap.enabled = true;
+        container.appendChild(renderer.domElement);
+        cleanupFns.push(() => {
+          renderer?.domElement?.parentNode?.removeChild(renderer.domElement);
+          renderer?.dispose();
+        });
+
+        const neutralKey = new THREE.DirectionalLight(0xffffff, 1.2);
+        neutralKey.position.set(4, 6, 3);
+        neutralKey.castShadow = true;
+        scene.add(neutralKey);
+
+        const warmFill = new THREE.DirectionalLight(0xfff1d6, 0.6);
+        warmFill.position.set(-3, 2, -2);
+        scene.add(warmFill);
+
+        const coolRim = new THREE.DirectionalLight(0xd8ecff, 0.45);
+        coolRim.position.set(0, 4, -4);
+        scene.add(coolRim);
+
+        scene.add(new THREE.AmbientLight(0xfaf7f1, 0.5));
+
+        const groundGeo = new THREE.PlaneGeometry(20, 20);
+        const groundMat = new THREE.ShadowMaterial({
+          opacity: 0.18,
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -1;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath(
+          "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+        );
+        dracoLoader.setDecoderConfig({ type: "js" });
+
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+        loader.setCrossOrigin("anonymous");
+        loader.load(
+          POLLINATOR_DATA.glbPath,
+          (gltf) => {
+            const model = gltf.scene;
+            model.traverse((node) => {
+              if (node.isMesh) {
+                node.castShadow = true;
+                node.receiveShadow = true;
+                if (node.material) {
+                  node.material.needsUpdate = true;
+                }
+              }
+            });
+
+            const box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const targetHeight = 1.8;
+            const scale = targetHeight / maxDim;
+            model.scale.setScalar(scale);
+            model.position.sub(center.multiplyScalar(scale));
+
+            scene.add(model);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.autoRotate = viewSettings.controls.autoRotate ?? true;
+            controls.autoRotateSpeed =
+              viewSettings.controls.autoRotateSpeed ?? 0.8;
+            controls.minPolarAngle = viewSettings.controls.minPolar;
+            controls.maxPolarAngle = viewSettings.controls.maxPolar;
+            controls.enablePan = false;
+            cleanupFns.push(() => controls.dispose());
+
+            const animate = () => {
+              animationId = requestAnimationFrame(animate);
+              controls.update();
+              renderer.render(scene, camera);
+            };
+            animate();
+            cleanupFns.push(() => cancelAnimationFrame(animationId));
+
+            const handleResize = () => {
+              if (!container) return;
+              camera.aspect = container.clientWidth / container.clientHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+
+            window.addEventListener("resize", handleResize);
+            setIsAntLoaded(true);
+            cleanupFns.push(() =>
+              window.removeEventListener("resize", handleResize)
+            );
+          },
+          undefined,
+          (error) => {
+            console.error("GLB load error", error);
+            setAntError("Failed to load 3D model.");
+            setIsAntLoaded(false);
+          }
+        );
+      } catch (err) {
+        console.error("Three.js setup error", err);
+        setAntError("Three.js could not initialize.");
+        setIsAntLoaded(false);
+      }
+    };
+
+    loadModel();
+
+    return () => {
+      cleanupFns.forEach((fn) => fn());
+    };
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return (
+      <div className="w-full h-[500px] flex items-center justify-center bg-white/70 backdrop-blur-xl rounded-3xl">
+        <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative group">
+      {/* Glow effect on hover */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-yellow-400/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
-      {/* Mobile: Horizontal Slider */}
-      <div className="md:hidden">
-        <div className="relative">
-          {/* Scroll Buttons */}
-          {canScrollLeft && (
-            <button
-              onClick={() => scroll('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all"
-              aria-label="Scroll left"
+      {/* Card */}
+      <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-md">
+            <Bug className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h2 
+              className="text-3xl lg:text-4xl font-bold text-gray-900"
+              style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </button>
-          )}
-          {canScrollRight && (
-            <button
-              onClick={() => scroll('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 transition-all"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-700" />
-            </button>
-          )}
+              {POLLINATOR_DATA.commonName}
+            </h2>
+            <p className="text-sm text-gray-600 italic">
+              <em>{POLLINATOR_DATA.scientificName}</em>
+            </p>
+          </div>
+        </div>
 
-          {/* Scrollable Container */}
-          <div
-            ref={scrollContainerRef}
-            className="overflow-x-auto hide-scrollbar snap-x snap-mandatory"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            <div className="flex space-x-4 px-8 py-4 min-w-max">
-              {data.map((item, index) => (
-                <div key={index} className="snap-center flex-shrink-0">
-                  <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 border border-gray-200 shadow-md w-[280px] h-[400px] flex flex-col">
-                    {/* Percentage Badge */}
-                    <div className="text-center mb-4">
-                      <div 
-                        className="inline-block px-6 py-3 rounded-full text-white font-bold text-3xl shadow-lg"
-                        style={{ backgroundColor: item.color }}
-                      >
-                        {item.percentage}%
-                      </div>
-                    </div>
-                    
-                    {/* Bar Container */}
-                    <div className="flex-1 flex flex-col justify-end items-center px-4">
-                      <div className="w-full bg-gray-100 rounded-lg overflow-hidden h-[200px] flex flex-col-reverse border border-gray-200">
-                        <div
-                          className="w-full transition-all duration-500 rounded-t-lg relative"
-                          style={{
-                            height: `${item.percentage}%`,
-                            backgroundColor: item.color
-                          }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
-                        </div>
-                      </div>
-                    </div>
+        {/* 3D Viewer */}
+        <div className="relative w-full h-[500px] rounded-2xl overflow-hidden isolate mb-6">
+          <div ref={antCanvasRef} className="w-full h-full gpu-accelerated" />
+          {!isAntLoaded && !antError && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
+              <div className="w-10 h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mb-3" />
+              <span className="text-sm text-gray-500">
+                {t('common.loading') || "Loading 3D model..."}
+              </span>
+            </div>
+          )}
+          {antError && (
+            <div className="absolute inset-0 grid place-content-center bg-red-50 text-red-500 text-sm font-medium text-center px-4">
+              {antError}
+            </div>
+          )}
+        </div>
 
-                    {/* Label */}
-                    <div className="mt-4 text-center">
-                      <p className="text-sm font-semibold text-gray-800 leading-tight">
-                        {item.label}
-                      </p>
-                      <span className="inline-block mt-2 px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-600">
-                        {item.category === "2016" ? t('pollinators.data2016') : item.category === "2025" ? t('pollinators.crisis2025') : t('pollinators.usImpact')}
-                      </span>
-                    </div>
-                  </div>
+        {/* Ant Information */}
+        <div className="space-y-6">
+          {/* Biological Data */}
+          <div className="bg-amber-50/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-amber-700 mb-4">
+              {t('pollinators.biologicalData') || "1. BIOLOGICAL DATA"}
+            </h3>
+            <div className="grid gap-3 text-sm">
+              <div className="bg-white/80 rounded-lg px-3 py-2 border-l-4 border-amber-500">
+                <div className="text-[11px] font-semibold text-amber-700 uppercase mb-1">
+                  {t('pollinators.scientificName') || "Scientific name"}
                 </div>
-              ))}
+                <div className="text-gray-800">
+                  <em>{POLLINATOR_DATA.scientificName}</em>
+                </div>
+              </div>
+              <div className="bg-white/80 rounded-lg px-3 py-2 border-l-4 border-amber-500">
+                <div className="text-[11px] font-semibold text-amber-700 uppercase mb-1">
+                  {t('pollinators.group') || "Group"}
+                </div>
+                <div className="text-gray-800">
+                  {t('pollinators.socialInsects') || "Social insects (Order Hymenoptera)"}
+                </div>
+              </div>
+              <div className="text-xs text-gray-700 space-y-1 mt-3">
+                <p>
+                  <span className="font-semibold">
+                    {t('pollinators.basicMorphology') || "Basic morphology:"}
+                  </span>{" "}
+                  {t('pollinators.antMorphology') || "Body divided into head, thorax and abdomen, elbowed antennae and strong mandibles; size from a few millimetres to 1–2 cm."}
+                </p>
+                <p>
+                  <span className="font-semibold">
+                    {t('pollinators.habitatDistribution') || "Habitat & distribution:"}
+                  </span>{" "}
+                  {t('pollinators.antHabitat') || "Present in almost all terrestrial ecosystems, especially soils, path edges and gardens."}
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="flex justify-center mt-4 space-x-2">
-            {data.map((_, index) => (
-              <div key={index} className="w-2 h-2 bg-gray-300 rounded-full"></div>
-            ))}
+          {/* Pollinator Role */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-amber-700 mb-4">
+              {t('pollinators.pollinatorRole') || "2-5. POLLINATOR ROLE, CONSERVATION & ARAIHAN MEASURE"}
+            </h3>
+            <p className="text-gray-800 text-sm leading-relaxed mb-3">
+              {t('pollinators.antRole') || "Ants visit flowers attracted by nectar and sugary exudates on the petals. Although often considered secondary pollinators compared to lepidoptera or bees, they promote contact with pollen at the base of the flower."}
+            </p>
+            <p className="text-gray-800 text-sm leading-relaxed">
+              {t('pollinators.antConservation') || "Ant pollinator guilds receive an estimated Araihan Measure of 18/25: high local efficiency and strong ecological interdependence, yet vulnerable to pesticides, habitat loss and changes in soil micro‑climate."}
+            </p>
+            <div className="mt-4 text-xs text-gray-600">
+              <p>
+                <span className="font-mono font-semibold">S.A.N.:</span> {POLLINATOR_DATA.sanCode}
+              </p>
+              <p>
+                {t('pollinators.araihanMeasure') || "Araihan Measure: 18 / 25 (Stable)"}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Desktop: Traditional Bar Chart */}
-      <div className="hidden md:block">
-        <div className="relative h-[32rem] lg:h-[36rem] pt-32 lg:pt-36 pb-8">
-          {/* Grid Lines */}
-          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-            {[100, 80, 60, 40, 20, 0].map((value) => (
-              <div key={value} className="flex items-center">
-                <div className="w-12 lg:w-16 text-xs text-gray-400 font-medium pr-3 text-right">
-                  {value}%
-                </div>
-                <div className="flex-1 border-t border-gray-200"></div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bars */}
-          <div className="relative flex items-end justify-center space-x-6 lg:space-x-12 h-full">
-            {data.map((item, index) => (
-              <div key={index} className="flex flex-col items-center relative z-10 group">
-                <div 
-                  className="w-16 lg:w-20 rounded-t-lg relative shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-105"
-                  style={{ 
-                    height: `${(item.percentage / 100) * 28}rem`,
-                    backgroundColor: item.color 
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-t-lg"></div>
-                  <div className="absolute -top-14 lg:-top-16 left-1/2 transform -translate-x-1/2 text-sm font-bold text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: item.color }}>
-                    {item.percentage}%
-                  </div>
-                </div>
-                <div className="mt-6 text-sm text-gray-600 text-center max-w-[120px] leading-tight font-medium">
-                  {item.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      {/* Legend */}
-      <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
-        <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-xs sm:text-sm text-gray-600">
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-blue-600 rounded shadow-sm"></div>
-            <span className="font-medium">{t('pollinators.data2016')}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-red-600 rounded shadow-sm"></div>
-            <span className="font-medium">{t('pollinators.crisis2025')}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 bg-orange-600 rounded shadow-sm"></div>
-            <span className="font-medium">{t('pollinators.usImpact')}</span>
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 }
@@ -216,67 +413,188 @@ export default function PollinatorsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
-      <Navigation />
-      
-      <div className="pt-16 sm:pt-20 px-4 sm:px-6 lg:pr-24 lg:pl-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-8 sm:mb-12 text-center">
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4 sm:mb-6">
-              {t('pollinators.pageTitle')}
-            </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed">
-              {t('pollinators.heroSubtitle')}
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
+      {/* Aurora-inspired background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Main aurora gradient */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 20% 20%, rgba(251, 191, 36, 0.4) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 80% 30%, rgba(249, 115, 22, 0.35) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 50% 80%, rgba(245, 158, 11, 0.3) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 30% at 10% 60%, rgba(217, 119, 6, 0.25) 0%, transparent 50%)
+            `,
+          }}
+        />
+        
+        {/* Animated aurora streaks */}
+        <div 
+          className="absolute inset-0 animate-aurora opacity-20"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                100deg,
+                rgba(251, 191, 36, 0.1) 10%,
+                rgba(249, 115, 22, 0.1) 15%,
+                rgba(245, 158, 11, 0.1) 20%,
+                rgba(217, 119, 6, 0.1) 25%,
+                rgba(251, 191, 36, 0.1) 30%
+              )
+            `,
+            backgroundSize: '300% 200%',
+          }}
+        />
+      </div>
 
-          {/* Guardians of Biodiversity */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-white/20">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-6 sm:mb-8">
-                  {t('pollinators.guardiansTitle')}
-                </h2>
-                <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed">
-                  <p>
-                    {t('pollinators.guardiansText1')}
-                  </p>
-                  <p>
-                    {t('pollinators.guardiansText2')}
-                  </p>
+      {/* Decorative elements */}
+      <GlowingOrb className="top-20 -right-20" color="amber" delay={0.2} size="xl" />
+      <GlowingOrb className="top-1/3 -left-32" color="amber" delay={0.4} size="lg" />
+      <GlowingOrb className="bottom-1/4 right-10" color="amber" delay={0.6} size="md" />
+      <GlowingOrb className="bottom-40 left-1/4" color="amber" delay={0.8} size="lg" />
+      
+      <FloralDecoration className="top-32 right-20 opacity-60" delay={1} />
+      <FloralDecoration className="top-1/2 left-10 opacity-40" delay={1.2} />
+      <FloralDecoration className="bottom-60 right-1/3 opacity-50" delay={1.4} />
+
+      <Navigation />
+
+      <main className="relative pt-24 pb-20">
+        {/* Hero Section */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-24">
+          <div className="max-w-6xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              {/* Decorative line */}
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+                <Bug className="w-5 h-5 text-amber-400" />
+                <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+              </div>
+
+              <h1 
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+                style={{ fontFamily: '"Cormorant Garamond", serif' }}
+              >
+                {t('pollinators.pageTitle')}
+              </h1>
+
+              {/* Separator */}
+              <div className="w-24 h-px bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 mx-auto mb-8" />
+
+              <p 
+                className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed italic"
+                style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
+              >
+                {t('pollinators.heroSubtitle')}
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Guardians Section */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-24">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="group relative">
+                {/* Glow effect on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-yellow-400/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Card */}
+                <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
+                  <h2 
+                    className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6"
+                    style={{ fontFamily: '"Cormorant Garamond", serif' }}
+                  >
+                    {t('pollinators.guardiansTitle')}
+                  </h2>
+                  
+                  <div className="space-y-6">
+                    <p className="text-lg text-gray-700 leading-relaxed">
+                      {t('pollinators.guardiansText1')}
+                    </p>
+                    
+                    <p className="text-gray-600 leading-relaxed">
+                      {t('pollinators.guardiansText2')}
+                    </p>
+                  </div>
+                  
+                  {/* Decorative corner element */}
+                  <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden rounded-tr-3xl">
+                    <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-amber-100/50 to-transparent rounded-full" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </motion.div>
+          </div>
+        </section>
 
-          {/* NAHIARA Manifesto Section */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-red-200">
-              <div className="text-center mb-8 sm:mb-10">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-800 mb-3 sm:mb-4">
-                  {t('pollinators.manifestoTitle')}
-                </h2>
-                <p className="text-lg sm:text-xl text-red-700 font-medium">
-                  {t('pollinators.manifestoSubtitle')}
-                </p>
-              </div>
+        {/* Ant 3D Viewer Section - In the middle */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-24">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <Ant3DViewer t={t} />
+            </motion.div>
+          </div>
+        </section>
 
-              <div className="max-w-5xl mx-auto space-y-8 sm:space-y-10">
-                {/* 2016 Section */}
-                <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
-                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
-                    <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-100 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-600 font-bold text-sm sm:text-base">2016</span>
+        {/* NAHIARA Manifesto Section */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-24">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <h2 
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+                style={{ fontFamily: '"Cormorant Garamond", serif' }}
+              >
+                {t('pollinators.manifestoTitle')}
+              </h2>
+              <div className="w-16 h-px bg-gradient-to-r from-red-400 to-orange-400 mx-auto mb-6" />
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                {t('pollinators.manifestoSubtitle')}
+              </p>
+            </motion.div>
+
+            <div className="space-y-6">
+              {/* 2016 Section */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-6 lg:p-8 border border-red-200 shadow-lg">
+                  <h3 className="text-xl lg:text-2xl font-bold text-red-800 mb-4 flex items-center">
+                    <span className="w-10 h-10 bg-red-100 rounded-full mr-4 flex items-center justify-center text-red-600 font-bold">2016</span>
                     {t('pollinators.ipbesReport')}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
                       <p className="text-gray-700">{t('pollinators.ipbesPoint1')}</p>
@@ -287,14 +605,21 @@ export default function PollinatorsPage() {
                     </div>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* 2025 Section */}
-                <div className="bg-red-100/80 rounded-2xl p-6 sm:p-8 border border-red-300">
-                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
-                    <span className="w-8 sm:w-10 h-8 sm:h-10 bg-red-200 rounded-full mr-3 sm:mr-4 flex items-center justify-center text-red-700 font-bold text-sm sm:text-base">2025</span>
+              {/* 2025 Section */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <div className="bg-red-100/80 backdrop-blur-lg rounded-2xl p-6 lg:p-8 border border-red-300 shadow-lg">
+                  <h3 className="text-xl lg:text-2xl font-bold text-red-800 mb-4 flex items-center">
+                    <span className="w-10 h-10 bg-red-200 rounded-full mr-4 flex items-center justify-center text-red-700 font-bold">2025</span>
                     {t('pollinators.evidence2025')}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                     <div className="flex items-start space-x-3">
                       <TrendingDown className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                       <p className="text-gray-700">{t('pollinators.evidence1')}</p>
@@ -313,326 +638,94 @@ export default function PollinatorsPage() {
                     </div>
                   </div>
                 </div>
+              </motion.div>
 
-                {/* Institutional Inertia Section */}
-                <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-red-200">
-                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-4 sm:mb-6 flex items-center">
-                    <Shield className="w-6 h-6 text-red-600 mr-3" />
-                    {t('pollinators.institutionalInertia')}
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">{t('pollinators.inertia1')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">{t('pollinators.inertia2')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">{t('pollinators.inertia3')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-gray-700">{t('pollinators.inertia4')}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Call for Action Section */}
-                <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 sm:p-8 border border-amber-300">
-                  <h3 className="text-xl sm:text-2xl font-bold text-amber-800 mb-4 sm:mb-6 flex items-center">
+              {/* Call for Action */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 lg:p-8 border border-amber-300 shadow-lg">
+                  <h3 className="text-xl lg:text-2xl font-bold text-amber-800 mb-4 flex items-center">
                     <Target className="w-6 h-6 text-amber-600 mr-3" />
                     {t('pollinators.callForAction')}
                   </h3>
-                  <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
+                  <p className="text-gray-700 mb-4 text-sm">
                     {t('pollinators.callText')}
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
-                    <div className="flex items-start space-x-3">
-                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-                      <p className="text-gray-700">{t('pollinators.action1')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-                      <p className="text-gray-700">{t('pollinators.action2')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-                      <p className="text-gray-700">{t('pollinators.action3')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
-                      <p className="text-gray-700">{t('pollinators.action4')}</p>
-                    </div>
-                    <div className="flex items-start space-x-3 sm:col-span-2">
-                      <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
-                      <p className="text-gray-700">{t('pollinators.action5')}</p>
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <div key={num} className="flex items-start space-x-3">
+                        <span className="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">{num}</span>
+                        <p className="text-gray-700">{t(`pollinators.action${num}`)}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                {/* Conclusion Section */}
-                <div className="bg-red-50 rounded-2xl p-6 sm:p-8 border border-red-200 text-center">
-                  <h3 className="text-xl sm:text-2xl font-bold text-red-800 mb-3 sm:mb-4">{t('pollinators.conclusion')}</h3>
-                  <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                    {t('pollinators.conclusionText')}
-                  </p>
-                </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Chart Section */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-6 sm:mb-8">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
-                  {t('pollinators.numbersTitle')}
-                  </h2>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-700 max-w-2xl mx-auto">
-                    {t('pollinators.numbersSubtitle')}
-                  </p>
-                </div>
+        {/* Quote / Call to Action Section */}
+        <section className="px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="relative group">
+                {/* Animated gradient border */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 rounded-3xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow" />
                 
-                <PollinatorDeclineChart t={t} />
-              </div>
-            </section>
-
-          {/* Guardians Section */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                {t('pollinators.guardiansTitle')}
-                  </h2>
-              <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-                {t('pollinators.guardiansText2')}
-                  </p>
-                </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {/* Bees */}
-              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <span className="text-2xl sm:text-3xl">🐝</span>
-                      </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.bees')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.beesDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.honeybees')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.global')}</span>
-                      </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.bumblebees')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.temperateRegions')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.solitaryBees')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.diverseHabitats')}</span>
-                      </div>
+                {/* Card */}
+                <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-white/50 shadow-2xl text-center overflow-hidden">
+                  {/* Decorative background */}
+                  <div 
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundImage: `
+                        radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.5) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.5) 0%, transparent 40%)
+                      `,
+                    }}
+                  />
+                  
+                  <div className="relative">
+                    <Sparkles className="w-8 h-8 text-amber-400 mx-auto mb-6" />
+                    
+                    <blockquote 
+                      className="text-xl sm:text-2xl lg:text-3xl text-gray-800 leading-relaxed mb-8 italic"
+                      style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
+                    >
+                      &ldquo;{t('pollinators.guardiansText2')}&rdquo;
+                    </blockquote>
+                    
+                    <div className="flex items-center justify-center gap-4 mb-8">
+                      <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+                      <Bug className="w-5 h-5 text-amber-400" />
+                      <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
                     </div>
+                    
+                    <Link
+                      href="/pollinators/gallery"
+                      className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl hover:scale-105 transition-all duration-300"
+                    >
+                      <span>{t('pollinators.exploreGallery') || "Explore Gallery"}</span>
+                      <Globe2 className="w-5 h-5" />
+                    </Link>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
 
-              {/* Birds */}
-              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <span className="text-2xl sm:text-3xl">🐦</span>
-                      </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.birds')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.birdsDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.hummingbirds')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.americas')}</span>
-                      </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.sunbirds')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.africaAsia')}</span>
-                      </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.honeyeaters')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.australia')}</span>
-                      </div>
-                    </div>
-                  </div>
-
-              {/* Butterflies */}
-              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-purple-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <span className="text-2xl sm:text-3xl">🦋</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.butterflies')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.butterfliesDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.monarchs')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.northAmerica')}</span>
-                      </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.swallowtails')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.global')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.hawkMoths')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.nightPollinators')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bats */}
-              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <span className="text-2xl sm:text-3xl">🦇</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.bats')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.batsDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.lesserLongNosed')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.mexicoUS')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.fruitBats')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.tropicalRegions')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.nectarBats')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.desertEcosystems')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Beetles */}
-              <div className="bg-white/90 rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <span className="text-2xl sm:text-3xl">🪲</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.beetles')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.beetlesDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.flowerBeetles')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.diverseSpecies')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.hoverflies')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.beeMimics')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.wasps')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.diverseSpecies')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Impact */}
-              <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl p-6 sm:p-8 border border-amber-200 shadow-lg">
-                <div className="w-16 sm:w-20 h-16 sm:h-20 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <Globe className="w-8 sm:w-10 h-8 sm:h-10 text-white" />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 text-center">{t('pollinators.globalImpactTitle')}</h3>
-                <p className="text-sm sm:text-base text-gray-600 text-center mb-4 sm:mb-6">
-                  {t('pollinators.globalImpactDesc')}
-                </p>
-                <div className="space-y-2 text-xs sm:text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.foodProduction')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.ofCrops')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.wildPlants')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.depend')}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">{t('pollinators.ecosystemHealth')}</span>
-                    <span className="font-semibold text-gray-800">{t('pollinators.critical')}</span>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </section>
-
-          {/* Call to Action */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-amber-200 text-center">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                {t('pollinators.takeAction')}
-                </h2>
-              <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto">
-                {t('pollinators.takeActionText')}
-                </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <Link 
-                  href="/pollinators/gallery"
-                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
-                >
-                  <span>{t('pollinators.exploreGallery')}</span>
-                  <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
-                </Link>
-                <Link 
-                  href="/education"
-                  className="inline-flex items-center space-x-2 bg-white/80 hover:bg-white text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105 border border-amber-200"
-                >
-                  <span>{t('common.learnMore')}</span>
-                  <ExternalLink className="w-4 sm:w-5 h-4 sm:h-5" />
-                </Link>
-              </div>
-              </div>
-            </section>
-
-          {/* Future Vision */}
-          <section className="mb-12 sm:mb-16 lg:mb-20">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 border border-blue-200">
-              <div className="text-center mb-6 sm:mb-8">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">
-                  {t('pollinators.futureVision')}
-                </h2>
-                <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-                  {t('pollinators.futureVisionText')}
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
-                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <Globe className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.globalCoverage')}</h3>
-                  <p className="text-sm text-gray-600">{t('pollinators.globalCoverageDesc')}</p>
-                </div>
-                
-                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
-                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <Rotate3D className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.exploration3D')}</h3>
-                  <p className="text-sm text-gray-600">{t('pollinators.exploration3DDesc')}</p>
-                </div>
-                
-                <div className="bg-white/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
-                  <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <Heart className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">{t('pollinators.conservationFocus')}</h3>
-                  <p className="text-sm text-gray-600">{t('pollinators.conservationFocusDesc')}</p>
-                </div>
-              </div>
-              </div>
-            </section>
-        </div>
-      </div>
       <Footer />
     </div>
   );

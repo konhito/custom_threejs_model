@@ -286,7 +286,19 @@
     "exploration3D": "3D-Erkundung",
     "exploration3DDesc": "Interaktive 3D-Modelle und virtuelle Umgebungen für immersives Lernen",
     "conservationFocus": "Naturschutzfokus",
-    "conservationFocusDesc": "Datengetriebene Erkenntnisse zur Unterstützung von Bestäuberschutzbemühungen weltweit"
+    "conservationFocusDesc": "Datengetriebene Erkenntnisse zur Unterstützung von Bestäuberschutzbemühungen weltweit",
+    "biologicalData": "1. BIOLOGISCHE DATEN",
+    "scientificName": "Wissenschaftlicher Name",
+    "group": "Gruppe",
+    "socialInsects": "Soziale Insekten (Ordnung Hymenoptera)",
+    "basicMorphology": "Grundmorphologie:",
+    "antMorphology": "Körper in Kopf, Thorax und Abdomen unterteilt, geknickte Antennen und starke Mandibeln; Größe von wenigen Millimetern bis 1–2 cm.",
+    "habitatDistribution": "Lebensraum & Verbreitung:",
+    "antHabitat": "In fast allen terrestrischen Ökosystemen vorhanden, insbesondere in Böden, Wegrändern und Gärten.",
+    "pollinatorRole": "2-5. BESTÄUBERROLLE, SCHUTZ & ARAIHAN-MESSUNG",
+    "antRole": "Ameisen besuchen Blumen, die von Nektar und zuckerhaltigen Ausscheidungen auf den Blütenblättern angezogen werden. Obwohl sie oft als sekundäre Bestäuber im Vergleich zu Schmetterlingen oder Bienen betrachtet werden, fördern sie den Kontakt mit Pollen an der Basis der Blume.",
+    "antConservation": "Ameisen-Bestäubergilden erhalten eine geschätzte Araihan-Messung von 18/25: hohe lokale Effizienz und starke ökologische Interdependenz, aber anfällig für Pestizide, Lebensraumverlust und Veränderungen im Bodenmikroklima.",
+    "araihanMeasure": "Araihan-Messung: 18 / 25 (Stabil)"
   },
 
   "guardians": {
@@ -320,6 +332,7 @@
     "functionTitle": "Funktion in AquaMundi",
     "functionText": "Die Wächter-Seite ermöglicht Besuchern:",
     "function1": "Jede Nationalblume und ihren entsprechenden Wächter sehen",
+    "exploreFlowers": "Blumen Erkunden",
     "function2": "Die verschiedenen Wächter-Legionen und ihre Zwecke erkunden",
     "function3": "Die symbolische Verbindung zwischen Natur und kulturellem Gedächtnis verstehen",
     "function4": "Die schützende Rolle der Wächter bei der Bewahrung des Blumen-Erbes entdecken"
@@ -680,6 +693,21 @@
     "closingScience": "botanisches Exemplar",
     "closingMiddle": "—es ist eine ",
     "closingGarden": "lebendige Geschichte",
-    "closingAfter": " die darauf wartet, entdeckt und mit der Welt geteilt zu werden."
+    "closingAfter": " die darauf wartet, entdeckt und mit der Welt geteilt zu werden.",
+    "botanicalData": "1. BOTANISCHE DATEN",
+    "scientificName": "Wissenschaftlicher Name",
+    "botanicalFamily": "Botanische Familie",
+    "basicMorphology": "Grundmorphologie:",
+    "carnationMorphology": "Breite Farbpalette (weiß, rosa, rot, gelb), sehr duftende Blüten mit gezahnten Blütenblättern und einer Höhe von 40‑80 cm.",
+    "habitatDistribution": "Lebensraum & Verbreitung:",
+    "carnationHabitat": "Zierpflanzen und mediterrane Gärten; heimisch im Mittelmeerraum und in Spanien weit verbreitet kultiviert.",
+    "culturalSignificance": "2-5. KULTUR, SCHUTZ & NAHIARA-MESSUNG",
+    "carnationCulture": "Die Nelke symbolisiert wahre Liebe, Leidenschaft und Widerstandsfähigkeit. Seit dem 16. Jahrhundert ist sie mit dem spanischen Königshaus verbunden und heute untrennbar mit Flamenco, Volksfesten und mediterraner Identität verbunden.",
+    "carnationConservation": "Obwohl es keine offizielle Nationalblume ist, verleihen ihr ihr kulturelles Gewicht und ihre extensive Kultivierung eine stabile Nahiara-Messung (19/25) mit starkem kulturellem Schutz, aber Exposition gegenüber Klima- und Lebensraumverlust-Bedrohungen.",
+    "nahiaraMeasure": "Nahiara-Messung: 19 / 25 (Stabil)",
+    "selectionCriteriaTitle": "Unsere Auswahlkriterien",
+    "selectionCriteriaSubtitle": "Jede Blume wird sorgfältig nach diesen Grundprinzipien ausgewählt",
+    "selectionMethodology": "Unsere rigorose Methodik gewährleistet Genauigkeit und kulturelle Authentizität",
+    "exploreGlobe": "Den Globus Erkunden"
   }
 }

@@ -286,7 +286,19 @@
     "exploration3D": "Exploration 3D",
     "exploration3DDesc": "Modèles 3D interactifs et environnements virtuels pour un apprentissage immersif",
     "conservationFocus": "Focus sur la conservation",
-    "conservationFocusDesc": "Informations basées sur les données pour soutenir les efforts de conservation des pollinisateurs dans le monde entier"
+    "conservationFocusDesc": "Informations basées sur les données pour soutenir les efforts de conservation des pollinisateurs dans le monde entier",
+    "biologicalData": "1. DONNÉES BIOLOGIQUES",
+    "scientificName": "Nom scientifique",
+    "group": "Groupe",
+    "socialInsects": "Insectes sociaux (Ordre Hymenoptera)",
+    "basicMorphology": "Morphologie de base :",
+    "antMorphology": "Corps divisé en tête, thorax et abdomen, antennes coudées et fortes mandibules ; taille de quelques millimètres à 1–2 cm.",
+    "habitatDistribution": "Habitat et distribution :",
+    "antHabitat": "Présent dans presque tous les écosystèmes terrestres, en particulier dans les sols, les bords de chemins et les jardins.",
+    "pollinatorRole": "2‑5. RÔLE DE POLLINISATEUR, CONSERVATION ET MESURE ARAIHAN",
+    "antRole": "Les fourmis visitent les fleurs attirées par le nectar et les exsudats sucrés des pétales. Bien qu'elles soient souvent considérées comme des pollinisateurs secondaires par rapport aux lépidoptères ou aux abeilles, elles favorisent le contact avec le pollen à la base de la fleur.",
+    "antConservation": "Les guildes de fourmis pollinisatrices reçoivent une Mesure Araihan estimée de 18/25 : haute efficacité locale et forte interdépendance écologique, mais vulnérables aux pesticides, à la perte d'habitat et aux changements dans le microclimat du sol.",
+    "araihanMeasure": "Mesure Araihan : 18 / 25 (Stable)"
   },
 
   "guardians": {
@@ -320,6 +332,7 @@
     "functionTitle": "Fonction dans AquaMundi",
     "functionText": "La page des Gardiens permet aux visiteurs de :",
     "function1": "Voir chaque fleur nationale et son Gardien correspondant",
+    "exploreFlowers": "Explorer les Fleurs",
     "function2": "Explorer les différentes légions de Gardiens et leurs objectifs",
     "function3": "Comprendre la connexion symbolique entre la nature et la mémoire culturelle",
     "function4": "Découvrir le rôle protecteur des Gardiens dans la préservation du patrimoine floral"
@@ -679,6 +692,21 @@
     "closingScience": "spécimen botanique",
     "closingMiddle": "—c'est une ",
     "closingGarden": "histoire vivante",
-    "closingAfter": " qui attend d'être découverte et partagée avec le monde."
+    "closingAfter": " qui attend d'être découverte et partagée avec le monde.",
+    "botanicalData": "1. DONNÉES BOTANIQUES",
+    "scientificName": "Nom scientifique",
+    "botanicalFamily": "Famille botanique",
+    "basicMorphology": "Morphologie de base :",
+    "carnationMorphology": "Large gamme chromatique (blanc, rose, rouge, jaune), fleurs très parfumées avec pétales dentelés et une hauteur de 40‑80 cm.",
+    "habitatDistribution": "Habitat et distribution :",
+    "carnationHabitat": "Cultures ornementales et jardins méditerranéens ; originaire du bassin méditerranéen et largement cultivé en Espagne.",
+    "culturalSignificance": "2‑5. CULTURE, CONSERVATION ET MESURE NAHIARA",
+    "carnationCulture": "L'Œillet symbolise l'amour véritable, la passion et la résilience. Depuis le XVIe siècle, il est lié à la royauté espagnole et aujourd'hui, il est indissociable du flamenco, des fêtes populaires et de l'identité méditerranéenne.",
+    "carnationConservation": "Bien qu'il ne soit pas une fleur nationale officielle, son poids culturel et sa culture extensive lui confèrent une Mesure Nahiara stable (19/25), avec une forte protection culturelle mais une exposition aux menaces climatiques et de perte d'habitat.",
+    "nahiaraMeasure": "Mesure Nahiara : 19 / 25 (Stable)",
+    "selectionCriteriaTitle": "Nos Critères de Sélection",
+    "selectionCriteriaSubtitle": "Chaque fleur est soigneusement choisie en fonction de ces principes fondamentaux",
+    "selectionMethodology": "Notre méthodologie rigoureuse garantit la précision et l'authenticité culturelle",
+    "exploreGlobe": "Explorer le Globe"
   }
 }
