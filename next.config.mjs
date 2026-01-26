@@ -50,6 +50,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'skiper-ui.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
       ...(process.env.CLOUDFRONT_DOMAIN ? [{
         protocol: 'https',
         hostname: process.env.CLOUDFRONT_DOMAIN,
