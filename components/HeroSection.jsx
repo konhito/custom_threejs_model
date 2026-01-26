@@ -12,11 +12,11 @@ export function HeroSection() {
   // Define line breaks for each language on mobile
   // Line 1: before "and", Line 2: "and" onwards
   const mobileLineBreaks = {
-    en: { line1: "Where nations bloom", line2: "and stories unfold" },
-    es: { line1: "Donde las naciones florecen", line2: "y las historias sedespliegan" },
-    fr: { line1: "Où les nations fleurissent", line2: "et les histoires sedéploient" },
-    zh: { line1: "国家在此绽放", line2: "故事在此展开" },
-    de: { line1: "Wo Nationen erblühen", line2: "und Geschichten sich entfalten" },
+    en: { line1: "Where nations flourish", line2: "and stories come to life" },
+    es: { line1: "Donde las naciones florecen", line2: "y las historias cobran vida" },
+    fr: { line1: "Où les nations s'épanouissent", line2: "et les histoires prennent vie" },
+    zh: { line1: "国家繁荣", line2: "故事鲜活" },
+    de: { line1: "Wo Nationen blühen", line2: "und Geschichten zum Leben erwachen" },
   };
 
   // Get translated subtitle words for desktop (single line)
@@ -27,10 +27,12 @@ export function HeroSection() {
       return [
         { text: "Where", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
         { text: "nations", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
-        { text: "bloom", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "flourish", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
         { text: "and", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
         { text: "stories", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
-        { text: "unfold", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "come", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "to", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
+        { text: "life", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
       ];
     }
     
