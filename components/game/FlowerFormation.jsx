@@ -1,19 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getPetalPath } from "@/lib/gameData";
+import { getCompleteFlowerPath } from "@/lib/gameData";
 import { useTranslation } from "@/lib/useTranslation";
-
-// SVG petal dimensions from the actual files (195.6 x 266.5)
-// The complete flower is a 3x2 grid = 586.8 x 533 total
-const PETAL_WIDTH = 195.6;
-const PETAL_HEIGHT = 266.5;
+import Image from "next/image";
 
 export default function FlowerFormation({ country, onComplete }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showFlower, setShowFlower] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [flowerSize, setFlowerSize] = useState({ width: 480, height: 435 });
   const { t } = useTranslation();
 
   // Play sounds
@@ -31,38 +26,22 @@ export default function FlowerFormation({ country, onComplete }) {
     }
   };
 
-  // Calculate flower size based on window
   useEffect(() => {
-    const calculateSize = () => {
-      const maxWidth = Math.min(window.innerWidth * 0.85, 540);
-      // Maintain exact aspect ratio of 3 petals wide by 2 petals tall
-      // Total aspect ratio = (3 * 195.6) / (2 * 266.5) = 586.8 / 533 = 1.101
-      const totalAspectRatio = (3 * PETAL_WIDTH) / (2 * PETAL_HEIGHT);
-      const width = maxWidth;
-      const height = width / totalAspectRatio;
-      setFlowerSize({ width, height });
-    };
+    // Preload complete flower image
+    const loadImage = async () => {
+      const img = new window.Image();
+      img.src = getCompleteFlowerPath(country.folder, 'svg');
 
-    calculateSize();
-    window.addEventListener("resize", calculateSize);
-    return () => window.removeEventListener("resize", calculateSize);
-  }, []);
+      await new Promise((resolve) => {
+        img.onload = resolve;
+        img.onerror = () => {
+          // Fallback to PNG if SVG fails
+          img.src = getCompleteFlowerPath(country.folder, 'png');
+          img.onload = resolve;
+          img.onerror = resolve;
+        };
+      });
 
-  useEffect(() => {
-    // Preload all petal images
-    const loadImages = async () => {
-      const loadPromises = [];
-      for (let i = 1; i <= 6; i++) {
-        const img = new window.Image();
-        img.src = getPetalPath(country.folder, i);
-        loadPromises.push(
-          new Promise((resolve) => {
-            img.onload = resolve;
-            img.onerror = resolve;
-          })
-        );
-      }
-      await Promise.all(loadPromises);
       setIsLoaded(true);
 
       // Play flower complete sound
@@ -80,10 +59,8 @@ export default function FlowerFormation({ country, onComplete }) {
       }, 1200);
     };
 
-    loadImages();
+    loadImage();
   }, [country]);
-
-  const { width: flowerWidth, height: flowerHeight } = flowerSize;
 
   const handleContinue = () => {
     playSound("button-click");
@@ -91,7 +68,7 @@ export default function FlowerFormation({ country, onComplete }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-start overflow-y-auto overflow-x-hidden">
       {/* Beautiful gradient background */}
       <div
         className="absolute inset-0"
@@ -116,9 +93,8 @@ export default function FlowerFormation({ country, onComplete }) {
                 Math.floor(Math.random() * 4)
               ],
               opacity: 0.4,
-              animation: `float-particle ${
-                8 + Math.random() * 6
-              }s ease-in-out infinite`,
+              animation: `float-particle ${8 + Math.random() * 6
+                }s ease-in-out infinite`,
               animationDelay: `${Math.random() * 5}s`,
             }}
           />
@@ -146,11 +122,29 @@ export default function FlowerFormation({ country, onComplete }) {
         </div>
       )}
 
-      {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 py-4 max-w-2xl w-full">
-        {/* The Restored Flower - Single Unified Element */}
+      {/* Main Content Container - Scrollable with proper spacing */}
+      <div className="relative z-10 flex flex-col items-center justify-start w-full min-h-screen py-4 px-4">
+
+        {/* Flower Name and Country - Top Section */}
         <div
-          className="relative mb-4"
+          className="text-center w-full max-w-2xl mb-3"
+          style={{
+            opacity: showContent ? 1 : 0,
+            transform: showContent ? "translateY(0)" : "translateY(20px)",
+            transition: "all 0.8s ease-out",
+          }}
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-purple-800 mb-2">
+            {country.flowerName}
+          </h2>
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-600 italic">
+            {country.country}
+          </p>
+        </div>
+
+        {/* The Complete Flower Image - Middle Section */}
+        <div
+          className="relative w-full flex items-center justify-center mb-4"
           style={{
             opacity: showFlower ? 1 : 0,
             transform: showFlower ? "scale(1)" : "scale(0.5)",
@@ -159,7 +153,7 @@ export default function FlowerFormation({ country, onComplete }) {
         >
           {/* Soft glow behind flower */}
           <div
-            className="absolute -inset-8 rounded-full"
+            className="absolute -inset-12 sm:-inset-16 md:-inset-20 rounded-full"
             style={{
               background:
                 "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)",
@@ -167,89 +161,65 @@ export default function FlowerFormation({ country, onComplete }) {
             }}
           />
 
-          {/* Flower container with breathing animation */}
-          <div
-            className="relative overflow-hidden rounded-2xl shadow-2xl"
-            style={{
-              width: `${flowerWidth}px`,
-              height: `${flowerHeight}px`,
-              animation: showFlower
-                ? "flower-breathe 4s ease-in-out infinite"
-                : "none",
-              boxShadow:
-                "0 25px 80px -20px rgba(251, 191, 36, 0.5), 0 15px 40px -15px rgba(0, 0, 0, 0.2)",
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gridTemplateRows: "repeat(2, 1fr)",
-              gap: "0px",
-            }}
-          >
-            {/* 6 petals in a 3x2 grid, each with staggered animation */}
-            {isLoaded &&
-              [1, 2, 3, 4, 5, 6].map((petalNum, idx) => (
+          {/* Complete Flower Image Container */}
+          {isLoaded && (
+            <div
+              className="relative rounded-2xl shadow-2xl overflow-hidden bg-white/50 backdrop-blur-sm"
+              style={{
+                width: "100%",
+                maxWidth: "min(85vw, 650px)",
+                animation: showFlower
+                  ? "flower-breathe 4s ease-in-out infinite"
+                  : "none",
+                boxShadow:
+                  "0 25px 80px -20px rgba(251, 191, 36, 0.5), 0 15px 40px -15px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <div className="relative w-full p-4 sm:p-6 md:p-8">
                 <img
-                  key={petalNum}
-                  src={getPetalPath(country.folder, petalNum)}
-                  alt={`Petal ${petalNum}`}
+                  src={getCompleteFlowerPath(country.folder, 'svg')}
+                  alt={`${country.flowerName} - ${country.country}`}
+                  className="w-full h-auto block mx-auto"
                   draggable={false}
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "block",
-                    margin: 0,
-                    padding: 0,
-                    border: "none",
-                    objectFit: "cover",
                     imageRendering: "auto",
                     backfaceVisibility: "hidden",
-                    opacity: showFlower ? 1 : 0,
-                    transform: showFlower ? "scale(1)" : "scale(0.7)",
-                    transition: "opacity 0.5s, transform 0.5s",
-                    transitionDelay: showFlower ? `${0.15 * idx + 0.2}s` : "0s",
+                    maxHeight: "50vh",
+                    objectFit: "contain",
+                  }}
+                  onError={(e) => {
+                    // Fallback to PNG if SVG fails
+                    e.target.src = getCompleteFlowerPath(country.folder, 'png');
                   }}
                 />
-              ))}
+              </div>
 
-            {/* Subtle shimmer overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%)",
-                animation: "shimmer 3s ease-in-out infinite",
-              }}
-            />
-          </div>
+              {/* Subtle shimmer overlay */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%)",
+                  animation: "shimmer 3s ease-in-out infinite",
+                }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Message and CTA */}
+        {/* Continue Button - Bottom Section */}
         <div
-          className="text-center"
+          className="text-center w-full max-w-2xl"
           style={{
             opacity: showContent ? 1 : 0,
             transform: showContent ? "translateY(0)" : "translateY(20px)",
             transition: "all 0.8s ease-out",
+            transitionDelay: "0.2s",
           }}
         >
-          {/* Flower name */}
-          <h2 className="text-3xl md:text-4xl font-bold text-purple-800 mb-2">
-            {country.flowerName}
-          </h2>
-          <p className="text-lg md:text-xl text-purple-600 mb-3 italic">
-            {country.country}
-          </p>
-
-          {/* Main message */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 mb-4 shadow-lg border border-purple-100">
-            <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-800">
-              🌸 {t('game.flowerRestored')} 🌸
-            </p>
-          </div>
-
-          {/* Continue Button */}
           <button
             onClick={handleContinue}
-            className="group relative px-10 py-4 bg-gradient-to-r from-yellow-100 via-pink-100 to-green-100 text-purple-700 text-lg md:text-xl font-bold rounded-full border-2 border-purple-200 shadow-lg hover:shadow-xl hover:bg-white/90 hover:text-purple-900 transform hover:scale-105 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 bg-gradient-to-r from-yellow-100 via-pink-100 to-green-100 text-purple-700 text-lg sm:text-xl md:text-2xl font-bold rounded-full border-2 border-purple-200 shadow-lg hover:shadow-xl hover:bg-white/90 hover:text-purple-900 transform hover:scale-105 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-300"
             style={{
               animation: "button-glow 2s ease-in-out infinite",
             }}
@@ -265,7 +235,6 @@ export default function FlowerFormation({ country, onComplete }) {
 
       {/* CSS Animations */}
       <style jsx>{`
-        /* No extra keyframes needed, handled by inline transition */
         @keyframes flower-breathe {
           0%,
           100% {
