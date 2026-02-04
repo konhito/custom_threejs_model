@@ -205,8 +205,17 @@ const backPath = `/Digital cards - Vol 1/Back card.svg`;
 When 6 petals are collected:
 - Display all 6 petal SVGs in a circular formation
 - Animate them converging to center
-- Show final flower (can use Petal_01.svg as representative or composite)
+- Show final complete flower image from `/complete-flowers/{countryFolder}.svg`
 - Display flower story/description
+
+### Complete Flower Images
+All complete flower images are located in `/complete-flowers/` folder:
+- **Path Pattern**: `/complete-flowers/{countryFolder}.{format}`
+- **Formats**: Both `.svg` (preferred) and `.png` (fallback) available
+- **Countries**: All 8 countries have complete flower images
+  - `Pakistan.svg/png`, `Peru.svg/png`, `Tanzania.svg/png`, `Nicaragua.svg/png`
+  - `Jamaica.svg/png`, `Espana.svg/png`, `Escocia.svg/png`, `Alemania.svg/png`
+- **Function**: Use `getCompleteFlowerPath(countryFolder, format)` from `/lib/gameData.js`
 
 ---
 

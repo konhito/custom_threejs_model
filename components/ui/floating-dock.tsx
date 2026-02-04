@@ -107,20 +107,54 @@ const FloatingDockDesktop = ({
   items: { title: string; icon: React.ReactNode; href: string }[];
   className?: string;
 }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   let mouseY = useMotionValue(Infinity);
+  
   return (
     <motion.div
       onMouseMove={(e) => mouseY.set(e.pageY)}
       onMouseLeave={() => mouseY.set(Infinity)}
       className={cn(
-        "hidden lg:flex flex-col items-center gap-2.5 rounded-2xl px-2 py-2.5 border border-gray-200/60 bg-white/90 backdrop-blur-xl shadow-xl",
+        "hidden lg:flex flex-col items-center gap-2.5 rounded-2xl px-2 py-2.5 border border-gray-200/60 bg-white/90 backdrop-blur-xl shadow-xl transition-all duration-300",
+        isCollapsed ? "px-2.5" : "",
         className,
       )}
       style={{ overflow: 'visible' }}
     >
-      {items.map((item) => (
-        <IconContainer mouseY={mouseY} key={item.title} {...item} />
-      ))}
+      <AnimatePresence mode="wait">
+        {!isCollapsed && (
+          <motion.div
+            key="items"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col items-center gap-2.5"
+          >
+            {items.map((item) => (
+              <IconContainer mouseY={mouseY} key={item.title} {...item} />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Collapse/Expand Button */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className={cn(
+          "flex items-center justify-center rounded-full transition-all duration-300 border border-gray-200/40 hover:border-gray-300/50",
+          isCollapsed ? "w-10 h-10" : "w-8 h-8 mt-1"
+        )}
+        aria-label={isCollapsed ? "Expand menu" : "Collapse menu"}
+      >
+        <IconLayoutNavbarCollapse 
+          className={cn(
+            "text-gray-600 hover:text-gray-700 transition-transform duration-300",
+            isCollapsed ? "rotate-180" : ""
+          )}
+          style={{ width: isCollapsed ? 20 : 16, height: isCollapsed ? 20 : 16 }}
+        />
+      </button>
     </motion.div>
   );
 };

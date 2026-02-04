@@ -37,7 +37,7 @@ export default function Card({ card, isFlipped, onFlip, disabled, index = 0, tot
 
   return (
     <div
-      className={`relative cursor-pointer transition-all duration-300 w-[80px] h-[110px] md:w-[100px] md:h-[140px] lg:w-[110px] lg:h-[155px] ${
+      className={`relative cursor-pointer transition-all duration-300 w-[100px] h-[140px] sm:w-[110px] sm:h-[155px] md:w-[120px] md:h-[170px] lg:w-[130px] lg:h-[185px] ${
         disabled || isFlipped ? "cursor-not-allowed" : "cursor-pointer hover:scale-110"
       }`}
       onClick={handleClick}

@@ -7,7 +7,7 @@ import GameLoader from "@/components/game/GameLoader";
 import StartButton from "@/components/game/StartButton";
 import AraihanGuide from "@/components/game/AraihanGuide";
 import WorldMapGarden from "@/components/game/WorldMapGarden";
-import { countriesData, getPetalPath, getCardBackPath, minionTypes, guardianTypes } from "@/lib/gameData";
+import { countriesData, getPetalPath, getCardBackPath, minionTypes, guardianTypes, verifyCompleteFlowerImages } from "@/lib/gameData";
 import Image from "next/image";
 import { Volume2, VolumeX } from "lucide-react";
 import GridScan from "../../components/GridScan";
@@ -49,6 +49,9 @@ export default function GamePage() {
           console.error('Failed to load completed flowers:', e);
         }
       }
+      
+      // Verify all countries have complete flower images mapped
+      verifyCompleteFlowerImages();
     }
   }, []);
 
@@ -539,19 +542,19 @@ export default function GamePage() {
       )}
 
 
-      {/* Mute Button - Top Left - Adjusted for mobile */}
+      {/* Mute Button - Top Left - Adjusted for mobile - Scaled up */}
       <button
         onClick={toggleMute}
-        className={`fixed top-4 left-4 md:top-6 md:left-6 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[9996] ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets)
+        className={`fixed top-4 left-4 md:top-6 md:left-6 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[9996] touch-manipulation ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets)
           ? "bg-black/10 hover:bg-black/20"
           : "bg-white/10 hover:bg-white/20"
           }`}
         aria-label={isMuted ? "Unmute" : "Mute"}
       >
         {isMuted ? (
-          <VolumeX className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets) ? "text-black" : "text-white"}`} />
+          <VolumeX className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets) ? "text-black" : "text-white"}`} />
         ) : (
-          <Volume2 className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets) ? "text-black" : "text-white"}`} />
+          <Volume2 className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${gameState === "completed" || (gameState === "playing" && !isLoadingAssets) ? "text-black" : "text-white"}`} />
         )}
       </button>
 

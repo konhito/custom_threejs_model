@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCompleteFlowerPath } from "@/lib/gameData";
+import { getCompleteFlowerPath, getCompleteFlowerPathFallbacks } from "@/lib/gameData";
 import { useTranslation } from "@/lib/useTranslation";
 import Image from "next/image";
 
@@ -27,20 +27,80 @@ export default function FlowerFormation({ country, onComplete }) {
   };
 
   useEffect(() => {
-    // Preload complete flower image
+    // Preload complete flower image with improved error handling and case-insensitive fallbacks
     const loadImage = async () => {
-      const img = new window.Image();
-      img.src = getCompleteFlowerPath(country.folder, 'svg');
+      const svgFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'svg');
+      const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'png');
+      
+      let loadedSuccessfully = false;
+      let finalImagePath = svgFallbacks[0];
 
-      await new Promise((resolve) => {
-        img.onload = resolve;
-        img.onerror = () => {
-          // Fallback to PNG if SVG fails
-          img.src = getCompleteFlowerPath(country.folder, 'png');
-          img.onload = resolve;
-          img.onerror = resolve;
-        };
-      });
+      // Try loading image with multiple fallback paths
+      const tryLoadImage = (imagePaths) => {
+        return new Promise((resolve) => {
+          let currentIndex = 0;
+          let timeoutId = null;
+          
+          const tryNext = () => {
+            // Clear any existing timeout
+            if (timeoutId) {
+              clearTimeout(timeoutId);
+              timeoutId = null;
+            }
+            
+            if (currentIndex >= imagePaths.length) {
+              resolve(false);
+              return;
+            }
+            
+            const img = new window.Image();
+            const currentPath = imagePaths[currentIndex];
+            const indexToCheck = currentIndex; // Capture index for timeout check
+            
+            img.onload = () => {
+              if (timeoutId) clearTimeout(timeoutId);
+              loadedSuccessfully = true;
+              finalImagePath = currentPath;
+              console.log(`Successfully loaded: ${currentPath}`);
+              resolve(true);
+            };
+            
+            img.onerror = () => {
+              if (timeoutId) clearTimeout(timeoutId);
+              console.warn(`Failed to load ${currentPath}, trying next fallback...`);
+              currentIndex++;
+              tryNext();
+            };
+            
+            img.src = currentPath;
+            
+            // Timeout after 3 seconds per path
+            timeoutId = setTimeout(() => {
+              if (!loadedSuccessfully && currentIndex === indexToCheck) {
+                console.warn(`Timeout loading ${currentPath}`);
+                currentIndex++;
+                tryNext();
+              }
+            }, 3000);
+          };
+          
+          tryNext();
+        });
+      };
+
+      // Try SVG paths first (with all fallbacks)
+      const svgLoaded = await tryLoadImage(svgFallbacks);
+      
+      // If SVG failed, try PNG paths (with all fallbacks)
+      if (!svgLoaded) {
+        const pngLoaded = await tryLoadImage(pngFallbacks);
+        if (!pngLoaded) {
+          console.error(`Failed to load complete flower for ${country.folder}. Tried all SVG and PNG fallbacks.`);
+          // Still set loaded to true to show the UI, but image will show broken
+          setIsLoaded(true);
+          return;
+        }
+      }
 
       setIsLoaded(true);
 
@@ -188,8 +248,31 @@ export default function FlowerFormation({ country, onComplete }) {
                     objectFit: "contain",
                   }}
                   onError={(e) => {
-                    // Fallback to PNG if SVG fails
-                    e.target.src = getCompleteFlowerPath(country.folder, 'png');
+                    const currentSrc = e.target.src;
+                    const fallbacks = getCompleteFlowerPathFallbacks(country.folder, 
+                      currentSrc.includes('.png') ? 'png' : 'svg'
+                    );
+                    
+                    // Find current path index and try next fallback
+                    const currentIndex = fallbacks.findIndex(path => currentSrc.includes(path.split('/').pop()));
+                    const nextIndex = currentIndex + 1;
+                    
+                    if (nextIndex < fallbacks.length) {
+                      console.log(`Trying fallback ${nextIndex + 1}/${fallbacks.length} for ${country.folder}...`);
+                      e.target.src = fallbacks[nextIndex];
+                    } else {
+                      // If all SVG fallbacks failed, try PNG fallbacks
+                      if (currentSrc.includes('.svg')) {
+                        const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'png');
+                        console.log(`All SVG paths failed, trying PNG fallbacks for ${country.folder}...`);
+                        e.target.src = pngFallbacks[0];
+                      } else {
+                        console.error(`All paths failed for ${country.folder}. Last tried: ${currentSrc}`);
+                      }
+                    }
+                  }}
+                  onLoad={() => {
+                    console.log(`Successfully loaded complete flower for ${country.folder}`);
                   }}
                 />
               </div>
