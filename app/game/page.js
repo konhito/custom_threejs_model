@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+// ... imports
+import { useState, useEffect, useCallback, useRef } from "react";
 import GameBoard from "@/components/game/GameBoard";
 import FlowerFormation from "@/components/game/FlowerFormation";
-import GameLoader from "@/components/game/GameLoader";
+import PageLoader from "@/components/PageLoader"; // Replaces GameLoader
 import StartButton from "@/components/game/StartButton";
 import AraihanGuide from "@/components/game/AraihanGuide";
 import WorldMapGarden from "@/components/game/WorldMapGarden";
@@ -30,6 +31,78 @@ export default function GamePage() {
   const [isSharing, setIsSharing] = useState(false); // Share button loading state
   const [completedFlowers, setCompletedFlowers] = useState([]); // Track all completed flowers for world map
   const { t } = useTranslation();
+
+  // Initial loader logic (formerly in GameLoader)
+  useEffect(() => {
+    // Minimum time to show the loader (to allow for smooth animation)
+    const MIN_LOADER_TIME = 4000;
+    const startTime = Date.now();
+
+    // Play loading sound
+    const playLoadingSound = () => {
+      try {
+        if (typeof window !== "undefined") {
+          import("@/lib/soundUtils").then((module) => {
+            module.default.play("loading");
+          }).catch(() => { });
+        }
+      } catch (error) {
+        console.log("Could not play loading sound");
+      }
+    };
+    playLoadingSound();
+
+    // Preload basic assets
+    const preloadAssets = async () => {
+      const assetsToLoad = [];
+      const loadImage = (src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve;
+          img.src = src;
+        });
+      };
+
+      // Load card back
+      assetsToLoad.push(loadImage(getCardBackPath()));
+
+      // Load first country's petals
+      if (countriesData.length > 0) {
+        const firstCountry = countriesData[0];
+        for (let i = 1; i <= 6; i++) {
+          assetsToLoad.push(loadImage(getPetalPath(firstCountry.folder, i)));
+        }
+      }
+
+      // Load guardian & minion images
+      guardianTypes.forEach((guardian) => {
+        assetsToLoad.push(loadImage(guardian.image));
+      });
+      minionTypes.forEach((minion) => {
+        assetsToLoad.push(loadImage(minion.image));
+      });
+
+      // Wait for assets or timeout
+      await Promise.race([
+        Promise.allSettled(assetsToLoad),
+        new Promise(resolve => setTimeout(resolve, 3000))
+      ]);
+    };
+
+    const runLoader = async () => {
+      await preloadAssets();
+
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, remaining);
+    };
+
+    runLoader();
+  }, []);
 
   // Check if user has seen intro before (localStorage) and load completed flowers
   useEffect(() => {
@@ -286,11 +359,7 @@ export default function GamePage() {
     }
   };
 
-  const handleLoaderComplete = () => {
-    setIsLoading(false);
-  };
-
-  // Load all flower assets
+  // Load all flower assets (for game start)
   const loadAllFlowerAssets = useCallback(async () => {
     setIsLoadingAssets(true);
 
@@ -408,15 +477,14 @@ export default function GamePage() {
     });
   };
 
-  // Show initial loader while loading
-  if (isLoading) {
-    return <GameLoader onComplete={handleLoaderComplete} />;
-  }
-
   return (
     <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${(gameState === "playing" && !isLoadingAssets) || gameState === "completed" ? "bg-white text-black" : "bg-black text-white"}`}>
+
+      {/* Page Loader - visible while isLoading is true */}
+      <PageLoader isLoading={isLoading} />
+
       {/* GridScan background - Only show before card game loads */}
-      {!gameState || (gameState !== "playing" && gameState !== "completed") || isLoadingAssets ? (
+      {(!gameState || (gameState !== "playing" && gameState !== "completed") || isLoadingAssets) && !isLoading ? (
         <div className="fixed inset-0 z-0" style={{ width: '100%', height: '100%' }}>
           <GridScan
             sensitivity={0.55}
@@ -436,7 +504,9 @@ export default function GamePage() {
         <div
           className="fixed inset-0 z-0"
           style={{
-            background: 'linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)'
+            background: 'linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)',
+            opacity: isLoading ? 0 : 1, // Hide during loading
+            transition: 'opacity 0.5s ease-out'
           }}
         >
           {/* Subtle leaf outlines scattered across background */}
