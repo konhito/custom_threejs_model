@@ -239,9 +239,9 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       
       if (result === "reset") {
         // Calculate message typing duration + 2 seconds wait time
-        // Message: "You revealed the [Minion Name] minion. The ecosystem falls back. We must start again…"
+        // Message: "You revealed the [Minion Name] minion. The ecosystem is set back. We must start again…"
         const minionName = card.minionData?.name || "minion";
-        const message = `You revealed the ${minionName} minion. The ecosystem falls back. We must start again…`;
+        const message = `You revealed the ${minionName} minion. The ecosystem is set back. We must start again…`;
         const typingSpeed = 20; // ms per character (from AraihanGuide)
         const typingDuration = message.length * typingSpeed;
         const waitAfterTyping = 2000; // 2 seconds after message finishes
@@ -293,49 +293,49 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
 
   return (
     <div className="w-full relative flex-1 flex flex-col overflow-visible">
-      {/* Game Status Bar - UNO Style - Mobile Optimized */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-2 mb-2 md:mb-3 px-2 sm:px-4 relative overflow-visible mt-14 md:mt-0">
+      {/* Game Status Bar - UNO Style - Mobile Optimized - Scaled up */}
+      <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0">
         {/* Petal Counter Card */}
-        <div className="bg-white border-2 border-purple-200 rounded-xl px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-2.5 shadow-lg flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 md:gap-3 w-full max-w-md overflow-hidden">
-            <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-shrink-0">
-              <div className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🌸</div>
+        <div className="bg-white border-2 border-purple-200 rounded-xl px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 shadow-lg flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 w-full max-w-md overflow-hidden">
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
+              <div className="text-xl sm:text-2xl md:text-3xl flex-shrink-0">🌸</div>
               <div className="flex flex-col min-w-0">
-                <div className="text-gray-600 text-[8px] sm:text-[9px] md:text-[10px] font-medium whitespace-nowrap">Petals Collected</div>
-                <div className="text-black text-sm sm:text-base md:text-lg font-bold whitespace-nowrap">
+                <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
+                <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
                   {petalsCollected} / {PETAL_COUNT}
                 </div>
               </div>
             </div>
-            <div className="flex gap-1 sm:gap-1 md:gap-1.5 flex-shrink-0">
+            <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0">
               {Array.from({ length: PETAL_COUNT }).map((_, i) => (
                 <div
                   key={i}
-                  className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${
+                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${
                   i < petalsCollected
                     ? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-300 scale-110 shadow-lg ring-2 ring-purple-200"
                     : "bg-gray-100 border-gray-300 scale-100"
                 }`}
               >
                 {i < petalsCollected && (
-                  <span className="text-white text-[10px] sm:text-xs md:text-sm">✓</span>
+                  <span className="text-white text-xs sm:text-sm md:text-base">✓</span>
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Araihan Character - Outside the box, next to it - Mobile optimized */}
+        {/* Araihan - Abstract Light/Aura Representation - Outside the box, next to it - Mobile optimized */}
         <div className="absolute right-2 sm:right-4 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
           {/* Improved hover effect - subtle glow */}
-          <div className="absolute inset-0 rounded-full bg-red-500/0 group-hover:bg-red-500/10 transition-all duration-500 ease-out blur-lg -z-10 scale-125 pointer-events-none"
+          <div className="absolute inset-0 rounded-full bg-yellow-500/0 group-hover:bg-yellow-500/10 transition-all duration-500 ease-out blur-lg -z-10 scale-125 pointer-events-none"
                style={{
                  animation: 'none',
                }}></div>
           
           <div className="relative group">
-            {/* Animated SVG Creature Character - Red & Black, Non-Human */}
+            {/* Abstract Light/Aura Representation - Energy, Light, Life */}
             <div 
-              className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer ${
+              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer relative ${
                 lastRevealedCard 
                   ? "animate-bounce scale-110" 
                   : "animate-pulse-slow scale-100 animate-float group-hover:scale-110 group-hover:brightness-110"
@@ -353,89 +353,150 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                 }
               }}
             >
-              <svg
-                width="56"
-                height="56"
-                viewBox="0 0 56 56"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-              >
-                {/* Creature Body - Organic blob shape */}
-                <path d="M28 40 Q20 38 18 32 Q16 26 20 24 Q18 22 22 20 Q26 18 28 22 Q30 18 34 20 Q38 22 36 24 Q40 26 38 32 Q36 38 28 40 Z" fill="#DC2626" />
-                
-                {/* Creature Head - Round but organic */}
-                <ellipse cx="28" cy="18" rx="10" ry="11" fill="#DC2626" />
-                
-                {/* Black Pattern/Spots on body */}
-                <circle cx="24" cy="30" r="2.5" fill="#1F2937" opacity="0.7" />
-                <circle cx="32" cy="28" r="2" fill="#1F2937" opacity="0.7" />
-                <circle cx="26" cy="34" r="1.5" fill="#1F2937" opacity="0.6" />
-                
-                {/* Eyes - Multiple simple dots */}
-                {!lastRevealedCard ? (
-                  // Sleeping - small dots
-                  <>
-                    <circle cx="24" cy="18" r="1.5" fill="#1F2937" opacity="0.5" />
-                    <circle cx="32" cy="18" r="1.5" fill="#1F2937" opacity="0.5" />
-                  </>
-                ) : (
-                  // Active - larger bright eyes
-                  <>
-                    <circle cx="24" cy="18" r="3" fill="#1F2937" />
-                    <circle cx="32" cy="18" r="3" fill="#1F2937" />
-                    <circle cx="24" cy="18" r="1.5" fill="#DC2626" />
-                    <circle cx="32" cy="18" r="1.5" fill="#DC2626" />
-                  </>
-                )}
-                
-                {/* Simple mouth/opening */}
-                {!lastRevealedCard ? (
-                  // Sleeping - closed
-                  <ellipse cx="28" cy="22" rx="2" ry="1" fill="#1F2937" opacity="0.4" />
-                ) : (
-                  // Active - open
-                  <ellipse cx="28" cy="22" rx="3" ry="2" fill="#1F2937" opacity="0.6" />
-                )}
-                
-                {/* Small appendages/tentacles */}
-                <ellipse cx="16" cy="26" rx="2" ry="5" fill="#DC2626" transform="rotate(-30 16 26)" />
-                <ellipse cx="40" cy="26" rx="2" ry="5" fill="#DC2626" transform="rotate(30 40 26)" />
-                <ellipse cx="20" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(-20 20 36)" />
-                <ellipse cx="36" cy="36" rx="2" ry="4" fill="#DC2626" transform="rotate(20 36 36)" />
-                
-                {/* Improved glow effect when active - subtle pulse */}
-                {lastRevealedCard && (
-                  <>
-                    <circle 
-                      cx="28" 
-                      cy="28" 
-                      r="22" 
-                      fill="#DC2626" 
-                      opacity="0.1" 
+              {/* Outer glow ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-200/50 via-amber-200/40 to-transparent animate-pulse" />
+              
+              {/* Central luminous core */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                {/* Light particles - floating (more when active) */}
+                {Array.from({ length: lastRevealedCard ? 12 : 8 }).map((_, i) => {
+                  const angle = (i / (lastRevealedCard ? 12 : 8)) * Math.PI * 2;
+                  const radius = lastRevealedCard ? 16 : 12;
+                  return (
+                    <div
+                      key={i}
+                      className="absolute rounded-full bg-yellow-300/70"
                       style={{
-                        animation: 'glow-pulse-smooth 2s ease-in-out infinite',
+                        width: lastRevealedCard ? '5px' : '4px',
+                        height: lastRevealedCard ? '5px' : '4px',
+                        left: `calc(50% + ${Math.cos(angle) * radius}px)`,
+                        top: `calc(50% + ${Math.sin(angle) * radius}px)`,
+                        transform: 'translate(-50%, -50%)',
+                        animation: `float-particle ${2 + i * 0.3}s ease-in-out infinite`,
+                        animationDelay: `${i * 0.2}s`,
+                        boxShadow: lastRevealedCard 
+                          ? '0 0 12px rgba(251, 191, 36, 1)' 
+                          : '0 0 8px rgba(251, 191, 36, 0.8)',
                       }}
                     />
-                    <circle 
-                      cx="28" 
-                      cy="28" 
-                      r="20" 
-                      fill="#DC2626" 
-                      opacity="0.08" 
+                  );
+                })}
+                
+                {/* Faceless luminous silhouette - abstract form */}
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
+                  {/* Main aura shape - organic, flowing */}
+                  <div 
+                    className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-300/90 via-amber-200/70 to-yellow-100/50"
+                    style={{
+                      filter: 'blur(2px)',
+                      animation: lastRevealedCard ? 'aura-pulse-active 2s ease-in-out infinite' : 'aura-pulse 3s ease-in-out infinite',
+                    }}
+                  />
+                  
+                  {/* Inner light core */}
+                  <div 
+                    className="absolute inset-2 rounded-full bg-gradient-radial from-white via-yellow-200 to-transparent"
+                    style={{
+                      filter: 'blur(1px)',
+                      animation: lastRevealedCard ? 'core-glow-active 1.5s ease-in-out infinite' : 'core-glow 2s ease-in-out infinite',
+                    }}
+                  />
+                  
+                  {/* Energy waves */}
+                  <div 
+                    className="absolute inset-0 rounded-full border-2 border-yellow-300/50"
+                    style={{
+                      animation: lastRevealedCard ? 'energy-wave-active 2s ease-out infinite' : 'energy-wave 2.5s ease-out infinite',
+                    }}
+                  />
+                  
+                  {/* Additional energy wave when active */}
+                  {lastRevealedCard && (
+                    <div 
+                      className="absolute inset-0 rounded-full border-2 border-amber-400/60"
                       style={{
-                        animation: 'glow-pulse-smooth 2s ease-in-out infinite 0.3s',
+                        animation: 'energy-wave-active 2s ease-out infinite 0.5s',
                       }}
                     />
-                  </>
-                )}
-              </svg>
+                  )}
+                </div>
+              </div>
+              
+              {/* CSS Animations */}
+              <style jsx>{`
+                @keyframes float-particle {
+                  0%, 100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.6;
+                  }
+                  50% {
+                    transform: translate(-50%, -50%) scale(1.3) translateY(-4px);
+                    opacity: 1;
+                  }
+                }
+                @keyframes aura-pulse {
+                  0%, 100% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                  }
+                  50% {
+                    transform: scale(1.1);
+                    opacity: 1;
+                  }
+                }
+                @keyframes aura-pulse-active {
+                  0%, 100% {
+                    transform: scale(1);
+                    opacity: 1;
+                  }
+                  50% {
+                    transform: scale(1.15);
+                    opacity: 1;
+                  }
+                }
+                @keyframes core-glow {
+                  0%, 100% {
+                    opacity: 0.7;
+                  }
+                  50% {
+                    opacity: 1;
+                  }
+                }
+                @keyframes core-glow-active {
+                  0%, 100% {
+                    opacity: 0.9;
+                  }
+                  50% {
+                    opacity: 1;
+                  }
+                }
+                @keyframes energy-wave {
+                  0% {
+                    transform: scale(1);
+                    opacity: 0.6;
+                  }
+                  100% {
+                    transform: scale(1.5);
+                    opacity: 0;
+                  }
+                }
+                @keyframes energy-wave-active {
+                  0% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                  }
+                  100% {
+                    transform: scale(1.6);
+                    opacity: 0;
+                  }
+                }
+              `}</style>
             </div>
             
-            {/* Sleeping state - Zzz when idle */}
+            {/* Resting state - subtle glow when idle */}
             {!lastRevealedCard && (
-              <div className="absolute -top-1 -right-1 text-yellow-200 text-[10px] animate-pulse font-bold">
-                zzz
+              <div className="absolute -top-1 -right-1 text-yellow-300/60 text-[8px] animate-pulse font-bold">
+                ✨
               </div>
             )}
 
@@ -447,10 +508,10 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                   overflowWrap: 'break-word',
                   lineHeight: '1.4'
                 }}>
-                  {lastCardType === "petal" && "Wow petal card!"}
-                  {lastCardType === "minion" && !hasGuardian && "Oh no minion!"}
-                  {lastCardType === "minion" && hasGuardian && "Guardian saved!"}
-                  {lastCardType === "guardian" && activeGuardian && "Guardian active!"}
+                  {lastCardType === "petal" && "Petal collected!"}
+                  {lastCardType === "minion" && !hasGuardian && "Minion revealed!"}
+                  {lastCardType === "minion" && hasGuardian && "Guardian protection activated!"}
+                  {lastCardType === "guardian" && activeGuardian && "Guardian activated!"}
                   {hasGuardian && activeGuardian && !lastRevealedCard && "Guardian protecting!"}
                 </p>
                 {/* Speech bubble tail - pointing left, centered vertically */}
@@ -463,20 +524,20 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         </div>
       </div>
 
-      {/* Help Button - Top Left - Adjusted for mobile sidebar */}
+      {/* Help Button - Top Left - Adjusted for mobile sidebar - Scaled up */}
       <button
         onClick={() => setShowHowToPlay(true)}
-        className="fixed top-16 left-4 md:top-24 md:left-6 w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 z-[9997] text-xl md:text-3xl font-bold"
+        className="fixed top-16 left-4 md:top-24 md:left-6 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 z-[9997] text-2xl sm:text-3xl md:text-4xl font-bold touch-manipulation"
         aria-label="How to Play"
       >
         ?
       </button>
 
-      {/* Cards Grid - Playing Area Panel - Mobile Optimized (8 cards: 2x4 mobile, 4x2 desktop) */}
-      <div className="flex justify-center items-start px-2 sm:px-4 py-2 md:py-3 flex-1 overflow-visible pb-20 md:pb-4">
+      {/* Cards Grid - Playing Area Panel - Mobile Optimized (8 cards: 2x4 mobile, 4x2 desktop) - Scaled up */}
+      <div className="flex justify-center items-start px-3 sm:px-5 py-3 md:py-4 flex-1 overflow-visible pb-24 md:pb-6">
         {/* Playing Area Panel - Clear visual container */}
-        <div className="w-full max-w-3xl bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 border-2 border-green-200/60 shadow-lg">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 md:gap-3 w-full">
+        <div className="w-full max-w-3xl bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl md:rounded-3xl p-4 sm:p-5 md:p-7 border-2 border-green-200/60 shadow-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 w-full">
           {cards.map((card, index) => {
             const isFlipped = flippedCards.has(card.id);
             const totalCards = cards.length;

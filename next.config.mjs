@@ -313,18 +313,35 @@ const nextConfig = {
   // Rewrites for API proxy (optional)
   async rewrites() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const rewrites = [];
     
-    // Only add rewrite if API URL is configured
-    if (!apiUrl) {
-      return [];
-    }
+    // Handle old paths with spaces - redirect to hyphenated folder name
+    rewrites.push({
+      source: '/complete%20flowers/:path*',
+      destination: '/complete-flowers/:path*',
+    });
+    rewrites.push({
+      source: '/complete flowers/:path*',
+      destination: '/complete-flowers/:path*',
+    });
+    rewrites.push({
+      source: '/Complete-flowers/:path*',
+      destination: '/complete-flowers/:path*',
+    });
+    rewrites.push({
+      source: '/Complete flowers/:path*',
+      destination: '/complete-flowers/:path*',
+    });
     
-    return [
-      {
+    // Only add API proxy rewrite if API URL is configured
+    if (apiUrl) {
+      rewrites.push({
         source: '/api-proxy/:path*',
         destination: `${apiUrl}/api/:path*`,
-      },
-    ];
+      });
+    }
+    
+    return rewrites;
   },
 
   // Redirects
@@ -334,6 +351,27 @@ const nextConfig = {
       {
         source: '/shop/products',
         destination: '/shop',
+        permanent: true,
+      },
+      // Handle old paths with spaces - redirect to hyphenated folder name
+      {
+        source: '/complete%20flowers/:path*',
+        destination: '/complete-flowers/:path*',
+        permanent: true, // Permanent redirect for SEO
+      },
+      {
+        source: '/complete flowers/:path*',
+        destination: '/complete-flowers/:path*',
+        permanent: true,
+      },
+      {
+        source: '/Complete-flowers/:path*',
+        destination: '/complete-flowers/:path*',
+        permanent: true,
+      },
+      {
+        source: '/Complete flowers/:path*',
+        destination: '/complete-flowers/:path*',
         permanent: true,
       },
     ];
