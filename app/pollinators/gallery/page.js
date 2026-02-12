@@ -3,14 +3,15 @@ import Navigation from "../../../components/Navigation";
 import Footer from "../../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D, Bot, Zap, Cpu, Wifi } from "lucide-react";
+import { ArrowLeft, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D, Bot, Zap, Cpu, Wifi, Bug, ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation as SwiperNavigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 import { useState, useRef, useEffect } from "react";
+import { motion } from "motion/react";
 import Pollinator3D from "../../../components/Pollinator3D";
-
-// Helper function to create GLB path
-const createGLBPath = (fileName) => {
-  return `/api/glb-proxy?url=${encodeURIComponent(`https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/${fileName}`)}`;
-};
+import { naturalPollinators, roboticPollinators, createGLBPath } from "./pollinatorData";
 
 // Enhanced 3D Model Viewer Component with GLB support
 function Pollinator3DViewer({ pollinator, onClose }) {
@@ -101,7 +102,19 @@ function Pollinator3DViewer({ pollinator, onClose }) {
               }
             });
 
-            const box = new THREE.Box3().setFromObject(model);
+            model.updateMatrixWorld(true);
+            const box = new THREE.Box3();
+            model.traverse((node) => {
+              if (node.isMesh) {
+                node.castShadow = true;
+                node.receiveShadow = true;
+                node.geometry.computeBoundingBox();
+                const nodeBox = node.geometry.boundingBox.clone();
+                nodeBox.applyMatrix4(node.matrixWorld);
+                box.expandByPoint(nodeBox.min);
+                box.expandByPoint(nodeBox.max);
+              }
+            });
             const size = box.getSize(new THREE.Vector3());
             const center = box.getCenter(new THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
@@ -151,7 +164,7 @@ function Pollinator3DViewer({ pollinator, onClose }) {
   const getPollinatorType = (name, scientificName) => {
     const lowerName = name.toLowerCase();
     const lowerScientific = scientificName?.toLowerCase() || "";
-    
+
     if (lowerName.includes("bee") || lowerScientific.includes("apis") || lowerScientific.includes("bombus") || lowerScientific.includes("formicidae")) {
       return "bee";
     } else if (lowerName.includes("butterfly") || lowerName.includes("moth") || lowerScientific.includes("danaus") || lowerScientific.includes("papilionidae") || lowerScientific.includes("hemaris")) {
@@ -162,6 +175,14 @@ function Pollinator3DViewer({ pollinator, onClose }) {
       return "bat";
     } else if (lowerName.includes("beetle") || lowerScientific.includes("coleoptera") || lowerScientific.includes("cetoniinae")) {
       return "bee"; // Default for beetles
+    } else if (lowerName.includes("robot") || lowerName.includes("droid") || lowerName.includes("drone") || lowerName.includes("system")) {
+      // Try to determine robot type from name
+      if (lowerName.includes("hummingbird")) return "hummingbird";
+      if (lowerName.includes("bee")) return "bee";
+      if (lowerName.includes("butterfly")) return "butterfly";
+      if (lowerName.includes("moth")) return "butterfly"; // Use butterfly for moth
+      if (lowerName.includes("bat")) return "bat";
+      return "robot";
     } else {
       return "bee";
     }
@@ -195,9 +216,9 @@ function Pollinator3DViewer({ pollinator, onClose }) {
           {hasGLBModel && isMounted ? (
             <div ref={canvasRef} className="w-full h-full" />
           ) : (
-            <Pollinator3D 
-              type={pollinatorType} 
-              size={1.2} 
+            <Pollinator3D
+              type={pollinatorType}
+              size={1.2}
               autoRotate={true}
             />
           )}
@@ -246,239 +267,468 @@ function Pollinator3DViewer({ pollinator, onClose }) {
   );
 }
 
-export default function PollinatorsGalleryPage() {
-  const [selected3DModel, setSelected3DModel] = useState(null);
+// Robotic Pollinator 3D Sliding Window Viewer
+const ROBOT_BACKGROUND_HEX = "#E8E6DF";
+const ROBOT_VIEW_OPTION = {
+  id: "side",
+  label: "Side View",
+  camera: { position: [0, 1.5, 3], lookAt: [0, 0, 0] },
+  controls: {
+    minPolar: Math.PI / 3.2,
+    maxPolar: Math.PI / 1.8,
+    autoRotate: true,
+    autoRotateSpeed: 0.8,
+  },
+};
 
-  // Natural Pollinators Data with GLB paths
-  const naturalPollinators = {
-    bees: [
-      {
-        name: "Ant",
-        scientificName: "Formicidae sp.",
-        region: "Global",
-        country: "Global",
-        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/ant-on-flower-petals",
-        description: "Ground pollinator associated with flowers. Ants visit flowers attracted by nectar and sugary exudates on the petals.",
-        habitat: "Present in almost all terrestrial ecosystems, especially soils, path edges and gardens.",
-        conservation: "Ant pollinator guilds receive an estimated Araihan Measure of 18/25: high local efficiency and strong ecological interdependence.",
-        glbPath: "/ant.glb",
-        roleEn: "Ground pollinator associated with flowers"
-      },
-      {
-        name: "Honeybee",
-        scientificName: "Apis mellifera",
-        region: "Global",
-        country: "Global",
-        image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/bee-on-yellow-flower",
-        description: "Essential pollinator responsible for pollinating many of the world's food crops. Honeybees are among the most important pollinators, responsible for pollinating approximately 80% of flowering plants and 75% of food crops worldwide.",
-        habitat: "Found worldwide in diverse habitats, from forests to urban gardens, wherever flowering plants grow.",
-        conservation: "Honeybee populations face significant threats from pesticides, habitat loss, climate change, and diseases. Araihan Measure: 20 / 25 (Declining).",
-        glbPath: null,
-        roleEn: "Essential pollinator responsible for pollinating many of the world's food crops"
-      },
-      {
-        name: "Bumblebee",
-        scientificName: "Bombus terrestris",
-        region: "Europe, Asia, North America",
-        country: "Europe, Asia, North America",
-        image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/bumblebee-on-flower",
-        description: "Large, fuzzy bees that are excellent pollinators for many wildflowers and crops. Bumblebees are excellent pollinators due to their large size and ability to 'buzz pollinate' flowers that require vibration to release pollen.",
-        habitat: "Temperate regions, grasslands, meadows, and gardens with abundant flowering plants.",
-        conservation: "Many bumblebee species are declining due to habitat loss and pesticide use. Araihan Measure: 19 / 25 (Stable to Declining).",
-        glbPath: null,
-        roleEn: "Large, fuzzy bees that are excellent pollinators for many wildflowers and crops"
-      }
-    ],
-    birds: [
-      {
-        name: "Ruby-throated Hummingbird",
-        scientificName: "Archilochus colubris",
-        region: "North America",
-        country: "North America",
-        image: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/hummingbird-in-flight",
-        description: "Tiny, fast-flying birds that pollinate tubular flowers with their long beaks. Hummingbirds are important pollinators for many tubular flowers, transferring pollen as they feed on nectar with their long, specialized beaks.",
-        habitat: "Forests, gardens, and meadows throughout North America, especially areas with abundant nectar-producing flowers.",
-        conservation: "While not currently endangered, habitat loss and climate change pose threats. Araihan Measure: 22 / 25 (Stable).",
-        glbPath: createGLBPath("Humming_bird.glb"),
-        roleEn: "Tiny, fast-flying birds that pollinate tubular flowers with their long beaks"
-      },
-      {
-        name: "Sunbird",
-        scientificName: "Nectariniidae",
-        region: "Africa, Asia, Australia",
-        country: "Africa, Asia, Australia",
-        image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/colorful-sunbird-on-branch",
-        description: "Colorful nectar-feeding birds that pollinate many tropical flowers. Sunbirds are important pollinators in tropical and subtropical regions, visiting a wide variety of flowering plants.",
-        habitat: "Tropical and subtropical regions of Africa, Asia, and Australia, in forests, gardens, and open areas with flowering plants.",
-        conservation: "Sunbird populations are generally stable but face threats from habitat destruction. Araihan Measure: 21 / 25 (Stable).",
-        glbPath: null,
-        roleEn: "Colorful nectar-feeding birds that pollinate many tropical flowers"
-      }
-    ],
-    butterflies: [
-      {
-        name: "Monarch Butterfly",
-        scientificName: "Danaus plexippus",
-        region: "North America",
-        country: "North America",
-        image: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=800&h=600&fit=crop",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/monarch-butterfly",
-        description: "Famous migratory butterflies that pollinate milkweed and other wildflowers. Monarchs are important pollinators during their long migrations, visiting numerous flowering plants along their route.",
-        habitat: "Meadows, fields, and gardens across North America, with specific overwintering sites in Mexico and California.",
-        conservation: "Monarch populations have declined significantly due to habitat loss and pesticide use. Araihan Measure: 17 / 25 (Declining).",
-        glbPath: createGLBPath("Final_Textured_Butterfly.glb"),
-        roleEn: "Famous migratory butterflies that pollinate milkweed and other wildflowers"
-      },
-      {
-        name: "Hummingbird Moth",
-        scientificName: "Hemaris spp.",
-        region: "North America, Europe, Asia",
-        country: "North America, Europe, Asia",
-        image: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/hummingbird-moth-on-flower",
-        description: "Moth species that mimic hummingbirds in appearance and behavior. Hummingbird moths are important pollinators, especially for tubular flowers. They hover like hummingbirds while feeding on nectar.",
-        habitat: "Gardens, meadows, and open areas with abundant flowering plants. Found in temperate regions worldwide.",
-        conservation: "Hummingbird moth populations are generally stable but face threats from habitat loss and pesticide use. Araihan Measure: 19 / 25 (Stable).",
-        glbPath: createGLBPath("Normal__Humming_Bird_Moth_Glb.glb"),
-        roleEn: "Moth species that mimic hummingbirds in appearance and behavior"
-      },
-      {
-        name: "Swallowtail Butterfly",
-        scientificName: "Papilionidae",
-        region: "Global",
-        country: "Global",
-        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/swallowtail-butterfly-on-flower",
-        description: "Large, colorful butterflies with distinctive tail-like extensions on their wings. Swallowtails are important pollinators for many flowering plants, especially those with deep corollas.",
-        habitat: "Found in diverse habitats worldwide, from forests to gardens, wherever flowering plants grow.",
-        conservation: "Many swallowtail species are stable, but some face threats from habitat loss. Araihan Measure: 20 / 25 (Stable).",
-        glbPath: null,
-        roleEn: "Large, colorful butterflies with distinctive tail-like extensions on their wings"
-      }
-    ],
-    bats: [
-      {
-        name: "Lesser Long-nosed Bat",
-        scientificName: "Leptonycteris yerbabuenae",
-        region: "Mexico, Southwestern US",
-        country: "Mexico, Southwestern US",
-        image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/bat-pollinating-flower",
-        description: "Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers. These bats are crucial pollinators for agave, cacti, and other night-blooming plants in desert ecosystems.",
-        habitat: "Desert and semi-desert regions of Mexico and the southwestern United States, especially areas with agave and cacti.",
-        conservation: "Once endangered, populations have recovered but still face threats from habitat loss. Araihan Measure: 18 / 25 (Recovering).",
-        glbPath: null,
-        roleEn: "Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers"
-      }
-    ],
-    beetles: [
-      {
-        name: "Flower Beetle",
-        scientificName: "Coleoptera sp.",
-        region: "Global",
-        country: "Global",
-        image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/beetle-on-flower",
-        description: "Diverse group of insects that pollinate flowers while feeding on pollen and nectar. Beetles are among the oldest pollinators, visiting flowers to feed on pollen and nectar. They are particularly important for primitive flowering plants.",
-        habitat: "Found in almost all terrestrial ecosystems worldwide, from forests to deserts, gardens to grasslands.",
-        conservation: "Beetle pollinator populations are generally stable but face threats from habitat loss and pesticide use. Araihan Measure: 20 / 25 (Stable).",
-        glbPath: createGLBPath("Beetle_Final_With_Texture.glb"),
-        roleEn: "Diverse group of insects that pollinate flowers while feeding on pollen and nectar"
-      }
-    ]
-  };
+function RoboticPollinator3DViewer({ robot, isActive = false }) {
+  const canvasRef = useRef(null);
+  const [isGLBLoaded, setIsGLBLoaded] = useState(false);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
+  const [error, setError] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Robotic Pollinators Data
-  const roboticPollinators = [
-    {
-      name: "RoboBee",
-      manufacturer: "Harvard University",
-      year: "2013",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop&q=80",
-      imageAttribution: "Unsplash",
-      imageUrl: "https://unsplash.com/photos/robotic-technology",
-      description: "Miniature flying robot inspired by honeybees, designed for artificial pollination. Weighs only 80 milligrams and can hover, fly, and land on surfaces.",
-      capabilities: "Autonomous flight, precision landing, payload carrying, swarm coordination",
-      applications: "Greenhouse pollination, crop monitoring, search and rescue, environmental monitoring",
-      status: "Research & Development",
-      advantages: "Can work 24/7, unaffected by pesticides, precise pollination control",
-      limitations: "Limited battery life, requires charging infrastructure, cannot fully replicate natural bee behavior"
-    },
-    {
-      name: "B-Droid",
-      manufacturer: "Warsaw University of Technology",
-      year: "2017",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/agricultural-robot",
-      description: "Autonomous ground robot designed for precision pollination in greenhouses. Uses computer vision to identify flowers and apply pollen with precision.",
-      capabilities: "Autonomous navigation, flower recognition, precise pollen application, data collection",
-      applications: "Greenhouse crops, controlled environment agriculture, research applications",
-      status: "Prototype",
-      advantages: "Precise pollination, data collection capabilities, works in controlled environments",
-      limitations: "Limited to ground-based plants, requires structured environments, high initial cost"
-    },
-    {
-      name: "Strawberry Pollination Drone",
-      manufacturer: "Various",
-      year: "2020",
-      image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&h=600&fit=crop&q=80",
-      imageAttribution: "Unsplash",
-      imageUrl: "https://unsplash.com/photos/agricultural-drone",
-      description: "Small drone systems designed specifically for pollinating strawberry plants in greenhouses. Uses air currents to distribute pollen effectively.",
-      capabilities: "Autonomous flight patterns, pollen distribution, crop monitoring, precision agriculture",
-      applications: "Strawberry greenhouses, high-value crops, controlled environment agriculture",
-      status: "Commercial Development",
-      advantages: "Effective for specific crops, reduces labor costs, consistent pollination",
-      limitations: "Limited to specific crop types, requires greenhouse infrastructure, ongoing maintenance"
-    },
-    {
-      name: "AI-Powered Pollination System",
-      manufacturer: "Various Tech Companies",
-      year: "2022",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop",
-      imageAttribution: "Unsplash",
-      imageUrl: "https://unsplash.com/photos/ai-robotics-agriculture",
-      description: "Advanced robotic systems using artificial intelligence and machine learning to identify flowers, assess pollination needs, and apply pollen with precision.",
-      capabilities: "AI-powered flower recognition, adaptive pollination strategies, real-time monitoring, data analytics",
-      applications: "Large-scale agriculture, precision farming, research, commercial greenhouses",
-      status: "Advanced Development",
-      advantages: "Intelligent decision-making, scalable solutions, data-driven optimization",
-      limitations: "High complexity, requires technical expertise, significant investment, cannot replace ecosystem services"
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !isMounted || !isActive || !robot.glbPath) return;
+
+    let renderer, camera, animationId;
+    const cleanupFns = [];
+
+    setIsGLBLoaded(false);
+    setError(null);
+
+    const loadModel = async () => {
+      try {
+        const THREE = await import("three");
+        const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader.js");
+        const { DRACOLoader } = await import("three/examples/jsm/loaders/DRACOLoader.js");
+        const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls.js");
+
+        const container = canvasRef.current;
+        if (!container) return;
+
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(ROBOT_BACKGROUND_HEX);
+
+        const viewSettings = ROBOT_VIEW_OPTION;
+        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(...viewSettings.camera.position);
+        camera.lookAt(...viewSettings.camera.lookAt);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+        renderer.setSize(container.clientWidth, container.clientHeight, false);
+        renderer.domElement.style.width = "100%";
+        renderer.domElement.style.height = "100%";
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+        renderer.shadowMap.enabled = true;
+
+        renderer.domElement.style.touchAction = "none";
+        renderer.domElement.style.pointerEvents = "auto";
+        renderer.domElement.style.userSelect = "none";
+
+        let removeDocListeners = null;
+        const stopPropagationOnly = (e) => e.stopPropagation();
+        const stopOnCanvas = (e) => { if (e.target !== renderer.domElement) return; e.stopPropagation(); };
+
+        const bindDocListeners = () => {
+          if (removeDocListeners) return;
+          const docStop = (e) => e.stopPropagation();
+          const docUp = (e) => { e.stopPropagation(); removeDocListeners?.(); removeDocListeners = null; };
+          const opts = { capture: true, passive: false };
+          document.addEventListener("mousemove", docStop, opts);
+          document.addEventListener("mouseup", docUp, opts);
+          document.addEventListener("touchmove", docStop, opts);
+          document.addEventListener("touchend", docUp, opts);
+          document.addEventListener("touchcancel", docUp, opts);
+          removeDocListeners = () => {
+            document.removeEventListener("mousemove", docStop, opts);
+            document.removeEventListener("mouseup", docUp, opts);
+            document.removeEventListener("touchmove", docStop, opts);
+            document.removeEventListener("touchend", docUp, opts);
+            document.removeEventListener("touchcancel", docUp, opts);
+          };
+        };
+
+        const canvasPointerDown = (e) => {
+          if (e.target !== renderer.domElement) return;
+          e.stopPropagation();
+          bindDocListeners();
+        };
+
+        renderer.domElement.addEventListener("mousedown", canvasPointerDown, { capture: true, passive: false });
+        renderer.domElement.addEventListener("touchstart", canvasPointerDown, { capture: true, passive: false });
+        renderer.domElement.addEventListener("mousemove", stopOnCanvas, { capture: true, passive: false });
+        renderer.domElement.addEventListener("mouseup", stopOnCanvas, { capture: true, passive: false });
+        renderer.domElement.addEventListener("touchmove", stopOnCanvas, { capture: true, passive: false });
+        renderer.domElement.addEventListener("touchend", stopOnCanvas, { capture: true, passive: false });
+        renderer.domElement.addEventListener("click", stopPropagationOnly, { capture: true, passive: false });
+        renderer.domElement.addEventListener("wheel", stopPropagationOnly, { capture: true, passive: false });
+        renderer.domElement.addEventListener("contextmenu", stopPropagationOnly, { capture: true, passive: false });
+
+        container.style.pointerEvents = "auto";
+        container.appendChild(renderer.domElement);
+        cleanupFns.push(() => {
+          removeDocListeners?.();
+          if (renderer?.domElement?.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+          renderer?.dispose();
+        });
+
+        // Lighting
+        const neutralKey = new THREE.DirectionalLight(0xffffff, 1.2);
+        neutralKey.position.set(4, 6, 3);
+        neutralKey.castShadow = true;
+        scene.add(neutralKey);
+        const warmFill = new THREE.DirectionalLight(0xfff1d6, 0.6);
+        warmFill.position.set(-3, 2, -2);
+        scene.add(warmFill);
+        const coolRim = new THREE.DirectionalLight(0xd8ecff, 0.45);
+        coolRim.position.set(0, 4, -4);
+        scene.add(coolRim);
+        scene.add(new THREE.AmbientLight(0xfaf7f1, 0.5));
+
+        // Ground shadow
+        const groundGeo = new THREE.PlaneGeometry(20, 20);
+        const groundMat = new THREE.ShadowMaterial({ opacity: 0.18 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -1;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Load GLB
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+        dracoLoader.setDecoderConfig({ type: "js" });
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+        loader.setCrossOrigin("anonymous");
+
+        loader.load(
+          robot.glbPath,
+          (gltf) => {
+            const model = gltf.scene;
+            model.traverse((node) => {
+              if (node.isMesh) {
+                node.castShadow = true;
+                node.receiveShadow = true;
+                if (node.material) node.material.needsUpdate = true;
+              }
+            });
+            const box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 1.8 / maxDim;
+            model.scale.setScalar(scale);
+            model.position.sub(center.multiplyScalar(scale));
+            scene.add(model);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.autoRotate = viewSettings.controls.autoRotate ?? true;
+            controls.autoRotateSpeed = viewSettings.controls.autoRotateSpeed ?? 0.8;
+            controls.minPolarAngle = viewSettings.controls.minPolar;
+            controls.maxPolarAngle = viewSettings.controls.maxPolar;
+            controls.enablePan = false;
+            cleanupFns.push(() => controls.dispose());
+
+            const animate = () => {
+              animationId = requestAnimationFrame(animate);
+              controls.update();
+              renderer.render(scene, camera);
+            };
+            animate();
+            cleanupFns.push(() => cancelAnimationFrame(animationId));
+
+            const handleResize = () => {
+              if (!container) return;
+              camera.aspect = container.clientWidth / container.clientHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+            window.addEventListener("resize", handleResize);
+            cleanupFns.push(() => window.removeEventListener("resize", handleResize));
+
+            setIsGLBLoaded(true);
+            setTimeout(() => setIsContentLoaded(true), 300);
+          },
+          undefined,
+          (err) => {
+            console.error("GLB load error", err);
+            setError("Failed to load 3D model.");
+            setIsGLBLoaded(false);
+            setIsContentLoaded(true);
+          }
+        );
+      } catch (err) {
+        console.error("Three.js setup error", err);
+        setError("Three.js could not initialize.");
+        setIsGLBLoaded(false);
+        setIsContentLoaded(true);
+      }
+    };
+
+    loadModel();
+    return () => cleanupFns.forEach((fn) => fn());
+  }, [isMounted, isActive, robot.glbPath]);
+
+  useEffect(() => {
+    if (isActive && !robot.glbPath) {
+      setTimeout(() => setIsContentLoaded(true), 100);
     }
-  ];
+  }, [isActive, robot.glbPath]);
+
+  if (!isMounted) {
+    return (
+      <div className="w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[500px] flex items-center justify-center bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-blue-300 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
+    <div className="relative group">
+      {/* Glow effect */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-cyan-400/20 rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block" />
+
+      {/* Card */}
+      <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md flex-shrink-0">
+            <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          </div>
+          <div className="min-w-0">
+            <h2
+              className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 line-clamp-1 sm:line-clamp-none"
+              style={{ fontFamily: '"Cormorant Garamond", serif' }}
+            >
+              {robot.name}
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-600 italic line-clamp-1 sm:line-clamp-none">
+              {robot.manufacturer} · {robot.year}
+            </p>
+            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1">
+              Status: <span className="font-semibold">{robot.status}</span>
+            </p>
+          </div>
+        </div>
+
+        {/* 3D Viewer */}
+        {robot.glbPath && (
+          <div className="relative w-full h-[260px] sm:h-[340px] md:h-[420px] lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden isolate mb-4 sm:mb-6 swiper-no-swiping" style={{ pointerEvents: 'auto' }} data-canvas-container>
+            <div ref={canvasRef} className="w-full h-full gpu-accelerated" style={{ pointerEvents: 'auto' }} />
+            {!isGLBLoaded && !error && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-blue-300 border-t-transparent rounded-full animate-spin mb-2 sm:mb-3" />
+                <span className="text-xs sm:text-sm text-gray-500 px-2 text-center">Loading 3D model...</span>
+              </div>
+            )}
+            {error && (
+              <div className="absolute inset-0 grid place-content-center bg-red-50 text-red-500 text-sm font-medium text-center px-4">
+                {error}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Robot Information - Lazy loaded after GLB */}
+        {isContentLoaded && (
+          <div className="space-y-4 sm:space-y-6" style={{ animation: 'fadeIn 0.5s ease-in' }}>
+            {/* Description */}
+            <div className="bg-blue-50/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-200">
+              <h3 className="text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-blue-700 mb-3 sm:mb-4">
+                DESCRIPTION
+              </h3>
+              <p className="text-gray-800 text-xs sm:text-sm leading-relaxed">
+                {robot.description}
+              </p>
+            </div>
+
+            {/* Capabilities & Applications */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-purple-200">
+              <h3 className="text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-purple-700 mb-3 sm:mb-4">
+                CAPABILITIES & APPLICATIONS
+              </h3>
+              <div className="grid gap-2 sm:gap-3 text-xs sm:text-sm">
+                <div className="bg-white/80 rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 border-l-4 border-blue-500">
+                  <div className="text-[10px] sm:text-[11px] font-semibold text-blue-700 uppercase mb-0.5 sm:mb-1 flex items-center">
+                    <Zap className="w-3 h-3 mr-1" /> Capabilities
+                  </div>
+                  <div className="text-gray-800">{robot.capabilities}</div>
+                </div>
+                <div className="bg-white/80 rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 border-l-4 border-purple-500">
+                  <div className="text-[10px] sm:text-[11px] font-semibold text-purple-700 uppercase mb-0.5 sm:mb-1 flex items-center">
+                    <Cpu className="w-3 h-3 mr-1" /> Applications
+                  </div>
+                  <div className="text-gray-800">{robot.applications}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Advantages & Limitations */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200">
+              <h3 className="text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-amber-700 mb-3 sm:mb-4">
+                ADVANTAGES & LIMITATIONS
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <h5 className="text-xs font-semibold text-green-700 mb-1 flex items-center">
+                    <span className="text-green-600 mr-1">✓</span> Advantages
+                  </h5>
+                  <p className="text-xs text-gray-700 leading-relaxed">{robot.advantages}</p>
+                </div>
+                <div>
+                  <h5 className="text-xs font-semibold text-orange-700 mb-1 flex items-center">
+                    <span className="text-orange-600 mr-1">⚠</span> Limitations
+                  </h5>
+                  <p className="text-xs text-gray-700 leading-relaxed">{robot.limitations}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function PollinatorsGalleryPage() {
+  const [selected3DModel, setSelected3DModel] = useState(null);
+  const swiperRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const robotSwiperRef = useRef(null);
+  const [robotActiveIndex, setRobotActiveIndex] = useState(0);
+  // Floating floral decoration component
+  const FloralDecoration = ({ className, delay = 0 }) => (
+    <motion.div
+      className={`absolute pointer-events-none ${className}`}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay, duration: 1, ease: "easeOut" }}
+    >
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="petalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(147, 197, 253, 0.3)" />
+            <stop offset="50%" stopColor="rgba(196, 181, 253, 0.2)" />
+            <stop offset="100%" stopColor="rgba(249, 168, 212, 0.3)" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#glow)" className="animate-float">
+          <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)" />
+          <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)" />
+          <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)" />
+          <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)" />
+          <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)" />
+          <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)" />
+        </g>
+      </svg>
+    </motion.div>
+  );
+
+  // Glowing orb decoration
+  const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
+    const sizeClasses = {
+      sm: "w-24 h-24",
+      md: "w-40 h-40",
+      lg: "w-64 h-64",
+      xl: "w-96 h-96",
+    };
+    const colorClasses = {
+      blue: "from-blue-400/20 via-indigo-300/10 to-transparent",
+      purple: "from-purple-400/20 via-violet-300/10 to-transparent",
+      pink: "from-pink-400/20 via-rose-300/10 to-transparent",
+      teal: "from-teal-400/20 via-cyan-300/10 to-transparent",
+      emerald: "from-emerald-400/20 via-green-300/10 to-transparent",
+      amber: "from-amber-400/20 via-yellow-300/10 to-transparent",
+      rainbow: "from-blue-400/15 via-purple-400/15 to-pink-400/15",
+    };
+    return (
+      <motion.div
+        className={`absolute rounded-full bg-gradient-radial ${colorClasses[color]} ${sizeClasses[size]} blur-3xl pointer-events-none ${className}`}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay, duration: 1.5, ease: "easeOut" }}
+      />
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
+      {/* Aurora-inspired background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {/* Main aurora gradient */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 20% 20%, rgba(251, 191, 36, 0.4) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 80% 30%, rgba(249, 115, 22, 0.35) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 50% 80%, rgba(245, 158, 11, 0.3) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 30% at 10% 60%, rgba(217, 119, 6, 0.25) 0%, transparent 50%)
+            `,
+          }}
+        />
+
+        {/* Animated aurora streaks */}
+        <div
+          className="absolute inset-0 animate-aurora opacity-20"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                100deg,
+                rgba(251, 191, 36, 0.1) 10%,
+                rgba(249, 115, 22, 0.1) 15%,
+                rgba(245, 158, 11, 0.1) 20%,
+                rgba(217, 119, 6, 0.1) 25%,
+                rgba(251, 191, 36, 0.1) 30%
+              )
+            `,
+            backgroundSize: '300% 200%',
+          }}
+        />
+      </div>
+
+      {/* Decorative elements - hidden on mobile for performance */}
+      <GlowingOrb className="hidden md:block top-20 -right-20" color="amber" delay={0.2} size="xl" />
+      <GlowingOrb className="hidden sm:block top-1/3 -left-32" color="amber" delay={0.4} size="lg" />
+      <GlowingOrb className="bottom-1/4 right-4 sm:right-10 opacity-60 sm:opacity-100" color="amber" delay={0.6} size="md" />
+      <GlowingOrb className="hidden lg:block bottom-40 left-1/4" color="amber" delay={0.8} size="lg" />
+
+      <FloralDecoration className="hidden sm:block top-32 right-20 opacity-60" delay={1} />
+      <FloralDecoration className="hidden md:block top-1/2 left-10 opacity-40" delay={1.2} />
+      <FloralDecoration className="hidden lg:block bottom-60 right-1/3 opacity-50" delay={1.4} />
+
       <Navigation />
-      
-      <div className="pt-20 px-4 lg:pr-24 lg:pl-8">
+
+      <div className="relative pt-20 px-4 lg:pr-24 lg:pl-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <Link 
+            <Link
               href="/pollinators"
               className="inline-flex items-center space-x-2 text-amber-600 hover:text-amber-700 transition-colors duration-200 mb-4"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to pollinators</span>
             </Link>
-            
+
             <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4">
               Pollinators Gallery
             </h1>
@@ -635,129 +885,177 @@ export default function PollinatorsGalleryPage() {
             </section>
           </div>
 
-          {/* Robotic Pollinators Section */}
-          <section className="mb-20">
-            <div className="mb-12 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-4">
-                <Bot className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                Robotic Pollinators
-              </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                As natural pollinator populations decline, scientists and engineers are developing robotic alternatives. While these technologies show promise for specific applications, they cannot fully replace the complex ecosystem services provided by natural pollinators.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              {roboticPollinators.map((robot, index) => (
-                <RoboticPollinatorCard key={index} robot={robot} />
-              ))}
-            </div>
-
-            {/* Comparison Section */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-200">
-              <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-                Natural vs. Robotic Pollinators
-              </h3>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Natural Pollinators */}
-                <div className="bg-white/80 rounded-2xl p-6 border border-green-200">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
-                      <Heart className="w-6 h-6 text-white" />
-                    </div>
-                    <h4 className="text-2xl font-bold text-gray-800">Natural Pollinators</h4>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                        <span className="text-green-600 mr-2">✓</span>
-                        Advantages
-                      </h5>
-                      <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                        <li>• Self-sustaining populations that reproduce naturally</li>
-                        <li>• Provide ecosystem services beyond pollination (soil health, food web support)</li>
-                        <li>• Adapt to environmental changes and flower diversity</li>
-                        <li>• No energy infrastructure required</li>
-                        <li>• Contribute to biodiversity and ecosystem resilience</li>
-                        <li>• Co-evolved with plants over millions of years</li>
-                        <li>• Support entire ecosystems, not just crops</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                        <span className="text-red-600 mr-2">⚠</span>
-                        Challenges
-                      </h5>
-                      <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                        <li>• Vulnerable to pesticides, habitat loss, and climate change</li>
-                        <li>• Populations declining globally</li>
-                        <li>• Cannot be controlled or directed like machines</li>
-                        <li>• Seasonal availability in some regions</li>
-                      </ul>
-                    </div>
-                  </div>
+          {/* Robotic Pollinators Sliding Window Section - COMMENTED OUT */}
+          {false && (
+            <section className="mb-20">
+              <div className="mb-12 text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-4">
+                  <Bot className="w-8 h-8 text-white" />
                 </div>
-
-                {/* Robotic Pollinators */}
-                <div className="bg-white/80 rounded-2xl p-6 border border-blue-200">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                      <Bot className="w-6 h-6 text-white" />
-                    </div>
-                    <h4 className="text-2xl font-bold text-gray-800">Robotic Pollinators</h4>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                        <span className="text-green-600 mr-2">✓</span>
-                        Potential Benefits
-                      </h5>
-                      <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                        <li>• Can work 24/7 without rest</li>
-                        <li>• Not affected by pesticides or environmental toxins</li>
-                        <li>• Precise control over pollination process</li>
-                        <li>• Useful for controlled environments (greenhouses)</li>
-                        <li>• Can collect data while pollinating</li>
-                        <li>• No risk of stings or allergic reactions</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                        <span className="text-red-600 mr-2">⚠</span>
-                        Limitations
-                      </h5>
-                      <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                        <li>• Cannot replace ecosystem services provided by natural pollinators</li>
-                        <li>• High initial cost and maintenance requirements</li>
-                        <li>• Limited battery life requires charging infrastructure</li>
-                        <li>• Cannot fully replicate natural pollination behaviors</li>
-                        <li>• Not suitable for wild ecosystems or diverse plant communities</li>
-                        <li>• Require technical expertise and ongoing support</li>
-                        <li>• Cannot contribute to biodiversity or ecosystem health</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Conclusion */}
-              <div className="mt-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 border border-amber-300">
-                <h4 className="text-xl font-bold text-gray-800 mb-3 text-center">
-                  The Path Forward
-                </h4>
-                <p className="text-gray-700 text-center leading-relaxed">
-                  Robotic pollinators may serve as valuable tools for specific applications, particularly in controlled agricultural environments. However, they should be viewed as <strong>supplements, not replacements</strong> for natural pollinators. The ultimate goal must be to protect and restore natural pollinator populations, as they provide irreplaceable ecosystem services that support life on Earth. Conservation efforts, habitat restoration, and sustainable agricultural practices remain the most critical priorities for ensuring food security and ecosystem health.
+                <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                  Robotic Pollinators
+                </h2>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  As natural pollinator populations decline, scientists and engineers are developing robotic alternatives. While these technologies show promise for specific applications, they cannot fully replace the complex ecosystem services provided by natural pollinators.
                 </p>
               </div>
+
+              <div className="relative px-2 sm:px-0 mb-12">
+                <style jsx>{`
+                @keyframes fadeIn {
+                  from { opacity: 0; transform: translateY(10px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+                .robot-swiper .swiper-slide {
+                  opacity: 0.3;
+                  transition: opacity 0.3s;
+                }
+                .robot-swiper .swiper-slide-active {
+                  opacity: 1;
+                }
+              `}</style>
+                <Swiper
+                  ref={robotSwiperRef}
+                  modules={[SwiperNavigation]}
+                  navigation={{
+                    nextEl: '.swiper-button-next-robot',
+                    prevEl: '.swiper-button-prev-robot',
+                  }}
+                  spaceBetween={16}
+                  slidesPerView={1}
+                  loop={true}
+                  allowTouchMove={true}
+                  simulateTouch={true}
+                  noSwipingClass="swiper-no-swiping"
+                  noSwipingSelector="[data-canvas-container]"
+                  touchEventsTarget="container"
+                  className="robot-swiper"
+                  onSlideChange={(swiper) => setRobotActiveIndex(swiper.realIndex)}
+                  onSwiper={(swiper) => { robotSwiperRef.current = swiper; }}
+                >
+                  {roboticPollinators.map((robot, index) => (
+                    <SwiperSlide key={index}>
+                      <RoboticPollinator3DViewer
+                        robot={robot}
+                        isActive={robotActiveIndex === index}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+                <button className="swiper-button-prev-robot absolute left-0 sm:left-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 -translate-x-1 sm:-translate-x-4 lg:-translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Previous robot">
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-blue-600 transition-colors" />
+                </button>
+                <button className="swiper-button-next-robot absolute right-0 sm:right-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 translate-x-1 sm:translate-x-4 lg:translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Next robot">
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-blue-600 transition-colors" />
+                </button>
+              </div>
+            </section>
+          )}
+
+          {/* Comparison Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-200">
+            <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+              Natural vs. Robotic Pollinators
+            </h3>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Natural Pollinators */}
+              <div className="bg-white/80 rounded-2xl p-6 border border-green-200">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                    <Heart className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-gray-800">Natural Pollinators</h4>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      Advantages
+                    </h5>
+                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
+                      <li>• Self-sustaining populations that reproduce naturally</li>
+                      <li>• Provide ecosystem services beyond pollination (soil health, food web support)</li>
+                      <li>• Adapt to environmental changes and flower diversity</li>
+                      <li>• No energy infrastructure required</li>
+                      <li>• Contribute to biodiversity and ecosystem resilience</li>
+                      <li>• Co-evolved with plants over millions of years</li>
+                      <li>• Support entire ecosystems, not just crops</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
+                      <span className="text-red-600 mr-2">⚠</span>
+                      Challenges
+                    </h5>
+                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
+                      <li>• Vulnerable to pesticides, habitat loss, and climate change</li>
+                      <li>• Populations declining globally</li>
+                      <li>• Cannot be controlled or directed like machines</li>
+                      <li>• Seasonal availability in some regions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Robotic Pollinators */}
+              <div className="bg-white/80 rounded-2xl p-6 border border-blue-200">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                    <Bot className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-gray-800">Robotic Pollinators</h4>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
+                      <span className="text-green-600 mr-2">✓</span>
+                      Potential Benefits
+                    </h5>
+                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
+                      <li>• Can work 24/7 without rest</li>
+                      <li>• Not affected by pesticides or environmental toxins</li>
+                      <li>• Precise control over pollination process</li>
+                      <li>• Useful for controlled environments (greenhouses)</li>
+                      <li>• Can collect data while pollinating</li>
+                      <li>• No risk of stings or allergic reactions</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
+                      <span className="text-red-600 mr-2">⚠</span>
+                      Limitations
+                    </h5>
+                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
+                      <li>• Cannot replace ecosystem services provided by natural pollinators</li>
+                      <li>• High initial cost and maintenance requirements</li>
+                      <li>• Limited battery life requires charging infrastructure</li>
+                      <li>• Cannot fully replicate natural pollination behaviors</li>
+                      <li>• Not suitable for wild ecosystems or diverse plant communities</li>
+                      <li>• Require technical expertise and ongoing support</li>
+                      <li>• Cannot contribute to biodiversity or ecosystem health</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-          </section>
+
+            {/* Conclusion */}
+            <div className="mt-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 border border-amber-300">
+              <h4 className="text-xl font-bold text-gray-800 mb-3 text-center">
+                The Path Forward
+              </h4>
+              <p className="text-gray-700 text-center leading-relaxed">
+                Robotic pollinators may serve as valuable tools for specific applications, particularly in controlled agricultural environments. However, they should be viewed as <strong>supplements, not replacements</strong> for natural pollinators. The ultimate goal must be to protect and restore natural pollinator populations, as they provide irreplaceable ecosystem services that support life on Earth. Conservation efforts, habitat restoration, and sustainable agricultural practices remain the most critical priorities for ensuring food security and ecosystem health.
+              </p>
+            </div>
+          </div>
+
 
           {/* Future Vision */}
           <div className="mt-20 mb-20 p-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl border border-amber-200">
@@ -773,24 +1071,29 @@ export default function PollinatorsGalleryPage() {
       </div>
 
       {/* 3D Model Viewer Modal */}
-      {selected3DModel && (
-        <Pollinator3DViewer
-          pollinator={selected3DModel}
-          onClose={() => setSelected3DModel(null)}
-        />
-      )}
-      
+      {
+        selected3DModel && (
+          <Pollinator3DViewer
+            pollinator={selected3DModel}
+            onClose={() => setSelected3DModel(null)}
+          />
+        )
+      }
+
       <Footer />
-    </div>
+    </div >
   );
 }
 
 function PollinatorCard({ pollinator, onView3D }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <Link
+      href={`/pollinators/gallery/${pollinator.slug}`}
+      className="block bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+    >
       <div className="relative overflow-hidden">
-        <Image 
-          src={pollinator.image} 
+        <Image
+          src={pollinator.image}
           alt={pollinator.name}
           width={400}
           height={300}
@@ -806,29 +1109,30 @@ function PollinatorCard({ pollinator, onView3D }) {
           </div>
         )}
       </div>
-      
+
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-800 mb-2">{pollinator.name}</h3>
         <p className="text-sm text-gray-600 italic mb-2">{pollinator.scientificName}</p>
         <p className="text-sm text-gray-700 mb-4">{pollinator.region}</p>
-        
+
         <p className="text-sm text-gray-600 mb-4 line-clamp-3">
           {pollinator.description}
         </p>
-        
+
         <div className="flex items-center justify-between">
-          <a 
-            href={pollinator.imageUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center space-x-1 text-amber-600 hover:text-amber-700 text-sm transition-colors duration-200"
+          <span
+            className="inline-flex items-center space-x-1 text-amber-600 hover:text-amber-700 text-sm font-medium transition-colors duration-200"
           >
-            <span>View source</span>
+            <span>Read Details</span>
             <ExternalLink className="w-3 h-3" />
-          </a>
-          
+          </span>
+
           <button
-            onClick={() => onView3D(pollinator)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onView3D(pollinator);
+            }}
             className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
           >
             <Rotate3D className="w-4 h-4" />
@@ -836,16 +1140,19 @@ function PollinatorCard({ pollinator, onView3D }) {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
-function RoboticPollinatorCard({ robot }) {
+function RoboticPollinatorCard({ robot, onView3D }) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border-2 border-blue-100">
+    <Link
+      href={`/pollinators/gallery/${robot.slug}`}
+      className="block bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border-2 border-blue-100 cursor-pointer"
+    >
       <div className="relative overflow-hidden">
-        <Image 
-          src={robot.image} 
+        <Image
+          src={robot.image}
           alt={robot.name}
           width={600}
           height={400}
@@ -855,11 +1162,19 @@ function RoboticPollinatorCard({ robot }) {
           <Bot className="w-3 h-3 mr-1" />
           <span>Robotic</span>
         </div>
-        <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full">
-          {robot.imageAttribution}
+        <div className="absolute top-2 left-2 flex gap-2">
+          <div className="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+            {robot.imageAttribution}
+          </div>
+          {robot.glbPath && (
+            <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center">
+              <Rotate3D className="w-3 h-3 mr-1" />
+              <span>3D Model</span>
+            </div>
+          )}
         </div>
       </div>
-      
+
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <div>
@@ -868,7 +1183,7 @@ function RoboticPollinatorCard({ robot }) {
           </div>
           <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{robot.year}</span>
         </div>
-        
+
         <p className="text-sm text-gray-600 mb-4 line-clamp-3">
           {robot.description}
         </p>
@@ -881,7 +1196,7 @@ function RoboticPollinatorCard({ robot }) {
             </h5>
             <p className="text-xs text-gray-600">{robot.capabilities}</p>
           </div>
-          
+
           <div>
             <h5 className="text-xs font-semibold text-gray-700 mb-1 flex items-center">
               <Cpu className="w-3 h-3 mr-1 text-purple-600" />
@@ -901,22 +1216,34 @@ function RoboticPollinatorCard({ robot }) {
             </div>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between pt-3 border-t border-gray-200">
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
             {robot.status}
           </span>
-          <a 
-            href={robot.imageUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs transition-colors duration-200"
-          >
-            <span>Learn more</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          <div className="flex items-center gap-2">
+            {robot.glbPath && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onView3D(robot);
+                }}
+                className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs transition-colors duration-200 font-medium"
+              >
+                <Rotate3D className="w-3 h-3" />
+                <span>View 3D</span>
+              </button>
+            )}
+            <span
+              className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs font-medium transition-colors duration-200"
+            >
+              <span>Read Details</span>
+              <ExternalLink className="w-3 h-3" />
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -15,7 +15,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  
+
   // Disable TypeScript type checking during builds
   typescript: {
     ignoreBuildErrors: true,
@@ -23,10 +23,10 @@ const nextConfig = {
 
   // Externalize packages that use browser globals (self, window) on server
   serverExternalPackages: ['three', 'ogl', '@react-three/fiber', '@react-three/drei'],
-  
+
   // Optimize production builds
   reactStrictMode: true,
-  
+
   // Optimize images
   images: {
     remotePatterns: [
@@ -54,6 +54,30 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.shutterstock.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.scientificamerican.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.newscientist.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.perkypet.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+      },
       ...(process.env.CLOUDFRONT_DOMAIN ? [{
         protocol: 'https',
         hostname: process.env.CLOUDFRONT_DOMAIN,
@@ -76,7 +100,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error', 'warn'],
     } : false,
-    
+
     // Remove React properties in production
     reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
@@ -85,14 +109,14 @@ const nextConfig = {
   experimental: {
     // Optimize CSS
     optimizeCss: true,
-    
+
     // Optimize package imports
     optimizePackageImports: [
       'lucide-react',
       '@stripe/stripe-js',
       '@stripe/react-stripe-js',
     ],
-    
+
     // Server actions
     serverActions: {
       bodySizeLimit: '2mb',
@@ -131,13 +155,13 @@ const nextConfig = {
         'face-api.js': false, // Don't bundle face-api.js on server
       };
     }
-    
+
     // Ignore face-api.js server-side dependencies for client bundle
     if (!isServer) {
       config.resolve.alias = {
         ...config.resolve.alias,
       };
-      
+
       // Ignore problematic modules in face-api.js dependencies
       config.plugins.push(
         new webpack.IgnorePlugin({
@@ -145,7 +169,7 @@ const nextConfig = {
         })
       );
     }
-    
+
     // Production optimizations
     if (!dev && !isServer) {
       // Split chunks more aggressively - only for client
@@ -314,25 +338,10 @@ const nextConfig = {
   async rewrites() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const rewrites = [];
-    
-    // Handle old paths with spaces - redirect to hyphenated folder name
-    rewrites.push({
-      source: '/complete%20flowers/:path*',
-      destination: '/complete-flowers/:path*',
-    });
-    rewrites.push({
-      source: '/complete flowers/:path*',
-      destination: '/complete-flowers/:path*',
-    });
-    rewrites.push({
-      source: '/Complete-flowers/:path*',
-      destination: '/complete-flowers/:path*',
-    });
-    rewrites.push({
-      source: '/Complete flowers/:path*',
-      destination: '/complete-flowers/:path*',
-    });
-    
+
+    // Note: Removed complete-flowers rewrites - they caused ERR_TOO_MANY_REDIRECTS.
+    // Static files in public/complete-flowers/ are served directly at /complete-flowers/
+
     // Only add API proxy rewrite if API URL is configured
     if (apiUrl) {
       rewrites.push({
@@ -340,7 +349,7 @@ const nextConfig = {
         destination: `${apiUrl}/api/:path*`,
       });
     }
-    
+
     return rewrites;
   },
 
@@ -353,33 +362,14 @@ const nextConfig = {
         destination: '/shop',
         permanent: true,
       },
-      // Handle old paths with spaces - redirect to hyphenated folder name
-      {
-        source: '/complete%20flowers/:path*',
-        destination: '/complete-flowers/:path*',
-        permanent: true, // Permanent redirect for SEO
-      },
-      {
-        source: '/complete flowers/:path*',
-        destination: '/complete-flowers/:path*',
-        permanent: true,
-      },
-      {
-        source: '/Complete-flowers/:path*',
-        destination: '/complete-flowers/:path*',
-        permanent: true,
-      },
-      {
-        source: '/Complete flowers/:path*',
-        destination: '/complete-flowers/:path*',
-        permanent: true,
-      },
+      // Note: Complete flowers path redirects are handled by rewrites (internal routing)
+      // Only use redirects for external URLs that need SEO-friendly permanent redirects
     ];
   },
 
   // Output configuration
   output: 'standalone',
-  
+
   // Disable x-powered-by header
   poweredByHeader: false,
 

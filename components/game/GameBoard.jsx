@@ -15,46 +15,46 @@ const PETAL_COUNT = 6; // Number of petal cards needed
 const CARD_PATTERNS = [
   // Pattern 1: Early petals, guardian early, minion late
   ['P', 'P', 'P', 'G', 'P', 'P', 'M', 'P'],
-  
+
   // Pattern 2: Strong start, guardian mid, minion before last petal
   ['P', 'P', 'G', 'P', 'P', 'M', 'P', 'P'],
-  
+
   // Pattern 3: Guardian very early, minion late
   ['P', 'G', 'P', 'P', 'P', 'M', 'P', 'P'],
-  
+
   // Pattern 4: Four petals first, then guardian, then minion
   ['P', 'P', 'P', 'P', 'G', 'P', 'M', 'P'],
-  
+
   // Pattern 5: Five petals, guardian late, minion very late
   ['P', 'P', 'P', 'P', 'P', 'G', 'M', 'P'],
-  
+
   // Pattern 6: Balanced - petals, guardian, petals, minion, petals
   ['P', 'P', 'P', 'G', 'P', 'M', 'P', 'P'],
-  
+
   // Pattern 7: Early guardian protection setup
   ['P', 'P', 'G', 'P', 'P', 'P', 'M', 'P'],
-  
+
   // Pattern 8: Guardian in middle, minion near end
   ['P', 'P', 'P', 'P', 'G', 'M', 'P', 'P'],
-  
+
   // Pattern 9: Fast start with early protection
   ['P', 'G', 'P', 'P', 'P', 'P', 'M', 'P'],
-  
+
   // Pattern 10: Guardian early, minion mid-game
   ['P', 'P', 'G', 'P', 'M', 'P', 'P', 'P'],
-  
+
   // Pattern 11: Three petals, guardian, two petals, minion, last petal
   ['P', 'P', 'P', 'G', 'P', 'P', 'M', 'P'],
-  
+
   // Pattern 12: Guardian second, minion sixth
   ['P', 'G', 'P', 'P', 'P', 'M', 'P', 'P'],
-  
+
   // Pattern 13: Four petals, guardian, minion, two petals
   ['P', 'P', 'P', 'P', 'G', 'M', 'P', 'P'],
-  
+
   // Pattern 14: Early momentum with protection
   ['P', 'P', 'P', 'G', 'P', 'M', 'P', 'P'],
-  
+
   // Pattern 15: Guardian first, then petals, minion late
   ['G', 'P', 'P', 'P', 'P', 'M', 'P', 'P'],
 ];
@@ -72,6 +72,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [collectedPetals, setCollectedPetals] = useState([]); // Track which petal cards were collected
   const [lastRevealedCard, setLastRevealedCard] = useState(null); // Track last revealed card for display
+  const [bumpedCardId, setBumpedCardId] = useState(null); // Which card's stone is animating
   const { t } = useTranslation();
 
   // Initialize deck
@@ -82,22 +83,22 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   const initializeDeck = () => {
     // CASINO-STYLE DECK ARRANGEMENT
     // Selects from 20 pre-determined patterns that hook players with early wins
-    
+
     // Reset if all patterns have been used
     if (availablePatterns.length === 0) {
       availablePatterns = [...Array(15).keys()];
       usedPatterns.clear();
     }
-    
+
     // Randomly select a pattern from available ones
     const randomIndex = Math.floor(Math.random() * availablePatterns.length);
     const patternIndex = availablePatterns[randomIndex];
     const selectedPattern = CARD_PATTERNS[patternIndex];
-    
+
     // Remove selected pattern from available list
     availablePatterns.splice(randomIndex, 1);
     usedPatterns.add(patternIndex);
-    
+
     // Create all card objects first
     const petalCards = [];
     for (let i = 1; i <= PETAL_COUNT; i++) {
@@ -134,7 +135,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     const availablePetals = [...petalCards];
     const availableMinions = [...minionCards];
     const availableGuardians = [...guardianCards];
-    
+
     // Shuffle each type's array to randomize which specific card is used
     const shuffle = (array) => {
       const shuffled = [...array];
@@ -144,18 +145,18 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       }
       return shuffled;
     };
-    
+
     const shuffledPetals = shuffle(availablePetals);
     const shuffledMinions = shuffle(availableMinions);
     const shuffledGuardians = shuffle(availableGuardians);
-    
+
     let petalIndex = 0;
     let minionUsed = false;
     let guardianUsed = false;
-    
+
     for (let i = 0; i < CARD_COUNT; i++) {
       const cardType = selectedPattern[i];
-      
+
       if (cardType === 'P') {
         // Add petal card (cycle through all 6 petals)
         deck.push(shuffledPetals[petalIndex % PETAL_COUNT]);
@@ -202,6 +203,10 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     setIsProcessing(true);
     setFlippedCards((prev) => new Set([...prev, cardId]));
 
+    // Trigger stone bump animation for this card
+    setBumpedCardId(cardId);
+    setTimeout(() => setBumpedCardId(null), 400);
+
     // Play card flip sound
     playSound("flip");
 
@@ -230,13 +235,13 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     } else if (card.type === "minion") {
       // Play minion sound immediately when revealed
       playSound("minion");
-      
+
       const result = onMinionRevealed();
       setLastRevealedCard(card);
       setLastCardType("minion");
       // Pass minion data for the message - Official brief requires minion name
       if (onCardTypeChange) onCardTypeChange("minion", card.minionData);
-      
+
       if (result === "reset") {
         // Calculate message typing duration + 2 seconds wait time
         // Message: "You revealed the [Minion Name] minion. The ecosystem is set back. We must start again…"
@@ -246,7 +251,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         const typingDuration = message.length * typingSpeed;
         const waitAfterTyping = 2000; // 2 seconds after message finishes
         const totalWait = typingDuration + waitAfterTyping;
-        
+
         // Wait for message to finish typing + 2 seconds
         await new Promise((resolve) => setTimeout(resolve, totalWait));
         initializeDeck();
@@ -297,24 +302,23 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0">
         {/* Petal Counter Card */}
         <div className="bg-white border-2 border-purple-200 rounded-xl px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 shadow-lg flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 w-full max-w-md overflow-hidden">
-            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
-              <div className="text-xl sm:text-2xl md:text-3xl flex-shrink-0">🌸</div>
-              <div className="flex flex-col min-w-0">
-                <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
-                <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
-                  {petalsCollected} / {PETAL_COUNT}
-                </div>
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
+            <div className="text-xl sm:text-2xl md:text-3xl flex-shrink-0">🌸</div>
+            <div className="flex flex-col min-w-0">
+              <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
+              <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
+                {petalsCollected} / {PETAL_COUNT}
               </div>
             </div>
-            <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0">
-              {Array.from({ length: PETAL_COUNT }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${
-                  i < petalsCollected
-                    ? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-300 scale-110 shadow-lg ring-2 ring-purple-200"
-                    : "bg-gray-100 border-gray-300 scale-100"
-                }`}
+          </div>
+          <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0">
+            {Array.from({ length: PETAL_COUNT }).map((_, i) => (
+              <div
+                key={i}
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${i < petalsCollected
+                  ? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-300 scale-110 shadow-lg ring-2 ring-purple-200"
+                  : "bg-gray-100 border-gray-300 scale-100"
+                  }`}
               >
                 {i < petalsCollected && (
                   <span className="text-white text-xs sm:text-sm md:text-base">✓</span>
@@ -328,18 +332,17 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         <div className="absolute right-2 sm:right-4 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
           {/* Improved hover effect - subtle glow */}
           <div className="absolute inset-0 rounded-full bg-yellow-500/0 group-hover:bg-yellow-500/10 transition-all duration-500 ease-out blur-lg -z-10 scale-125 pointer-events-none"
-               style={{
-                 animation: 'none',
-               }}></div>
-          
+            style={{
+              animation: 'none',
+            }}></div>
+
           <div className="relative group">
             {/* Abstract Light/Aura Representation - Energy, Light, Life */}
-            <div 
-              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer relative ${
-                lastRevealedCard 
-                  ? "animate-bounce scale-110" 
-                  : "animate-pulse-slow scale-100 animate-float group-hover:scale-110 group-hover:brightness-110"
-              }`}
+            <div
+              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer relative ${lastRevealedCard
+                ? "animate-bounce scale-110"
+                : "animate-pulse-slow scale-100 animate-float group-hover:scale-110 group-hover:brightness-110"
+                }`}
               onClick={() => {
                 // Click effect - trigger a bounce
                 if (typeof window !== "undefined") {
@@ -355,7 +358,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
             >
               {/* Outer glow ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-200/50 via-amber-200/40 to-transparent animate-pulse" />
-              
+
               {/* Central luminous core */}
               <div className="relative w-full h-full flex items-center justify-center">
                 {/* Light particles - floating (more when active) */}
@@ -374,45 +377,45 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                         transform: 'translate(-50%, -50%)',
                         animation: `float-particle ${2 + i * 0.3}s ease-in-out infinite`,
                         animationDelay: `${i * 0.2}s`,
-                        boxShadow: lastRevealedCard 
-                          ? '0 0 12px rgba(251, 191, 36, 1)' 
+                        boxShadow: lastRevealedCard
+                          ? '0 0 12px rgba(251, 191, 36, 1)'
                           : '0 0 8px rgba(251, 191, 36, 0.8)',
                       }}
                     />
                   );
                 })}
-                
+
                 {/* Faceless luminous silhouette - abstract form */}
                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
                   {/* Main aura shape - organic, flowing */}
-                  <div 
+                  <div
                     className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-300/90 via-amber-200/70 to-yellow-100/50"
                     style={{
                       filter: 'blur(2px)',
                       animation: lastRevealedCard ? 'aura-pulse-active 2s ease-in-out infinite' : 'aura-pulse 3s ease-in-out infinite',
                     }}
                   />
-                  
+
                   {/* Inner light core */}
-                  <div 
+                  <div
                     className="absolute inset-2 rounded-full bg-gradient-radial from-white via-yellow-200 to-transparent"
                     style={{
                       filter: 'blur(1px)',
                       animation: lastRevealedCard ? 'core-glow-active 1.5s ease-in-out infinite' : 'core-glow 2s ease-in-out infinite',
                     }}
                   />
-                  
+
                   {/* Energy waves */}
-                  <div 
+                  <div
                     className="absolute inset-0 rounded-full border-2 border-yellow-300/50"
                     style={{
                       animation: lastRevealedCard ? 'energy-wave-active 2s ease-out infinite' : 'energy-wave 2.5s ease-out infinite',
                     }}
                   />
-                  
+
                   {/* Additional energy wave when active */}
                   {lastRevealedCard && (
-                    <div 
+                    <div
                       className="absolute inset-0 rounded-full border-2 border-amber-400/60"
                       style={{
                         animation: 'energy-wave-active 2s ease-out infinite 0.5s',
@@ -421,7 +424,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                   )}
                 </div>
               </div>
-              
+
               {/* CSS Animations */}
               <style jsx>{`
                 @keyframes float-particle {
@@ -492,7 +495,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
                 }
               `}</style>
             </div>
-            
+
             {/* Resting state - subtle glow when idle */}
             {!lastRevealedCard && (
               <div className="absolute -top-1 -right-1 text-yellow-300/60 text-[8px] animate-pulse font-bold">
@@ -533,34 +536,54 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         ?
       </button>
 
-      {/* Cards Grid - Playing Area Panel - Mobile Optimized (8 cards: 2x4 mobile, 4x2 desktop) - Scaled up */}
+      {/* Cards Grid - 1 stone per card - Mobile Optimized */}
       <div className="flex justify-center items-start px-3 sm:px-5 py-3 md:py-4 flex-1 overflow-visible pb-24 md:pb-6">
-        {/* Playing Area Panel - Clear visual container */}
-        <div className="w-full max-w-3xl bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl md:rounded-3xl p-4 sm:p-5 md:p-7 border-2 border-green-200/60 shadow-lg">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 w-full">
+        <style>{`
+          @keyframes stone-bump {
+            0%, 100% { transform: rotate(-90deg) scale(1); }
+            50% { transform: rotate(-90deg) scale(1.05); }
+          }
+        `}</style>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 w-full max-w-3xl">
           {cards.map((card, index) => {
             const isFlipped = flippedCards.has(card.id);
             const totalCards = cards.length;
             const isGuardian = card.type === "guardian" && isFlipped;
-            
+            const isBumping = bumpedCardId === card.id;
+
             return (
               <div
                 key={card.id}
-                className="flex flex-col items-center justify-center animate-scale-in"
+                className="relative flex flex-col items-center justify-end animate-scale-in min-h-[200px] sm:min-h-[220px] md:min-h-[240px]"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <Card
-                  card={card}
-                  isFlipped={isFlipped}
-                  onFlip={handleCardFlip}
-                  disabled={isProcessing}
-                  index={index}
-                  totalCards={totalCards}
-                />
+                {/* Stone - very large platform base (rotated) - positioned higher */}
+                <div className="absolute bottom-[-40px] sm:bottom-[-50px] md:bottom-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[450px] sm:w-[400px] sm:h-[500px] md:w-[450px] md:h-[550px] lg:w-[430px] lg:h-[400px] flex items-center justify-center pointer-events-none">
+                  <img
+                    src="/game_stone.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-full object-contain object-center select-none"
+                    style={{
+                      transform: "rotate(-90deg)",
+                      animation: isBumping ? "stone-bump 0.4s ease-out" : "none",
+                    }}
+                  />
+                </div>
+                {/* Card - sits above the stone */}
+                <div className="relative z-10 flex flex-col items-center justify-center mb-0">
+                  <Card
+                    card={card}
+                    isFlipped={isFlipped}
+                    onFlip={handleCardFlip}
+                    disabled={isProcessing}
+                    index={index}
+                    totalCards={totalCards}
+                  />
+                </div>
               </div>
             );
           })}
-          </div>
         </div>
       </div>
 

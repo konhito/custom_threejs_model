@@ -6,6 +6,29 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
   const containerRef = useRef();
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const createPollinator = useCallback((THREE, type, size) => {
+    const group = new THREE.Group();
+
+    switch (type) {
+      case "bee":
+        createBee(THREE, group, size);
+        break;
+      case "butterfly":
+        createButterfly(THREE, group, size);
+        break;
+      case "hummingbird":
+        createHummingbird(THREE, group, size);
+        break;
+      case "bat":
+        createBat(THREE, group, size);
+        break;
+      default:
+        createBee(THREE, group, size);
+    }
+
+    return group;
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -112,28 +135,6 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
     load3D();
   }, [type, size, autoRotate, createPollinator]);
 
-  const createPollinator = useCallback((THREE, type, size) => {
-    const group = new THREE.Group();
-
-    switch (type) {
-      case "bee":
-        createBee(THREE, group, size);
-        break;
-      case "butterfly":
-        createButterfly(THREE, group, size);
-        break;
-      case "hummingbird":
-        createHummingbird(THREE, group, size);
-        break;
-      case "bat":
-        createBat(THREE, group, size);
-        break;
-      default:
-        createBee(THREE, group, size);
-    }
-
-    return group;
-  }, []);
 
   function createBee(THREE, group, size) {
     // Body
@@ -184,7 +185,7 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
     // Stripes
     const stripeGeometry = new THREE.CapsuleGeometry(0.18 * size, 0.1 * size, 8, 16);
     const stripeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
-    
+
     for (let i = 0; i < 3; i++) {
       const stripe = new THREE.Mesh(stripeGeometry, stripeMaterial);
       stripe.position.y = 0.1 * size - i * 0.2 * size;
@@ -205,7 +206,7 @@ export default function Pollinator3D({ type = "bee", size = 1, autoRotate = true
 
     // Wings (larger and more colorful)
     const wingGeometry = new THREE.PlaneGeometry(1.2 * size, 0.8 * size);
-    
+
     // Left wings
     const leftWingMaterial = new THREE.MeshPhongMaterial({
       color: 0xff69b4,

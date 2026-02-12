@@ -92,28 +92,32 @@ export default function FlowerFormation({ country, onComplete }) {
       const svgLoaded = await tryLoadImage(svgFallbacks);
       
       // If SVG failed, try PNG paths (with all fallbacks)
+      let imageLoaded = svgLoaded;
       if (!svgLoaded) {
         const pngLoaded = await tryLoadImage(pngFallbacks);
+        imageLoaded = pngLoaded;
         if (!pngLoaded) {
           console.error(`Failed to load complete flower for ${country.folder}. Tried all SVG and PNG fallbacks.`);
-          // Still set loaded to true to show the UI, but image will show broken
-          setIsLoaded(true);
-          return;
         }
       }
 
+      // Always set loaded to true to show the UI, even if image failed
       setIsLoaded(true);
 
       // Play flower complete sound
-      playSound("flower-complete");
+      if (imageLoaded) {
+        playSound("flower-complete");
+      }
 
-      // Show flower with animation after brief delay
+      // Show flower with animation after brief delay (even if image failed)
       setTimeout(() => {
         setShowFlower(true);
-        playSound("flower-appear");
+        if (imageLoaded) {
+          playSound("flower-appear");
+        }
       }, 300);
 
-      // Show text content after flower appears
+      // Show text content after flower appears (always show, even if image failed)
       setTimeout(() => {
         setShowContent(true);
       }, 1200);
@@ -206,20 +210,20 @@ export default function FlowerFormation({ country, onComplete }) {
         <div
           className="relative w-full flex items-center justify-center mb-4"
           style={{
-            opacity: showFlower ? 1 : 0,
-            transform: showFlower ? "scale(1)" : "scale(0.5)",
-            transition: "all 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
+            minHeight: "200px",
           }}
         >
           {/* Soft glow behind flower */}
-          <div
-            className="absolute -inset-12 sm:-inset-16 md:-inset-20 rounded-full"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)",
-              animation: "glow-pulse 3s ease-in-out infinite",
-            }}
-          />
+          {showFlower && (
+            <div
+              className="absolute -inset-12 sm:-inset-16 md:-inset-20 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)",
+                animation: "glow-pulse 3s ease-in-out infinite",
+              }}
+            />
+          )}
 
           {/* Complete Flower Image Container */}
           {isLoaded && (
@@ -228,6 +232,10 @@ export default function FlowerFormation({ country, onComplete }) {
               style={{
                 width: "100%",
                 maxWidth: "min(85vw, 650px)",
+                minHeight: "200px",
+                opacity: showFlower ? 1 : 0,
+                transform: showFlower ? "scale(1)" : "scale(0.5)",
+                transition: "all 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
                 animation: showFlower
                   ? "flower-breathe 4s ease-in-out infinite"
                   : "none",
@@ -235,7 +243,7 @@ export default function FlowerFormation({ country, onComplete }) {
                   "0 25px 80px -20px rgba(251, 191, 36, 0.5), 0 15px 40px -15px rgba(0, 0, 0, 0.2)",
               }}
             >
-              <div className="relative w-full p-4 sm:p-6 md:p-8">
+              <div className="relative w-full p-4 sm:p-6 md:p-8 min-h-[200px] flex items-center justify-center">
                 <img
                   src={getCompleteFlowerPath(country.folder, 'svg')}
                   alt={`${country.flowerName} - ${country.country}`}
@@ -248,13 +256,37 @@ export default function FlowerFormation({ country, onComplete }) {
                     objectFit: "contain",
                   }}
                   onError={(e) => {
-                    const currentSrc = e.target.src;
-                    const fallbacks = getCompleteFlowerPathFallbacks(country.folder, 
-                      currentSrc.includes('.png') ? 'png' : 'svg'
-                    );
+                    // Prevent infinite loops by tracking attempts
+                    if (!e.target.dataset.errorCount) {
+                      e.target.dataset.errorCount = '0';
+                    }
+                    const errorCount = parseInt(e.target.dataset.errorCount) + 1;
+                    e.target.dataset.errorCount = errorCount.toString();
                     
-                    // Find current path index and try next fallback
-                    const currentIndex = fallbacks.findIndex(path => currentSrc.includes(path.split('/').pop()));
+                    // Stop after 3 attempts to prevent redirect loops
+                    if (errorCount > 3) {
+                      console.error(`Too many errors loading image for ${country.folder}. Stopping fallback attempts.`);
+                      e.target.style.display = 'none';
+                      // Show placeholder if not already shown
+                      if (!e.target.parentElement.querySelector('.image-placeholder')) {
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'image-placeholder text-center text-purple-600 text-lg';
+                        placeholder.textContent = `${country.flowerName}`;
+                        e.target.parentElement.appendChild(placeholder);
+                      }
+                      return;
+                    }
+                    
+                    const currentSrc = e.target.src;
+                    const isPng = currentSrc.includes('.png');
+                    const fallbacks = getCompleteFlowerPathFallbacks(country.folder, isPng ? 'png' : 'svg');
+                    
+                    // Find current path index
+                    const currentIndex = fallbacks.findIndex(path => {
+                      const fileName = path.split('/').pop();
+                      return currentSrc.includes(fileName);
+                    });
+                    
                     const nextIndex = currentIndex + 1;
                     
                     if (nextIndex < fallbacks.length) {
@@ -262,17 +294,29 @@ export default function FlowerFormation({ country, onComplete }) {
                       e.target.src = fallbacks[nextIndex];
                     } else {
                       // If all SVG fallbacks failed, try PNG fallbacks
-                      if (currentSrc.includes('.svg')) {
+                      if (!isPng) {
                         const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'png');
                         console.log(`All SVG paths failed, trying PNG fallbacks for ${country.folder}...`);
                         e.target.src = pngFallbacks[0];
                       } else {
                         console.error(`All paths failed for ${country.folder}. Last tried: ${currentSrc}`);
+                        e.target.style.display = 'none';
+                        // Show placeholder if not already shown
+                        if (!e.target.parentElement.querySelector('.image-placeholder')) {
+                          const placeholder = document.createElement('div');
+                          placeholder.className = 'image-placeholder text-center text-purple-600 text-lg';
+                          placeholder.textContent = `${country.flowerName}`;
+                          e.target.parentElement.appendChild(placeholder);
+                        }
                       }
                     }
                   }}
-                  onLoad={() => {
+                  onLoad={(e) => {
                     console.log(`Successfully loaded complete flower for ${country.folder}`);
+                    // Reset error count on successful load
+                    if (e.target.dataset.errorCount) {
+                      e.target.dataset.errorCount = '0';
+                    }
                   }}
                 />
               </div>

@@ -9,7 +9,8 @@ export function middleware(request) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/admin') ||
     pathname.includes('.') ||
-    pathname.startsWith('/Digital') // Skip for game assets
+    pathname.startsWith('/Digital') || // Skip for game assets
+    pathname.startsWith('/complete-flowers') // Skip for complete flower images
   ) {
     return NextResponse.next();
   }
