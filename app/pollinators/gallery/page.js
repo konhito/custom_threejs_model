@@ -3,7 +3,7 @@ import Navigation from "../../../components/Navigation";
 import Footer from "../../../components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D, Bot, Zap, Cpu, Wifi, Bug, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Box, ExternalLink, TrendingDown, AlertTriangle, Globe, Heart, Rotate3D, Bot, Zap, Cpu, Wifi, Bug, ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation as SwiperNavigation } from "swiper/modules";
 import "swiper/css";
