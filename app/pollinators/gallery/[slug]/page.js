@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
 import Navigation from "../../../../components/Navigation";
 import Footer from "../../../../components/Footer";
 import Image from "next/image";
@@ -8,6 +8,16 @@ import { ArrowLeft, Globe, Heart, Rotate3D, Bot, Zap, Cpu, MapPin, Shield, TreeP
 import { useState, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import { getPollinatorBySlug, getAllPollinators } from "../pollinatorData";
+
+// Helper for localized content
+const getLocalizedContent = (content, lang = 'en') => {
+    if (typeof content === 'string') return content;
+    if (typeof content === 'object' && content !== null) {
+        if (Array.isArray(content)) return content;
+        return content[lang] || content['en'] || Object.values(content)[0] || '';
+    }
+    return '';
+};
 
 // ── 3D Model Viewer ──────────────────────────────────────
 function PollinatorModelViewer({ glbPath }) {
@@ -231,8 +241,24 @@ function getStatusVariant(status) {
 // ── Main Page ────────────────────────────────────────────
 export default function PollinatorDetailPage() {
     const params = useParams();
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const slug = params?.slug;
+    const initialLang = searchParams?.get('lang') || 'en';
+    const [language, setLanguage] = useState(initialLang);
     const pollinator = slug ? getPollinatorBySlug(slug) : null;
+
+    useEffect(() => {
+        const lang = searchParams?.get('lang');
+        if (lang && lang !== language) {
+            setLanguage(lang);
+        }
+    }, [searchParams]);
+
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang);
+        router.push(`?lang=${lang}`, { scroll: false });
+    };
 
     if (!pollinator) {
         return (
@@ -251,6 +277,7 @@ export default function PollinatorDetailPage() {
     }
 
     const isRobotic = pollinator.type === "robotic";
+    const localizedFunFacts = pollinator.funFacts ? (pollinator.funFacts[language] || pollinator.funFacts['en'] || (Array.isArray(pollinator.funFacts) ? pollinator.funFacts : [])) : [];
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/30 to-white">
@@ -274,12 +301,36 @@ export default function PollinatorDetailPage() {
                     <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16">
                         <div className="max-w-5xl mx-auto">
                             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-                                <Link
-                                    href="/pollinators/gallery"
-                                    className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm mb-4 transition-colors"
-                                >
-                                    <ArrowLeft className="w-4 h-4" /> Back to Gallery
-                                </Link>
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                                    <Link
+                                        href={`/pollinators/gallery?lang=${language}`}
+                                        className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm transition-colors"
+                                    >
+                                        <ArrowLeft className="w-4 h-4" /> Back to Gallery
+                                    </Link>
+
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {[
+                                            { code: 'en', label: 'English', flag: '🇺🇸' },
+                                            { code: 'es', label: 'Español', flag: '🇪🇸' },
+                                            { code: 'fr', label: 'Français', flag: '🇫🇷' },
+                                            { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+                                            { code: 'zh', label: '中文', flag: '🇨🇳' }
+                                        ].map((lang) => (
+                                            <button
+                                                key={lang.code}
+                                                onClick={() => handleLanguageChange(lang.code)}
+                                                className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-200 border ${language === lang.code
+                                                        ? 'bg-white/20 text-white border-white/50 shadow-sm backdrop-blur-md'
+                                                        : 'bg-black/20 text-white/70 hover:bg-black/40 border-transparent hover:border-white/20 backdrop-blur-sm'
+                                                    }`}
+                                            >
+                                                <span>{lang.flag}</span>
+                                                <span className="hidden sm:inline">{lang.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
 
                                 <div className="flex items-center gap-3 mb-3">
                                     <span className="text-3xl">{pollinator.categoryIcon}</span>
@@ -413,7 +464,7 @@ export default function PollinatorDetailPage() {
                     </h2>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm">
                         <p className="text-gray-700 leading-relaxed text-base sm:text-lg">
-                            {pollinator.detailedDescription || pollinator.description}
+                            {getLocalizedContent(pollinator.detailedDescription, language) || getLocalizedContent(pollinator.description, language)}
                         </p>
                     </div>
                 </motion.section>
@@ -431,7 +482,7 @@ export default function PollinatorDetailPage() {
                                 <h3 className="text-lg font-bold text-green-800 mb-3 flex items-center gap-2">
                                     <TreePine className="w-5 h-5" /> Habitat
                                 </h3>
-                                <p className="text-green-900/80 leading-relaxed">{pollinator.habitat}</p>
+                                <p className="text-green-900/80 leading-relaxed">{getLocalizedContent(pollinator.habitat, language)}</p>
                             </div>
                         )}
 
@@ -440,14 +491,14 @@ export default function PollinatorDetailPage() {
                                 <h3 className="text-lg font-bold text-amber-800 mb-3 flex items-center gap-2">
                                     <Shield className="w-5 h-5" /> Conservation
                                 </h3>
-                                <p className="text-amber-900/80 leading-relaxed">{pollinator.conservation}</p>
+                                <p className="text-amber-900/80 leading-relaxed">{getLocalizedContent(pollinator.conservation, language)}</p>
                             </div>
                         )}
                     </motion.div>
                 )}
 
                 {/* Fun Facts */}
-                {pollinator.funFacts && pollinator.funFacts.length > 0 && (
+                {localizedFunFacts.length > 0 && (
                     <motion.section
                         className="mb-12"
                         initial={{ opacity: 0, y: 20 }}
@@ -459,7 +510,7 @@ export default function PollinatorDetailPage() {
                             Did You Know?
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {pollinator.funFacts.map((fact, i) => (
+                            {localizedFunFacts.map((fact, i) => (
                                 <motion.div
                                     key={i}
                                     className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
@@ -497,14 +548,14 @@ export default function PollinatorDetailPage() {
                                     <h3 className="text-lg font-bold text-blue-800 mb-3 flex items-center gap-2">
                                         <Zap className="w-5 h-5" /> Capabilities
                                     </h3>
-                                    <p className="text-blue-900/80 leading-relaxed">{pollinator.capabilities}</p>
+                                    <p className="text-blue-900/80 leading-relaxed">{getLocalizedContent(pollinator.capabilities, language)}</p>
                                 </div>
 
                                 <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 sm:p-8 border border-purple-200">
                                     <h3 className="text-lg font-bold text-purple-800 mb-3 flex items-center gap-2">
                                         <Cpu className="w-5 h-5" /> Applications
                                     </h3>
-                                    <p className="text-purple-900/80 leading-relaxed">{pollinator.applications}</p>
+                                    <p className="text-purple-900/80 leading-relaxed">{getLocalizedContent(pollinator.applications, language)}</p>
                                 </div>
                             </div>
                         </section>
@@ -520,14 +571,14 @@ export default function PollinatorDetailPage() {
                                     <h3 className="text-lg font-bold text-green-800 mb-3 flex items-center gap-2">
                                         <span className="text-green-600">✓</span> Advantages
                                     </h3>
-                                    <p className="text-green-900/80 leading-relaxed">{pollinator.advantages}</p>
+                                    <p className="text-green-900/80 leading-relaxed">{getLocalizedContent(pollinator.advantages, language)}</p>
                                 </div>
 
                                 <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 sm:p-8 border border-orange-200">
                                     <h3 className="text-lg font-bold text-orange-800 mb-3 flex items-center gap-2">
                                         <AlertTriangle className="w-5 h-5" /> Limitations
                                     </h3>
-                                    <p className="text-orange-900/80 leading-relaxed">{pollinator.limitations}</p>
+                                    <p className="text-orange-900/80 leading-relaxed">{getLocalizedContent(pollinator.limitations, language)}</p>
                                 </div>
                             </div>
                         </section>
@@ -549,7 +600,7 @@ export default function PollinatorDetailPage() {
                             .map((p) => (
                                 <Link
                                     key={p.slug}
-                                    href={`/pollinators/gallery/${p.slug}`}
+                                    href={`/pollinators/gallery/${p.slug}?lang=${language}`}
                                     className="group bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                                 >
                                     <div className="relative h-28 sm:h-32 overflow-hidden">
@@ -577,7 +628,7 @@ export default function PollinatorDetailPage() {
                 {/* Back to Gallery CTA */}
                 <div className="text-center py-8">
                     <Link
-                        href="/pollinators/gallery"
+                        href={`/pollinators/gallery?lang=${language}`}
                         className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                     >
                         <ArrowLeft className="w-5 h-5" />
