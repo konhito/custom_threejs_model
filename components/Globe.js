@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2 } from "lucide-react";
+import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2, ArrowLeft, Palette } from "lucide-react";
+import { MusicToggleButton } from "./MusicToggleButton";
 import Link from "next/link";
 import Image from "next/image";
 import GlobeLoader from "./GlobeLoader";
@@ -8,28 +9,31 @@ import GlobeLoader from "./GlobeLoader";
 // Three.js is loaded dynamically to avoid SSR issues
 let THREE = null;
 let GLTFLoader = null;
+let DRACOLoader = null;
 let OrbitControls = null;
 
 // Promise to track Three.js loading
 let threeLoadPromise = null;
 
 async function loadThreeJS() {
-  if (THREE) return { THREE, GLTFLoader, OrbitControls };
-  
+  if (THREE) return { THREE, GLTFLoader, DRACOLoader, OrbitControls };
+
   if (!threeLoadPromise) {
     threeLoadPromise = (async () => {
       const threeModule = await import("three");
       const gltfModule = await import("three/examples/jsm/loaders/GLTFLoader.js");
+      const dracoModule = await import("three/examples/jsm/loaders/DRACOLoader.js");
       const controlsModule = await import("three/examples/jsm/controls/OrbitControls.js");
-      
+
       THREE = threeModule;
       GLTFLoader = gltfModule.GLTFLoader;
+      DRACOLoader = dracoModule.DRACOLoader;
       OrbitControls = controlsModule.OrbitControls;
-      
-      return { THREE, GLTFLoader, OrbitControls };
+
+      return { THREE, GLTFLoader, DRACOLoader, OrbitControls };
     })();
   }
-  
+
   return threeLoadPromise;
 }
 
@@ -37,6 +41,7 @@ async function loadThreeJS() {
 function FlowerDetailModal({ country, isVisible, onClose }) {
   const modelViewerRef = useRef();
   const [isModelLoaded, setIsModelLoaded] = useState(false);
+  const [lang, setLang] = useState("en"); // Default to English for now
 
   useEffect(() => {
     if (!isVisible || !country) return;
@@ -45,7 +50,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
     const loadModel = async () => {
       try {
         // Load Three.js dynamically
-        const { THREE, GLTFLoader, OrbitControls } = await loadThreeJS();
+        const { THREE, GLTFLoader, DRACOLoader, OrbitControls } = await loadThreeJS();
 
         if (!modelViewerRef.current) return;
 
@@ -54,163 +59,129 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
 
         // Scene setup
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xf8fafc);
+        // Use a warm neutral background similar to test page
+        scene.background = new THREE.Color(0xF2F1ED);
 
         const camera = new THREE.PerspectiveCamera(
-          75,
+          45,
           modelViewerRef.current.clientWidth /
-            modelViewerRef.current.clientHeight,
+          modelViewerRef.current.clientHeight,
           0.1,
-          1000
+          100
         );
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
         renderer.setSize(
           modelViewerRef.current.clientWidth,
           modelViewerRef.current.clientHeight
         );
         renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.toneMappingExposure = 1.1;
 
         modelViewerRef.current.appendChild(renderer.domElement);
 
         // Controls
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 2;
-        controls.enableZoom = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.minPolarAngle = Math.PI / 3.2;
+        controls.maxPolarAngle = Math.PI / 1.8;
         controls.enablePan = false;
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
+        // Lighting match test page
+        const neutralKey = new THREE.DirectionalLight(0xffffff, 1.2);
+        neutralKey.position.set(4, 6, 3);
+        neutralKey.castShadow = true;
+        scene.add(neutralKey);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(10, 10, 5);
-        directionalLight.castShadow = true;
-        directionalLight.shadow.mapSize.width = 2048;
-        directionalLight.shadow.mapSize.height = 2048;
-        scene.add(directionalLight);
+        const warmFill = new THREE.DirectionalLight(0xfff1d6, 0.6);
+        warmFill.position.set(-3, 2, -2);
+        scene.add(warmFill);
 
-        const fillLight = new THREE.DirectionalLight(0x74c7ec, 0.4);
-        fillLight.position.set(-5, 5, -5);
-        scene.add(fillLight);
+        const coolRim = new THREE.DirectionalLight(0xd8ecff, 0.45);
+        coolRim.position.set(0, 4, -4);
+        scene.add(coolRim);
+
+        scene.add(new THREE.AmbientLight(0xfaf7f1, 0.5));
+
+        // Ground plane
+        const groundGeo = new THREE.PlaneGeometry(20, 20);
+        const groundMat = new THREE.ShadowMaterial({
+          opacity: 0.18,
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -1;
+        ground.receiveShadow = true;
+        scene.add(ground);
 
         // Load model or create fallback
         const loader = new GLTFLoader();
 
-        if (country.gltfPath) {
+        // Use custom DRACO loader if needed
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath(
+          "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+        );
+        dracoLoader.setDecoderConfig({ type: "js" });
+        loader.setDRACOLoader(dracoLoader);
+
+        const gltfUrl = country.gltfPath;
+
+        if (gltfUrl) {
+          loader.setCrossOrigin("anonymous");
           loader.load(
-            country.gltfPath,
+            gltfUrl,
             (gltf) => {
               const model = gltf.scene;
 
-              // Center and scale the model
-              const box = new THREE.Box3().setFromObject(model);
-              const center = box.getCenter(new THREE.Vector3());
-              const size = box.getSize(new THREE.Vector3());
-              const maxDim = Math.max(size.x, size.y, size.z);
-              const scale = 3 / maxDim;
-
-              model.scale.multiplyScalar(scale);
-              model.position.sub(center.multiplyScalar(scale));
-
-              // Enable shadows
-              model.traverse((child) => {
-                if (child.isMesh) {
-                  child.castShadow = true;
-                  child.receiveShadow = true;
+              // Try to fix textures if they are black
+              model.traverse((node) => {
+                if (node.isMesh) {
+                  node.castShadow = true;
+                  node.receiveShadow = true;
+                  if (node.material) {
+                    node.material.side = THREE.DoubleSide;
+                    // Reset emissive if it's potentially causing issues, or ensure map encoding
+                    if (node.material.map) node.material.map.encoding = THREE.sRGBEncoding;
+                    node.material.needsUpdate = true;
+                  }
                 }
               });
+
+              // Center and scale the model
+              const box = new THREE.Box3().setFromObject(model);
+              const size = box.getSize(new THREE.Vector3());
+              const center = box.getCenter(new THREE.Vector3());
+              const maxDim = Math.max(size.x, size.y, size.z);
+
+              // Different scale for different models if needed, but 1.8 fit well in test page
+              const targetHeight = 1.8;
+              const scale = targetHeight / maxDim;
+
+              model.scale.setScalar(scale);
+              model.position.sub(center.multiplyScalar(scale));
 
               scene.add(model);
               setIsModelLoaded(true);
 
               // Position camera
-              camera.position.set(5, 5, 5);
+              camera.position.set(0, 1.5, 3);
               camera.lookAt(0, 0, 0);
               controls.target.set(0, 0, 0);
             },
-            (progress) => {
-              console.log(
-                `Loading model: ${(progress.loaded / progress.total) * 100}%`
-              );
-            },
+            undefined,
             (error) => {
               console.error("Error loading model:", error);
-              createFallbackFlower();
+              createFallbackFlower(THREE, scene, camera, controls, country);
             }
           );
         } else {
-          createFallbackFlower();
+          createFallbackFlower(THREE, scene, camera, controls, country);
         }
-
-        function createFallbackFlower() {
-          // Create a beautiful 3D flower as fallback
-          const flowerGroup = new THREE.Group();
-
-          // Flower center
-          const centerGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-          const centerMaterial = new THREE.MeshPhongMaterial({
-            color: 0xffd700,
-            shininess: 100,
-          });
-          const center = new THREE.Mesh(centerGeometry, centerMaterial);
-          flowerGroup.add(center);
-
-          // Petals
-          const petalCount = 8;
-          const petalGeometry = new THREE.ConeGeometry(0.5, 1.5, 8);
-          const petalMaterial = new THREE.MeshPhongMaterial({
-            color: country.color,
-            shininess: 80,
-            transparent: true,
-            opacity: 0.9,
-          });
-
-          for (let i = 0; i < petalCount; i++) {
-            const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-            const angle = (i / petalCount) * Math.PI * 2;
-            petal.position.set(Math.cos(angle) * 0.8, 0, Math.sin(angle) * 0.8);
-            petal.rotation.z = angle + Math.PI / 2;
-            petal.rotation.x = Math.PI / 4;
-            petal.castShadow = true;
-            flowerGroup.add(petal);
-          }
-
-          // Stem
-          const stemGeometry = new THREE.CylinderGeometry(0.05, 0.08, 2, 8);
-          const stemMaterial = new THREE.MeshPhongMaterial({ color: 0x228b22 });
-          const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-          stem.position.y = -1.5;
-          stem.castShadow = true;
-          flowerGroup.add(stem);
-
-          scene.add(flowerGroup);
-          setIsModelLoaded(true);
-
-          camera.position.set(3, 3, 3);
-          camera.lookAt(0, 0, 0);
-          controls.target.set(0, 0, 0);
-        }
-
-        // Ground plane
-        const groundGeometry = new THREE.PlaneGeometry(20, 20);
-        const groundMaterial = new THREE.MeshLambertMaterial({
-          color: 0xffffff,
-          transparent: true,
-          opacity: 0.8,
-        });
-        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.y = -2;
-        ground.receiveShadow = true;
-        scene.add(ground);
 
         // Animation loop
         const animate = () => {
@@ -250,137 +221,180 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
     }
   }, [isVisible, country]);
 
+  // Fallback flower function
+  function createFallbackFlower(THREE, scene, camera, controls, country) {
+    const flowerGroup = new THREE.Group();
+    // Simple fallback logic (simplified for brevity)
+    const centerGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+    const centerMaterial = new THREE.MeshPhongMaterial({ color: 0xffd700 });
+    const center = new THREE.Mesh(centerGeometry, centerMaterial);
+    flowerGroup.add(center);
+
+    // Add some petals
+    const petalCount = 8;
+    const petalGeo = new THREE.ConeGeometry(0.5, 1.5, 8);
+    const petalMat = new THREE.MeshPhongMaterial({ color: country.color });
+    for (let i = 0; i < petalCount; i++) {
+      const petal = new THREE.Mesh(petalGeo, petalMat);
+      const angle = (i / petalCount) * Math.PI * 2;
+      petal.position.set(Math.cos(angle) * 0.8, 0, Math.sin(angle) * 0.8);
+      petal.rotation.z = angle + Math.PI / 2;
+      petal.rotation.x = Math.PI / 4;
+      flowerGroup.add(petal);
+    }
+
+    scene.add(flowerGroup);
+    setIsModelLoaded(true);
+    camera.position.set(0, 2, 4);
+    controls.target.set(0, 0, 0);
+  }
+
   if (!country) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[100000] flex items-center justify-center p-4 sm:p-6 transition-all duration-500 ${
-        isVisible
-          ? "bg-black/80 backdrop-blur-md"
-          : "bg-transparent pointer-events-none"
-      }`}
+      className={`fixed inset-0 z-[100000] flex items-center justify-center p-0 sm:p-4 transition-all duration-500 ${isVisible
+        ? "bg-slate-50/90 backdrop-blur-sm"
+        : "bg-transparent pointer-events-none opacity-0"
+        }`}
       role="dialog"
       aria-modal="true"
-      aria-labelledby="flower-modal-title"
-      aria-describedby="flower-modal-description"
-      onClick={onClose}
     >
-      <div
-        className={`bg-white rounded-3xl shadow-2xl max-w-5xl w-full overflow-hidden transition-all duration-700 transform ${
-          isVisible ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-8"
-        }`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center transition-all duration-200 z-20 group"
-          aria-label="Close flower details dialog"
-        >
-          <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:rotate-90 transition-transform duration-300" aria-hidden="true" />
-        </button>
+      {/* Music Player */}
+      {isVisible && country.musicPath && (
+        <div className="fixed bottom-6 left-6 z-[100002]">
+          <MusicToggleButton
+            src={country.musicPath}
+            autoPlay={true}
+            onLoadComplete={isModelLoaded}
+          />
+        </div>
+      )}
 
-        <div className="flex flex-col lg:flex-row max-h-[90vh]">
+      <div
+        className={`bg-white w-full h-full sm:h-auto sm:max-w-6xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col transition-all duration-700 transform ${isVisible ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-8"
+          }`}
+        style={{ maxHeight: "95vh" }}
+      >
+        {/* Top Bar */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white z-10">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </button>
+            <span className="text-xs rounded-full bg-rose-50 px-3 py-1 text-rose-700 font-medium hidden sm:inline-block">
+              {country.country} · {country.flowerName}
+            </span>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="w-10 h-10 bg-gray-50 hover:bg-gray-100 rounded-full flex items-center justify-center transition-all"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
           {/* 3D Model Viewer - Left Side */}
-          <div className="lg:w-1/2 relative bg-gradient-to-br from-gray-50 to-gray-100">
+          <div className="lg:w-[55%] relative bg-[#F2F1ED] flex flex-col">
             <div
               ref={modelViewerRef}
-              className="w-full h-64 sm:h-80 lg:h-[90vh] rounded-lg"
+              className="w-full h-[40vh] lg:h-full"
             />
 
             {!isModelLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-                <div className="text-center">
-                  <div 
-                    className="w-16 h-16 rounded-full animate-spin flex items-center justify-center mx-auto mb-4"
-                    style={{
-                      background: `linear-gradient(135deg, ${country.color}40, ${country.color}80)`,
-                    }}
-                  >
-                    <Rotate3D className="w-8 h-8 animate-pulse" style={{ color: country.color }} />
-                  </div>
-                  <p className="text-lg font-medium text-gray-600">
-                    Loading...
-                  </p>
-                </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="w-10 h-10 border-2 border-gray-400 border-t-transparent rounded-full animate-spin mb-3" />
+                <p className="text-sm text-gray-500">Loading model...</p>
               </div>
             )}
 
-            <div className="absolute bottom-4 left-4 bg-black/30 backdrop-blur-md rounded-full px-4 py-2">
-              <p className="text-xs text-white font-medium">
+            <div className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-md rounded-full px-4 py-2 border border-white/50 shadow-sm hidden sm:block">
+              <p className="text-xs text-gray-600 font-medium">
                 Drag to rotate • Scroll to zoom
               </p>
             </div>
           </div>
 
           {/* Information Panel - Right Side */}
-          <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 overflow-y-auto">
-            <div className="space-y-6">
+          <div className="lg:w-[45%] flex flex-col h-[60vh] lg:h-auto bg-white border-l border-gray-100 overflow-y-auto">
+            <div className="p-6 sm:p-8 lg:p-10 space-y-8">
+
               {/* Header */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
-                    style={{
-                      backgroundColor: `${country.color}15`,
-                    }}
-                  >
-                    <Flower className="w-6 h-6" style={{ color: country.color }} />
-                  </div>
-                  <div className="flex-1">
-                    <h1 id="flower-modal-title" className="text-3xl sm:text-4xl font-bold text-gray-900">
-                      {country.flowerName}
-                    </h1>
-                  </div>
-                </div>
-                
-                <p className="text-lg sm:text-xl italic text-gray-500 font-light">
+              <header>
+                <div className="text-3xl mb-2">🌸</div>
+                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">
+                  {country.flowerName}
+                </h1>
+                <p className="text-gray-500 text-lg italic font-serif">
                   {country.flowerScientificName}
                 </p>
-                
-                <div className="flex items-center gap-2 text-gray-600">
-                  <MapPin className="w-4 h-4" style={{ color: country.color }} />
-                  <span className="text-sm font-medium">National flower of {country.country}</span>
+                {country.sanCode && (
+                  <div className="mt-2 text-xs text-gray-400 font-mono">
+                    S.A.N.: {country.sanCode}
+                  </div>
+                )}
+              </header>
+
+              {/* Botanical Data */}
+              <div className="space-y-4">
+                <h2 className="text-xs uppercase tracking-[0.3em] text-rose-500 font-semibold">
+                  1. BOTANICAL DATA
+                </h2>
+                <div className="bg-rose-50 rounded-xl p-5 border border-rose-100 space-y-4">
+                  <div>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Scientific Name</span>
+                    <span className="text-gray-800 italic">{country.flowerScientificName}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Common Names</span>
+                    <span className="text-gray-800">{country.flowerName}</span>
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Description</span>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {country.botanicalInfo}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Divider */}
-              <div 
-                className="h-px w-full"
-                style={{
-                  background: `linear-gradient(90deg, transparent, ${country.color}40, transparent)`,
-                }}
-              />
-
-              {/* Description */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-                  About
-                </h4>
-                <p className="text-gray-700 leading-relaxed text-base">
-                  {country.flowerDescription}
-                </p>
-              </div>
-
-              {/* Country Details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Capital</p>
-                  <p className="text-base font-semibold text-gray-900">{country.capital}</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Language</p>
-                  <p className="text-base font-semibold text-gray-900">{country.language}</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Currency</p>
-                  <p className="text-base font-semibold text-gray-900">{country.currency}</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Continent</p>
-                  <p className="text-base font-semibold text-gray-900">{country.continent}</p>
+              {/* Cultural Significance */}
+              <div className="space-y-4">
+                <h2 className="text-xs uppercase tracking-[0.3em] text-gray-400 font-semibold">
+                  2. CULTURAL SIGNIFICANCE
+                </h2>
+                <div className="prose prose-sm text-gray-600">
+                  <p>{country.flowerDescription}</p>
+                  <p className="mt-2">{country.culturalSignificance}</p>
                 </div>
               </div>
+
+              {/* Country Stats */}
+              <div className="pt-6 border-t border-gray-100 grid grid-cols-2 gap-6">
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Country</p>
+                  <p className="font-semibold text-gray-900">{country.country}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Capital</p>
+                  <p className="font-semibold text-gray-900">{country.capital}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Language</p>
+                  <p className="font-semibold text-gray-900">{country.language}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Currency</p>
+                  <p className="font-semibold text-gray-900">{country.currency}</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -401,32 +415,34 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
 
-  // Countries data array - India and USA only
+  // Countries data array
   const countriesData = useMemo(() => [
     {
-    id: "IN_LOTUS",
-    name: "Lotus",
-    country: "India",
-    countryCode: "IN",
-    lat: 20.5937,
-      lng: -55.9629, // Your custom globe coordinates
-    capital: "New Delhi",
-    population: "1.4 billion",
-    continent: "Asia",
-    language: "Hindi, English",
-    currency: "Indian Rupee (INR)",
-    flowerName: "Lotus",
-    flowerScientificName: "Nelumbo nucifera",
-    flowerDescription:
-      "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
-    culturalSignificance:
-      "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
-    botanicalInfo:
-      "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
-    color: "#ff6b9d",
-    special: true,
+      id: "IN_LOTUS",
+      name: "Lotus",
+      country: "India",
+      countryCode: "IN",
+      lat: 20.5937,
+      lng: -55.9629, // Adjusted for custom globe
+      capital: "New Delhi",
+      population: "1.4 billion",
+      continent: "Asia",
+      language: "Hindi, English",
+      currency: "Indian Rupee (INR)",
+      flowerName: "Lotus",
+      flowerScientificName: "Nelumbo nucifera",
+      flowerDescription:
+        "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
+      culturalSignificance:
+        "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
+      botanicalInfo:
+        "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
+      color: "#ff6b9d",
+      special: true,
       size: 0.10,
-    gltfPath: "/lotus.glb",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indian_lotus.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(India).mp3.mpeg",
+      sanCode: "SAN-F-IN-001",
     },
     {
       id: "US_ROSE",
@@ -451,90 +467,125 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#e91e63",
       special: false,
       size: 0.08,
-      gltfPath: null, // Will use fallback flower
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(USA).mp3.mpeg",
+      sanCode: "SAN-F-US-001",
     },
     {
-      id: "RU_CHAMOMILE",
-      name: "Chamomile",
-      country: "Russia",
-      countryCode: "RU",
-      lat: 50.0,
-      lng: -40.0, // Russia coordinates (moved away from USA)
-      capital: "Moscow",
-      population: "146 million",
-      continent: "Europe/Asia",
-      language: "Russian",
-      currency: "Russian Ruble (RUB)",
-      flowerName: "Chamomile",
-      flowerScientificName: "Matricaria chamomilla",
+      id: "CA_MAPLE",
+      name: "Maple Leaf",
+      country: "Canada",
+      countryCode: "CA",
+      lat: 67.7560,
+      lng: 120.8520,
+      capital: "Ottawa",
+      population: "38 million",
+      continent: "North America",
+      language: "English, French",
+      currency: "Canadian Dollar (CAD)",
+      flowerName: "Maple Leaf",
+      flowerScientificName: "Acer",
       flowerDescription:
-        "The chamomile is Russia's national flower, symbolizing simplicity, purity, and healing. It represents the country's vast natural landscapes and traditional medicine.",
+        "The maple leaf is the distinctively shaped leaf of the maple tree, and is the most widely recognized national symbol of Canada.",
       culturalSignificance:
-        "Chamomile has deep roots in Russian culture, often used in traditional medicine and tea. It symbolizes the simple beauty and resilience of the Russian people.",
+        "The maple leaf has been a symbol of Canada since the 18th century, representing the land and its people. It features prominently on the national flag.",
       botanicalInfo:
-        "A small, daisy-like flowering plant with white petals and yellow centers. Known for its medicinal properties and pleasant aroma, it grows wild across Russia's vast territories.",
-      color: "#ffffff",
+        "Maples are trees or shrubs in the genus Acer. They are known for their palmate leaves and winged seeds. Canada is home to ten native maple species.",
+      color: "#ff0000",
       special: true,
       size: 0.09,
-      gltfPath: null, // Will use fallback flower
+      gltfPath: null, // Will use fallback
+      musicPath: "/music/Canada.mp3", // Placeholder
+      sanCode: "SAN-F-CA-001",
     },
     {
-      id: "CN_PEONY",
-      name: "Peony",
-      country: "China",
-      countryCode: "CN",
-      lat: 30.8617,
-      lng: -30.1954, // China coordinates (positioned for your custom globe)
-      capital: "Beijing",
-      population: "1.4 billion",
-      continent: "Asia",
-      language: "Mandarin Chinese",
-      currency: "Chinese Yuan (CNY)",
-      flowerName: "Peony",
-      flowerScientificName: "Paeonia suffruticosa",
+      id: "ES_CARNATION",
+      name: "Carnation",
+      country: "Spain",
+      countryCode: "ES",
+      lat: 44.5711,
+      lng: -139.5964,
+      capital: "Madrid",
+      population: "47 million",
+      continent: "Europe",
+      language: "Spanish",
+      currency: "Euro (EUR)",
+      flowerName: "Carnation",
+      flowerScientificName: "Dianthus caryophyllus",
       flowerDescription:
-        "The peony is China's national flower, symbolizing prosperity, honor, and wealth. It represents the country's rich cultural heritage and natural beauty.",
+        "The carnation is Spain's national flower, symbolizing passion, love, and the vibrant spirit of the Spanish people.",
       culturalSignificance:
-        "Peonies have been revered in Chinese culture for over 1,000 years, often called the 'king of flowers.' They symbolize good fortune, happiness, and honor in Chinese tradition.",
+        "Carnations are central to Spanish culture, often worn during festivals and bullfights. They represent the deep-rooted traditions and artistic soul of Spain.",
       botanicalInfo:
-        "A perennial flowering plant with large, fragrant, colorful blooms. The tree peony is particularly prized for its beauty and has been cultivated in China for centuries.",
-      color: "#ff1744",
+        "A perennial flowering plant known for its fringed petals and sweet, spicy fragrance. It thrives in Spain's Mediterranean climate.",
+      color: "#ff5252",
       special: true,
-      size: 0.10,
-      gltfPath: null, // Will use fallback flower
+      size: 0.08,
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb"),
+      musicPath: "/Folk Project (España).mp3",
+      sanCode: "SAN-F-ES-001",
     },
     {
-      id: "MN_SCABIOSA",
-      name: "Scabiosa",
-      country: "Mongolia",
-      countryCode: "MN",
-      lat: 40.0,
-      lng: -40.0, // Mongolia coordinates (positioned between Russia and China)
-      capital: "Ulaanbaatar",
-      population: "3.3 million",
-      continent: "Asia",
-      language: "Mongolian",
-      currency: "Mongolian Tugrik (MNT)",
-      flowerName: "Scabiosa",
-      flowerScientificName: "Scabiosa comosa",
+      id: "ZA_PROTEA",
+      name: "Protea",
+      country: "South Africa",
+      countryCode: "ZA",
+      lat: -30.6814,
+      lng: -117.5419,
+      capital: "Pretoria",
+      population: "60 million",
+      continent: "Africa",
+      language: "Zulu, Xhosa, Afrikaans, English",
+      currency: "South African Rand (ZAR)",
+      flowerName: "King Protea",
+      flowerScientificName: "Protea cynaroides",
       flowerDescription:
-        "The scabiosa is Mongolia's national flower, symbolizing the country's vast steppes and nomadic heritage. It represents resilience and natural beauty in harsh climates.",
+        "The King Protea is South Africa's national flower, symbolizing diversity and courage. It has the largest flower head in the genus.",
       culturalSignificance:
-        "Scabiosa flowers are deeply connected to Mongolian nomadic culture, often found in the country's grasslands and representing the harmony between people and nature.",
+        "It represents the beauty and resilience of the land. Its name comes from the Greek god Proteus due to the many shapes and colors of the flowers.",
       botanicalInfo:
-        "A hardy perennial plant with delicate, pincushion-like flowers in shades of blue, purple, and white. It thrives in Mongolia's continental climate and steppe environment.",
-      color: "#673ab7",
-      special: false,
+        "A woody shrub with thick stems and large dark green glossy leaves. The flower heads are huge, bowl-shaped, and surrounded by bracts.",
+      color: "#e91e63",
+      special: true,
+      size: 0.09,
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/King_Protea.glb"),
+      musicPath: "/music/SouthAfrica.mp3", // Placeholder
+      sanCode: "SAN-F-ZA-001",
+    },
+    {
+      id: "CO_ORCHID",
+      name: "Orchid",
+      country: "Colombia",
+      countryCode: "CO",
+      lat: 20.6917,
+      lng: 135.5094,
+      capital: "Bogotá",
+      population: "50 million",
+      continent: "South America",
+      language: "Spanish",
+      currency: "Colombian Peso (COP)",
+      flowerName: "Cattleya Trianae",
+      flowerScientificName: "Cattleya trianae",
+      flowerDescription:
+        "The Cattleya trianae orchid is Colombia's national flower, chosen for its beauty and because the colors of its lip (yellow, blue, and red) match the Colombian flag.",
+      culturalSignificance:
+        "Named after Colombian botanist Jerónimo Triana, it represents the rich biodiversity of Colombia, which has the most orchid species in the world.",
+      botanicalInfo:
+        "An epiphytic orchid that grows on trees in the cloud forests of the Andes. It produces large, fragrant flowers.",
+      color: "#ba68c8",
+      special: true,
       size: 0.08,
-      gltfPath: null, // Will use fallback flower
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Orqui%CC%81dea_Tricolor.glb"),
+      musicPath: "/music/Colombia.mp3", // Placeholder
+      sanCode: "SAN-F-CO-001",
     },
     {
       id: "PK_JASMINE",
       name: "Jasmine",
       country: "Pakistan",
       countryCode: "PK",
-      lat: 28.0,
-      lng: -65.0, // Pakistan coordinates (positioned near India)
+      lat: 28.6939,
+      lng: -68.0902,
       capital: "Islamabad",
       population: "231 million",
       continent: "Asia",
@@ -551,165 +602,18 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#4caf50",
       special: false,
       size: 0.08,
-      gltfPath: null, // Will use fallback flower
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Pakistani_Jasmine.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Pakistan).mp3.mpeg",
+      sanCode: "SAN-F-PK-001",
     },
-    {
-      id: "BD_WATER_LILY",
-      name: "Water Lily",
-      country: "Bangladesh",
-      countryCode: "BD",
-      lat: 20.0,
-      lng: -40.0, // Bangladesh coordinates (positioned near India and Pakistan)
-      capital: "Dhaka",
-      population: "165 million",
-      continent: "Asia",
-      language: "Bengali",
-      currency: "Bangladeshi Taka (BDT)",
-      flowerName: "Water Lily",
-      flowerScientificName: "Nymphaea nouchali",
-      flowerDescription:
-        "The water lily is Bangladesh's national flower, symbolizing purity, beauty, and resilience. It represents the country's aquatic landscapes and natural heritage.",
-      culturalSignificance:
-        "Water lilies are deeply embedded in Bangladeshi culture, often found in the country's rivers and wetlands. They symbolize the connection between people and water in this riverine nation.",
-      botanicalInfo:
-        "An aquatic perennial plant with large, floating leaves and beautiful white or pink flowers. It thrives in Bangladesh's numerous rivers, ponds, and wetlands.",
-      color: "#2196f3",
-      special: false,
-      size: 0.08,
-      gltfPath: null, // Will use fallback flower
-    },
-    {
-      id: "MM_PADAUK",
-      name: "Padauk",
-      country: "Myanmar",
-      countryCode: "MM",
-      lat: 18.0,
-      lng: -35.0, // Myanmar coordinates (positioned near other South Asian countries)
-      capital: "Naypyidaw",
-      population: "54 million",
-      continent: "Asia",
-      language: "Burmese",
-      currency: "Myanmar Kyat (MMK)",
-      flowerName: "Padauk",
-      flowerScientificName: "Pterocarpus indicus",
-      flowerDescription:
-        "The padauk is Myanmar's national flower, symbolizing strength, resilience, and beauty. It represents the country's rich natural heritage and cultural identity.",
-      culturalSignificance:
-        "Padauk flowers are deeply cherished in Myanmar culture, often associated with traditional festivals and ceremonies. They symbolize the strength and resilience of the Myanmar people.",
-      botanicalInfo:
-        "A large deciduous tree with bright golden-yellow flowers that bloom in spring. The padauk is known for its beautiful wood and fragrant flowers, making it highly valued in Myanmar.",
-      color: "#ff9800",
-      special: false,
-      size: 0.06,
-      gltfPath: null, // Will use fallback flower
-    },
-    {
-      id: "TH_RATCHAPHRUEK",
-      name: "Ratchaphruek",
-      country: "Thailand",
-      countryCode: "TH",
-      lat: 12.0,
-      lng: -30.0, // Thailand coordinates (positioned near Myanmar and Bangladesh)
-      capital: "Bangkok",
-      population: "70 million",
-      continent: "Asia",
-      language: "Thai",
-      currency: "Thai Baht (THB)",
-      flowerName: "Ratchaphruek",
-      flowerScientificName: "Cassia fistula",
-      flowerDescription:
-        "The ratchaphruek is Thailand's national flower, symbolizing unity, harmony, and the Thai people. It represents the country's royal heritage and natural beauty.",
-      culturalSignificance:
-        "Ratchaphruek flowers are deeply revered in Thai culture, often associated with the monarchy and Buddhist traditions. They symbolize the unity and harmony of the Thai people.",
-      botanicalInfo:
-        "A medium-sized tree with bright yellow flowers that hang in long clusters. The ratchaphruek is known for its beautiful golden blooms and is widely planted throughout Thailand.",
-      color: "#ffeb3b",
-      special: true,
-      size: 0.07,
-      gltfPath: null, // Will use fallback flower
-    },
-    {
-      id: "LA_FRANGIPANI",
-      name: "Frangipani",
-      country: "Laos",
-      countryCode: "LA",
-      lat: 10.0,
-      lng: -25.0, // Laos coordinates (positioned near Thailand and Myanmar)
-      capital: "Vientiane",
-      population: "7.4 million",
-      continent: "Asia",
-      language: "Lao",
-      currency: "Lao Kip (LAK)",
-      flowerName: "Frangipani",
-      flowerScientificName: "Plumeria alba",
-      flowerDescription:
-        "The frangipani is Laos' national flower, symbolizing beauty, grace, and spiritual enlightenment. It represents the country's Buddhist heritage and natural elegance.",
-      culturalSignificance:
-        "Frangipani flowers are deeply cherished in Lao culture, often used in Buddhist ceremonies and temple decorations. They symbolize spiritual purity and the beauty of life.",
-      botanicalInfo:
-        "A tropical tree with fragrant, waxy flowers in white, pink, or yellow. The frangipani is known for its sweet fragrance and is commonly found in temples and gardens throughout Laos.",
-      color: "#e91e63",
-      special: false,
-      size: 0.06,
-      gltfPath: null, // Will use fallback flower
-    },
-    {
-      id: "KH_RUMDUL",
-      name: "Rumdul",
-      country: "Cambodia",
-      countryCode: "KH",
-      lat: 8.0,
-      lng: -25.0, // Cambodia coordinates (positioned near Laos and Thailand)
-      capital: "Phnom Penh",
-      population: "17 million",
-      continent: "Asia",
-      language: "Khmer",
-      currency: "Cambodian Riel (KHR)",
-      flowerName: "Rumdul",
-      flowerScientificName: "Mitrella mesnyi",
-      flowerDescription:
-        "The rumdul is Cambodia's national flower, symbolizing beauty, elegance, and the Khmer people. It represents the country's rich cultural heritage and natural beauty.",
-      culturalSignificance:
-        "Rumdul flowers are deeply cherished in Cambodian culture, often associated with traditional dances and ceremonies. They symbolize the grace and beauty of the Khmer people.",
-      botanicalInfo:
-        "A small tree with fragrant, white or cream-colored flowers that bloom in clusters. The rumdul is known for its sweet, intoxicating fragrance and is commonly found in Cambodian gardens.",
-      color: "#9c27b0",
-      special: false,
-      size: 0.03,
-      gltfPath: null, // Will use fallback flower
-    },
-    {
-      id: "VN_LOTUS",
-      name: "Lotus",
-      country: "Vietnam",
-      countryCode: "VN",
-      lat: 6.0,
-      lng: -22.0, // Vietnam coordinates (positioned near Cambodia, Laos, and Thailand)
-      capital: "Hanoi",
-      population: "98 million",
-      continent: "Asia",
-      language: "Vietnamese",
-      currency: "Vietnamese Dong (VND)",
-      flowerName: "Lotus",
-      flowerScientificName: "Nelumbo nucifera",
-      flowerDescription:
-        "The lotus is Vietnam's national flower, symbolizing purity, enlightenment, and resilience. It represents the country's cultural heritage and the strength of the Vietnamese people.",
-      culturalSignificance:
-        "Lotus flowers are deeply revered in Vietnamese culture, often associated with Buddhism and traditional values. They symbolize purity, beauty, and the ability to rise above adversity.",
-      botanicalInfo:
-        "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus is known for its ability to grow in muddy waters and bloom beautifully, representing resilience and purity.",
-      color: "#00bcd4",
-      special: true,
-      size: 0.08,
-      gltfPath: null, // Will use fallback flower
-    }
+
   ], []);
 
   // Helper function to calculate 3D coordinates from lat/lng
   const calculate3DCoordinates = (lat, lng, radius = 4.5) => {
     const phi = (90 - lat) * (Math.PI / 180);
     const theta = (lng + 180) * (Math.PI / 180);
-    
+
     return {
       x: -(radius * Math.sin(phi) * Math.cos(theta)),
       y: radius * Math.cos(phi),
@@ -773,35 +677,35 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           1000
         );
         cameraRef.current = camera;
-        
-         // Adjust camera position based on screen size
-         const isMobile = window.innerWidth < 768;
-         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-         
-         // Set initial camera position far for zoom-in effect
-         const targetDistance = isMobile ? 7 : isTablet ? 6.5 : 8;
-         const startDistance = isMobile ? 14 : isTablet ? 13 : 16;
-         
-         camera.position.set(0, 0, startDistance);
+
+        // Adjust camera position based on screen size
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+
+        // Set initial camera position far for zoom-in effect
+        const targetDistance = isMobile ? 7 : isTablet ? 6.5 : 8;
+        const startDistance = isMobile ? 14 : isTablet ? 13 : 16;
+
+        camera.position.set(0, 0, startDistance);
         console.log("✅ Camera positioned at:", camera.position);
-        
+
         // Animate camera zoom in on load
         const zoomDuration = 2000; // 2 seconds
         const startTime = Date.now();
-        
+
         const animateZoom = () => {
           const elapsed = Date.now() - startTime;
           const progress = Math.min(elapsed / zoomDuration, 1);
           const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
-          
+
           const currentDistance = startDistance + (targetDistance - startDistance) * easeProgress;
           camera.position.z = currentDistance;
-          
+
           if (progress < 1) {
             requestAnimationFrame(animateZoom);
           }
         };
-        
+
         animateZoom();
 
         // Create renderer
@@ -836,7 +740,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         const calculate3DCoordsWithRadius = (lat, lng, radius) => {
           const phi = (90 - lat) * (Math.PI / 180);
           const theta = (lng + 180) * (Math.PI / 180);
-          
+
           return {
             x: -(radius * Math.sin(phi) * Math.cos(theta)),
             y: radius * Math.cos(phi),
@@ -849,24 +753,24 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           // Convert world position to screen coordinates
           const vector = worldPosition.clone();
           vector.project(camera);
-          
+
           // Convert to screen coordinates
           const x = (vector.x * 0.5 + 0.5) * renderer.domElement.clientWidth;
           const y = (vector.y * 0.5 + 0.5) * renderer.domElement.clientHeight;
-          
+
           // Calculate distance from screen center
           const screenCenterX = renderer.domElement.clientWidth / 2;
           const screenCenterY = renderer.domElement.clientHeight / 2;
-          
+
           const distance = Math.sqrt(
             Math.pow(x - screenCenterX, 2) + Math.pow(y - screenCenterY, 2)
           );
-          
+
           // Normalize distance (0 = center, 1 = edge)
           const maxDistance = Math.sqrt(
             Math.pow(screenCenterX, 2) + Math.pow(screenCenterY, 2)
           );
-          
+
           return Math.min(distance / maxDistance, 1);
         };
 
@@ -874,25 +778,25 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         const getDynamicColor = (baseColor, distanceFromCenter) => {
           // Parse base color
           const color = new THREE.Color(baseColor);
-          
+
           // Calculate brightness factor with dramatic range (1.5 at center, 0.2 at edge)
           const brightness = 1.5 - (distanceFromCenter * 1.3);
-          
+
           // Calculate saturation factor (1.2 at center, 0.4 at edge)
           const saturation = 1.2 - (distanceFromCenter * 0.8);
-          
+
           // Apply brightness and saturation
           const hsl = { h: 0, s: 0, l: 0 };
           color.getHSL(hsl);
-          
+
           // Adjust saturation and lightness with more dramatic effect
           hsl.s = Math.min(hsl.s * saturation, 1.0);
           hsl.l = Math.min(hsl.l * brightness, 1.0);
-          
+
           // Convert back to color
           const dynamicColor = new THREE.Color();
           dynamicColor.setHSL(hsl.h, hsl.s, hsl.l);
-          
+
           return dynamicColor;
         };
 
@@ -905,16 +809,16 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
                 const countryData = ballGroup.userData.data;
                 const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
                 const dynamicColor = getDynamicColor(countryData.color, distanceFromCenter);
-                
+
                 // Calculate dramatic opacity factor (1.5 at center, 0.3 at edge)
                 const opacityFactor = 1.5 - (distanceFromCenter * 1.2);
                 const clampedOpacityFactor = Math.max(0.1, Math.min(opacityFactor, 1.0));
-                
+
                 // Update main ball color
                 if (child.material.color) {
                   child.material.color.copy(dynamicColor);
                 }
-                
+
                 // Store original opacity if not already stored
                 if (!child.material.userData) {
                   child.material.userData = {};
@@ -922,7 +826,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
                 if (child.material.userData.originalOpacity === undefined) {
                   child.material.userData.originalOpacity = child.material.opacity || 0.9;
                 }
-                
+
                 // Update opacity with dramatic range
                 if (child.material.opacity !== undefined) {
                   child.material.opacity = child.material.userData.originalOpacity * clampedOpacityFactor;
@@ -939,7 +843,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           "/Globe.glb",
           (gltf) => {
             const globe = gltf.scene;
-            
+
             // Ensure globe materials are visible
             globe.traverse((child) => {
               if (child.isMesh && child.material) {
@@ -948,8 +852,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
               }
             });
 
-             // Add initial scale animation with mobile-friendly scaling
-             const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
+            // Add initial scale animation with mobile-friendly scaling
+            const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
             globe.scale.setScalar(0.1);
             scene.add(globe);
             console.log("✅ Globe loaded successfully");
@@ -984,15 +888,15 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           console.log("🔄 Creating fallback globe");
           // Create fallback sphere with better visibility
           const geometry = new THREE.SphereGeometry(1, 32, 32);
-          const material = new THREE.MeshPhongMaterial({ 
+          const material = new THREE.MeshPhongMaterial({
             color: 0x4a90e2,
             transparent: false,
             opacity: 1.0
           });
           const sphere = new THREE.Mesh(geometry, material);
 
-           // Add initial scale animation for fallback with mobile-friendly scaling
-           const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
+          // Add initial scale animation for fallback with mobile-friendly scaling
+          const targetScale = isMobile ? 1.8 : isTablet ? 2.8 : 4.0;
           sphere.scale.setScalar(0.1);
           scene.add(sphere);
           console.log("✅ Fallback globe added to scene");
@@ -1020,185 +924,185 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         // Function to add country balls for all countries
         function addCountryBalls(scene, camera) {
           countriesData.forEach((countryData, index) => {
-          const ballGroup = new THREE.Group();
+            const ballGroup = new THREE.Group();
 
-          // Adjust satellite size based on device type
-          const adjustedSize = isMobile 
-            ? countryData.size * 1.2  // 20% larger on mobile for better visibility
-            : isTablet 
-            ? countryData.size * 0.9  // 10% smaller on tablet
-            : countryData.size;       // Original size on desktop
+            // Adjust satellite size based on device type
+            const adjustedSize = isMobile
+              ? countryData.size * 1.2  // 20% larger on mobile for better visibility
+              : isTablet
+                ? countryData.size * 0.9  // 10% smaller on tablet
+                : countryData.size;       // Original size on desktop
 
-          // Main sphere (ball) - this will be clickable
-          const sphereGeometry = new THREE.SphereGeometry(
+            // Main sphere (ball) - this will be clickable
+            const sphereGeometry = new THREE.SphereGeometry(
               adjustedSize,
-            16,
-            16
-          );
-          const sphereMaterial = new THREE.MeshPhongMaterial({
+              16,
+              16
+            );
+            const sphereMaterial = new THREE.MeshPhongMaterial({
               color: countryData.color,
-            shininess: 120,
-            specular: 0x666666,
-            transparent: true,
-            opacity: 0.9,
-          });
-          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+              shininess: 120,
+              specular: 0x666666,
+              transparent: true,
+              opacity: 0.9,
+            });
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-          // Store country data for click handling
+            // Store country data for click handling
             sphere.userData = { data: countryData };
-          sphere.castShadow = true;
-          sphere.receiveShadow = true;
-          ballGroup.add(sphere);
+            sphere.castShadow = true;
+            sphere.receiveShadow = true;
+            ballGroup.add(sphere);
 
-          // Add initial scale animation for the ball
-          ballGroup.scale.setScalar(0);
-          scene.add(ballGroup);
+            // Add initial scale animation for the ball
+            ballGroup.scale.setScalar(0);
+            scene.add(ballGroup);
 
             // Animate ball appearance with delay (staggered for visual effect)
-          setTimeout(() => {
-            const ballAnimation = () => {
-              if (ballGroup.scale.x < 1) {
-                ballGroup.scale.addScalar(0.1);
-                requestAnimationFrame(ballAnimation);
-              } else {
-                ballGroup.scale.setScalar(1);
-              }
-            };
-            ballAnimation();
+            setTimeout(() => {
+              const ballAnimation = () => {
+                if (ballGroup.scale.x < 1) {
+                  ballGroup.scale.addScalar(0.1);
+                  requestAnimationFrame(ballAnimation);
+                } else {
+                  ballGroup.scale.setScalar(1);
+                }
+              };
+              ballAnimation();
             }, 1000 + (index * 200)); // Staggered delay for each country
 
-              // Enhanced 3-layer glow effect with stronger aura
-              // Inner glow (closest to ball)
-              const innerGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 1.4,
-            16,
-            16
-          );
-              const innerGlowMaterial = new THREE.MeshBasicMaterial({
-                color: countryData.color,
-                transparent: true,
-                opacity: 0.45,
-              });
-              const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
-              innerGlow.userData = { data: countryData };
-              ballGroup.add(innerGlow);
+            // Enhanced 3-layer glow effect with stronger aura
+            // Inner glow (closest to ball)
+            const innerGlowGeometry = new THREE.SphereGeometry(
+              adjustedSize * 1.4,
+              16,
+              16
+            );
+            const innerGlowMaterial = new THREE.MeshBasicMaterial({
+              color: countryData.color,
+              transparent: true,
+              opacity: 0.45,
+            });
+            const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
+            innerGlow.userData = { data: countryData };
+            ballGroup.add(innerGlow);
 
-              // Middle glow
-              const middleGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 2.0,
-                16,
-                16
-              );
-              const middleGlowMaterial = new THREE.MeshBasicMaterial({
-                color: countryData.color,
-            transparent: true,
-            opacity: 0.30,
-          });
-              const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
-              middleGlow.userData = { data: countryData };
-              ballGroup.add(middleGlow);
+            // Middle glow
+            const middleGlowGeometry = new THREE.SphereGeometry(
+              adjustedSize * 2.0,
+              16,
+              16
+            );
+            const middleGlowMaterial = new THREE.MeshBasicMaterial({
+              color: countryData.color,
+              transparent: true,
+              opacity: 0.30,
+            });
+            const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
+            middleGlow.userData = { data: countryData };
+            ballGroup.add(middleGlow);
 
-              // Outer glow
-              const outerGlowGeometry = new THREE.SphereGeometry(
-                adjustedSize * 2.8,
-                16,
-                16
-              );
-              const outerGlowMaterial = new THREE.MeshBasicMaterial({
-                color: countryData.color,
-                transparent: true,
-                opacity: 0.18,
-              });
-              const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
-              outerGlow.userData = { data: countryData };
-              ballGroup.add(outerGlow);
+            // Outer glow
+            const outerGlowGeometry = new THREE.SphereGeometry(
+              adjustedSize * 2.8,
+              16,
+              16
+            );
+            const outerGlowMaterial = new THREE.MeshBasicMaterial({
+              color: countryData.color,
+              transparent: true,
+              opacity: 0.18,
+            });
+            const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
+            outerGlow.userData = { data: countryData };
+            ballGroup.add(outerGlow);
 
             // Enhanced ring effect for special countries
             if (countryData.special) {
               // Single elegant ring with stronger glow
-          const ringGeometry = new THREE.RingGeometry(
+              const ringGeometry = new THREE.RingGeometry(
                 adjustedSize * 1.6,
                 adjustedSize * 2.0,
-            32
-          );
-          const ringMaterial = new THREE.MeshBasicMaterial({
+                32
+              );
+              const ringMaterial = new THREE.MeshBasicMaterial({
                 color: countryData.color,
-            transparent: true,
-            opacity: 0.5,
-            side: THREE.DoubleSide,
-          });
-          const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-          ring.rotateX(Math.PI / 2);
+                transparent: true,
+                opacity: 0.5,
+                side: THREE.DoubleSide,
+              });
+              const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+              ring.rotateX(Math.PI / 2);
               ring.userData = { data: countryData };
-          ballGroup.add(ring);
+              ballGroup.add(ring);
             }
 
-             // Position the ball using the helper function with closer radius for mobile
-             const initialRadius = isMobile ? 2.0 : isTablet ? 3.0 : 4.5;
+            // Position the ball using the helper function with closer radius for mobile
+            const initialRadius = isMobile ? 2.0 : isTablet ? 3.0 : 4.5;
             const coords = calculate3DCoordinates(countryData.lat, countryData.lng, initialRadius);
             ballGroup.position.set(coords.x, coords.y, coords.z);
-            ballGroup.userData = { 
+            ballGroup.userData = {
               data: countryData,
-              isHovered: false 
+              isHovered: false
             };
 
             // Store ball group for zoom scaling
             ballGroups.push(ballGroup);
 
             console.log(`🌸 ${countryData.country} ball added at coordinates:`, coords);
-            console.log(`Ball distance from origin: ${Math.sqrt(coords.x*coords.x + coords.y*coords.y + coords.z*coords.z)}`);
+            console.log(`Ball distance from origin: ${Math.sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z)}`);
           });
         }
 
         // Cache for last distance to avoid unnecessary recalculations
         let lastDistance = -1;
         const DISTANCE_THRESHOLD = 0.1; // Only recalculate if distance changed by more than this
-        
+
         // Function to scale and reposition satellites based on camera distance (zoom level)
         const scaleSatellitesBasedOnZoom = (camera) => {
           const distance = camera.position.length();
-          
+
           // Only recalculate if distance changed significantly (optimization)
           if (Math.abs(distance - lastDistance) < DISTANCE_THRESHOLD) {
             return; // Skip recalculation if distance hasn't changed much
           }
           lastDistance = distance;
-          
-           // Mobile-friendly distance limits
-           const minDistance = isMobile ? 3 : isTablet ? 2.5 : 3;
-           const maxDistance = isMobile ? 12 : isTablet ? 11 : 15;
-          
+
+          // Mobile-friendly distance limits
+          const minDistance = isMobile ? 3 : isTablet ? 2.5 : 3;
+          const maxDistance = isMobile ? 12 : isTablet ? 11 : 15;
+
           // Calculate normalized distance (0 = closest, 1 = farthest)
           const normalizedDistance = Math.max(0, Math.min(1, (distance - minDistance) / (maxDistance - minDistance)));
-          
+
           // Calculate base scale factor (closer = smaller satellites)
           // Mobile: Scale from 0.4x to 0.9x (larger for better visibility), Tablet: 0.25x to 0.8x, Desktop: 0.4x to 1.2x
-          const baseScaleFactor = isMobile 
-            ? 0.4 + (normalizedDistance * 0.5) 
-            : isTablet 
-            ? 0.25 + (normalizedDistance * 0.55)
-            : 0.4 + (normalizedDistance * 0.8);
-          
-           // Calculate dynamic radius (closer zoom = satellites closer to globe)
-           // Mobile: 1.8 to 2.4 (balanced), Tablet: 2.8 to 3.4, Desktop: 4.2 to 4.8
-           const dynamicRadius = isMobile
-             ? 1.8 + (normalizedDistance * 0.6)
-             : isTablet
-             ? 2.8 + (normalizedDistance * 0.6)
-             : 4.2 + (normalizedDistance * 0.6);
-          
+          const baseScaleFactor = isMobile
+            ? 0.4 + (normalizedDistance * 0.5)
+            : isTablet
+              ? 0.25 + (normalizedDistance * 0.55)
+              : 0.4 + (normalizedDistance * 0.8);
+
+          // Calculate dynamic radius (closer zoom = satellites closer to globe)
+          // Mobile: 1.8 to 2.4 (balanced), Tablet: 2.8 to 3.4, Desktop: 4.2 to 4.8
+          const dynamicRadius = isMobile
+            ? 1.8 + (normalizedDistance * 0.6)
+            : isTablet
+              ? 2.8 + (normalizedDistance * 0.6)
+              : 4.2 + (normalizedDistance * 0.6);
+
           // Apply scaling and repositioning to all ball groups
           ballGroups.forEach((ballGroup) => {
             if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
               const countryData = ballGroup.userData.data;
-              
+
               // Calculate final scale factor (base scale * hover multiplier)
               const hoverMultiplier = ballGroup.userData.isHovered ? 1.3 : 1.0;
               const finalScaleFactor = baseScaleFactor * hoverMultiplier;
-              
+
               // Apply the combined scaling
               ballGroup.scale.setScalar(finalScaleFactor);
-              
+
               // Reposition with dynamic radius
               const coords = calculate3DCoordsWithRadius(countryData.lat, countryData.lng, dynamicRadius);
               ballGroup.position.set(coords.x, coords.y, coords.z);
@@ -1215,23 +1119,23 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.enablePan = false;
         // Disable rotation on mobile when not in fullscreen to prevent scroll interference
         controls.enableRotate = !isMobile; // Disable on mobile, enable on desktop/tablet
-        
-         // Mobile-friendly zoom limits
-         if (isMobile) {
-           controls.minDistance = 3;
-           controls.maxDistance = 12;
-           controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
-           // Disable all interactions on mobile when not in fullscreen
-           controls.enableRotate = false;
-         } else if (isTablet) {
-           controls.minDistance = 2.5;
-           controls.maxDistance = 11;
-           controls.autoRotateSpeed = 0.4;
-         } else {
-           controls.minDistance = 3;
-           controls.maxDistance = 15;
-         }
-        
+
+        // Mobile-friendly zoom limits
+        if (isMobile) {
+          controls.minDistance = 3;
+          controls.maxDistance = 12;
+          controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
+          // Disable all interactions on mobile when not in fullscreen
+          controls.enableRotate = false;
+        } else if (isTablet) {
+          controls.minDistance = 2.5;
+          controls.maxDistance = 11;
+          controls.autoRotateSpeed = 0.4;
+        } else {
+          controls.minDistance = 3;
+          controls.maxDistance = 15;
+        }
+
         // Mobile touch settings - disable touch controls on mobile when not in fullscreen
         if (isMobile) {
           controls.touches = {
@@ -1275,16 +1179,50 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           });
 
           // Check for intersections
-          const intersects = raycaster.intersectObjects(intersectableObjects);
+          const intersects = raycaster.intersectObjects(scene.children, true);
 
           if (intersects.length > 0) {
-            const clickedObject = intersects[0].object;
-            const countryData = clickedObject.userData.data;
+            const firstIntersect = intersects[0];
+            const clickedObject = firstIntersect.object;
+
+            // --- COORDINATE DEBUG TOOL ---
+            // Find the point on the globe's surface (specifically looking for the globe mesh)
+            let globeIntersection = null;
+            for (let intersect of intersects) {
+              // Usually the globe is a mesh that doesn't have country data
+              if (intersect.object.isMesh && (!intersect.object.userData || !intersect.object.userData.data)) {
+                globeIntersection = intersect;
+                break;
+              }
+            }
+
+            if (globeIntersection) {
+              const point = globeIntersection.point.clone();
+              // Calculate distance from center
+              const distance = point.length();
+
+              // Normalize point to sphere (latitude/longitude calculation)
+              const normalizedPoint = point.clone().normalize();
+
+              const lat = Math.asin(normalizedPoint.y) * (180 / Math.PI);
+              let lng = (Math.atan2(normalizedPoint.z, -normalizedPoint.x) * (180 / Math.PI)) + 180;
+
+              // Normalize to [-180, 180]
+              while (lng <= -180) lng += 360;
+              while (lng > 180) lng -= 360;
+
+              console.log("%c--- GLOBE COORDINATE FIXED ---", "color: #38a169; font-weight: bold;");
+              console.log(`📍 Clicked Location: lat: ${lat.toFixed(4)}, lng: ${lng.toFixed(4)}`);
+              console.log(`📏 Distance from origin: ${distance.toFixed(4)}`);
+            }
+            // -----------------------------
+
+            const countryData = clickedObject.userData?.data || clickedObject.parent?.userData?.data;
 
             if (countryData) {
               // Prevent fullscreen toggle when clicking on a flower
               event.stopPropagation();
-              
+
               // Stop auto rotation
               controls.autoRotate = false;
 
@@ -1298,7 +1236,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
         // Add click listener
         renderer.domElement.addEventListener("click", handleClick);
-        
+
         // On mobile when not in fullscreen, disable pointer events on the canvas to allow scrolling
         if (isMobile) {
           renderer.domElement.style.pointerEvents = 'none';
@@ -1307,7 +1245,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
         // Add hover effect for balls
         let hoveredBall = null;
-        
+
         const handleMouseMove = (event) => {
           const mouse = new THREE.Vector2();
           // Use renderer element's bounding rect for accurate coordinates
@@ -1320,7 +1258,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
           // Check for intersections with balls
           const intersects = raycaster.intersectObjects(scene.children, true);
-          
+
           // Reset previously hovered ball
           if (hoveredBall) {
             hoveredBall.userData.isHovered = false;
@@ -1343,13 +1281,13 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         const animate = () => {
           requestAnimationFrame(animate);
           controls.update();
-          
+
           // Scale satellites based on zoom level
           scaleSatellitesBasedOnZoom(camera);
-          
+
           // Update ball colors based on screen position
           updateBallColors(scene, camera, renderer);
-          
+
           // Add dynamic pulsing glow animation with stronger effect
           const time = Date.now() * 0.001;
           scene.traverse((child) => {
@@ -1359,18 +1297,18 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
                 const ballGroup = child.parent;
                 if (ballGroup && ballGroup.userData && ballGroup.userData.data) {
                   const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
-                  
+
                   // Stronger pulsing effect for better visibility
                   const pulseIntensity = 0.25 * (1 - distanceFromCenter); // 0.25 at center, 0 at edge (increased from 0.15)
                   const pulseSpeed = 1.2 + (0.8 * (1 - distanceFromCenter)); // Faster pulse at center
-                  
+
                   const pulse = Math.sin(time * pulseSpeed) * pulseIntensity + (1 - pulseIntensity);
                   child.material.opacity = child.material.opacity * pulse;
                 }
               }
             }
           });
-          
+
           renderer.render(scene, camera);
         };
         animate();
@@ -1380,26 +1318,26 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           if (!containerRef.current) return;
           const width = containerRef.current.clientWidth;
           const height = containerRef.current.clientHeight;
-          
+
           // Update camera aspect ratio
           camera.aspect = width / height;
           camera.updateProjectionMatrix();
-          
+
           // Update renderer size
           renderer.setSize(width, height);
-          
+
           // Recalculate mobile/tablet status
           const newIsMobile = window.innerWidth < 768;
           const newIsTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-          
-           // Adjust camera position if screen size changed
-           if (newIsMobile && !isMobile) {
-             camera.position.set(0, 0, 7);
-           } else if (newIsTablet && !isTablet) {
-             camera.position.set(0, 0, 6.5);
-           } else if (!newIsMobile && !newIsTablet && (isMobile || isTablet)) {
-             camera.position.set(0, 0, 8);
-           }
+
+          // Adjust camera position if screen size changed
+          if (newIsMobile && !isMobile) {
+            camera.position.set(0, 0, 7);
+          } else if (newIsTablet && !isTablet) {
+            camera.position.set(0, 0, 6.5);
+          } else if (!newIsMobile && !newIsTablet && (isMobile || isTablet)) {
+            camera.position.set(0, 0, 8);
+          }
         };
 
         window.addEventListener("resize", handleResize);
@@ -1493,7 +1431,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
     if (controlsRef.current) {
       const isMobile = window.innerWidth < 768;
       controlsRef.current.enableZoom = isFullscreen; // Enable zoom only in fullscreen
-      
+
       // On mobile: only enable rotation in fullscreen. On desktop/tablet: always enable rotation
       if (isMobile) {
         controlsRef.current.enableRotate = isFullscreen;
@@ -1511,7 +1449,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       } else {
         controlsRef.current.enableRotate = true; // Always enable on desktop/tablet
       }
-      
+
       console.log(`🔍 Zoom ${isFullscreen ? 'enabled' : 'disabled'}, Rotate ${controlsRef.current.enableRotate ? 'enabled' : 'disabled'} (fullscreen: ${isFullscreen}, mobile: ${isMobile})`);
     }
 
@@ -1525,7 +1463,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         }
         // Add to new container
         targetContainer.appendChild(rendererRef.current.domElement);
-        
+
         // Update renderer size
         const width = targetContainer.clientWidth;
         const height = targetContainer.clientHeight;
@@ -1535,7 +1473,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         }
         rendererRef.current.setSize(width, height);
       }
-      
+
       // Update pointer events based on fullscreen state and device type
       const isMobile = window.innerWidth < 768;
       if (isMobile) {
@@ -1557,7 +1495,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
     <>
       {/* Fullscreen Overlay */}
       {isFullscreen && (
-        <div 
+        <div
           className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex items-center justify-center"
           onClick={(e) => {
             // Close fullscreen when clicking the background (not the globe)
@@ -1577,7 +1515,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
           {/* Fullscreen Globe Container */}
           <div className="w-full h-full relative">
-            <div 
+            <div
               className="w-full h-full flex items-center justify-center relative"
               role="main"
               aria-label="Interactive 3D Globe of Sacred Flowers - Fullscreen Mode"
@@ -1596,13 +1534,12 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 />
               )}
-              
+
               {/* Main globe container in fullscreen */}
               <div
                 ref={fullscreenContainerRef}
-                className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 z-10 ${
-                  isGlobeLoaded ? "opacity-100" : "opacity-0"
-                }`}
+                className={`w-full h-full cursor-grab active:cursor-grabbing relative transition-opacity duration-1000 z-10 ${isGlobeLoaded ? "opacity-100" : "opacity-0"
+                  }`}
                 role="img"
                 aria-label="Interactive 3D globe showing national flowers from different countries"
                 tabIndex={0}
@@ -1610,7 +1547,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
               {/* Loading Animation */}
               {!isGlobeLoaded && (
-                <div 
+                <div
                   className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
                   role="status"
                   aria-live="polite"
@@ -1626,7 +1563,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
       {/* Normal View */}
       {!isFullscreen && (
-        <div 
+        <div
           className="w-full h-full flex items-center justify-center relative group"
           style={{
             minHeight: '100%',
@@ -1662,17 +1599,17 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
             />
           )}
-          
+
           {/* Oval Border Frame - Contains the globe (only if showOvalBorder is true) */}
           {showOvalBorder && (
-            <div 
+            <div
               className="absolute inset-0 flex items-center justify-center z-0"
               style={{
                 clipPath: 'ellipse(85% 90% at 50% 50%)',
               }}
             >
               {/* Decorative border */}
-              <div 
+              <div
                 className="absolute inset-0"
                 style={{
                   clipPath: 'ellipse(85% 90% at 50% 50%)',
@@ -1687,9 +1624,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           {/* Main globe container */}
           <div
             ref={containerRef}
-            className={`w-full h-full relative transition-opacity duration-1000 z-10 ${
-              isGlobeLoaded ? "opacity-100" : "opacity-0"
-            }`}
+            className={`w-full h-full relative transition-opacity duration-1000 z-10 ${isGlobeLoaded ? "opacity-100" : "opacity-0"
+              }`}
             style={{
               ...(showOvalBorder ? {
                 clipPath: 'ellipse(85% 90% at 50% 50%)',
@@ -1707,7 +1643,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
 
           {/* Loading Animation */}
           {!isGlobeLoaded && (
-            <div 
+            <div
               className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
               role="status"
               aria-live="polite"
