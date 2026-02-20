@@ -515,7 +515,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       flowerNameLocal: "Feuille d'érable",
       localLanguageName: "French",
       gltfPath: null, // Will use fallback
-      musicPath: "/music/Canada.mp3", // Placeholder
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Canada).mp3+(1).mpeg",
       sanCode: "SAN-F-CA-001",
     },
     {
