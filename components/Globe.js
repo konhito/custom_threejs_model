@@ -328,9 +328,23 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {/* Header */}
               <header>
                 <div className="text-3xl mb-2">🌸</div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">
+                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-1">
                   {country.flowerName}
                 </h1>
+                {/* Local language name */}
+                {country.flowerNameLocal && country.flowerNameLocal !== country.flowerName && (
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span
+                      className="text-xl font-semibold"
+                      style={{ color: country.color }}
+                    >
+                      {country.flowerNameLocal}
+                    </span>
+                    <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">
+                      {country.localLanguageName}
+                    </span>
+                  </div>
+                )}
                 <p className="text-gray-500 text-lg italic font-serif">
                   {country.flowerScientificName}
                 </p>
@@ -440,6 +454,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#ff6b9d",
       special: true,
       size: 0.10,
+      flowerNameLocal: "कमल",
+      localLanguageName: "Hindi",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indian_lotus.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(India).mp3.mpeg",
       sanCode: "SAN-F-IN-001",
@@ -467,6 +483,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#e91e63",
       special: false,
       size: 0.08,
+      flowerNameLocal: "Rose",
+      localLanguageName: "English",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(USA).mp3.mpeg",
       sanCode: "SAN-F-US-001",
@@ -494,6 +512,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#ff0000",
       special: true,
       size: 0.09,
+      flowerNameLocal: "Feuille d'érable",
+      localLanguageName: "French",
       gltfPath: null, // Will use fallback
       musicPath: "/music/Canada.mp3", // Placeholder
       sanCode: "SAN-F-CA-001",
@@ -521,6 +541,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#ff5252",
       special: true,
       size: 0.08,
+      flowerNameLocal: "Clavel",
+      localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb"),
       musicPath: "/Folk Project (España).mp3",
       sanCode: "SAN-F-ES-001",
@@ -548,6 +570,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#e91e63",
       special: true,
       size: 0.09,
+      flowerNameLocal: "Koningsuikerbos",
+      localLanguageName: "Afrikaans",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/King_Protea.glb"),
       musicPath: "/music/SouthAfrica.mp3", // Placeholder
       sanCode: "SAN-F-ZA-001",
@@ -575,6 +599,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#ba68c8",
       special: true,
       size: 0.08,
+      flowerNameLocal: "Orquídea de Navidad",
+      localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Orqui%CC%81dea_Tricolor.glb"),
       musicPath: "/music/Colombia.mp3", // Placeholder
       sanCode: "SAN-F-CO-001",
@@ -602,6 +628,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       color: "#4caf50",
       special: false,
       size: 0.08,
+      flowerNameLocal: "چنبیلی",
+      localLanguageName: "Urdu",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Pakistani_Jasmine.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Pakistan).mp3.mpeg",
       sanCode: "SAN-F-PK-001",

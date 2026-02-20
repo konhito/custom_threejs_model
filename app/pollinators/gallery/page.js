@@ -151,7 +151,7 @@ function Pollinator3DViewer({ pollinator, onClose }) {
   const getPollinatorType = (name, scientificName) => {
     const lowerName = name.toLowerCase();
     const lowerScientific = scientificName?.toLowerCase() || "";
-    
+
     if (lowerName.includes("bee") || lowerScientific.includes("apis") || lowerScientific.includes("bombus") || lowerScientific.includes("formicidae")) {
       return "bee";
     } else if (lowerName.includes("butterfly") || lowerName.includes("moth") || lowerScientific.includes("danaus") || lowerScientific.includes("papilionidae") || lowerScientific.includes("hemaris")) {
@@ -195,9 +195,9 @@ function Pollinator3DViewer({ pollinator, onClose }) {
           {hasGLBModel && isMounted ? (
             <div ref={canvasRef} className="w-full h-full" />
           ) : (
-            <Pollinator3D 
-              type={pollinatorType} 
-              size={1.2} 
+            <Pollinator3D
+              type={pollinatorType}
+              size={1.2}
               autoRotate={true}
             />
           )}
@@ -217,28 +217,55 @@ function Pollinator3DViewer({ pollinator, onClose }) {
         </div>
 
         {/* Pollinator Information */}
-        <div className="p-6 bg-gray-50 max-h-64 overflow-y-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
-              <p className="text-gray-700 text-sm">{pollinator.description || pollinator.roleEn || "No description available."}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-800 mb-2">Region</h4>
-              <p className="text-gray-700 text-sm">{pollinator.region || pollinator.country || "Global"}</p>
-            </div>
-            {pollinator.habitat && (
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Habitat</h4>
-                <p className="text-gray-700 text-sm">{pollinator.habitat}</p>
+        <div className="overflow-y-auto max-h-72 bg-white border-t border-gray-100">
+          <div className="p-6 space-y-6">
+
+            {/* 1. Botanical / Taxonomic Data */}
+            <div className="space-y-3">
+              <h3 className="text-xs uppercase tracking-[0.3em] text-amber-600 font-bold">1. TAXONOMIC &amp; BOTANICAL DATA</h3>
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <span className="text-xs font-bold text-amber-700 uppercase block mb-1">Scientific Name</span>
+                  <span className="text-gray-800 italic text-sm">{pollinator.scientificName}</span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-amber-700 uppercase block mb-1">Region</span>
+                  <span className="text-gray-800 text-sm">{pollinator.region || "Global"}</span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-amber-700 uppercase block mb-1">Habitat</span>
+                  <span className="text-gray-800 text-sm">{pollinator.habitat || "Varied"}</span>
+                </div>
+                {pollinator.botanicalInfo && (
+                  <div className="sm:col-span-2">
+                    <span className="text-xs font-bold text-amber-700 uppercase block mb-1">Morphology &amp; Biology</span>
+                    <p className="text-gray-700 text-sm leading-relaxed">{pollinator.botanicalInfo}</p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+
+            {/* 2. Ecological Role */}
+            <div className="space-y-3">
+              <h3 className="text-xs uppercase tracking-[0.3em] text-gray-400 font-bold">2. ECOLOGICAL ROLE</h3>
+              <div className="space-y-2">
+                <p className="text-gray-600 text-sm leading-relaxed">{pollinator.description || pollinator.roleEn}</p>
+                {pollinator.ecologicalRole && (
+                  <p className="text-gray-600 text-sm leading-relaxed">{pollinator.ecologicalRole}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Conservation status */}
             {pollinator.conservation && (
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Conservation</h4>
-                <p className="text-gray-700 text-sm">{pollinator.conservation}</p>
+              <div className="pt-4 border-t border-gray-100">
+                <h3 className="text-xs uppercase tracking-[0.3em] text-red-500 font-bold mb-2">3. CONSERVATION STATUS</h3>
+                <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+                  <p className="text-gray-700 text-sm leading-relaxed">{pollinator.conservation}</p>
+                </div>
               </div>
             )}
+
           </div>
         </div>
       </div>
@@ -263,6 +290,8 @@ export default function PollinatorsGalleryPage() {
         description: "Ground pollinator associated with flowers. Ants visit flowers attracted by nectar and sugary exudates on the petals.",
         habitat: "Present in almost all terrestrial ecosystems, especially soils, path edges and gardens.",
         conservation: "Ant pollinator guilds receive an estimated Araihan Measure of 18/25: high local efficiency and strong ecological interdependence.",
+        botanicalInfo: "Ants belong to the family Formicidae, order Hymenoptera. They are eusocial insects with a colonial lifecycle, comprising workers, queens, and males. Their exoskeleton, segmented body, and powerful mandibles are key morphological features.",
+        ecologicalRole: "Though less efficient than bees due to the absence of specialized pollen-carrying structures (corbiculae), ants contribute to pollination by transferring pollen grains between flowers of low-growing plants while foraging for nectar. They are also important seed dispersers (myrmecochory).",
         glbPath: "/ant.glb",
         roleEn: "Ground pollinator associated with flowers"
       },
@@ -277,6 +306,8 @@ export default function PollinatorsGalleryPage() {
         description: "Essential pollinator responsible for pollinating many of the world's food crops. Honeybees are among the most important pollinators, responsible for pollinating approximately 80% of flowering plants and 75% of food crops worldwide.",
         habitat: "Found worldwide in diverse habitats, from forests to urban gardens, wherever flowering plants grow.",
         conservation: "Honeybee populations face significant threats from pesticides, habitat loss, climate change, and diseases. Araihan Measure: 20 / 25 (Declining).",
+        botanicalInfo: "Apis mellifera belongs to the family Apidae. The worker bee's body is covered in branched hairs that electrostatically attract pollen. Specialised hind-leg structures called corbiculae (pollen baskets) allow them to carry large pollen loads back to the hive. The colony superorganism comprises a single queen, up to 60,000 workers, and seasonal drones.",
+        ecologicalRole: "Honeybees employ a 'waggle dance' communication system to recruit nestmates to high-quality food sources, making them extraordinarily efficient at exploiting floral patches. Their fuzzy bodies passively pick up pollen and deposit it on stigmas during subsequent visits. They pollinate over 400 agricultural plant species globally, contributing an estimated $235 billion in annual crop value.",
         glbPath: null,
         roleEn: "Essential pollinator responsible for pollinating many of the world's food crops"
       },
@@ -291,6 +322,8 @@ export default function PollinatorsGalleryPage() {
         description: "Large, fuzzy bees that are excellent pollinators for many wildflowers and crops. Bumblebees are excellent pollinators due to their large size and ability to 'buzz pollinate' flowers that require vibration to release pollen.",
         habitat: "Temperate regions, grasslands, meadows, and gardens with abundant flowering plants.",
         conservation: "Many bumblebee species are declining due to habitat loss and pesticide use. Araihan Measure: 19 / 25 (Stable to Declining).",
+        botanicalInfo: "Bombus terrestris belongs to family Apidae, subfamily Apinae. Queens are 20–23 mm long; workers 11–17 mm. Their robust, densely hairy bodies are adapted to colder climates, and they can thermoregulate by shivering their flight muscles. Unlike honeybees, colonies are annual — only mated queens overwinter.",
+        ecologicalRole: "Bumblebees are the primary practitioners of 'sonication' or buzz pollination, where they grip the anthers and vibrate at ~400 Hz to dislodge pollen. This is critical for solanaceous crops (tomatoes, peppers, aubergines) and wild plants like Solanum. Their large body size allows them to access flowers inaccessible to smaller insects.",
         glbPath: null,
         roleEn: "Large, fuzzy bees that are excellent pollinators for many wildflowers and crops"
       }
@@ -307,6 +340,8 @@ export default function PollinatorsGalleryPage() {
         description: "Tiny, fast-flying birds that pollinate tubular flowers with their long beaks. Hummingbirds are important pollinators for many tubular flowers, transferring pollen as they feed on nectar with their long, specialized beaks.",
         habitat: "Forests, gardens, and meadows throughout North America, especially areas with abundant nectar-producing flowers.",
         conservation: "While not currently endangered, habitat loss and climate change pose threats. Araihan Measure: 22 / 25 (Stable).",
+        botanicalInfo: "Archilochus colubris is the only hummingbird species that regularly breeds in eastern North America. Adults weigh ~3 g and have a wing-beat frequency of 53 Hz. Males display an iridescent ruby-red gorget produced by structural coloration of feather barbules. They enter daily torpor to conserve energy.",
+        ecologicalRole: "Hummingbirds co-evolved with ornithophilous (bird-pollinated) flowers characterised by red or orange tubular corollas with dilute nectar. Their long, curved bills and extensible tongues allow nectar extraction while the forehead brushes against anthers and stigmas. Key plant relationships include Lobelia cardinalis, Campsis radicans, and Monarda didyma.",
         glbPath: createGLBPath("Humming_bird.glb"),
         roleEn: "Tiny, fast-flying birds that pollinate tubular flowers with their long beaks"
       },
@@ -321,6 +356,8 @@ export default function PollinatorsGalleryPage() {
         description: "Colorful nectar-feeding birds that pollinate many tropical flowers. Sunbirds are important pollinators in tropical and subtropical regions, visiting a wide variety of flowering plants.",
         habitat: "Tropical and subtropical regions of Africa, Asia, and Australia, in forests, gardens, and open areas with flowering plants.",
         conservation: "Sunbird populations are generally stable but face threats from habitat destruction. Araihan Measure: 21 / 25 (Stable).",
+        botanicalInfo: "The family Nectariniidae comprises ~145 species. Males are typically iridescent and highly colourful due to structural coloration; females are duller. Bills are long, slender, and down-curved — morphologically convergent with hummingbirds through parallel evolution. Body mass ranges from 5 to 20 g depending on species.",
+        ecologicalRole: "Sunbirds are the ecological equivalents of hummingbirds in the Old World. They are obligate nectarivores and primary pollinators of many African and Asian flowers including Strelitzia (bird-of-paradise), Aloe, and Erythrina. Unlike hummingbirds, many sunbirds are able to perch while feeding, sometimes piercing flower bases to access nectar (nectar robbing).",
         glbPath: null,
         roleEn: "Colorful nectar-feeding birds that pollinate many tropical flowers"
       }
@@ -337,6 +374,8 @@ export default function PollinatorsGalleryPage() {
         description: "Famous migratory butterflies that pollinate milkweed and other wildflowers. Monarchs are important pollinators during their long migrations, visiting numerous flowering plants along their route.",
         habitat: "Meadows, fields, and gardens across North America, with specific overwintering sites in Mexico and California.",
         conservation: "Monarch populations have declined significantly due to habitat loss and pesticide use. Araihan Measure: 17 / 25 (Declining).",
+        botanicalInfo: "Danaus plexippus (family Nymphalidae) displays aposematic orange-and-black wing patterning warning predators of cardiac glycoside toxicity acquired from its host plant, Asclepias (milkweed). Wingspan: 86–124 mm. The four-stage holometabolous lifecycle (egg → larva → chrysalis → adult) takes 4 weeks in summer.",
+        ecologicalRole: "Monarchs are generalist pollinators, visiting a wide range of nectar plants (goldenrod, asters, lantana) during 4,800 km annual migrations. Pollen adheres to their bodies passively and is deposited across vast geographic ranges, contributing to long-distance gene flow between plant populations. Larvae are specialist feeders on Asclepias, influencing milkweed population dynamics.",
         glbPath: createGLBPath("Final_Textured_Butterfly.glb"),
         roleEn: "Famous migratory butterflies that pollinate milkweed and other wildflowers"
       },
@@ -351,6 +390,8 @@ export default function PollinatorsGalleryPage() {
         description: "Moth species that mimic hummingbirds in appearance and behavior. Hummingbird moths are important pollinators, especially for tubular flowers. They hover like hummingbirds while feeding on nectar.",
         habitat: "Gardens, meadows, and open areas with abundant flowering plants. Found in temperate regions worldwide.",
         conservation: "Hummingbird moth populations are generally stable but face threats from habitat loss and pesticide use. Araihan Measure: 19 / 25 (Stable).",
+        botanicalInfo: "Hemaris (family Sphingidae, clearwing hawkmoths) are diurnal moths with a wingspan of 38–55 mm. Wing scales are shed after the first flight, leaving transparent 'windows' — an adaptation for visual mimicry of hummingbirds. The proboscis can exceed 25 mm, enabling deep-flower nectar extraction while hovering.",
+        ecologicalRole: "As hawkmoths, Hemaris spp. are key pollinators of long-tubed flowers including Phlox, Lonicera (honeysuckle), Viburnum, and Dianthus. Their hovering flight and long proboscis allow exploitation of floral resources inaccessible to shorter-tongued insects. Being diurnal also means they bridge the gap between bee activity periods and nocturnal sphinx moths.",
         glbPath: createGLBPath("Normal__Humming_Bird_Moth_Glb.glb"),
         roleEn: "Moth species that mimic hummingbirds in appearance and behavior"
       },
@@ -365,6 +406,8 @@ export default function PollinatorsGalleryPage() {
         description: "Large, colorful butterflies with distinctive tail-like extensions on their wings. Swallowtails are important pollinators for many flowering plants, especially those with deep corollas.",
         habitat: "Found in diverse habitats worldwide, from forests to gardens, wherever flowering plants grow.",
         conservation: "Many swallowtail species are stable, but some face threats from habitat loss. Araihan Measure: 20 / 25 (Stable).",
+        botanicalInfo: "Papilionidae is one of the largest butterfly families with ~600 species. Wingspans range 45–280 mm. Many species exhibit sexual dimorphism and Batesian mimicry. Larvae are notable for the osmeterium — a forked glandular organ that emits repellent terpenes when threatened. Compound eyes detect UV-wavelength floral guides invisible to humans.",
+        ecologicalRole: "Swallowtails preferentially visit large, flat-headed flowers (Asteraceae, Apiaceae, Zinnias) and deep-tubular blooms. Their long proboscis enables nectaring at flowers with restricted access. As wide-ranging insects they transfer pollen across larger areas than most bee species, contributing to cross-pollination and genetic diversity of plant populations.",
         glbPath: null,
         roleEn: "Large, colorful butterflies with distinctive tail-like extensions on their wings"
       }
@@ -381,6 +424,8 @@ export default function PollinatorsGalleryPage() {
         description: "Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers. These bats are crucial pollinators for agave, cacti, and other night-blooming plants in desert ecosystems.",
         habitat: "Desert and semi-desert regions of Mexico and the southwestern United States, especially areas with agave and cacti.",
         conservation: "Once endangered, populations have recovered but still face threats from habitat loss. Araihan Measure: 18 / 25 (Recovering).",
+        botanicalInfo: "Leptonycteris yerbabuenae (family Phyllostomidae) is a medium-sized bat (~22 g) with a greatly reduced tail and extensible tongue adapted for nectar feeding. The tongue tip bears papillae that mop up nectar and pollen. Echolocation calls are low-intensity compared to insectivorous bats. They undertake seasonal migrations tracking the 'nectar corridor' of blooming plants.",
+        ecologicalRole: "Leptonycteris bats are obligate mutualists of columnar cacti (Carnegiea gigantea — saguaro) and Agave species. Pollen is deposited on the bat's face and chest as it hovers and probes flowers. Without bat pollination, many agave species fail to set seed. The Tequila Bat is sometimes called the 'guardian of the tequila plant' due to its role in blue agave reproduction.",
         glbPath: null,
         roleEn: "Nocturnal pollinators that feed on nectar and pollinate night-blooming flowers"
       }
@@ -397,6 +442,8 @@ export default function PollinatorsGalleryPage() {
         description: "Diverse group of insects that pollinate flowers while feeding on pollen and nectar. Beetles are among the oldest pollinators, visiting flowers to feed on pollen and nectar. They are particularly important for primitive flowering plants.",
         habitat: "Found in almost all terrestrial ecosystems worldwide, from forests to deserts, gardens to grasslands.",
         conservation: "Beetle pollinator populations are generally stable but face threats from habitat loss and pesticide use. Araihan Measure: 20 / 25 (Stable).",
+        botanicalInfo: "Coleoptera is the largest insect order (~400,000 described species). Flower-visiting beetles (Cetoniidae, Nitidulidae, Melyridae) possess chewing mouthparts that allow them to consume both pollen and floral tissues. Their heavily sclerotised exoskeleton carries pollen less efficiently than hairy bees, but body spines and setae aid passive transport.",
+        ecologicalRole: "Beetles are the oldest known pollinators — fossil evidence dates their association with primitive flowering plants (magnolias, water lilies) to the Cretaceous period (~125 Ma). They are primary pollinators of bowl-shaped, strongly scented white or green flowers that provide easy landing access (e.g., Magnolia, Camellia, Nelumbo). Their pollination syndrome is called 'cantharophily'.",
         glbPath: createGLBPath("Beetle_Final_With_Texture.glb"),
         roleEn: "Diverse group of insects that pollinate flowers while feeding on pollen and nectar"
       }
@@ -424,8 +471,8 @@ export default function PollinatorsGalleryPage() {
       manufacturer: "Warsaw University of Technology",
       year: "2017",
       image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&q=80",
-        imageAttribution: "Unsplash",
-        imageUrl: "https://unsplash.com/photos/agricultural-robot",
+      imageAttribution: "Unsplash",
+      imageUrl: "https://unsplash.com/photos/agricultural-robot",
       description: "Autonomous ground robot designed for precision pollination in greenhouses. Uses computer vision to identify flowers and apply pollen with precision.",
       capabilities: "Autonomous navigation, flower recognition, precise pollen application, data collection",
       applications: "Greenhouse crops, controlled environment agriculture, research applications",
@@ -466,19 +513,19 @@ export default function PollinatorsGalleryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
       <Navigation />
-      
+
       <div className="pt-20 px-4 lg:pr-24 lg:pl-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <Link 
+            <Link
               href="/pollinators"
               className="inline-flex items-center space-x-2 text-amber-600 hover:text-amber-700 transition-colors duration-200 mb-4"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to pollinators</span>
             </Link>
-            
+
             <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4">
               Pollinators Gallery
             </h1>
@@ -660,7 +707,7 @@ export default function PollinatorsGalleryPage() {
               <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
                 Natural vs. Robotic Pollinators
               </h3>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Natural Pollinators */}
                 <div className="bg-white/80 rounded-2xl p-6 border border-green-200">
@@ -670,7 +717,7 @@ export default function PollinatorsGalleryPage() {
                     </div>
                     <h4 className="text-2xl font-bold text-gray-800">Natural Pollinators</h4>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
@@ -687,7 +734,7 @@ export default function PollinatorsGalleryPage() {
                         <li>• Support entire ecosystems, not just crops</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
                         <span className="text-red-600 mr-2">⚠</span>
@@ -711,7 +758,7 @@ export default function PollinatorsGalleryPage() {
                     </div>
                     <h4 className="text-2xl font-bold text-gray-800">Robotic Pollinators</h4>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
@@ -727,7 +774,7 @@ export default function PollinatorsGalleryPage() {
                         <li>• No risk of stings or allergic reactions</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
                         <span className="text-red-600 mr-2">⚠</span>
@@ -779,7 +826,7 @@ export default function PollinatorsGalleryPage() {
           onClose={() => setSelected3DModel(null)}
         />
       )}
-      
+
       <Footer />
     </div>
   );
@@ -789,8 +836,8 @@ function PollinatorCard({ pollinator, onView3D }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
       <div className="relative overflow-hidden">
-        <Image 
-          src={pollinator.image} 
+        <Image
+          src={pollinator.image}
           alt={pollinator.name}
           width={400}
           height={300}
@@ -806,18 +853,24 @@ function PollinatorCard({ pollinator, onView3D }) {
           </div>
         )}
       </div>
-      
+
       <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-2">{pollinator.name}</h3>
-        <p className="text-sm text-gray-600 italic mb-2">{pollinator.scientificName}</p>
-        <p className="text-sm text-gray-700 mb-4">{pollinator.region}</p>
-        
-        <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+        <h3 className="text-xl font-bold text-gray-800 mb-1">{pollinator.name}</h3>
+        <p className="text-sm text-gray-500 italic mb-3">{pollinator.scientificName}</p>
+
+        {/* Botanical snippet chip */}
+        {pollinator.botanicalInfo && (
+          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 mb-3 line-clamp-2">
+            {pollinator.botanicalInfo}
+          </p>
+        )}
+
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
           {pollinator.description}
         </p>
-        
+
         <div className="flex items-center justify-between">
-          <a 
+          <a
             href={pollinator.imageUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -826,7 +879,7 @@ function PollinatorCard({ pollinator, onView3D }) {
             <span>View source</span>
             <ExternalLink className="w-3 h-3" />
           </a>
-          
+
           <button
             onClick={() => onView3D(pollinator)}
             className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
@@ -844,8 +897,8 @@ function RoboticPollinatorCard({ robot }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border-2 border-blue-100">
       <div className="relative overflow-hidden">
-        <Image 
-          src={robot.image} 
+        <Image
+          src={robot.image}
           alt={robot.name}
           width={600}
           height={400}
@@ -859,7 +912,7 @@ function RoboticPollinatorCard({ robot }) {
           {robot.imageAttribution}
         </div>
       </div>
-      
+
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
           <div>
@@ -868,7 +921,7 @@ function RoboticPollinatorCard({ robot }) {
           </div>
           <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{robot.year}</span>
         </div>
-        
+
         <p className="text-sm text-gray-600 mb-4 line-clamp-3">
           {robot.description}
         </p>
@@ -881,7 +934,7 @@ function RoboticPollinatorCard({ robot }) {
             </h5>
             <p className="text-xs text-gray-600">{robot.capabilities}</p>
           </div>
-          
+
           <div>
             <h5 className="text-xs font-semibold text-gray-700 mb-1 flex items-center">
               <Cpu className="w-3 h-3 mr-1 text-purple-600" />
@@ -901,12 +954,12 @@ function RoboticPollinatorCard({ robot }) {
             </div>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between pt-3 border-t border-gray-200">
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
             {robot.status}
           </span>
-          <a 
+          <a
             href={robot.imageUrl}
             target="_blank"
             rel="noopener noreferrer"
