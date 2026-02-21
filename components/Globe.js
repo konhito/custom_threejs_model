@@ -453,7 +453,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
       color: "#ff6b9d",
       special: true,
-      size: 0.10,
+      size: 0.14,
       flowerNameLocal: "कमल",
       localLanguageName: "Hindi",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indian_lotus.glb"),
@@ -481,8 +481,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       botanicalInfo:
         "A woody perennial flowering plant with over 300 species. Roses are known for their fragrant flowers and thorny stems.",
       color: "#e91e63",
-      special: false,
-      size: 0.08,
+      special: true,
+      size: 0.13,
       flowerNameLocal: "Rose",
       localLanguageName: "English",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
@@ -511,7 +511,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         "Maples are trees or shrubs in the genus Acer. They are known for their palmate leaves and winged seeds. Canada is home to ten native maple species.",
       color: "#ff0000",
       special: true,
-      size: 0.09,
+      size: 0.15,
       flowerNameLocal: "Feuille d'érable",
       localLanguageName: "French",
       gltfPath: null, // Will use fallback
@@ -538,9 +538,9 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         "Carnations are central to Spanish culture, often worn during festivals and bullfights. They represent the deep-rooted traditions and artistic soul of Spain.",
       botanicalInfo:
         "A perennial flowering plant known for its fringed petals and sweet, spicy fragrance. It thrives in Spain's Mediterranean climate.",
-      color: "#ff5252",
-      special: true,
-      size: 0.08,
+      color: "#ff8f00",
+      special: false,
+      size: 0.07,
       flowerNameLocal: "Clavel",
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb"),
@@ -567,9 +567,9 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         "It represents the beauty and resilience of the land. Its name comes from the Greek god Proteus due to the many shapes and colors of the flowers.",
       botanicalInfo:
         "A woody shrub with thick stems and large dark green glossy leaves. The flower heads are huge, bowl-shaped, and surrounded by bracts.",
-      color: "#e91e63",
+      color: "#f06292",
       special: true,
-      size: 0.09,
+      size: 0.10,
       flowerNameLocal: "Koningsuikerbos",
       localLanguageName: "Afrikaans",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/King_Protea.glb"),
@@ -598,7 +598,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         "An epiphytic orchid that grows on trees in the cloud forests of the Andes. It produces large, fragrant flowers.",
       color: "#ba68c8",
       special: true,
-      size: 0.08,
+      size: 0.09,
       flowerNameLocal: "Orquídea de Navidad",
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Orqui%CC%81dea_Tricolor.glb"),
@@ -633,6 +633,180 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Pakistani_Jasmine.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Pakistan).mp3.mpeg",
       sanCode: "SAN-F-PK-001",
+    },
+    {
+      id: "AR_CEIBO",
+      name: "Ceibo",
+      country: "Argentina",
+      countryCode: "AR",
+      lat: -29.9511,
+      lng: 151.9987,
+      capital: "Buenos Aires",
+      population: "46 million",
+      continent: "South America",
+      language: "Spanish",
+      currency: "Argentine Peso (ARS)",
+      flowerName: "Ceibo",
+      flowerScientificName: "Erythrina crista-galli",
+      flowerDescription:
+        "The ceibo is Argentina's national flower, declared in 1942. Its vivid crimson blossoms symbolize the strength, courage, and passionate spirit of the Argentine people.",
+      culturalSignificance:
+        "Legend tells of Anahí, a Guaraní woman who was burned at the stake but transformed into a ceibo tree, its red flowers representing her undying spirit. The tree is deeply woven into Argentine folklore and identity.",
+      botanicalInfo:
+        "A deciduous tree reaching 5–10 m, the ceibo produces striking coral-red, claw-shaped flowers in clusters. It thrives along riverbanks and wetlands across the Río de la Plata basin and is also the national tree of Uruguay.",
+      color: "#d32f2f",
+      special: true,
+      size: 0.12,
+      flowerNameLocal: "Ceibo",
+      localLanguageName: "Spanish",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Argentina_Ceibo.glb"),
+      musicPath: "/music/Argentina.mp3",
+      sanCode: "SAN-F-AR-001",
+    },
+    {
+      id: "EG_LOTUS",
+      name: "Blue Lotus",
+      country: "Egypt",
+      countryCode: "EG",
+      lat: 26.8144,
+      lng: -106.6949,
+      capital: "Cairo",
+      population: "104 million",
+      continent: "Africa",
+      language: "Arabic",
+      currency: "Egyptian Pound (EGP)",
+      flowerName: "Blue Lotus",
+      flowerScientificName: "Nymphaea caerulea",
+      flowerDescription:
+        "The Blue Lotus, also known as the Blue Water Lily, is Egypt's iconic flower. Revered since ancient times, it symbolizes creation, rebirth, and the sun — blooming at dawn and closing at dusk.",
+      culturalSignificance:
+        "Sacred to the ancient Egyptians, the Blue Lotus appears extensively in temple art, tomb paintings, and hieroglyphics. It was associated with the sun god Ra and the myth of creation, where the first lotus emerged from primordial waters.",
+      botanicalInfo:
+        "An aquatic perennial with floating leaves and star-shaped blue flowers that rise above the water's surface. It contains mild psychoactive alkaloids and was used in ancient Egyptian ceremonies and medicine.",
+      color: "#1565c0",
+      special: false,
+      size: 0.08,
+      flowerNameLocal: "لوتس أزرق",
+      localLanguageName: "Arabic",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Egypt_Blue_Lotus.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Egipto).mp3",
+      sanCode: "SAN-F-EG-001",
+    },
+    {
+      id: "ID_JASMINE",
+      name: "Jasmine",
+      country: "Indonesia",
+      countryCode: "ID",
+      lat: -15.1694,
+      lng: -17.0172,
+      capital: "Jakarta",
+      population: "275 million",
+      continent: "Asia",
+      language: "Indonesian (Bahasa Indonesia)",
+      currency: "Indonesian Rupiah (IDR)",
+      flowerName: "Melati Putih",
+      flowerScientificName: "Jasminum sambac",
+      flowerDescription:
+        "The Melati Putih (White Jasmine) is Indonesia's national flower, symbolizing purity, grace, and simplicity. It is deeply embedded in the traditions and daily life of the Indonesian people.",
+      culturalSignificance:
+        "Jasmine garlands are essential in Javanese and Sundanese weddings, draping the bride and groom. The flower is offered in spiritual ceremonies and adorns sacred spaces, representing sincerity and eternal devotion.",
+      botanicalInfo:
+        "A small evergreen shrub producing clusters of intensely fragrant, waxy white flowers. It blooms year-round in Indonesia's tropical climate and is widely cultivated for perfumery, tea, and ceremonial use.",
+      color: "#e8d5b7",
+      special: true,
+      size: 0.11,
+      flowerNameLocal: "Melati Putih",
+      localLanguageName: "Bahasa Indonesia",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indonesia_Jazmine.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Indonesia).mp3",
+      sanCode: "SAN-F-ID-001",
+    },
+    {
+      id: "JM_LIGNUMVITAE",
+      name: "Lignum Vitae",
+      country: "Jamaica",
+      countryCode: "JM",
+      lat: 34.0798,
+      lng: 134.3422,
+      capital: "Kingston",
+      population: "3 million",
+      continent: "North America",
+      language: "English, Jamaican Patois",
+      currency: "Jamaican Dollar (JMD)",
+      flowerName: "Lignum Vitae",
+      flowerScientificName: "Guaiacum officinale",
+      flowerDescription:
+        "The Lignum Vitae is Jamaica's national flower, bearing delicate blue-purple blossoms. Its name means 'wood of life' in Latin, reflecting the tree's legendary medicinal properties.",
+      culturalSignificance:
+        "Adopted as Jamaica's national flower in 1971, the Lignum Vitae represents strength, resilience, and healing — qualities deeply valued in Jamaican culture. The tree is now protected due to over-harvesting.",
+      botanicalInfo:
+        "A slow-growing evergreen tree producing clusters of star-shaped blue-purple flowers. It yields one of the densest and hardest woods in the world, and its resin (guaiac) has been used medicinally for centuries.",
+      color: "#5c6bc0",
+      special: false,
+      size: 0.05,
+      flowerNameLocal: "Lignum Vitae",
+      localLanguageName: "English",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Lignum_Vitae_Textured.glb"),
+      musicPath: "/music/Jamaica.mp3",
+      sanCode: "SAN-F-JM-001",
+    },
+    {
+      id: "MX_DAHLIA",
+      name: "Dahlia",
+      country: "Mexico",
+      countryCode: "MX",
+      lat: 35.0928,
+      lng: 106.1846,
+      capital: "Mexico City",
+      population: "129 million",
+      continent: "North America",
+      language: "Spanish",
+      currency: "Mexican Peso (MXN)",
+      flowerName: "Dahlia",
+      flowerScientificName: "Dahlia pinnata",
+      flowerDescription:
+        "The Dahlia is Mexico's national flower, declared in 1963. Native to the highlands of Mexico and Central America, it dazzles with an extraordinary range of colors, shapes, and sizes.",
+      culturalSignificance:
+        "The Aztecs cultivated dahlias for food, medicine, and ceremony long before European contact. The hollow stems were used as water pipes. Today the flower is a proud symbol of Mexican botanical heritage and biodiversity.",
+      botanicalInfo:
+        "A tuberous perennial in the Asteraceae family with over 40 species and thousands of cultivars. Flowers range from tiny pompons to dinner-plate blooms exceeding 30 cm in diameter, in every color except true blue.",
+      color: "#e65100",
+      special: true,
+      size: 0.11,
+      flowerNameLocal: "Dalia",
+      localLanguageName: "Spanish",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Dalia.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Mexico).mp3",
+      sanCode: "SAN-F-MX-001",
+    },
+    {
+      id: "GB_THISTLE",
+      name: "Thistle",
+      country: "Scotland",
+      countryCode: "GB-SCT",
+      lat: 64.7611,
+      lng: -126.0279,
+      capital: "Edinburgh",
+      population: "5.5 million",
+      continent: "Europe",
+      language: "English, Scots, Scottish Gaelic",
+      currency: "Pound Sterling (GBP)",
+      flowerName: "Thistle",
+      flowerScientificName: "Onopordum acanthium",
+      flowerDescription:
+        "The Thistle is Scotland's national emblem, representing resilience, defiance, and nobility. Its prickly exterior conceals a striking purple flower, much like the fierce spirit of the Scottish people.",
+      culturalSignificance:
+        "Legend holds that a Norse army's night raid was foiled when a barefoot Viking stepped on a thistle and cried out, alerting the Scots. It has been Scotland's royal emblem since the 13th century and features on the Order of the Thistle, the nation's highest honour.",
+      botanicalInfo:
+        "A robust biennial growing up to 2.5 m tall, with spiny-winged stems and large spherical flower heads of violet-purple florets. It thrives in dry, disturbed ground across Scotland's lowlands and is a vital nectar source for pollinators.",
+      color: "#ab47bc",
+      special: false,
+      size: 0.06,
+      flowerNameLocal: "Cluaran",
+      localLanguageName: "Scottish Gaelic",
+      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Onopordum_Acanthium.glb"),
+      musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Escocia).mp3",
+      sanCode: "SAN-F-SCT-001",
     },
 
   ], []);
@@ -999,70 +1173,103 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
               ballAnimation();
             }, 1000 + (index * 200)); // Staggered delay for each country
 
-            // Enhanced 3-layer glow effect with stronger aura
-            // Inner glow (closest to ball)
-            const innerGlowGeometry = new THREE.SphereGeometry(
-              adjustedSize * 1.4,
-              16,
-              16
-            );
+            // Gradient glow effect — each layer shifts toward a softer pastel
+            const baseColor = new THREE.Color(countryData.color);
+            const baseHSL = { h: 0, s: 0, l: 0 };
+            baseColor.getHSL(baseHSL);
+
+            // Inner glow: saturated, close to original
+            const innerGlowColor = new THREE.Color();
+            innerGlowColor.setHSL(baseHSL.h, Math.min(baseHSL.s * 0.9, 1.0), Math.min(baseHSL.l * 1.1, 0.85));
+            const innerGlowGeometry = new THREE.SphereGeometry(adjustedSize * 1.4, 16, 16);
             const innerGlowMaterial = new THREE.MeshBasicMaterial({
-              color: countryData.color,
+              color: innerGlowColor,
               transparent: true,
-              opacity: 0.45,
+              opacity: 0.40,
             });
             const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
             innerGlow.userData = { data: countryData };
             ballGroup.add(innerGlow);
 
-            // Middle glow
-            const middleGlowGeometry = new THREE.SphereGeometry(
-              adjustedSize * 2.0,
-              16,
-              16
-            );
+            // Middle glow: desaturated + lighter
+            const middleGlowColor = new THREE.Color();
+            middleGlowColor.setHSL(baseHSL.h, Math.min(baseHSL.s * 0.55, 1.0), Math.min(baseHSL.l * 1.4, 0.9));
+            const middleGlowGeometry = new THREE.SphereGeometry(adjustedSize * 2.0, 16, 16);
             const middleGlowMaterial = new THREE.MeshBasicMaterial({
-              color: countryData.color,
+              color: middleGlowColor,
               transparent: true,
-              opacity: 0.30,
+              opacity: 0.25,
             });
             const middleGlow = new THREE.Mesh(middleGlowGeometry, middleGlowMaterial);
             middleGlow.userData = { data: countryData };
             ballGroup.add(middleGlow);
 
-            // Outer glow
-            const outerGlowGeometry = new THREE.SphereGeometry(
-              adjustedSize * 2.8,
-              16,
-              16
-            );
+            // Outer glow: soft pastel wash
+            const outerGlowColor = new THREE.Color();
+            outerGlowColor.setHSL(baseHSL.h, Math.min(baseHSL.s * 0.25, 1.0), Math.min(baseHSL.l * 1.7, 0.95));
+            const outerGlowGeometry = new THREE.SphereGeometry(adjustedSize * 2.8, 16, 16);
             const outerGlowMaterial = new THREE.MeshBasicMaterial({
-              color: countryData.color,
+              color: outerGlowColor,
               transparent: true,
-              opacity: 0.18,
+              opacity: 0.15,
             });
             const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
             outerGlow.userData = { data: countryData };
             ballGroup.add(outerGlow);
 
-            // Enhanced ring effect for special countries
+            // Elegant ring for special countries
             if (countryData.special) {
-              // Single elegant ring with stronger glow
+              const ringColor = new THREE.Color();
+              ringColor.setHSL(baseHSL.h, Math.min(baseHSL.s * 0.7, 1.0), Math.min(baseHSL.l * 1.3, 0.85));
               const ringGeometry = new THREE.RingGeometry(
                 adjustedSize * 1.6,
                 adjustedSize * 2.0,
                 32
               );
               const ringMaterial = new THREE.MeshBasicMaterial({
-                color: countryData.color,
+                color: ringColor,
                 transparent: true,
-                opacity: 0.5,
+                opacity: 0.45,
                 side: THREE.DoubleSide,
               });
               const ring = new THREE.Mesh(ringGeometry, ringMaterial);
               ring.rotateX(Math.PI / 2);
               ring.userData = { data: countryData };
               ballGroup.add(ring);
+            }
+
+            // Pollen particle dust — tiny sparkles orbiting around each satellite
+            const particleCount = 6;
+            const particleSpread = adjustedSize * 3.5;
+            for (let p = 0; p < particleCount; p++) {
+              const particleSize = adjustedSize * (0.08 + Math.random() * 0.10);
+              const particleGeo = new THREE.SphereGeometry(particleSize, 6, 6);
+              const particleColor = new THREE.Color();
+              particleColor.setHSL(baseHSL.h, Math.min(baseHSL.s * 0.6, 1.0), 0.7 + Math.random() * 0.25);
+              const particleMat = new THREE.MeshBasicMaterial({
+                color: particleColor,
+                transparent: true,
+                opacity: 0.4 + Math.random() * 0.3,
+              });
+              const particle = new THREE.Mesh(particleGeo, particleMat);
+              // Random position in a sphere around the satellite
+              const angle1 = Math.random() * Math.PI * 2;
+              const angle2 = Math.random() * Math.PI * 2;
+              const dist = particleSpread * (0.5 + Math.random() * 0.5);
+              particle.position.set(
+                Math.cos(angle1) * Math.sin(angle2) * dist,
+                Math.cos(angle2) * dist * 0.6,
+                Math.sin(angle1) * Math.sin(angle2) * dist
+              );
+              particle.userData = {
+                data: countryData,
+                isParticle: true,
+                orbitSpeed: 0.2 + Math.random() * 0.4,
+                orbitAngle: angle1,
+                orbitRadius: dist,
+                orbitTilt: angle2,
+              };
+              ballGroup.add(particle);
             }
 
             // Position the ball using the helper function with closer radius for mobile
@@ -1327,12 +1534,23 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
                   const distanceFromCenter = getDistanceFromScreenCenter(ballGroup.position, camera, renderer);
 
                   // Stronger pulsing effect for better visibility
-                  const pulseIntensity = 0.25 * (1 - distanceFromCenter); // 0.25 at center, 0 at edge (increased from 0.15)
+                  const pulseIntensity = 0.25 * (1 - distanceFromCenter); // 0.25 at center, 0 at edge
                   const pulseSpeed = 1.2 + (0.8 * (1 - distanceFromCenter)); // Faster pulse at center
 
                   const pulse = Math.sin(time * pulseSpeed) * pulseIntensity + (1 - pulseIntensity);
                   child.material.opacity = child.material.opacity * pulse;
                 }
+              }
+
+              // Animate pollen particles — gentle orbit drift
+              if (child.userData && child.userData.isParticle) {
+                const pd = child.userData;
+                pd.orbitAngle += pd.orbitSpeed * 0.008;
+                child.position.x = Math.cos(pd.orbitAngle) * Math.sin(pd.orbitTilt) * pd.orbitRadius;
+                child.position.y = Math.cos(pd.orbitTilt) * pd.orbitRadius * 0.6;
+                child.position.z = Math.sin(pd.orbitAngle) * Math.sin(pd.orbitTilt) * pd.orbitRadius;
+                // Gentle opacity flicker
+                child.material.opacity = (0.3 + Math.sin(time * pd.orbitSpeed * 2) * 0.2);
               }
             }
           });
