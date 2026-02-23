@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2, ArrowLeft, Palette } from "lucide-react";
 import { MusicToggleButton } from "./MusicToggleButton";
+import { computeSANCode } from "../lib/sanCode";
 import Link from "next/link";
 import Image from "next/image";
 import GlobeLoader from "./GlobeLoader";
@@ -458,7 +459,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Hindi",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indian_lotus.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(India).mp3.mpeg",
-      sanCode: "SAN-F-IN-001",
+      sanCode: computeSANCode("Nelumbo nucifera", "F"),
     },
     {
       id: "US_ROSE",
@@ -487,7 +488,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "English",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(USA).mp3.mpeg",
-      sanCode: "SAN-F-US-001",
+      sanCode: computeSANCode("Rosa", "F"),
     },
     {
       id: "CA_MAPLE",
@@ -516,7 +517,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "French",
       gltfPath: null, // Will use fallback
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Canada).mp3+(1).mpeg",
-      sanCode: "SAN-F-CA-001",
+      sanCode: computeSANCode("Acer", "F"),
     },
     {
       id: "ES_CARNATION",
@@ -545,7 +546,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Espana_Carnation.glb"),
       musicPath: "/Folk Project (España).mp3",
-      sanCode: "SAN-F-ES-001",
+      sanCode: computeSANCode("Dianthus caryophyllus", "F"),
     },
     {
       id: "ZA_PROTEA",
@@ -574,7 +575,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Afrikaans",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/King_Protea.glb"),
       musicPath: "/music/SouthAfrica.mp3", // Placeholder
-      sanCode: "SAN-F-ZA-001",
+      sanCode: computeSANCode("Protea cynaroides", "F"),
     },
     {
       id: "CO_ORCHID",
@@ -603,7 +604,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Orqui%CC%81dea_Tricolor.glb"),
       musicPath: "/music/Colombia.mp3", // Placeholder
-      sanCode: "SAN-F-CO-001",
+      sanCode: computeSANCode("Cattleya trianae", "F"),
     },
     {
       id: "PK_JASMINE",
@@ -632,7 +633,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Urdu",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Pakistani_Jasmine.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Pakistan).mp3.mpeg",
-      sanCode: "SAN-F-PK-001",
+      sanCode: computeSANCode("Jasminum officinale", "F"),
     },
     {
       id: "AR_CEIBO",
@@ -661,7 +662,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Argentina_Ceibo.glb"),
       musicPath: "/music/Argentina.mp3",
-      sanCode: "SAN-F-AR-001",
+      sanCode: computeSANCode("Erythrina crista-galli", "F"),
     },
     {
       id: "EG_LOTUS",
@@ -690,7 +691,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Arabic",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Egypt_Blue_Lotus.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Egipto).mp3",
-      sanCode: "SAN-F-EG-001",
+      sanCode: computeSANCode("Nymphaea caerulea", "F"),
     },
     {
       id: "ID_JASMINE",
@@ -719,7 +720,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Bahasa Indonesia",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indonesia_Jazmine.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Indonesia).mp3",
-      sanCode: "SAN-F-ID-001",
+      sanCode: computeSANCode("Jasminum sambac", "F"),
     },
     {
       id: "JM_LIGNUMVITAE",
@@ -748,7 +749,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "English",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Lignum_Vitae_Textured.glb"),
       musicPath: "/music/Jamaica.mp3",
-      sanCode: "SAN-F-JM-001",
+      sanCode: computeSANCode("Guaiacum officinale", "F"),
     },
     {
       id: "MX_DAHLIA",
@@ -777,7 +778,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Spanish",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Dalia.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Mexico).mp3",
-      sanCode: "SAN-F-MX-001",
+      sanCode: computeSANCode("Dahlia pinnata", "F"),
     },
     {
       id: "GB_THISTLE",
@@ -806,7 +807,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Scottish Gaelic",
       gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Onopordum_Acanthium.glb"),
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(Escocia).mp3",
-      sanCode: "SAN-F-SCT-001",
+      sanCode: computeSANCode("Onopordum acanthium", "F"),
     },
 
   ], []);
@@ -1352,16 +1353,13 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.autoRotateSpeed = 0.5;
         controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
-        // Disable rotation on mobile when not in fullscreen to prevent scroll interference
-        controls.enableRotate = !isMobile; // Disable on mobile, enable on desktop/tablet
+        controls.enableRotate = true; // Enable rotation on all devices
 
-        // Mobile-friendly zoom limits
+        // Device-specific zoom limits and rotation speed
         if (isMobile) {
           controls.minDistance = 3;
           controls.maxDistance = 12;
           controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
-          // Disable all interactions on mobile when not in fullscreen
-          controls.enableRotate = false;
         } else if (isTablet) {
           controls.minDistance = 2.5;
           controls.maxDistance = 11;
@@ -1371,18 +1369,11 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           controls.maxDistance = 15;
         }
 
-        // Mobile touch settings - disable touch controls on mobile when not in fullscreen
-        if (isMobile) {
-          controls.touches = {
-            ONE: THREE.TOUCH.NONE,
-            TWO: THREE.TOUCH.NONE
-          };
-        } else {
-          controls.touches = {
-            ONE: THREE.TOUCH.ROTATE,
-            TWO: THREE.TOUCH.DOLLY_PAN
-          };
-        }
+        // Touch settings - enable touch interaction on all devices
+        controls.touches = {
+          ONE: THREE.TOUCH.ROTATE,
+          TWO: THREE.TOUCH.DOLLY_PAN
+        };
 
         // Add zoom event listener to immediately scale satellites
         controls.addEventListener('change', () => {
@@ -1677,24 +1668,11 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
     if (controlsRef.current) {
       const isMobile = window.innerWidth < 768;
       controlsRef.current.enableZoom = isFullscreen; // Enable zoom only in fullscreen
-
-      // On mobile: only enable rotation in fullscreen. On desktop/tablet: always enable rotation
-      if (isMobile) {
-        controlsRef.current.enableRotate = isFullscreen;
-        if (isFullscreen) {
-          controlsRef.current.touches = {
-            ONE: THREE.TOUCH.ROTATE,
-            TWO: THREE.TOUCH.DOLLY_PAN
-          };
-        } else {
-          controlsRef.current.touches = {
-            ONE: THREE.TOUCH.NONE,
-            TWO: THREE.TOUCH.NONE
-          };
-        }
-      } else {
-        controlsRef.current.enableRotate = true; // Always enable on desktop/tablet
-      }
+      controlsRef.current.enableRotate = true; // Always enable rotation on all devices
+      controlsRef.current.touches = {
+        ONE: THREE.TOUCH.ROTATE,
+        TWO: THREE.TOUCH.DOLLY_PAN
+      };
 
       console.log(`🔍 Zoom ${isFullscreen ? 'enabled' : 'disabled'}, Rotate ${controlsRef.current.enableRotate ? 'enabled' : 'disabled'} (fullscreen: ${isFullscreen}, mobile: ${isMobile})`);
     }

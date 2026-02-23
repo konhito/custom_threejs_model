@@ -2,20 +2,21 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { 
-  FaHome, 
-  FaInfoCircle, 
-  FaSeedling, 
-  FaBug, 
-  FaShieldAlt, 
-  FaGraduationCap, 
-  FaChartLine, 
-  FaArchive, 
-  FaBullseye, 
+import {
+  FaHome,
+  FaInfoCircle,
+  FaSeedling,
+  FaBug,
+  FaShieldAlt,
+  FaGraduationCap,
+  FaChartLine,
+  FaArchive,
+  FaBullseye,
   FaUsers,
   FaShoppingCart,
   FaBook,
-  FaGlobe
+  FaGlobe,
+  FaCalculator
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { FloatingDock } from "./ui/floating-dock";
@@ -92,7 +93,7 @@ const getNavItems = (t) => [
 export default function Navigation() {
   const [cartCount, setCartCount] = useState(0);
   const { t, isLoading } = useTranslation();
-  
+
   // Use Next.js usePathname hook for proper pathname detection across all pages
   const pathname = usePathname() || "/";
 

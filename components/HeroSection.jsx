@@ -35,7 +35,7 @@ export function HeroSection() {
         { text: "life", className: "text-gray-700 text-base md:text-xl lg:text-2xl italic font-light" },
       ];
     }
-    
+
     // Split translated subtitle into words
     return subtitle.split(' ').map(word => ({
       text: word,
@@ -57,7 +57,7 @@ export function HeroSection() {
       })),
     };
   };
-  
+
   // Get subtitle words
   const subtitleWords = getSubtitleWords();
   const mobileSubtitle = getMobileSubtitleLines();
@@ -71,14 +71,14 @@ export function HeroSection() {
           className="relative inline-block group"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ 
-            delay: 1.2, 
+          transition={{
+            delay: 1.2,
             duration: 0.4,
             ease: [0.4, 0, 0.2, 1],
           }}
           style={{ willChange: 'opacity, transform' }}
         >
-          <span 
+          <span
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-900 font-normal relative inline-block notranslate"
             style={{ fontFamily: '"Agustina Signature", "Great Vibes", "Dancing Script", cursive' }}
             translate="no"
@@ -89,9 +89,9 @@ export function HeroSection() {
       </div>
 
       {/* Hero Content with Aurora Background - Transparent for Ghost Cursor */}
-      <AuroraBackground 
+      <AuroraBackground
         className="bg-transparent"
-        style={{ 
+        style={{
           backgroundColor: 'transparent',
           background: 'transparent'
         }}
@@ -113,10 +113,10 @@ export function HeroSection() {
               <br />
               {t('home.heroTitleLine2')}
             </h1>
-            
+
             {/* Separator Line */}
             <div className="w-12 sm:w-16 h-px bg-gray-900 mb-4 md:mb-6 mx-auto"></div>
-            
+
             {/* Subtitle with cursive serif font and typewriter effect */}
             {/* Desktop: Single line */}
             <div className="hidden sm:block text-center w-full" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
@@ -127,7 +127,7 @@ export function HeroSection() {
                 cursorClassName="bg-gray-700"
               />
             </div>
-            
+
             {/* Mobile: Two lines for better readability */}
             <div className="sm:hidden text-center w-full px-4" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
               <div className="mb-1">
@@ -148,10 +148,10 @@ export function HeroSection() {
           </div>
         </motion.div>
       </AuroraBackground>
-      
+
       {/* Bouncing Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+      <motion.div
+        className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-[5]"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{

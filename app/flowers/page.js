@@ -1,17 +1,18 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
-import { 
-  Flower2, 
-  Globe2, 
-  Heart, 
-  Sparkles, 
+import { computeSANCode } from "../../lib/sanCode";
+import {
+  Flower2,
+  Globe2,
+  Heart,
+  Search,
+  Sparkles,
   BookOpen,
   Shield,
-  Search,
   Archive,
   Layers,
   Sprout,
@@ -39,7 +40,7 @@ const FLOWERS_DATA = [
     country: "España (Spain)",
     countryCode: "ES",
     glbPath: createGLBPath("Espana", "Carnation"),
-    sanCode: "SAN-F-191998",
+    sanCode: computeSANCode("Dianthus caryophyllus L.", "F"),
     botanicalFamily: "Caryophyllaceae",
     morphology: "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals and a height of 40‑80 cm.",
     habitat: "Ornamental crops and Mediterranean gardens; native to the Mediterranean basin and widely cultivated in Spain.",
@@ -54,7 +55,7 @@ const FLOWERS_DATA = [
     country: "India",
     countryCode: "IN",
     glbPath: createGLBPath("India", "Lotus"),
-    sanCode: "SAN-F-191999",
+    sanCode: computeSANCode("Nelumbo nucifera", "F"),
     botanicalFamily: "Nelumbonaceae",
     morphology: "Large, fragrant pink or white flowers with broad, floating leaves. Aquatic perennial plant that can live for over 1,000 years.",
     habitat: "Ponds, lakes, and slow-moving rivers throughout India and Southeast Asia.",
@@ -69,7 +70,7 @@ const FLOWERS_DATA = [
     country: "Pakistan",
     countryCode: "PK",
     glbPath: createGLBPath("Pakistan", "Jasmine"),
-    sanCode: "SAN-F-192000",
+    sanCode: computeSANCode("Jasminum officinale", "F"),
     botanicalFamily: "Oleaceae",
     morphology: "Small, white, star-shaped flowers with a sweet, intoxicating fragrance. Climbing or trailing shrub.",
     habitat: "Gardens, parks, and cultivated areas throughout Pakistan and South Asia.",
@@ -84,7 +85,7 @@ const FLOWERS_DATA = [
     country: "Peru",
     countryCode: "PE",
     glbPath: createGLBPath("Peru", "Cantuta"),
-    sanCode: "SAN-F-192001",
+    sanCode: computeSANCode("Cantua buxifolia", "F"),
     botanicalFamily: "Polemoniaceae",
     morphology: "Tubular flowers in shades of red, pink, and yellow. Shrub or small tree native to the Andes.",
     habitat: "High-altitude Andean regions, between 2,000 and 3,500 meters above sea level.",
@@ -99,7 +100,7 @@ const FLOWERS_DATA = [
     country: "Tanzania",
     countryCode: "TZ",
     glbPath: createGLBPath("Tanzania", "Clove"),
-    sanCode: "SAN-F-192002",
+    sanCode: computeSANCode("Syzygium aromaticum", "F"),
     botanicalFamily: "Myrtaceae",
     morphology: "Small, aromatic flower buds that are dried and used as a spice. Evergreen tree with glossy leaves.",
     habitat: "Tropical regions, particularly Zanzibar and Pemba islands in Tanzania.",
@@ -114,7 +115,7 @@ const FLOWERS_DATA = [
     country: "Nicaragua",
     countryCode: "NI",
     glbPath: createGLBPath("Nicaragua", "Sacuanjoche"),
-    sanCode: "SAN-F-192003",
+    sanCode: computeSANCode("Plumeria rubra", "F"),
     botanicalFamily: "Apocynaceae",
     morphology: "Fragrant, waxy flowers in white, pink, yellow, or red. Deciduous tree with thick, succulent branches.",
     habitat: "Tropical and subtropical regions, gardens, and coastal areas throughout Central America.",
@@ -129,7 +130,7 @@ const FLOWERS_DATA = [
     country: "Jamaica",
     countryCode: "JM",
     glbPath: createGLBPath("Jamaica", "LignumVitae"),
-    sanCode: "SAN-F-192004",
+    sanCode: computeSANCode("Guaiacum officinale", "F"),
     botanicalFamily: "Zygophyllaceae",
     morphology: "Small, blue to purple flowers with five petals. Slow-growing evergreen tree with very hard wood.",
     habitat: "Dry coastal forests and limestone areas in the Caribbean, particularly Jamaica.",
@@ -144,7 +145,7 @@ const FLOWERS_DATA = [
     country: "Escocia (Scotland)",
     countryCode: "GB-SCT",
     glbPath: createGLBPath("Escocia", "Thistle"),
-    sanCode: "SAN-F-192005",
+    sanCode: computeSANCode("Cirsium vulgare", "F"),
     botanicalFamily: "Asteraceae",
     morphology: "Purple or pink flower heads with spiny leaves and stems. Biennial or perennial herb.",
     habitat: "Meadows, grasslands, and disturbed areas throughout Scotland and the British Isles.",
@@ -159,7 +160,7 @@ const FLOWERS_DATA = [
     country: "Alemania (Germany)",
     countryCode: "DE",
     glbPath: createGLBPath("Alemania", "Cornflower"),
-    sanCode: "SAN-F-192006",
+    sanCode: computeSANCode("Centaurea cyanus", "F"),
     botanicalFamily: "Asteraceae",
     morphology: "Bright blue flower heads with delicate, fringed petals. Annual herbaceous plant.",
     habitat: "Fields, meadows, and roadsides throughout Europe, particularly Germany.",
@@ -253,20 +254,20 @@ const FloralDecoration = ({ className, delay = 0 }) => (
           <stop offset="100%" stopColor="rgba(249, 168, 212, 0.3)" />
         </linearGradient>
         <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
           <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
       </defs>
       <g filter="url(#glow)" className="animate-float">
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)"/>
-        <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)" />
+        <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)" />
       </g>
     </svg>
   </motion.div>
@@ -280,7 +281,7 @@ const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
     lg: "w-64 h-64",
     xl: "w-96 h-96",
   };
-  
+
   const colorClasses = {
     blue: "from-blue-400/20 via-indigo-300/10 to-transparent",
     purple: "from-purple-400/20 via-violet-300/10 to-transparent",
@@ -502,7 +503,7 @@ function Flower3DViewer({ flower, t, isActive = false }) {
     <div className="relative group">
       {/* Glow effect on hover */}
       <div className="absolute -inset-1 bg-gradient-to-r from-pink-400/20 via-rose-400/20 to-purple-400/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       {/* Card */}
       <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
         <div className="flex items-center gap-4 mb-6">
@@ -510,7 +511,7 @@ function Flower3DViewer({ flower, t, isActive = false }) {
             <Flower2 className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 
+            <h2
               className="text-3xl lg:text-4xl font-bold text-gray-900"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
@@ -612,10 +613,24 @@ function Flower3DViewer({ flower, t, isActive = false }) {
 
 export default function FlowersPage() {
   const { t, isLoading } = useTranslation();
-  
+  const [searchQuery, setSearchQuery] = useState("");
+
   // Get translated data
   const criteriaCards = getCriteriaCards(t);
   const selectionPoints = getSelectionPoints(t);
+
+  // Filter flowers by SAN code, scientific name, or common name
+  const filteredFlowers = useMemo(() => {
+    if (!searchQuery.trim()) return null; // null = show swiper (no filtering)
+    const q = searchQuery.toLowerCase().replace(/[,\s-]/g, "");
+    return FLOWERS_DATA.filter((flower) => {
+      const san = (flower.sanCode || "").toLowerCase().replace(/[,\s-]/g, "");
+      const sci = (flower.scientificName || "").toLowerCase();
+      const common = (flower.commonName || "").toLowerCase();
+      const country = (flower.country || "").toLowerCase();
+      return san.includes(q) || sci.includes(q) || common.includes(q) || country.includes(q);
+    });
+  }, [searchQuery]);
 
   if (isLoading) {
     return (
@@ -639,7 +654,7 @@ export default function FlowersPage() {
       {/* Aurora-inspired background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Main aurora gradient */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
             background: `
@@ -650,9 +665,9 @@ export default function FlowersPage() {
             `,
           }}
         />
-        
+
         {/* Animated aurora streaks */}
-        <div 
+        <div
           className="absolute inset-0 animate-aurora opacity-20"
           style={{
             backgroundImage: `
@@ -675,7 +690,7 @@ export default function FlowersPage() {
       <GlowingOrb className="top-1/3 -left-32" color="blue" delay={0.4} size="lg" />
       <GlowingOrb className="bottom-1/4 right-10" color="pink" delay={0.6} size="md" />
       <GlowingOrb className="bottom-40 left-1/4" color="emerald" delay={0.8} size="lg" />
-      
+
       <FloralDecoration className="top-32 right-20 opacity-60" delay={1} />
       <FloralDecoration className="top-1/2 left-10 opacity-40" delay={1.2} />
       <FloralDecoration className="bottom-60 right-1/3 opacity-50" delay={1.4} />
@@ -698,7 +713,7 @@ export default function FlowersPage() {
                 <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
               </div>
 
-              <h1 
+              <h1
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -708,7 +723,7 @@ export default function FlowersPage() {
               {/* Separator */}
               <div className="w-24 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto mb-8" />
 
-              <p 
+              <p
                 className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed italic"
                 style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
               >
@@ -730,30 +745,30 @@ export default function FlowersPage() {
               <div className="group relative">
                 {/* Glow effect on hover */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Card */}
                 <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
-                  <h2 
+                  <h2
                     className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6"
                     style={{ fontFamily: '"Cormorant Garamond", serif' }}
                   >
                     {t('flowers.introTitle')}
                   </h2>
-                  
+
                   <div className="space-y-6">
                     <p className="text-lg text-gray-700 leading-relaxed">
                       {t('flowers.introParagraph1')}
                     </p>
-                    
+
                     <p className="text-gray-600 leading-relaxed">
                       {t('flowers.introParagraph2')}
                     </p>
-                    
+
                     <p className="text-gray-600 leading-relaxed">
                       {t('flowers.introParagraph3')}
                     </p>
                   </div>
-                  
+
                   {/* Decorative corner element */}
                   <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden rounded-tr-3xl">
                     <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-transparent rounded-full" />
@@ -767,43 +782,99 @@ export default function FlowersPage() {
         {/* Flowers 3D Viewer Section - In the middle */}
         <section className="px-4 sm:px-6 lg:px-8 mb-24">
           <div className="max-w-5xl mx-auto">
+            {/* Search Bar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="mb-8"
             >
-              <div className="relative">
-                <Swiper
-                  modules={[SwiperNavigation]}
-                  navigation={{
-                    nextEl: '.swiper-button-next-flowers',
-                    prevEl: '.swiper-button-prev-flowers',
-                  }}
-                  spaceBetween={30}
-                  slidesPerView={1}
-                  className="flowers-swiper"
-                >
-                  {FLOWERS_DATA.map((flower, index) => (
-                    <SwiperSlide key={flower.id}>
-                      <Flower3DViewer 
-                        flower={flower} 
-                        t={t}
-                        isActive={true}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-                
-                {/* Custom Navigation Buttons */}
-                <button className="swiper-button-prev-flowers absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-4 lg:-translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-                  <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
-                </button>
-                <button className="swiper-button-next-flowers absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-4 lg:translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
-                  <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
-                </button>
+              <div className="relative max-w-xl mx-auto">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  id="flowers-search"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t('flowers.searchPlaceholder') || "Search by SAN code, name, or country..."}
+                  className="w-full pl-12 pr-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-400/50 focus:border-rose-400 shadow-sm transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
+              {filteredFlowers !== null && (
+                <p className="text-center text-sm text-gray-500 mt-3">
+                  {filteredFlowers.length} {filteredFlowers.length === 1 ? 'flower' : 'flowers'} found
+                </p>
+              )}
             </motion.div>
+
+            {/* Filtered Results or Swiper */}
+            {filteredFlowers !== null ? (
+              // Filtered results as vertical stack
+              <div className="space-y-8">
+                {filteredFlowers.length === 0 ? (
+                  <div className="text-center py-16">
+                    <p className="text-gray-500 text-lg">No flowers match your search.</p>
+                  </div>
+                ) : (
+                  filteredFlowers.map((flower) => (
+                    <Flower3DViewer
+                      key={flower.id}
+                      flower={flower}
+                      t={t}
+                      isActive={true}
+                    />
+                  ))
+                )}
+              </div>
+            ) : (
+              // Default swiper view
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="relative">
+                  <Swiper
+                    modules={[SwiperNavigation]}
+                    navigation={{
+                      nextEl: '.swiper-button-next-flowers',
+                      prevEl: '.swiper-button-prev-flowers',
+                    }}
+                    spaceBetween={30}
+                    slidesPerView={1}
+                    className="flowers-swiper"
+                  >
+                    {FLOWERS_DATA.map((flower, index) => (
+                      <SwiperSlide key={flower.id}>
+                        <Flower3DViewer
+                          flower={flower}
+                          t={t}
+                          isActive={true}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* Custom Navigation Buttons */}
+                  <button className="swiper-button-prev-flowers absolute left-0 top-1/2 -translate-y-1/2 z-10 -translate-x-4 lg:-translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                    <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
+                  </button>
+                  <button className="swiper-button-next-flowers absolute right-0 top-1/2 -translate-y-1/2 z-10 translate-x-4 lg:translate-x-12 w-12 h-12 lg:w-16 lg:h-16 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                    <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-rose-600 transition-colors" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </div>
         </section>
 
@@ -817,7 +888,7 @@ export default function FlowersPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h2 
+              <h2
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -845,18 +916,18 @@ export default function FlowersPage() {
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
                         <card.icon className="w-6 h-6 text-white" />
                       </div>
-                      
-                      <h3 
+
+                      <h3
                         className="text-xl font-bold text-gray-900 mb-3"
                         style={{ fontFamily: '"Cormorant Garamond", serif' }}
                       >
                         {card.title}
                       </h3>
-                      
+
                       <p className="text-gray-600 leading-relaxed">
                         {card.description}
                       </p>
-                      
+
                       {/* Subtle gradient line */}
                       <div className={`absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r ${card.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-full`} />
                     </div>
@@ -879,25 +950,25 @@ export default function FlowersPage() {
               <div className="group relative">
                 {/* Glow effect on hover */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/20 via-teal-400/20 to-emerald-400/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Card */}
                 <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center shadow-md">
                       <Archive className="w-6 h-6 text-white" />
                     </div>
-                    <h2 
+                    <h2
                       className="text-3xl lg:text-4xl font-bold text-gray-900"
                       style={{ fontFamily: '"Cormorant Garamond", serif' }}
                     >
                       {t('flowers.narrativeTitle')}
                     </h2>
                   </div>
-                  
+
                   <p className="text-lg text-gray-700 leading-relaxed">
                     {t('flowers.narrativeText')}
                   </p>
-                  
+
                   {/* Decorative corner element */}
                   <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden rounded-tr-3xl">
                     <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-cyan-100/50 to-transparent rounded-full" />
@@ -918,7 +989,7 @@ export default function FlowersPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h2 
+              <h2
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -946,11 +1017,11 @@ export default function FlowersPage() {
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${point.gradient} flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
                         <point.icon className="w-6 h-6 text-white" />
                       </div>
-                      
+
                       <p className="text-gray-700 leading-relaxed">
                         {point.text}
                       </p>
-                      
+
                       {/* Subtle gradient line */}
                       <div className={`absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r ${point.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300 rounded-full`} />
                     </div>
@@ -973,11 +1044,11 @@ export default function FlowersPage() {
               <div className="relative group">
                 {/* Animated gradient border */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-3xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow" />
-                
+
                 {/* Card */}
                 <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-white/50 shadow-2xl text-center overflow-hidden">
                   {/* Decorative background */}
-                  <div 
+                  <div
                     className="absolute inset-0 opacity-10"
                     style={{
                       backgroundImage: `
@@ -986,11 +1057,11 @@ export default function FlowersPage() {
                       `,
                     }}
                   />
-                  
+
                   <div className="relative">
                     <Sparkles className="w-8 h-8 text-purple-400 mx-auto mb-6" />
-                    
-                    <blockquote 
+
+                    <blockquote
                       className="text-xl sm:text-2xl lg:text-3xl text-gray-800 leading-relaxed mb-8 italic"
                       style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
                     >
@@ -1004,13 +1075,13 @@ export default function FlowersPage() {
                       </span>
                       {t('flowers.closingAfter')}&rdquo;
                     </blockquote>
-                    
+
                     <div className="flex items-center justify-center gap-4 mb-8">
                       <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
                       <Flower2 className="w-5 h-5 text-pink-400" />
                       <div className="w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
                     </div>
-                    
+
                     <a
                       href="/globe"
                       className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl hover:scale-105 transition-all duration-300"

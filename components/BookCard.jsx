@@ -3,71 +3,33 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ShoppingCart, Download, Sparkles, BookOpen, Heart, Eye, Award } from "lucide-react";
+import { ShoppingCart, Download, BookOpen, Heart, Eye, Award } from "lucide-react";
 
-export default function BookCard({ 
-  product, 
-  price, 
-  digitalPrice, 
-  hasDigital, 
+export default function BookCard({
+  product,
+  price,
+  digitalPrice,
+  hasDigital,
   currency,
   formatCurrency,
-  onAddToCart 
+  onAddToCart
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePosition({ x, y });
-  };
 
   return (
     <motion.div
       className="group relative"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setMousePosition({ x: 0, y: 0 });
-      }}
-      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setIsHovered(false)}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Ambient glow effect */}
-      <div 
-        className="absolute -inset-4 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"
-        style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1), transparent 70%)',
-        }}
-      />
-
       {/* Main Card */}
-      <motion.div
-        className="relative bg-white/80 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/20 shadow-xl"
-        style={{
-          transformStyle: 'preserve-3d',
-          transform: isHovered 
-            ? `perspective(1000px) rotateY(${mousePosition.x * 8}deg) rotateX(${-mousePosition.y * 8}deg)`
-            : 'perspective(1000px) rotateY(0deg) rotateX(0deg)',
-          transition: 'transform 0.1s ease-out',
-          boxShadow: isHovered 
-            ? '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset'
-            : '0 10px 40px -10px rgba(0, 0, 0, 0.1)',
-        }}
+      <div
+        className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500"
       >
-        {/* Shine effect */}
-        <div 
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20"
-          style={{
-            background: `linear-gradient(${105 + mousePosition.x * 30}deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%)`,
-          }}
-        />
-
         {/* Top Actions */}
         <div className="absolute top-3 right-3 z-30 flex gap-2">
           <motion.button
@@ -77,11 +39,10 @@ export default function BookCard({
               e.stopPropagation();
               setIsLiked(!isLiked);
             }}
-            className={`w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${
-              isLiked 
-                ? 'bg-red-500 text-white shadow-lg shadow-red-500/30' 
-                : 'bg-white/70 text-gray-600 hover:bg-white hover:text-red-500'
-            }`}
+            className={`w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 ${isLiked
+                ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
+                : 'bg-white/80 text-gray-400 hover:bg-white hover:text-rose-500'
+              }`}
           >
             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
           </motion.button>
@@ -90,105 +51,76 @@ export default function BookCard({
         {/* Badge */}
         {product.stock_quantity > 50 && (
           <div className="absolute top-3 left-3 z-30">
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1.5"
-            >
+            <div className="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full border border-amber-200 flex items-center gap-1">
               <Award className="w-3 h-3" />
               <span>Bestseller</span>
-            </motion.div>
+            </div>
           </div>
         )}
 
         {/* Book Cover Section */}
-        <div className="relative h-72 bg-gradient-to-br from-slate-100 via-emerald-50 to-cyan-50 overflow-hidden">
-          {/* Decorative pattern */}
-          <div className="absolute inset-0 opacity-30">
-            <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="bookPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <circle cx="20" cy="20" r="1" fill="currentColor" className="text-emerald-300" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#bookPattern)" />
-            </svg>
-          </div>
+        <div className="relative h-80 bg-gradient-to-b from-stone-100 to-stone-50 overflow-hidden flex items-center justify-center p-8">
+          {/* Subtle grid texture */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='20' height='20' fill='none' stroke='%23000' stroke-width='0.5'/%3E%3C/svg%3E")`,
+            }}
+          />
 
           {/* Book Image with 3D effect */}
-          <div className="absolute inset-0 flex items-center justify-center p-6">
-            <motion.div
-              className="relative w-40 h-56"
-              animate={{
-                rotateY: isHovered ? -15 : 0,
-                x: isHovered ? -10 : 0,
+          <motion.div
+            className="relative w-44 h-60"
+            animate={{
+              rotateY: isHovered ? -8 : 0,
+              y: isHovered ? -4 : 0,
+            }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {/* Book shadow on surface */}
+            <div
+              className="absolute -bottom-3 left-2 right-2 h-6 rounded-full bg-black/10 blur-lg transition-all duration-300"
+              style={{
+                transform: isHovered ? 'scaleX(1.1) translateY(4px)' : 'scaleX(1)',
               }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              {/* Book spine shadow */}
-              <div 
-                className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-black/30 to-transparent rounded-l-sm"
-                style={{ transform: 'translateZ(-2px)' }}
-              />
-              
-              {/* Book cover */}
-              <div className="relative w-full h-full rounded-r-md overflow-hidden shadow-2xl">
-                {product.image_url ? (
-                  <Image
-                    src={product.image_url}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-emerald-600 via-teal-500 to-cyan-600 flex items-center justify-center">
-                    <BookOpen className="w-16 h-16 text-white/80" />
-                  </div>
-                )}
-                
-                {/* Book spine effect */}
-                <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
-                
-                {/* Book page edges */}
-                <div 
-                  className="absolute right-0 top-2 bottom-2 w-1 bg-gradient-to-l from-gray-100 to-gray-200"
-                  style={{ boxShadow: 'inset -1px 0 2px rgba(0,0,0,0.1)' }}
-                />
-              </div>
+            />
 
-              {/* Floating sparkles on hover */}
-              {isHovered && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute -top-2 -right-2"
-                  >
-                    <Sparkles className="w-5 h-5 text-amber-400" />
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="absolute -bottom-1 -left-2"
-                  >
-                    <Sparkles className="w-4 h-4 text-emerald-400" />
-                  </motion.div>
-                </>
+            {/* Book cover */}
+            <div className="relative w-full h-full rounded-r-md overflow-hidden shadow-2xl">
+              {product.image_url ? (
+                <Image
+                  src={product.image_url}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <BookOpen className="w-14 h-14 text-white/60" />
+                </div>
               )}
-            </motion.div>
-          </div>
+
+              {/* Book spine effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-black/25 via-black/10 to-transparent" />
+
+              {/* Book page edges */}
+              <div
+                className="absolute right-0 top-2 bottom-2 w-1 bg-gradient-to-l from-stone-200 to-stone-100"
+                style={{ boxShadow: 'inset -1px 0 2px rgba(0,0,0,0.06)' }}
+              />
+            </div>
+          </motion.div>
 
           {/* Quick View overlay */}
-          <motion.div 
-            className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          <motion.div
+            className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             initial={false}
           >
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-gray-900 font-medium text-sm flex items-center gap-2 shadow-lg"
+              className="px-4 py-2 bg-white rounded-full text-gray-900 font-medium text-sm flex items-center gap-2 shadow-lg"
             >
               <Eye className="w-4 h-4" />
               Quick View
@@ -197,76 +129,73 @@ export default function BookCard({
         </div>
 
         {/* Content Section */}
-        <div className="p-5 space-y-4">
-          {/* Category */}
-          <div>
-            <span className="px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-md uppercase tracking-wide">
-              {product.type === 'book' ? 'Novel' : 'Card Game'}
-            </span>
-          </div>
+        <div className="p-5 space-y-3">
+          {/* Category tag */}
+          <span className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-[11px] font-semibold rounded uppercase tracking-wider">
+            {product.type === 'book' ? 'Novel' : 'Card Game'}
+          </span>
 
           {/* Title */}
-          <h3 className="text-lg font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-emerald-700 transition-colors">
+          <h3 className="text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-gray-700 transition-colors">
             {product.name}
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+          <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
 
           {/* Stock indicator */}
           {!product.is_digital && (
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${product.stock_quantity > 0 ? 'bg-emerald-500' : 'bg-red-500'}`} />
-              <span className={`text-xs font-medium ${product.stock_quantity > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                {product.stock_quantity > 50 
-                  ? 'In Stock' 
-                  : product.stock_quantity > 0 
-                  ? `Only ${product.stock_quantity} left`
-                  : 'Out of Stock'
+              <div className={`w-1.5 h-1.5 rounded-full ${product.stock_quantity > 0 ? 'bg-green-500' : 'bg-red-400'}`} />
+              <span className={`text-xs ${product.stock_quantity > 0 ? 'text-gray-500' : 'text-red-500'}`}>
+                {product.stock_quantity > 50
+                  ? 'In Stock'
+                  : product.stock_quantity > 0
+                    ? `Only ${product.stock_quantity} left`
+                    : 'Out of Stock'
                 }
               </span>
             </div>
           )}
 
-          {/* Action Buttons - Stacked for clarity */}
-          <div className="space-y-2 pt-2">
+          {/* Action Buttons */}
+          <div className="space-y-2 pt-1">
             {/* Physical Book Button */}
             {!product.is_digital && product.stock_quantity > 0 && (
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => onAddToCart(product, false)}
-                className="w-full px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white font-semibold rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-between"
+                className="w-full px-4 py-3 bg-gray-900 text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4" />
-                  <span>Physical Book</span>
+                  <span className="text-sm">Physical Book</span>
                 </div>
                 <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
               </motion.button>
             )}
-            
+
             {/* Digital Book Button */}
             {hasDigital && (
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => onAddToCart(product, true)}
-                className="w-full px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg hover:shadow-emerald-500/25 flex items-center justify-between"
+                className="w-full px-4 py-3 bg-white text-gray-900 font-medium rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  <span>Digital eBook</span>
+                  <Download className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm">Digital eBook</span>
                 </div>
                 <span className="text-sm font-bold">{formatCurrency(digitalPrice, currency)}</span>
               </motion.button>
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
-

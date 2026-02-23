@@ -806,6 +806,55 @@ export default function PollinatorsGalleryPage() {
             </div>
           </section>
 
+          {/* SAN Calculator Reference */}
+          <section className="mt-20 mb-12">
+            <Link href="/san-calculator" className="block group">
+              <div className="relative overflow-hidden bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 rounded-3xl p-8 lg:p-10 border border-indigo-200 hover:border-indigo-300 transition-all duration-500 hover:shadow-2xl">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-indigo-200/30 to-purple-200/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-pink-200/30 to-amber-200/30 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl group-hover:scale-110 transition-transform duration-700" />
+
+                <div className="relative flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
+                  {/* Icon */}
+                  <div className="flex-shrink-0">
+                    <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-105 group-hover:shadow-xl transition-all duration-300">
+                      <span className="text-3xl lg:text-4xl font-bold text-white font-mono">SAN</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2 group-hover:text-indigo-700 transition-colors duration-300">
+                      SAN Code Calculator
+                    </h3>
+                    <p className="text-gray-600 text-sm lg:text-base leading-relaxed max-w-2xl">
+                      Explore the <strong>Fibonacci Nomenclature System (S.A.N.)</strong> — a unique classification code for every species in our database.
+                      Enter any scientific name to generate its SAN code instantly, or look up existing species codes.
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                      <span className="inline-flex items-center gap-1.5 bg-white/80 text-indigo-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-indigo-200">
+                        🔢 Fibonacci-based encoding
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 bg-white/80 text-purple-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-purple-200">
+                        🧬 Species classification
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 bg-white/80 text-pink-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-pink-200">
+                        🌿 AquaMundi standard
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="flex-shrink-0 hidden lg:flex">
+                    <div className="w-12 h-12 rounded-full bg-white/80 border border-indigo-200 flex items-center justify-center group-hover:bg-indigo-500 group-hover:border-indigo-500 transition-all duration-300">
+                      <ExternalLink className="w-5 h-5 text-indigo-500 group-hover:text-white transition-colors duration-300" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </section>
+
           {/* Future Vision */}
           <div className="mt-20 mb-20 p-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl border border-amber-200">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Future Vision</h3>

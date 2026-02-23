@@ -12,7 +12,7 @@ function OrderSuccessContent() {
   const router = useRouter();
   const { session, track } = useSession();
   const orderNumber = searchParams.get('order');
-  
+
   const [order, setOrder] = useState(null);
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ function OrderSuccessContent() {
       setLoading(false);
     }
   };
-  
+
   // Track order completion
   useEffect(() => {
     if (order && session?.tracking_enabled) {
@@ -74,9 +74,13 @@ function OrderSuccessContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 flex items-center justify-center relative overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl" />
+        </div>
+        <div className="text-center relative z-10">
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading order details...</p>
         </div>
       </div>
@@ -85,16 +89,20 @@ function OrderSuccessContent() {
 
   if (error || !order) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 relative overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl" />
+        </div>
         <Navigation />
-        <div className="pt-32 pb-16 px-4">
+        <div className="pt-32 pb-16 px-4 relative z-10">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6 mb-6">
               <p className="text-red-600">{error || 'Order not found'}</p>
             </div>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all shadow-lg"
             >
               <Home className="w-5 h-5" />
               Back to Shop
@@ -106,18 +114,24 @@ function OrderSuccessContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 relative overflow-hidden">
+      {/* Background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl" />
+      </div>
+
       <Navigation />
-      
-      <div className="pt-20 pb-16 px-4">
+
+      <div className="pt-20 pb-16 px-4 relative z-10">
         <div className="max-w-3xl mx-auto">
           {/* Success Header */}
           <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-12 h-12 text-green-600" />
+            <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-12 h-12 text-emerald-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-              Order Successful! 🎉
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              Order Successful!
             </h1>
             <p className="text-lg text-gray-600">
               Thank you for your purchase. Your order has been confirmed.
@@ -125,9 +139,9 @@ function OrderSuccessContent() {
           </div>
 
           {/* Order Details Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 border border-green-100 mb-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-sm p-8 border border-gray-100 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Details</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Order Number</p>
@@ -147,11 +161,11 @@ function OrderSuccessContent() {
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Status</p>
-                <p className="text-lg font-semibold text-green-600 capitalize">{order.status}</p>
+                <p className="text-lg font-semibold text-emerald-600 capitalize">{order.status}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Amount</p>
-                <p className="text-2xl font-bold text-green-600">
+                <p className="text-2xl font-bold text-emerald-600">
                   {formatCurrency(order.total_amount, order.currency)}
                 </p>
               </div>
@@ -180,7 +194,7 @@ function OrderSuccessContent() {
           </div>
 
           {/* Customer Information */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 border border-green-100 mb-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-sm p-8 border border-gray-100 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -202,7 +216,7 @@ function OrderSuccessContent() {
 
           {/* Shipping Address */}
           {order.shipping_address && (
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-green-100 mb-6">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-sm p-8 border border-gray-100 mb-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Shipping Address</h2>
               <div className="text-gray-700">
                 <p className="font-medium">{order.shipping_address.street}</p>
@@ -215,12 +229,12 @@ function OrderSuccessContent() {
           )}
 
           {/* Invoice Section */}
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-lg p-8 border border-green-200 mb-6">
+          <div className="bg-emerald-50/80 backdrop-blur-xl rounded-2xl shadow-sm p-8 border border-emerald-200 mb-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Invoice</h3>
                 <p className="text-gray-600">
-                  {invoice 
+                  {invoice
                     ? 'Your invoice is ready for download.'
                     : 'Your invoice is being generated and will be sent to your email shortly.'}
                 </p>
@@ -233,7 +247,7 @@ function OrderSuccessContent() {
               {invoice && (
                 <button
                   onClick={downloadInvoice}
-                  className="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                  className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all shadow-lg flex items-center gap-2"
                 >
                   <Download className="w-5 h-5" />
                   Download Invoice
@@ -243,12 +257,12 @@ function OrderSuccessContent() {
           </div>
 
           {/* Email Confirmation */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <div className="bg-cyan-50/80 backdrop-blur-xl border border-cyan-200 rounded-2xl p-6 mb-6">
             <div className="flex items-start gap-3">
-              <Mail className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+              <Mail className="w-6 h-6 text-cyan-600 flex-shrink-0 mt-1" />
               <div>
-                <h4 className="font-semibold text-blue-900 mb-1">Email Confirmation</h4>
-                <p className="text-sm text-blue-700">
+                <h4 className="font-semibold text-gray-900 mb-1">Email Confirmation</h4>
+                <p className="text-sm text-gray-600">
                   A confirmation email with your order details has been sent to <strong>{order.customer_email}</strong>.
                   {invoice && ' Your invoice has also been attached.'}
                 </p>
@@ -260,21 +274,21 @@ function OrderSuccessContent() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/shop"
-              className="flex-1 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors text-center flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3.5 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl text-center flex items-center justify-center gap-2"
             >
               <Home className="w-5 h-5" />
               Continue Shopping
             </Link>
             <Link
               href={`/orders?email=${encodeURIComponent(order.customer_email)}`}
-              className="flex-1 px-6 py-3 border-2 border-green-600 text-green-600 font-medium rounded-lg hover:bg-green-50 transition-colors text-center flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3.5 bg-white border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all text-center flex items-center justify-center gap-2"
             >
               View My Orders
             </Link>
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
@@ -283,9 +297,9 @@ function OrderSuccessContent() {
 export default function OrderSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/30 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
       </div>

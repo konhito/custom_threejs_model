@@ -1,17 +1,19 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
-import { 
-  Globe2, 
-  Sparkles, 
+import { computeSANCode } from "../../lib/sanCode";
+import {
+  Globe2,
+  Sparkles,
   Bug,
   TrendingDown,
   Target,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Search
 } from "lucide-react";
 import { useTranslation } from "../../lib/useTranslation";
 import Link from "next/link";
@@ -33,7 +35,7 @@ const POLLINATORS_DATA = [
     scientificName: "Formicidae sp.",
     roleEn: "Ground pollinator associated with flowers",
     roleEs: "Polinizador terrestre asociado a las flores",
-    sanCode: "SAN-P-ANT001",
+    sanCode: computeSANCode("Formicidae sp.", "P"),
     glbPath: "/ant.glb",
     country: "Global",
     group: "Social insects (Order Hymenoptera)",
@@ -52,7 +54,7 @@ const POLLINATORS_DATA = [
   //   scientificName: "Apis mellifera",
   //   roleEn: "Essential pollinator responsible for pollinating many of the world's food crops",
   //   roleEs: "Polinizador esencial responsable de polinizar muchos de los cultivos alimentarios del mundo",
-  //   sanCode: "SAN-P-BEE001",
+  //   sanCode: computeSANCode("Apis mellifera", "P"),
   //   glbPath: null, // Will use procedural 3D for now
   //   country: "Global",
   //   group: "Social insects (Order Hymenoptera)",
@@ -70,7 +72,7 @@ const POLLINATORS_DATA = [
   //   scientificName: "Bombus terrestris",
   //   roleEn: "Large, fuzzy bees that are excellent pollinators for many wildflowers and crops",
   //   roleEs: "Abejas grandes y peludas que son excelentes polinizadores para muchas flores silvestres y cultivos",
-  //   sanCode: "SAN-P-BEE002",
+  //   sanCode: computeSANCode("Bombus terrestris", "P"),
   //   glbPath: null,
   //   country: "Europe, Asia, North America",
   //   group: "Social insects (Order Hymenoptera)",
@@ -88,7 +90,7 @@ const POLLINATORS_DATA = [
     scientificName: "Archilochus colubris",
     roleEn: "Tiny, fast-flying birds that pollinate tubular flowers with their long beaks",
     roleEs: "Aves diminutas y de vuelo rápido que polinizan flores tubulares con sus picos largos",
-    sanCode: "SAN-P-BIRD001",
+    sanCode: computeSANCode("Archilochus colubris", "P"),
     glbPath: createGLBPath("Humming_bird.glb"),
     country: "North America",
     group: "Birds (Order Apodiformes)",
@@ -106,7 +108,7 @@ const POLLINATORS_DATA = [
     scientificName: "Danaus plexippus",
     roleEn: "Famous migratory butterflies that pollinate milkweed and other wildflowers",
     roleEs: "Mariposas migratorias famosas que polinizan algodoncillo y otras flores silvestres",
-    sanCode: "SAN-P-BUT001",
+    sanCode: computeSANCode("Danaus plexippus", "P"),
     glbPath: createGLBPath("Final_Textured_Butterfly.glb"),
     country: "North America",
     group: "Butterflies (Order Lepidoptera)",
@@ -124,7 +126,7 @@ const POLLINATORS_DATA = [
     scientificName: "Hemaris spp.",
     roleEn: "Moth species that mimic hummingbirds in appearance and behavior",
     roleEs: "Especies de polillas que imitan a los colibríes en apariencia y comportamiento",
-    sanCode: "SAN-P-MOTH001",
+    sanCode: computeSANCode("Hemaris spp.", "P"),
     glbPath: createGLBPath("Normal__Humming_Bird_Moth_Glb.glb"),
     country: "North America, Europe, Asia",
     group: "Moths (Order Lepidoptera)",
@@ -142,7 +144,7 @@ const POLLINATORS_DATA = [
     scientificName: "Coleoptera sp.",
     roleEn: "Diverse group of insects that pollinate flowers while feeding on pollen and nectar",
     roleEs: "Grupo diverso de insectos que polinizan flores mientras se alimentan de polen y néctar",
-    sanCode: "SAN-P-BET001",
+    sanCode: computeSANCode("Coleoptera sp.", "P"),
     glbPath: createGLBPath("Beetle_Final_With_Texture.glb"),
     country: "Global",
     group: "Beetles (Order Coleoptera)",
@@ -185,20 +187,20 @@ const FloralDecoration = ({ className, delay = 0 }) => (
           <stop offset="100%" stopColor="rgba(249, 168, 212, 0.3)" />
         </linearGradient>
         <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
           <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
       </defs>
       <g filter="url(#glow)" className="animate-float">
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)"/>
-        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)"/>
-        <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)"/>
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(0 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(72 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(144 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(216 60 60)" />
+        <ellipse cx="60" cy="30" rx="12" ry="25" fill="url(#petalGradient)" transform="rotate(288 60 60)" />
+        <circle cx="60" cy="60" r="8" fill="rgba(251, 191, 36, 0.4)" />
       </g>
     </svg>
   </motion.div>
@@ -212,7 +214,7 @@ const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
     lg: "w-64 h-64",
     xl: "w-96 h-96",
   };
-  
+
   const colorClasses = {
     blue: "from-blue-400/20 via-indigo-300/10 to-transparent",
     purple: "from-purple-400/20 via-violet-300/10 to-transparent",
@@ -307,7 +309,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.1;
         renderer.shadowMap.enabled = true;
-        
+
         // Prevent Swiper from capturing events on the 3D canvas.
         // Use stopPropagation only (not stopImmediatePropagation) so OrbitControls still receive events.
         // When user drags off the canvas, mousemove/mouseup fire on other elements; we use document
@@ -577,7 +579,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
     <div className="relative group">
       {/* Glow effect on hover - hidden on touch/mobile */}
       <div className={`absolute -inset-1 bg-gradient-to-r ${colorClasses[pollinator.color] || colorClasses.amber} rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block`} />
-      
+
       {/* Card */}
       <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
         <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -585,7 +587,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
             <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div className="min-w-0">
-            <h2 
+            <h2
               className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 line-clamp-1 sm:line-clamp-none"
               style={{ fontFamily: '"Cormorant Garamond", serif' }}
             >
@@ -693,6 +695,20 @@ export default function PollinatorsPage() {
   const { t, isLoading } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter pollinators by SAN code, scientific name, or common name
+  const filteredPollinators = useMemo(() => {
+    if (!searchQuery.trim()) return null;
+    const q = searchQuery.toLowerCase().replace(/[,\s-]/g, "");
+    return POLLINATORS_DATA.filter((pol) => {
+      const san = (pol.sanCode || "").toLowerCase().replace(/[,\s-]/g, "");
+      const sci = (pol.scientificName || "").toLowerCase();
+      const common = (pol.commonName || "").toLowerCase();
+      const country = (pol.country || "").toLowerCase();
+      return san.includes(q) || sci.includes(q) || common.includes(q) || country.includes(q);
+    });
+  }, [searchQuery]);
 
   if (isLoading) {
     return (
@@ -726,7 +742,7 @@ export default function PollinatorsPage() {
       {/* Aurora-inspired background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Main aurora gradient */}
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
             background: `
@@ -737,9 +753,9 @@ export default function PollinatorsPage() {
             `,
           }}
         />
-        
+
         {/* Animated aurora streaks */}
-        <div 
+        <div
           className="absolute inset-0 animate-aurora opacity-20"
           style={{
             backgroundImage: `
@@ -762,7 +778,7 @@ export default function PollinatorsPage() {
       <GlowingOrb className="hidden sm:block top-1/3 -left-32" color="amber" delay={0.4} size="lg" />
       <GlowingOrb className="bottom-1/4 right-4 sm:right-10 opacity-60 sm:opacity-100" color="amber" delay={0.6} size="md" />
       <GlowingOrb className="hidden lg:block bottom-40 left-1/4" color="amber" delay={0.8} size="lg" />
-      
+
       <FloralDecoration className="hidden sm:block top-32 right-20 opacity-60" delay={1} />
       <FloralDecoration className="hidden md:block top-1/2 left-10 opacity-40" delay={1.2} />
       <FloralDecoration className="hidden lg:block bottom-60 right-1/3 opacity-50" delay={1.4} />
@@ -785,7 +801,7 @@ export default function PollinatorsPage() {
                 <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
               </div>
 
-              <h1 
+              <h1
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-1"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -795,7 +811,7 @@ export default function PollinatorsPage() {
               {/* Separator */}
               <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 mx-auto mb-4 sm:mb-8" />
 
-              <p 
+              <p
                 className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed italic px-1"
                 style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
               >
@@ -817,26 +833,26 @@ export default function PollinatorsPage() {
               <div className="group relative">
                 {/* Glow effect on hover - hidden on touch to avoid layout shift */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-yellow-400/20 rounded-2xl sm:rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:block" />
-                
+
                 {/* Card */}
                 <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500">
-                  <h2 
+                  <h2
                     className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6"
                     style={{ fontFamily: '"Cormorant Garamond", serif' }}
                   >
                     {t('pollinators.guardiansTitle')}
                   </h2>
-                  
+
                   <div className="space-y-4 sm:space-y-6">
                     <p className="text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed">
                       {t('pollinators.guardiansText1')}
                     </p>
-                    
+
                     <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                       {t('pollinators.guardiansText2')}
                     </p>
                   </div>
-                  
+
                   {/* Decorative corner element - smaller on mobile */}
                   <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 overflow-hidden rounded-tr-2xl sm:rounded-tr-3xl">
                     <div className="absolute -top-10 -right-10 sm:-top-16 sm:-right-16 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-br from-amber-100/50 to-transparent rounded-full" />
@@ -850,56 +866,110 @@ export default function PollinatorsPage() {
         {/* Pollinators Slider Section - In the middle */}
         <section className="px-2 sm:px-6 lg:px-8 mb-12 sm:mb-16 lg:mb-24">
           <div className="max-w-5xl mx-auto">
+            {/* Search Bar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="mb-8 px-2 sm:px-0"
             >
-              <div className="relative px-2 sm:px-0">
-                <Swiper
-                  ref={swiperRef}
-                  modules={[SwiperNavigation]}
-                  navigation={{
-                    nextEl: '.swiper-button-next-custom',
-                    prevEl: '.swiper-button-prev-custom',
-                  }}
-                  spaceBetween={16}
-                  slidesPerView={1}
-                  loop={true}
-                  allowTouchMove={true}
-                  simulateTouch={true}
-                  noSwipingClass="swiper-no-swiping"
-                  noSwipingSelector="[data-canvas-container]"
-                  touchEventsTarget="container"
-                  className="pollinators-swiper"
-                  onSlideChange={(swiper) => {
-                    setActiveIndex(swiper.realIndex);
-                  }}
-                  onSwiper={(swiper) => {
-                    swiperRef.current = swiper;
-                  }}
-                >
-                  {POLLINATORS_DATA.map((pollinator, index) => (
-                    <SwiperSlide key={pollinator.id}>
-                      <Pollinator3DViewer 
-                        pollinator={pollinator} 
-                        t={t}
-                        isActive={activeIndex === index}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-                
-                {/* Custom Navigation Buttons - compact on mobile */}
-                <button className="swiper-button-prev-custom absolute left-0 sm:left-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 -translate-x-1 sm:-translate-x-4 lg:-translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Previous pollinator">
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-amber-600 transition-colors" />
-                </button>
-                <button className="swiper-button-next-custom absolute right-0 sm:right-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 translate-x-1 sm:translate-x-4 lg:translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Next pollinator">
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-amber-600 transition-colors" />
-                </button>
+              <div className="relative max-w-xl mx-auto">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  id="pollinators-search"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t('pollinators.searchPlaceholder') || "Search by SAN code, name, or species..."}
+                  className="w-full pl-12 pr-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 shadow-sm transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
+              {filteredPollinators !== null && (
+                <p className="text-center text-sm text-gray-500 mt-3">
+                  {filteredPollinators.length} {filteredPollinators.length === 1 ? 'pollinator' : 'pollinators'} found
+                </p>
+              )}
             </motion.div>
+
+            {/* Filtered Results or Swiper */}
+            {filteredPollinators !== null ? (
+              <div className="space-y-8 px-2 sm:px-0">
+                {filteredPollinators.length === 0 ? (
+                  <div className="text-center py-16">
+                    <p className="text-gray-500 text-lg">No pollinators match your search.</p>
+                  </div>
+                ) : (
+                  filteredPollinators.map((pollinator) => (
+                    <Pollinator3DViewer
+                      key={pollinator.id}
+                      pollinator={pollinator}
+                      t={t}
+                      isActive={true}
+                    />
+                  ))
+                )}
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="relative px-2 sm:px-0">
+                  <Swiper
+                    ref={swiperRef}
+                    modules={[SwiperNavigation]}
+                    navigation={{
+                      nextEl: '.swiper-button-next-custom',
+                      prevEl: '.swiper-button-prev-custom',
+                    }}
+                    spaceBetween={16}
+                    slidesPerView={1}
+                    loop={true}
+                    allowTouchMove={true}
+                    simulateTouch={true}
+                    noSwipingClass="swiper-no-swiping"
+                    noSwipingSelector="[data-canvas-container]"
+                    touchEventsTarget="container"
+                    className="pollinators-swiper"
+                    onSlideChange={(swiper) => {
+                      setActiveIndex(swiper.realIndex);
+                    }}
+                    onSwiper={(swiper) => {
+                      swiperRef.current = swiper;
+                    }}
+                  >
+                    {POLLINATORS_DATA.map((pollinator, index) => (
+                      <SwiperSlide key={pollinator.id}>
+                        <Pollinator3DViewer
+                          pollinator={pollinator}
+                          t={t}
+                          isActive={activeIndex === index}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* Custom Navigation Buttons - compact on mobile */}
+                  <button className="swiper-button-prev-custom absolute left-0 sm:left-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 -translate-x-1 sm:-translate-x-4 lg:-translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Previous pollinator">
+                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-amber-600 transition-colors" />
+                  </button>
+                  <button className="swiper-button-next-custom absolute right-0 sm:right-0 top-[42%] sm:top-1/2 -translate-y-1/2 z-10 translate-x-1 sm:translate-x-4 lg:translate-x-12 w-9 h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-white/95 hover:bg-white backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 sm:hover:scale-110 group touch-manipulation" aria-label="Next pollinator">
+                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-gray-700 group-hover:text-amber-600 transition-colors" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </div>
         </section>
 
@@ -913,7 +983,7 @@ export default function PollinatorsPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-8 sm:mb-12 lg:mb-16"
             >
-              <h2 
+              <h2
                 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 px-1"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -1025,11 +1095,11 @@ export default function PollinatorsPage() {
               <div className="relative group">
                 {/* Animated gradient border - hidden on mobile */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 rounded-2xl sm:rounded-3xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-slow hidden sm:block" />
-                
+
                 {/* Card */}
                 <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-12 border border-white/50 shadow-2xl text-center overflow-hidden">
                   {/* Decorative background */}
-                  <div 
+                  <div
                     className="absolute inset-0 opacity-10"
                     style={{
                       backgroundImage: `
@@ -1038,23 +1108,23 @@ export default function PollinatorsPage() {
                       `,
                     }}
                   />
-                  
+
                   <div className="relative">
                     <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-amber-400 mx-auto mb-4 sm:mb-6" />
-                    
-                    <blockquote 
+
+                    <blockquote
                       className="text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-800 leading-relaxed mb-5 sm:mb-8 italic px-1"
                       style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
                     >
                       &ldquo;{t('pollinators.guardiansText2')}&rdquo;
                     </blockquote>
-                    
+
                     <div className="flex items-center justify-center gap-3 sm:gap-4 mb-5 sm:mb-8">
                       <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
                       <Bug className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
                       <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
                     </div>
-                    
+
                     <Link
                       href="/pollinators/gallery"
                       className="inline-flex items-center gap-2 px-5 py-3 sm:px-8 sm:py-4 bg-gray-900 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl active:scale-95 sm:hover:scale-105 transition-all duration-300 touch-manipulation"

@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  FaHome, 
-  FaInfoCircle, 
-  FaSeedling, 
-  FaBug, 
-  FaShieldAlt, 
-  FaGraduationCap, 
-  FaChartLine, 
-  FaArchive, 
-  FaBullseye, 
+import {
+  FaHome,
+  FaInfoCircle,
+  FaSeedling,
+  FaBug,
+  FaShieldAlt,
+  FaGraduationCap,
+  FaChartLine,
+  FaArchive,
+  FaBullseye,
   FaUsers,
   FaShoppingCart,
   FaBook,
@@ -162,8 +162,8 @@ export default function MobileSidebar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998]"
+            transition={{ duration: 0.15 }}
+            className="lg:hidden fixed inset-0 bg-black/40 z-[9998]"
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -176,12 +176,13 @@ export default function MobileSidebar() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            transition={{ type: "tween", duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
             className="lg:hidden fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-[9999] shadow-2xl overflow-hidden flex flex-col"
+            style={{ willChange: "transform" }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
-              <h2 
+              <h2
                 className="text-2xl font-bold text-gray-800"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
@@ -206,19 +207,14 @@ export default function MobileSidebar() {
 
                 return (
                   <div key={item.name}>
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
+                    <div>
                       {hasSubItems ? (
                         <button
                           onClick={() => setExpandedItem(isExpanded ? null : item.name)}
-                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${
-                            isActive
+                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${isActive
                               ? "bg-blue-50 text-blue-600"
                               : "text-gray-700 hover:bg-gray-50"
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center gap-3">
                             <IconComponent className="w-5 h-5" />
@@ -234,17 +230,16 @@ export default function MobileSidebar() {
                       ) : (
                         <Link
                           href={item.path}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                            isActive
+                          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
                               ? "bg-blue-50 text-blue-600"
                               : "text-gray-700 hover:bg-gray-50"
-                          }`}
+                            }`}
                         >
                           <IconComponent className="w-5 h-5" />
                           <span className="font-medium text-sm">{item.name}</span>
                         </Link>
                       )}
-                    </motion.div>
+                    </div>
 
                     {/* Sub Items */}
                     <AnimatePresence>
@@ -260,11 +255,10 @@ export default function MobileSidebar() {
                             <Link
                               key={subItem.path}
                               href={subItem.path}
-                              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${
-                                isPathActive(subItem.path)
+                              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${isPathActive(subItem.path)
                                   ? "bg-blue-50 text-blue-600"
                                   : "text-gray-600 hover:bg-gray-50"
-                              }`}
+                                }`}
                             >
                               {subItem.name}
                             </Link>
