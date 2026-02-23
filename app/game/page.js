@@ -122,7 +122,7 @@ export default function GamePage() {
           console.error('Failed to load completed flowers:', e);
         }
       }
-      
+
       // Verify all countries have complete flower images mapped
       verifyCompleteFlowerImages();
     }
@@ -481,13 +481,13 @@ export default function GamePage() {
   };
 
   return (
-    <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${(gameState === "playing" && !isLoadingAssets) || gameState === "completed" ? "bg-white text-black" : "bg-black text-white"}`}>
+    <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${(gameState === "playing" && !isLoadingAssets) || gameState === "completed" ? "text-black" : "bg-black text-white"}`}>
 
       {/* Page Loader - visible while isLoading is true */}
       <PageLoader isLoading={isLoading} />
 
-      {/* GridScan background - Only show before card game loads */}
-      {(!gameState || (gameState !== "playing" && gameState !== "completed") || isLoadingAssets) && !isLoading ? (
+      {/* GridScan background - Only show on start screen before any loading */}
+      {!isLoading && !isLoadingAssets && showStartButton ? (
         <div className="fixed inset-0 z-0" style={{ width: '100%', height: '100%' }}>
           <GridScan
             sensitivity={0.55}
@@ -503,64 +503,17 @@ export default function GamePage() {
           />
         </div>
       ) : (
-        /* Background with subtle leaf outlines like the image */
+        /* Game_bg.png - shown during asset loading and when playing/completed */
         <div
-          className="fixed inset-0 z-0"
-          style={{
-            background: 'linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)',
-            opacity: isLoading ? 0 : 1, // Hide during loading
-            transition: 'opacity 0.5s ease-out'
-          }}
+          className="fixed inset-0 z-0 min-h-screen min-h-[100dvh] min-w-full w-full overflow-hidden bg-black"
+          style={{ opacity: isLoading ? 0 : 1, transition: "opacity 0.5s ease-out" }}
         >
-          {/* Subtle leaf outlines scattered across background */}
-          <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            {/* Faint leaf outlines - scattered throughout */}
-            <g opacity="0.15" stroke="#a5d6a7" strokeWidth="1" fill="none">
-              {/* Leaf 1 - top left */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(8, 10) scale(0.6)" />
-              {/* Leaf 2 - top center */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(45, 8) scale(0.5) rotate(25)" />
-              {/* Leaf 3 - top right */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(82, 12) scale(0.55) rotate(-15)" />
-              {/* Leaf 4 - middle left */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(12, 35) scale(0.45) rotate(-30)" />
-              {/* Leaf 5 - middle */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(50, 40) scale(0.5) rotate(40)" />
-              {/* Leaf 6 - middle right */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(85, 38) scale(0.48) rotate(-25)" />
-              {/* Leaf 7 - bottom left */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(10, 65) scale(0.52) rotate(20)" />
-              {/* Leaf 8 - bottom center */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(48, 68) scale(0.46) rotate(-35)" />
-              {/* Leaf 9 - bottom right */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(88, 70) scale(0.5) rotate(30)" />
-              {/* Additional smaller leaves */}
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(25, 20) scale(0.35) rotate(15)" />
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(70, 25) scale(0.38) rotate(-20)" />
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(30, 55) scale(0.32) rotate(45)" />
-              <path d="M50 20 Q30 30 20 50 Q30 70 50 80 Q70 70 80 50 Q70 30 50 20" transform="translate(65, 58) scale(0.36) rotate(-40)" />
-            </g>
-
-            {/* Subtle vine outlines */}
-            <g opacity="0.12" stroke="#a5d6a7" strokeWidth="1.5" fill="none">
-              <path d="M0 85 Q15 80 30 85 T60 85 T90 85" />
-              <path d="M5 90 Q20 85 35 90 T65 90 T95 90" />
-              <path d="M10 92 Q25 87 40 92 T70 92" />
-            </g>
-
-            {/* Tiny pink petal specks */}
-            <g opacity="0.2" fill="#f8bbd0">
-              <circle cx="15%" cy="25%" r="2" />
-              <circle cx="35%" cy="15%" r="1.5" />
-              <circle cx="75%" cy="20%" r="2" />
-              <circle cx="20%" cy="50%" r="1.5" />
-              <circle cx="60%" cy="45%" r="2" />
-              <circle cx="85%" cy="55%" r="1.5" />
-              <circle cx="25%" cy="75%" r="2" />
-              <circle cx="55%" cy="80%" r="1.5" />
-              <circle cx="80%" cy="75%" r="2" />
-            </g>
-          </svg>
+          <img
+            src="/Game_bg.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
         </div>
       )}
 
@@ -592,9 +545,9 @@ export default function GamePage() {
         </div>
       )}
 
-      {/* Loader - Show while loading assets */}
+      {/* Loader - Show while loading assets (Game_bg visible behind) */}
       {isLoadingAssets && (
-        <div className="fixed inset-0 flex items-center justify-center z-30 bg-black">
+        <div className="fixed inset-0 flex items-center justify-center z-30 bg-transparent">
           <div className="relative w-full h-full flex items-center justify-center p-4">
             <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] sm:max-w-[80vw] sm:max-h-[80vh] md:max-w-[70vw] md:max-h-[70vh] lg:max-w-[60vw] lg:max-h-[60vh]">
               <Image
