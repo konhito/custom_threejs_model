@@ -407,28 +407,7 @@ export default function PollinatorsGalleryPage() {
               <span>{uiTranslations[language].header.back}</span>
             </Link>
 
-            <div className="flex flex-wrap items-center gap-2 mb-6">
-              <span className="text-sm font-medium text-gray-600 mr-2">{uiTranslations[language].header.language}</span>
-              {[
-                { code: 'en', label: 'English', flag: '🇺🇸' },
-                { code: 'es', label: 'Español', flag: '🇪🇸' },
-                { code: 'fr', label: 'Français', flag: '🇫🇷' },
-                { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-                { code: 'zh', label: '中文', flag: '🇨🇳' }
-              ].map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => setLanguage(lang.code)}
-                  className={`flex items-center space-x-1 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 ${language === lang.code
-                    ? 'bg-amber-600 text-white shadow-md transform scale-105'
-                    : 'bg-white text-gray-600 hover:bg-amber-50 hover:text-amber-600 border border-gray-200'
-                    }`}
-                >
-                  <span className="text-base">{lang.flag}</span>
-                  <span className="hidden sm:inline">{lang.label}</span>
-                </button>
-              ))}
-            </div>
+
 
             <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent mb-4">
               {uiTranslations[language].header.title}
@@ -586,128 +565,10 @@ export default function PollinatorsGalleryPage() {
             </section>
           </div>
 
-          <section className="mb-20">
-            <div className="mb-12 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-4">
-                <Bot className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                {uiTranslations[language].sections.robotic}
-              </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                {uiTranslations[language].sections.roboticSubtitle}
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {roboticPollinators.map((pollinator, index) => (
-                <RoboticPollinatorCard key={index} robot={pollinator} onView3D={setSelected3DModel} language={language} />
-              ))}
-            </div>
-          </section>
 
           {/* Comparison Section */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-200">
-            <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-              {uiTranslations[language].comparison.title}
-            </h3>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Natural Pollinators */}
-              <div className="bg-white/80 rounded-2xl p-6 border border-green-200">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
-                    <Heart className="w-6 h-6 text-white" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-gray-800">{uiTranslations[language].comparison.natural.title}</h4>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                      <span className="text-green-600 mr-2">✓</span>
-                      {uiTranslations[language].comparison.natural.advantages.title}
-                    </h5>
-                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                      <li>{uiTranslations[language].comparison.natural.advantages.item1}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item2}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item3}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item4}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item5}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item6}</li>
-                      <li>{uiTranslations[language].comparison.natural.advantages.item7}</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                      <span className="text-red-600 mr-2">⚠</span>
-                      {uiTranslations[language].comparison.natural.challenges.title}
-                    </h5>
-                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                      <li>{uiTranslations[language].comparison.natural.challenges.item1}</li>
-                      <li>{uiTranslations[language].comparison.natural.challenges.item2}</li>
-                      <li>{uiTranslations[language].comparison.natural.challenges.item3}</li>
-                      <li>{uiTranslations[language].comparison.natural.challenges.item4}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Robotic Pollinators */}
-              <div className="bg-white/80 rounded-2xl p-6 border border-blue-200">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
-                    <Bot className="w-6 h-6 text-white" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-gray-800">{uiTranslations[language].comparison.robotic.title}</h4>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                      <span className="text-green-600 mr-2">✓</span>
-                      {uiTranslations[language].comparison.robotic.benefits.title}
-                    </h5>
-                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item1}</li>
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item2}</li>
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item3}</li>
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item4}</li>
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item5}</li>
-                      <li>{uiTranslations[language].comparison.robotic.benefits.item6}</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h5 className="font-semibold text-gray-700 mb-2 flex items-center">
-                      <span className="text-red-600 mr-2">⚠</span>
-                      {uiTranslations[language].comparison.robotic.limitations.title}
-                    </h5>
-                    <ul className="space-y-2 text-sm text-gray-600 ml-6">
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item1}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item2}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item3}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item4}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item5}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item6}</li>
-                      <li>{uiTranslations[language].comparison.robotic.limitations.item7}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Conclusion */}
-            <div className="mt-8 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6 border border-amber-300">
-              <h4 className="text-xl font-bold text-gray-800 mb-3 text-center">
-                {uiTranslations[language].comparison.conclusion.title}
-              </h4>
-              <p className="text-gray-700 text-center leading-relaxed">
-                {uiTranslations[language].comparison.conclusion.text}
-              </p>
-            </div>
-          </div>
 
 
           {/* Future Vision */}
