@@ -382,13 +382,231 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {/* Cultural Significance */}
               <div className="space-y-4">
                 <h2 className="text-xs uppercase tracking-[0.3em] text-gray-400 font-semibold">
-                  2. CULTURAL SIGNIFICANCE
+                  2. CULTURAL & HISTORICAL DATA
                 </h2>
                 <div className="prose prose-sm text-gray-600">
                   <p>{country.flowerDescription}</p>
                   <p className="mt-2">{country.culturalSignificance}</p>
                 </div>
+                {country.historicalOrigin && (
+                  <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 mt-3">
+                    <span className="text-xs font-bold text-purple-700 uppercase block mb-1">📖 Historical Origin</span>
+                    <p className="text-sm text-gray-700 leading-relaxed">{country.historicalOrigin}</p>
+                  </div>
+                )}
+                {(country.nationalStatus || country.traditionalUses) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                    {country.nationalStatus && (
+                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">National Status</span>
+                        <span className="text-sm text-gray-800">{country.nationalStatus}</span>
+                      </div>
+                    )}
+                    {country.traditionalUses && (
+                      <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Traditional Uses</span>
+                        <span className="text-sm text-gray-800">{country.traditionalUses}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
+
+              {/* Morphology Table */}
+              {country.morphology && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-emerald-500 font-semibold">
+                    3. MORPHOLOGY
+                  </h2>
+                  <div className="bg-emerald-50 rounded-xl border border-emerald-100 overflow-hidden">
+                    <table className="w-full text-sm">
+                      <tbody>
+                        {[
+                          { label: "Color", value: country.morphology.color },
+                          { label: "Shape", value: country.morphology.shape },
+                          { label: "Size", value: country.morphology.size },
+                          { label: "Life Cycle", value: country.morphology.lifeCycle },
+                        ].map((row, i) => (
+                          <tr key={row.label} className={i % 2 === 0 ? "bg-emerald-50" : "bg-white"}>
+                            <td className="px-4 py-3 font-bold text-emerald-700 uppercase text-xs w-[100px] align-top">{row.label}</td>
+                            <td className="px-4 py-3 text-gray-700">{row.value}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {(country.habitat || country.distribution) && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {country.habitat && (
+                        <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
+                          <span className="text-xs font-bold text-emerald-700 uppercase block mb-1">Habitat</span>
+                          <span className="text-sm text-gray-700">{country.habitat}</span>
+                        </div>
+                      )}
+                      {country.distribution && (
+                        <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
+                          <span className="text-xs font-bold text-emerald-700 uppercase block mb-1">Distribution</span>
+                          <span className="text-sm text-gray-700">{country.distribution}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Conservation Data */}
+              {(country.conservationStatus || country.mainThreats) && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-blue-500 font-semibold">
+                    4. CONSERVATION DATA
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {country.conservationStatus && (
+                      <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">🌍 IUCN Status</span>
+                        <span className="text-sm text-gray-800 font-medium">{country.conservationStatus}</span>
+                      </div>
+                    )}
+                    {country.mainThreats && (
+                      <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">⚠️ Main Threats</span>
+                        <span className="text-sm text-gray-700">{country.mainThreats}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Nahiara Metadata */}
+              {(country.pfnoClassification || country.nahiaraMeasure) && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-violet-500 font-semibold">
+                    5. NAHIARA METADATA
+                  </h2>
+
+                  {/* SAN Code Display */}
+                  {country.sanCode && (
+                    <div className="bg-gradient-to-r from-violet-50 to-purple-50 rounded-xl p-5 border border-violet-100 text-center">
+                      <div className="text-2xl font-bold text-violet-800 font-mono tracking-wider mb-1">
+                        {country.sanCode}
+                      </div>
+                      <div className="text-xs text-violet-500">Assigned S.A.N. Code</div>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {country.pfnoClassification && (
+                      <div className="bg-violet-50 rounded-lg p-3 border border-violet-100">
+                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">PFNO Classification</span>
+                        <span className="text-sm text-gray-800 font-medium">{country.pfnoClassification}</span>
+                      </div>
+                    )}
+                    {country.relevantPollinator && (
+                      <div className="bg-violet-50 rounded-lg p-3 border border-violet-100">
+                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">🐝 Relevant Pollinator</span>
+                        <span className="text-sm text-gray-700">{country.relevantPollinator}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Nahiara Measure */}
+              {country.nahiaraMeasure && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-amber-500 font-semibold">
+                    6. NAHIARA MEASURE
+                  </h2>
+
+                  {/* Total Score */}
+                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-100 text-center">
+                    <div className="text-4xl font-bold text-amber-700 mb-1">
+                      {country.nahiaraMeasure.total}/{country.nahiaraMeasure.max}
+                    </div>
+                    <div className="text-sm text-amber-600 font-medium">
+                      {country.nahiaraMeasure.statusEN || country.nahiaraMeasure.status}
+                      {country.nahiaraMeasure.rank && ` · Rank #${country.nahiaraMeasure.rank} globally`}
+                    </div>
+                  </div>
+
+                  {/* Sub-dimensions */}
+                  <div className="space-y-3">
+                    {[
+                      { label: "Latido Floral (Population)", value: country.nahiaraMeasure.latidoFloral, color: "bg-green-500" },
+                      { label: "Memoria Cultural", value: country.nahiaraMeasure.memoriaCultural, color: "bg-purple-500" },
+                      { label: "Voz Pública (Public Voice)", value: country.nahiaraMeasure.vozPublica, color: "bg-blue-500" },
+                      { label: "Escudo de Protección", value: country.nahiaraMeasure.escudoProteccion, color: "bg-amber-500" },
+                      { label: "Pétalo de Esperanza", value: country.nahiaraMeasure.petaloEsperanza, color: "bg-rose-500" },
+                    ].map((dim) => (
+                      <div key={dim.label}>
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-xs text-gray-600 font-medium">{dim.label}</span>
+                          <span className="text-xs font-bold text-gray-800">{dim.value}/5</span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-2.5">
+                          <div
+                            className={`${dim.color} h-2.5 rounded-full transition-all duration-700`}
+                            style={{ width: `${(dim.value / 5) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Scorfidon Protocol */}
+              {country.scorfidon && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-red-500 font-semibold">
+                    7. SCORFIDON PROTOCOL
+                  </h2>
+                  <p className="text-xs text-gray-500 italic">
+                    Threats and their guardians — the balance between destruction and restoration.
+                  </p>
+                  <div className="space-y-3">
+                    {Object.values(country.scorfidon).map((entry) => (
+                      <div key={entry.code} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono text-gray-400">{entry.code}</span>
+                            <span className="text-sm font-bold text-gray-800">{entry.threat}</span>
+                          </div>
+                          <span className="text-xs font-bold text-red-600">{entry.impact} petals</span>
+                        </div>
+                        <p className="text-xs text-gray-600 mb-2">{entry.description}</p>
+                        <div className="flex items-center gap-2 bg-emerald-50 rounded-lg px-3 py-2 border border-emerald-100">
+                          <span className="text-xs text-emerald-700">🛡️ {entry.guardian}</span>
+                          <span className="text-xs font-bold text-emerald-600 ml-auto">+{entry.guardianPower} petals</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Araihan Measurement */}
+              {country.araihanScore && (
+                <div className="space-y-4">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-indigo-500 font-semibold">
+                    8. ARAIHAN MEASUREMENT
+                  </h2>
+                  <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-100 text-center">
+                    <div className="text-3xl font-bold text-indigo-700 mb-1">{country.araihanScore}</div>
+                    <div className="text-xs text-indigo-500">Araihan Score</div>
+                  </div>
+                </div>
+              )}
+
+              {/* Final Synthesis */}
+              {country.nahiaraSynthesis && (
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
+                  <h2 className="text-xs uppercase tracking-[0.3em] text-green-600 font-semibold mb-3">
+                    ✅ NAHIARA SYNTHESIS
+                  </h2>
+                  <p className="text-sm text-gray-700 leading-relaxed">{country.nahiaraSynthesis}</p>
+                </div>
+              )}
 
               {/* Country Stats */}
               <div className="pt-6 border-t border-gray-100 grid grid-cols-2 gap-6">
@@ -434,7 +652,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
   const countriesData = useMemo(() => [
     {
       id: "IN_LOTUS",
-      name: "Lotus",
+      name: "Sacred Lotus",
       country: "India",
       countryCode: "IN",
       lat: 20.5937,
@@ -444,14 +662,95 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       continent: "Asia",
       language: "Hindi, English",
       currency: "Indian Rupee (INR)",
-      flowerName: "Lotus",
-      flowerScientificName: "Nelumbo nucifera",
+      flowerName: "Sacred Lotus",
+      flowerScientificName: "Nelumbo nucifera Gaertn.",
       flowerDescription:
-        "The lotus is India's national flower, symbolizing purity, enlightenment, and rebirth. It rises from muddy waters to bloom magnificently, representing the journey from darkness to light.",
+        "The Sacred Lotus is India's national flower, officially adopted in 1950. It symbolizes purity, enlightenment, and rebirth — rising from muddy waters to bloom magnificently, representing the journey from darkness to light. Its presence in Indian civilization spans over 5,000 years.",
       culturalSignificance:
-        "Sacred in Hinduism and Buddhism, the lotus represents divine beauty and purity. It's often associated with gods and goddesses and is a symbol of spiritual awakening.",
+        "Sacred in Hinduism and Buddhism, the lotus is the seat of deities Lakshmi, Saraswati, and Brahma. In Buddhist iconography, the Buddha is often depicted sitting upon a lotus throne. The flower represents divine beauty, purity, and spiritual awakening. It appears in the Rigveda, the oldest Hindu scripture, and is woven into art, architecture, and philosophy across South and Southeast Asia.",
       botanicalInfo:
-        "An aquatic perennial plant with large, fragrant pink or white flowers. The lotus can live for over 1,000 years and its seeds can remain viable for centuries.",
+        "An aquatic perennial rhizomatous plant with large, fragrant pink or white flowers that can reach 30 cm in diameter. The lotus possesses a remarkable self-cleaning mechanism (the 'lotus effect') due to its superhydrophobic leaf surface. Its seeds can remain viable for centuries — a 1,300-year-old seed was successfully germinated in 1994.",
+      // Extended Botanical Data (Diamond Journal)
+      botanicalFamily: "Nelumbonaceae",
+      commonNames: "Sacred Lotus, Indian Lotus, Bean of India, Kamal (कमल), Padma (पद्म), Tāmarai (தாமரை)",
+      morphology: {
+        color: "Pink to white petals with a golden-yellow receptacle; leaves are blue-green, peltate, and superhydrophobic",
+        shape: "Large solitary flowers, actinomorphic, with 20–30 petals arranged spirally; distinctive flat-topped seed pod (torus)",
+        size: "Flowers 15–30 cm diameter; leaves up to 60 cm; plant height 100–150 cm above water",
+        lifeCycle: "Perennial aquatic herb with thick rhizomes; flowers June–September in the Northern Hemisphere",
+      },
+      habitat: "Shallow, warm, still or slow-moving freshwater — lakes, ponds, marshes, flooded paddy fields, and temple tanks across tropical and subtropical regions",
+      distribution: "Native to the Indian subcontinent, Southeast Asia, and northern Australia. Widely cultivated across East Asia (China, Japan, Korea, Vietnam) and introduced to Egypt, Iran, and parts of the Americas",
+      // Cultural & Historical Data
+      historicalOrigin: "The lotus has been revered in the Indian subcontinent since the Vedic period (1500 BCE). Ancient texts including the Rigveda, Bhagavad Gita, and Lotus Sutra reference it as a symbol of creation and cosmic order. In Egyptian-Indian trade routes, the lotus connected two of the world's oldest civilizations. The Mughal emperors incorporated lotus motifs into architectural masterworks including the Taj Mahal.",
+      nationalStatus: "Official national flower of India since 1950, adopted at the time of the Constitution",
+      traditionalUses: "Religious offerings and temple decoration; Ayurvedic medicine (seeds, rhizomes, petals used for digestive and cardiac remedies); cuisine (lotus root/kamal kakdi is a staple vegetable; seeds eaten roasted or in desserts); textile fiber from stems (lotus silk); ornamental cultivation in temple tanks and gardens",
+      // Conservation Data
+      conservationStatus: "Least Concern (LC) — IUCN Red List",
+      mainThreats: "Wetland drainage and conversion for agriculture; water pollution from industrial and agricultural runoff; habitat loss due to urbanization; over-harvesting of rhizomes and seeds in some regions; invasive aquatic species competition",
+      // Nahiara Metadata
+      pfnoClassification: "Official National Flower",
+      relevantPollinator: "Coleoptera (beetles) — the lotus employs thermogenic cantharophily, raising its flower temperature to attract beetle pollinators. Also visited by Apis cerana (Asian honeybee).",
+      // Nahiara Measure (from official Medida Nahiara platform)
+      nahiaraMeasure: {
+        total: 22,
+        max: 25,
+        rank: 7,
+        status: "EcoRaíz viva",
+        statusEN: "Living EcoRoot",
+        latidoFloral: 4,        // Population health
+        memoriaCultural: 5,     // Cultural memory
+        vozPublica: 5,          // Public voice
+        escudoProteccion: 4,    // Protection shield
+        petaloEsperanza: 4,     // Petal of hope
+      },
+      // Araihan Measurement
+      araihanScore: 22,
+      // Scorfidon Protocol — threats and guardians
+      scorfidon: {
+        cambiClimatico: {
+          code: "SCF-001",
+          threat: "Climate Change",
+          impact: -1,
+          description: "Rising temperatures and altered monsoon patterns threaten wetland ecosystems essential for lotus habitats.",
+          guardian: "Equilibrio Natural (Natural Balance)",
+          guardianPower: +1,
+        },
+        deforestacion: {
+          code: "SCF-002",
+          threat: "Deforestation",
+          impact: -2,
+          description: "Clearing of forested wetlands disrupts the interconnected water systems that sustain lotus populations.",
+          guardian: "Reforestación (Reforestation)",
+          guardianPower: +2,
+        },
+        explotacion: {
+          code: "SCF-003",
+          threat: "Exploitation",
+          impact: -3,
+          description: "Over-harvesting of lotus rhizomes and seeds for commercial purposes; uncontrolled tourism at sacred lotus lakes.",
+          guardian: "Justicia Floral (Floral Justice)",
+          guardianPower: +3,
+        },
+        ignorancia: {
+          code: "SCF-004",
+          threat: "Ignorance",
+          impact: -4,
+          description: "Urban populations losing connection with traditional wetland ecosystems and the cultural significance of lotus cultivation.",
+          guardian: "Educación (Education)",
+          guardianPower: +4,
+        },
+        fuegoIntencionado: {
+          code: "SCF-005",
+          threat: "Intentional Fire",
+          impact: -5,
+          description: "Deliberate burning of wetland margins for land conversion destroys lotus seed banks and rhizome networks.",
+          guardian: "Agua (Water)",
+          guardianPower: +5,
+        },
+      },
+      // Final Synthesis
+      nahiaraSynthesis: "Nelumbo nucifera integrates into the Nahiara universe with code SAN-F-161,001, evaluated at level 22/25 (EcoRaíz viva) in the Nahiara Measure — ranking 7th globally. As the official national flower of India since 1950, the Sacred Lotus is one of humanity's most culturally significant plants, revered across Hinduism, Buddhism, and ancient Egyptian civilization. Despite threats from wetland loss and climate change, its deep cultural roots, legal protection, and widespread cultivation ensure its persistence. The lotus serves as the Master Reference Model for the AquaMundi flower system.",
       color: "#ff6b9d",
       special: true,
       size: 0.14,
@@ -459,7 +758,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       localLanguageName: "Hindi",
       gltfPath: "/lotus.glb",
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(India).mp3.mpeg",
-      sanCode: computeSANCode("Nelumbo nucifera", "F"),
+      sanCode: "SAN-F-161,001",
     },
     {
       id: "US_ROSE",
