@@ -417,7 +417,6 @@ export default function PollinatorsGalleryPage() {
             </p>
           </div>
 
-          {/* Crisis Infographic */}
           <section className="mb-16 bg-gradient-to-r from-red-50 to-orange-100 rounded-3xl p-8 border border-red-200">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -565,9 +564,6 @@ export default function PollinatorsGalleryPage() {
             </section>
           </div>
 
-
-
-          {/* Comparison Section */}
 
 
 

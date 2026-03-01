@@ -457,7 +457,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
       size: 0.14,
       flowerNameLocal: "कमल",
       localLanguageName: "Hindi",
-      gltfPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Indian_lotus.glb"),
+      gltfPath: "/lotus.glb",
       musicPath: "https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/National_music/Folk+Project+(India).mp3.mpeg",
       sanCode: computeSANCode("Nelumbo nucifera", "F"),
     },
@@ -1355,15 +1355,13 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         controls.enablePan = false;
         controls.enableRotate = true; // Enable rotation on all devices
 
-        // Device-specific zoom limits and rotation speed
+        // Device-specific zoom limits
         if (isMobile) {
           controls.minDistance = 3;
           controls.maxDistance = 12;
-          controls.autoRotateSpeed = 0.3; // Slower rotation for mobile
         } else if (isTablet) {
           controls.minDistance = 2.5;
           controls.maxDistance = 11;
-          controls.autoRotateSpeed = 0.4;
         } else {
           controls.minDistance = 3;
           controls.maxDistance = 15;
@@ -1463,9 +1461,8 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         // Add click listener
         renderer.domElement.addEventListener("click", handleClick);
 
-        // On mobile when not in fullscreen, disable pointer events on the canvas to allow scrolling
+        // On mobile, prevent page scroll while swiping the globe
         if (isMobile) {
-          renderer.domElement.style.pointerEvents = 'none';
           renderer.domElement.style.touchAction = 'none';
         }
 
