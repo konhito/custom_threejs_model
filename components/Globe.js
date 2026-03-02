@@ -532,11 +532,11 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
                   {/* Sub-dimensions */}
                   <div className="space-y-3">
                     {[
-                      { label: "Latido Floral (Population)", value: country.nahiaraMeasure.latidoFloral, color: "bg-green-500" },
-                      { label: "Memoria Cultural", value: country.nahiaraMeasure.memoriaCultural, color: "bg-purple-500" },
-                      { label: "Voz Pública (Public Voice)", value: country.nahiaraMeasure.vozPublica, color: "bg-blue-500" },
-                      { label: "Escudo de Protección", value: country.nahiaraMeasure.escudoProteccion, color: "bg-amber-500" },
-                      { label: "Pétalo de Esperanza", value: country.nahiaraMeasure.petaloEsperanza, color: "bg-rose-500" },
+                      { label: "Floral Heartbeat (Population)", value: country.nahiaraMeasure.latidoFloral, color: "bg-green-500" },
+                      { label: "Cultural Memory", value: country.nahiaraMeasure.memoriaCultural, color: "bg-purple-500" },
+                      { label: "Public Voice", value: country.nahiaraMeasure.vozPublica, color: "bg-blue-500" },
+                      { label: "Protection Shield", value: country.nahiaraMeasure.escudoProteccion, color: "bg-amber-500" },
+                      { label: "Petal of Hope", value: country.nahiaraMeasure.petaloEsperanza, color: "bg-rose-500" },
                     ].map((dim) => (
                       <div key={dim.label}>
                         <div className="flex justify-between items-center mb-1">
@@ -696,8 +696,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
         total: 22,
         max: 25,
         rank: 7,
-        status: "EcoRaíz viva",
-        statusEN: "Living EcoRoot",
+        status: "Living EcoRoot",
         latidoFloral: 4,        // Population health
         memoriaCultural: 5,     // Cultural memory
         vozPublica: 5,          // Public voice
@@ -713,7 +712,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           threat: "Climate Change",
           impact: -1,
           description: "Rising temperatures and altered monsoon patterns threaten wetland ecosystems essential for lotus habitats.",
-          guardian: "Equilibrio Natural (Natural Balance)",
+          guardian: "Natural Balance",
           guardianPower: +1,
         },
         deforestacion: {
@@ -721,7 +720,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           threat: "Deforestation",
           impact: -2,
           description: "Clearing of forested wetlands disrupts the interconnected water systems that sustain lotus populations.",
-          guardian: "Reforestación (Reforestation)",
+          guardian: "Reforestation",
           guardianPower: +2,
         },
         explotacion: {
@@ -729,7 +728,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           threat: "Exploitation",
           impact: -3,
           description: "Over-harvesting of lotus rhizomes and seeds for commercial purposes; uncontrolled tourism at sacred lotus lakes.",
-          guardian: "Justicia Floral (Floral Justice)",
+          guardian: "Floral Justice",
           guardianPower: +3,
         },
         ignorancia: {
@@ -737,7 +736,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           threat: "Ignorance",
           impact: -4,
           description: "Urban populations losing connection with traditional wetland ecosystems and the cultural significance of lotus cultivation.",
-          guardian: "Educación (Education)",
+          guardian: "Education",
           guardianPower: +4,
         },
         fuegoIntencionado: {
@@ -745,12 +744,12 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
           threat: "Intentional Fire",
           impact: -5,
           description: "Deliberate burning of wetland margins for land conversion destroys lotus seed banks and rhizome networks.",
-          guardian: "Agua (Water)",
+          guardian: "Water",
           guardianPower: +5,
         },
       },
       // Final Synthesis
-      nahiaraSynthesis: "Nelumbo nucifera integrates into the Nahiara universe with code SAN-F-161,001, evaluated at level 22/25 (EcoRaíz viva) in the Nahiara Measure — ranking 7th globally. As the official national flower of India since 1950, the Sacred Lotus is one of humanity's most culturally significant plants, revered across Hinduism, Buddhism, and ancient Egyptian civilization. Despite threats from wetland loss and climate change, its deep cultural roots, legal protection, and widespread cultivation ensure its persistence. The lotus serves as the Master Reference Model for the AquaMundi flower system.",
+      nahiaraSynthesis: "Nelumbo nucifera integrates into the Nahiara universe with code SAN-F-161,001, evaluated at level 22/25 (Living EcoRoot) in the Nahiara Measure — ranking 7th globally. As the official national flower of India since 1950, the Sacred Lotus is one of humanity's most culturally significant plants, revered across Hinduism, Buddhism, and ancient Egyptian civilization. Despite threats from wetland loss and climate change, its deep cultural roots, legal protection, and widespread cultivation ensure its persistence. The lotus serves as the Master Reference Model for the AquaMundi flower system.",
       color: "#ff6b9d",
       special: true,
       size: 0.14,
