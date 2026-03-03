@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { productsAPI, adminAPI } from '@/lib/api';
-import { 
+import {
   Plus,
   Edit,
   Trash2,
@@ -53,7 +53,7 @@ export default function AdminProductsPage() {
     try {
       setIsLoading(true);
       const response = await productsAPI.getAll();
-      
+
       if (response.success) {
         setProducts(response.data || []);
       }
@@ -158,10 +158,10 @@ export default function AdminProductsPage() {
         await adminAPI.createProduct(formData);
         showNotification('Product created successfully!', 'success');
       }
-      
+
       // Invalidate cache after product update
       await adminAPI.invalidateCache('products');
-      
+
       setShowModal(false);
       loadProducts();
       resetForm();
@@ -178,10 +178,10 @@ export default function AdminProductsPage() {
     try {
       await adminAPI.deleteProduct(productId);
       showNotification('Product deleted successfully!', 'success');
-      
+
       // Invalidate cache after product deletion
       await adminAPI.invalidateCache('products');
-      
+
       loadProducts();
     } catch (error) {
       showNotification('Failed to delete product', 'error');
@@ -221,7 +221,7 @@ export default function AdminProductsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Products</h1>
           <p className="text-gray-900 mt-1 font-medium">Manage your product catalog</p>
         </div>
-        
+
         <button
           onClick={() => {
             setEditingProduct(null);
@@ -257,9 +257,9 @@ export default function AdminProductsPage() {
                     }}
                   />
                 ) : null}
-                
+
                 {/* Fallback placeholder (hidden if image loads successfully) */}
-                <div 
+                <div
                   className="absolute inset-0 flex flex-col items-center justify-center"
                   style={{ display: product.image_url ? 'none' : 'flex' }}
                 >
@@ -272,14 +272,14 @@ export default function AdminProductsPage() {
                   </div>
                   <span className="text-xs text-gray-900 font-medium">No Image</span>
                 </div>
-                
+
                 {/* Status Badge */}
                 {!product.is_active && (
                   <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full shadow-lg font-medium">
                     Inactive
                   </div>
                 )}
-                
+
                 {/* Product Type Badge */}
                 <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
                   {product.type === 'book' ? '📚 Book' : '🎮 Card Game'}
@@ -290,7 +290,7 @@ export default function AdminProductsPage() {
               <div className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
                 <p className="text-sm text-gray-900 mb-4 line-clamp-2">{product.description}</p>
-                
+
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-900 font-medium">SKU:</span>
@@ -329,6 +329,7 @@ export default function AdminProductsPage() {
                     Edit
                   </button>
                   <button
+                    onClick={() => handleDelete(product.id)}
                     className="flex items-center justify-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -377,7 +378,7 @@ export default function AdminProductsPage() {
                   <Package className="w-5 h-5 mr-2 text-emerald-600" />
                   Basic Information
                 </h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Product Name */}
                   <div className="md:col-span-2">
@@ -452,7 +453,7 @@ export default function AdminProductsPage() {
                   <DollarSign className="w-5 h-5 mr-2 text-emerald-600" />
                   Pricing
                 </h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Physical Prices */}
                   <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200">
@@ -541,14 +542,14 @@ export default function AdminProductsPage() {
                   <ImageIcon className="w-5 h-5 mr-2 text-emerald-600" />
                   Images & Files
                 </h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Product Image Upload */}
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-2">
                       Product Image
                     </label>
-                    
+
                     {/* Upload Button */}
                     <div className="flex items-center gap-4">
                       <label className="flex-1 cursor-pointer">
@@ -559,7 +560,7 @@ export default function AdminProductsPage() {
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-3"></div>
                                 <p className="text-sm text-gray-900 font-medium">Uploading {uploadProgress}%</p>
                                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                                  <div 
+                                  <div
                                     className="bg-emerald-600 h-2 rounded-full transition-all duration-300"
                                     style={{ width: `${uploadProgress}%` }}
                                   ></div>
@@ -682,7 +683,7 @@ export default function AdminProductsPage() {
                   <Package className="w-5 h-5 mr-2 text-emerald-600" />
                   Inventory & Status
                 </h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Stock Quantity */}
                   <div>
@@ -719,7 +720,7 @@ export default function AdminProductsPage() {
                         Digital Only Product
                       </label>
                     </div>
-                    
+
                     <div className="flex items-center">
                       <input
                         type="checkbox"
@@ -774,11 +775,10 @@ export default function AdminProductsPage() {
 
       {/* Notification */}
       {notification && (
-        <div className={`fixed bottom-4 right-4 px-6 py-4 rounded-xl shadow-2xl z-50 animate-fade-in flex items-center gap-3 ${
-          notification.type === 'success' 
-            ? 'bg-gradient-to-r from-emerald-600 to-green-600 text-white' 
+        <div className={`fixed bottom-4 right-4 px-6 py-4 rounded-xl shadow-2xl z-50 animate-fade-in flex items-center gap-3 ${notification.type === 'success'
+            ? 'bg-gradient-to-r from-emerald-600 to-green-600 text-white'
             : 'bg-gradient-to-r from-red-600 to-pink-600 text-white'
-        }`}>
+          }`}>
           {notification.type === 'success' ? (
             <Check className="w-5 h-5" />
           ) : (
