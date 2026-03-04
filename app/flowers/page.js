@@ -34,7 +34,51 @@ const createGLBPath = (countryName, flowerName) => {
 // Comprehensive flowers data array with all GLB links
 const FLOWERS_DATA = [
   {
+    id: "US_ROSE",
+    commonName: "Rose",
+    scientificName: "Rosa (hybrid cultivars)",
+    country: "United States",
+    countryCode: "US",
+    glbPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
+    sanCode: "SAN-F-083,003",
+    botanicalFamily: "Rosaceae",
+    morphology: "Wide chromatic range (red, pink, white, yellow, lavender), highly fragrant flowers with 5–60+ petals; woody perennial shrub 0.3–3 m tall with thorny stems and pinnately compound leaves.",
+    habitat: "Adaptable to temperate zones worldwide — gardens, parks, roadsides; native species in meadows, forest edges, and rocky hillsides across the Northern Hemisphere.",
+    distribution: "Native to Asia, Europe, North America, and North Africa. The US grows approximately 1.2 billion cut roses annually; major cultivation in California, Oregon, and Texas.",
+    historicalOrigin: "Roses have been cultivated for over 5,000 years. Ancient Romans used them in festivals and perfumery. In 1986, President Ronald Reagan signed legislation designating Rosa as the official national floral emblem of the United States. The rose's symbolic power spans Greek mythology (sacred to Aphrodite), Christianity (the Virgin Mary's flower), and heraldry (the Wars of the Roses in England).",
+    nationalStatus: "Official national floral emblem of the United States since 1986 (Public Law 99-449)",
+    traditionalUses: "Perfumery and essential oils (rose otto, rosa damascena); culinary uses (rosewater, rose hip tea, jams); Ayurvedic and Western herbal medicine (rose hips rich in Vitamin C); ornamental horticulture and floristry; religious and ceremonial decoration.",
+    conservationStatus: "Cultivated varieties: Not Evaluated (NE). Wild species: several native Rosa species listed as state or federal Species of Concern in the USA.",
+    mainThreats: "Rose Rosette Disease (RRD) — a devastating mite-transmitted virus; climate-driven drought stress; pesticide dependency in commercial cultivation; habitat loss for native wild rose species.",
+    pfnoClassification: "Official National Floral Emblem",
+    relevantPollinator: "Apis mellifera (Western honeybee) and native Bombus species (bumblebees) — roses are key bee pasture plants. Also pollinated by beetles, hoverflies, and solitary bees (Osmia spp.)",
+    nahiaraMeasure: {
+      total: 23,
+      max: 25,
+      rank: 5,
+      status: "Living EcoRoot",
+      latidoFloral: 5,
+      memoriaCultural: 5,
+      vozPublica: 5,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 23,
+    scorfidon: {
+      climateChange: { code: "SCF-001", threat: "Climate Change", impact: -1, description: "Shifting temperature patterns disrupt rose bloom cycles and increase drought stress in cultivation zones across the American Southwest.", guardian: "Natural Balance", guardianPower: 1 },
+      deforestation: { code: "SCF-002", threat: "Deforestation", impact: -2, description: "Loss of native meadow and woodland habitats reduces populations of wild rose species (Rosa carolina, Rosa blanda, Rosa woodsii).", guardian: "Reforestation", guardianPower: 2 },
+      exploitation: { code: "SCF-003", threat: "Exploitation", impact: -3, description: "Intensive commercial cut-flower production relies on heavy pesticide use, harming pollinators and degrading soil health.", guardian: "Floral Justice", guardianPower: 3 },
+      ignorance: { code: "SCF-004", threat: "Ignorance", impact: -4, description: "Widespread ignorance of Rose Rosette Disease (RRD) — a fatal mite-vectored virus — has led to catastrophic losses of landscape roses across North America.", guardian: "Education", guardianPower: 4 },
+      intentionalFire: { code: "SCF-005", threat: "Intentional Fire", impact: -5, description: "Wildfire, exacerbated by drought and heat waves, destroys native rose scrubland habitats across the western United States.", guardian: "Water", guardianPower: 5 },
+    },
+    nahiaraSynthesis: "Rosa integrates into the Nahiara universe with code SAN-F-083,003, evaluated at level 23/25 (Living EcoRoot) in the Nahiara Measure — ranking 5th globally. As the official national floral emblem of the United States since 1986, the rose carries 5,000 years of cultural resonance across civilizations. The principal threat — Rose Rosette Disease — underscores the fragility hidden within iconic status. The rose stands as Master Reference Model for the Western hemisphere within the AquaMundi flower system.",
+    cultural: "The rose is the official national floral emblem of the United States (1986). It has been a global symbol of love, beauty, passion, and remembrance for over 5,000 years — from ancient Rome and Greek mythology, to the heraldic Wars of the Roses, to the rose gardens of the White House.",
+    conservation: "While cultivated roses thrive globally, native wild rosa species in the US face threats from Rose Rosette Disease, habitat loss, and climate change. Nahiara Measure: 23 / 25 (Living EcoRoot).",
+    nahiaraMeasureLabel: "23 / 25 (Living EcoRoot)",
+  },
+  {
     id: "ES_CARNATION",
+
     commonName: "Carnation",
     scientificName: "Dianthus caryophyllus L.",
     country: "España (Spain)",
@@ -548,7 +592,7 @@ function Flower3DViewer({ flower, t, isActive = false }) {
 
         {/* Flower Information */}
         <div className="space-y-6">
-          {/* Botanical Data */}
+          {/* 1. Botanical Data */}
           <div className="bg-rose-50/80 backdrop-blur-sm rounded-2xl p-6 border border-rose-200">
             <h3 className="text-sm uppercase tracking-[0.3em] text-rose-700 mb-4">
               {t('flowers.botanicalData') || "1. BOTANICAL DATA"}
@@ -581,30 +625,187 @@ function Flower3DViewer({ flower, t, isActive = false }) {
                   </span>{" "}
                   {flower.habitat}
                 </p>
+                {flower.distribution && (
+                  <p className="text-gray-600 italic">{flower.distribution}</p>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Cultural Significance */}
+          {/* 2. Cultural & Historical Data */}
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-rose-200">
             <h3 className="text-sm uppercase tracking-[0.3em] text-rose-700 mb-4">
-              {t('flowers.culturalSignificance') || "2-5. CULTURE, CONSERVATION & NAHIARA MEASURE"}
+              2. CULTURAL &amp; HISTORICAL DATA
             </h3>
             <p className="text-gray-800 text-sm leading-relaxed mb-3">
               {flower.cultural}
             </p>
-            <p className="text-gray-800 text-sm leading-relaxed">
-              {flower.conservation}
-            </p>
-            <div className="mt-4 text-xs text-gray-600">
-              <p>
-                <span className="font-mono font-semibold">S.A.N.:</span> {flower.sanCode}
-              </p>
-              <p>
-                {t('flowers.nahiaraMeasure') || "Nahiara Measure:"} {flower.nahiaraMeasure}
-              </p>
-            </div>
+            {flower.historicalOrigin && (
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 mb-3">
+                <span className="text-xs font-bold text-purple-700 uppercase block mb-1">📖 Historical Origin</span>
+                <p className="text-sm text-gray-700 leading-relaxed">{flower.historicalOrigin}</p>
+              </div>
+            )}
+            {(flower.nationalStatus || flower.traditionalUses) && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                {flower.nationalStatus && (
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                    <span className="text-xs font-bold text-gray-500 uppercase block mb-1">National Status</span>
+                    <span className="text-sm text-gray-800">{flower.nationalStatus}</span>
+                  </div>
+                )}
+                {flower.traditionalUses && (
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                    <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Traditional Uses</span>
+                    <span className="text-sm text-gray-800">{flower.traditionalUses}</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
+
+          {/* 3. Conservation Data */}
+          {(flower.conservationStatus || flower.mainThreats) && (
+            <div className="bg-blue-50/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-blue-700 mb-4">3. CONSERVATION DATA</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {flower.conservationStatus && (
+                  <div className="bg-white/80 rounded-lg p-4 border border-blue-100">
+                    <span className="text-xs font-bold text-blue-700 uppercase block mb-1">🌍 IUCN Status</span>
+                    <span className="text-sm text-gray-800 font-medium">{flower.conservationStatus}</span>
+                  </div>
+                )}
+                {flower.mainThreats && (
+                  <div className="bg-white/80 rounded-lg p-4 border border-blue-100">
+                    <span className="text-xs font-bold text-blue-700 uppercase block mb-1">⚠️ Main Threats</span>
+                    <span className="text-sm text-gray-700">{flower.mainThreats}</span>
+                  </div>
+                )}
+                <p className="text-gray-800 text-sm leading-relaxed col-span-2">{flower.conservation}</p>
+              </div>
+            </div>
+          )}
+
+          {/* 4. Nahiara Metadata */}
+          {(flower.pfnoClassification || flower.nahiaraMeasure) && (
+            <div className="bg-violet-50/80 backdrop-blur-sm rounded-2xl p-6 border border-violet-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-violet-700 mb-4">4. NAHIARA METADATA</h3>
+              {/* SAN Code */}
+              <div className="bg-gradient-to-r from-violet-50 to-purple-50 rounded-xl p-5 border border-violet-100 text-center mb-4">
+                <div className="text-2xl font-bold text-violet-800 font-mono tracking-wider mb-1">{flower.sanCode}</div>
+                <div className="text-xs text-violet-500">Assigned S.A.N. Code</div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {flower.pfnoClassification && (
+                  <div className="bg-white/80 rounded-lg p-3 border border-violet-100">
+                    <span className="text-xs font-bold text-violet-700 uppercase block mb-1">PFNO Classification</span>
+                    <span className="text-sm text-gray-800 font-medium">{flower.pfnoClassification}</span>
+                  </div>
+                )}
+                {flower.relevantPollinator && (
+                  <div className="bg-white/80 rounded-lg p-3 border border-violet-100">
+                    <span className="text-xs font-bold text-violet-700 uppercase block mb-1">🐝 Relevant Pollinator</span>
+                    <span className="text-sm text-gray-700">{flower.relevantPollinator}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* 5. Nahiara Measure */}
+          {flower.nahiaraMeasure && typeof flower.nahiaraMeasure === 'object' && (
+            <div className="bg-amber-50/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-amber-700 mb-4">5. NAHIARA MEASURE</h3>
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-100 text-center mb-4">
+                <div className="text-4xl font-bold text-amber-700 mb-1">
+                  {flower.nahiaraMeasure.total}/{flower.nahiaraMeasure.max}
+                </div>
+                <div className="text-sm text-amber-600 font-medium">
+                  {flower.nahiaraMeasure.status}
+                  {flower.nahiaraMeasure.rank && ` · Rank #${flower.nahiaraMeasure.rank} globally`}
+                </div>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { label: "Floral Heartbeat (Population)", value: flower.nahiaraMeasure.latidoFloral, color: "bg-green-500" },
+                  { label: "Cultural Memory", value: flower.nahiaraMeasure.memoriaCultural, color: "bg-purple-500" },
+                  { label: "Public Voice", value: flower.nahiaraMeasure.vozPublica, color: "bg-blue-500" },
+                  { label: "Protection Shield", value: flower.nahiaraMeasure.escudoProteccion, color: "bg-amber-500" },
+                  { label: "Petal of Hope", value: flower.nahiaraMeasure.petaloEsperanza, color: "bg-rose-500" },
+                ].map((dim) => (
+                  <div key={dim.label}>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-gray-600 font-medium">{dim.label}</span>
+                      <span className="text-xs font-bold text-gray-800">{dim.value}/5</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2.5">
+                      <div className={`${dim.color} h-2.5 rounded-full`} style={{ width: `${(dim.value / 5) * 100}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 6. Scorfidon Protocol */}
+          {flower.scorfidon && (
+            <div className="bg-red-50/80 backdrop-blur-sm rounded-2xl p-6 border border-red-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-red-700 mb-2">6. SCORFIDON PROTOCOL</h3>
+              <p className="text-xs text-gray-500 italic mb-4">Threats and their guardians — the balance between destruction and restoration.</p>
+              <div className="space-y-3">
+                {Object.values(flower.scorfidon).map((entry) => (
+                  <div key={entry.code} className="bg-white/80 rounded-xl p-4 border border-gray-100">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-gray-400">{entry.code}</span>
+                        <span className="text-sm font-bold text-gray-800">{entry.threat}</span>
+                      </div>
+                      <span className="text-xs font-bold text-red-600">{entry.impact} petals</span>
+                    </div>
+                    <p className="text-xs text-gray-600 mb-2">{entry.description}</p>
+                    <div className="flex items-center gap-2 bg-emerald-50 rounded-lg px-3 py-2 border border-emerald-100">
+                      <span className="text-xs text-emerald-700">🛡️ {entry.guardian}</span>
+                      <span className="text-xs font-bold text-emerald-600 ml-auto">+{entry.guardianPower} petals</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 7. Araihan Measurement */}
+          {flower.araihanScore && (
+            <div className="bg-indigo-50/80 backdrop-blur-sm rounded-2xl p-6 border border-indigo-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-indigo-700 mb-4">7. ARAIHAN MEASUREMENT</h3>
+              <div className="bg-white/80 rounded-xl p-5 border border-indigo-100 text-center">
+                <div className="text-3xl font-bold text-indigo-700 mb-1">{flower.araihanScore}</div>
+                <div className="text-xs text-indigo-500">Araihan Score</div>
+              </div>
+            </div>
+          )}
+
+          {/* Nahiara Synthesis */}
+          {flower.nahiaraSynthesis && (
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-green-700 mb-3">✅ NAHIARA SYNTHESIS</h3>
+              <p className="text-sm text-gray-700 leading-relaxed">{flower.nahiaraSynthesis}</p>
+            </div>
+          )}
+
+          {/* Fallback: basic cultural/SAN for simple flowers */}
+          {!flower.nahiaraSynthesis && (
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-rose-200">
+              <h3 className="text-sm uppercase tracking-[0.3em] text-rose-700 mb-4">
+                {t('flowers.culturalSignificance') || "2-5. CULTURE, CONSERVATION & NAHIARA MEASURE"}
+              </h3>
+              <p className="text-gray-800 text-sm leading-relaxed mb-3">{flower.cultural}</p>
+              <p className="text-gray-800 text-sm leading-relaxed">{flower.conservation}</p>
+              <div className="mt-4 text-xs text-gray-600">
+                <p><span className="font-mono font-semibold">S.A.N.:</span> {flower.sanCode}</p>
+                <p>{t('flowers.nahiaraMeasure') || "Nahiara Measure:"} {flower.nahiaraMeasureLabel || flower.nahiaraMeasure}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

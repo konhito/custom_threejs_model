@@ -24,7 +24,6 @@
     "archiveDesc": "国花的互动3D模型",
     "archiveCta": "探索档案"
   },
-
   "nav": {
     "home": "首页",
     "about": "什么是AquaMundi？",
@@ -42,7 +41,6 @@
     "cart": "购物车",
     "game": "玩游戏"
   },
-
   "navDescriptions": {
     "home": "返回主地球视图",
     "about": "使命与目标",
@@ -55,7 +53,6 @@
     "araihan": "阿莱汉测量倡议",
     "professionals": "行业专业人士专属访问"
   },
-
   "footer": {
     "explore": "探索",
     "learn": "学习",
@@ -70,7 +67,6 @@
     "copyright": "© {year} AquaMundi。保留所有权利。",
     "contactSubject": "来自AquaMundi网站的联系"
   },
-
   "landing": {
     "heroTitle": "国际花卉保护协会",
     "heroSubtitle": "Proveneya & Nahiara",
@@ -131,7 +127,6 @@
     "loading": "加载中...",
     "pleaseWait": "请稍候，我们正在准备您的体验。"
   },
-
   "about": {
     "pageTitle": "关于AquaMundi",
     "heroTitle": "自然与技术相遇的数字花园",
@@ -193,7 +188,6 @@
     "quoteText": "AquaMundi不仅仅是一个网站：它是一个活的外衣，将科学、文化和希望联合起来，每一朵花和传粉者都提醒我们地球在多样性中绽放。",
     "exploreGarden": "探索我们的花园"
   },
-
   "pollinators": {
     "pageTitle": "传粉者",
     "heroSubtitle": "地球上生命的隐形守护者。这些重要的生物保持着我们星球生物多样性的平衡，为我们所有人提供食物的植物授粉。",
@@ -300,7 +294,6 @@
     "antConservation": "蚂蚁传粉者群体获得的估计Araihan测量值为18/25：局部效率高，生态相互依存性强，但易受杀虫剂、栖息地丧失和土壤微气候变化的影响。",
     "araihanMeasure": "Araihan测量：18 / 25（稳定）"
   },
-
   "guardians": {
     "pageTitle": "守护者",
     "heroSubtitle": "每朵花都有它的守护者",
@@ -337,7 +330,6 @@
     "function3": "理解自然与文化记忆之间的象征性联系",
     "function4": "发现守护者在保护花卉遗产中的保护作用"
   },
-
   "education": {
     "pageTitle": "教育与社区",
     "heroSubtitle": "学习资源和全球社区",
@@ -370,7 +362,6 @@
     "exploreResources": "探索资源",
     "joinCommunityBtn": "加入社区"
   },
-
   "impact": {
     "pageTitle": "影响与透明度",
     "heroSubtitle": "AquaMundi在哪里绽放？",
@@ -420,7 +411,6 @@
     "conclusionTitle": "结论",
     "conclusionText": "没有透明度的影响是不完整的。AquaMundi承诺确保两者齐头并进：可衡量的行动、透明的沟通和共享的希望。"
   },
-
   "livingArchive": {
     "pageTitle": "活档案",
     "heroSubtitle": "NAHIARA宇宙的核心内容",
@@ -454,7 +444,6 @@
     "ctaText": "通过书籍、游戏和互动档案深入NAHIARA的丰富世界",
     "exploreArchive": "探索档案"
   },
-
   "araihanMeasure": {
     "pageTitle": "Araihan测量",
     "heroSubtitle": "评估和保护国花的综合倡议",
@@ -490,7 +479,6 @@
     "exploreFlowers": "探索花朵",
     "learnMore": "了解更多"
   },
-
   "game": {
     "victory": "胜利！",
     "restoredFlower": "你已恢复神圣之花",
@@ -523,7 +511,6 @@
     "tip3": "仔细计划你的策略——只有8张牌，每一个选择都很重要！",
     "close": "关闭"
   },
-
   "gameMessages": {
     "petalCollected": "花瓣已收集",
     "minionRevealed": "仆从已揭示",
@@ -544,14 +531,32 @@
     "guardianContinue": "你激活了一个守护者。希望与你同在——继续！",
     "guardianSavedFull": "守护者保护你免受仆从的伤害！继续你的探索。"
   },
-
   "araihan": {
     "title": "阿莱汉",
     "subtitle": "Nahiara的忠诚侍从",
     "intro": "你好，我是阿莱汉，Nahiara的忠诚侍从。欢迎来到Nahiara与花之守护者游戏。我有点困……我喜欢天然软糖：草莓、覆盆子、黑莓……但我一点也不喜欢加工糖果。让我们一起玩得开心。你想和我一起玩吗？"
   },
-
   "countries": {
+    "unitedStates": {
+      "name": "美国",
+      "flowerName": "玫瑰",
+      "scientificName": "蔷薇属（杂交栽培品种）",
+      "description": "玫瑰是美国的官方国花（1986年）。5000多年来，它一直是爱情、美丽与记忆的全球象征——从古罗马和希腊神话，到白宫的玫瑰园。"
+    },
+    "indiaLotus": {
+      "name": "印度",
+      "flowerName": "圣莲",
+      "commonNames": "圣莲、印度莲、莲花（Kamal कमल）、Padma（पद्म）",
+      "botanicalInfo": "多年生根茎型水生植物，大型芳香粉红色或白色花朵直径可达30厘米。莲花具有独特的自洁机制（莲花效应），源于其超疏水的叶面。其种子可存活数百年——一颗1,300年前的种子于1994年成功发芽。",
+      "flowerDescription": "圣莲是印度的国花，于1950年正式确立。它象征纯洁、启迪与重生——从泥泞的水中升起，绽放为壮丽的花朵，代表从黑暗走向光明的历程。其在印度文明中的存在已逾5,000年。",
+      "culturalSignificance": "莲花在印度教和佛教中均为圣花，是吉祥天女拉克什米、辩才天女萨拉斯瓦蒂和梵天的座驾。在佛教图像中，佛陀常被描绘坐于莲台之上。莲花代表神圣之美、纯洁与精神觉醒。它出现于最古老的印度教经典《梨俱吠陀》中，并融入南亚与东南亚的艺术、建筑与哲学之中。",
+      "historicalOrigin": "莲花自吠陀时代（公元前1500年）起便在印度次大陆受到崇敬。《梨俱吠陀》、《薄伽梵歌》和《法华经》等古代典籍均将其视为创造与宇宙秩序的象征。在埃及与印度的贸易路线上，莲花连接了世界上两大最古老的文明。莫卧儿皇帝将莲花纹样融入泰姬陵等建筑杰作之中。",
+      "nationalStatus": "自1950年印度宪法颁布之时起，正式确立为印度国花",
+      "traditionalUses": "宗教供品与寺庙装饰；阿育吠陀医学（种子、根茎和花瓣用于消化和心脏疗法）；烹饪（莲藕是主要蔬菜；莲子烤后食用或入甜点）；茎纤维纺织（莲花丝）；在寺庙水池和花园中作观赏种植。",
+      "conservationStatus": "无危（LC）— 世界自然保护联盟红色名录",
+      "mainThreats": "湿地排水和农业转化；工业和农业径流造成的水污染；城镇化导致的生境丧失；部分地区对根茎和种子的过度采收；入侵水生物种的竞争。",
+      "nahiaraSynthesis": "Nelumbo nucifera以编号SAN-F-161,001融入Nahiara宇宙，在Nahiara测量中获评22/25级（活态生态根），位居全球第7。圣莲自1950年起作为印度官方国花，是人类文化意义最为深远的植物之一，在印度教、佛教和古埃及文明中均受崇拜。尽管面临湿地丧失和气候变化的威胁，其深厚的文化根基、法律保护和广泛种植确保了其持续存在。"
+    },
     "pakistan": {
       "name": "巴基斯坦",
       "flowerName": "茉莉",
@@ -601,7 +606,6 @@
       "description": "矢车菊是德国的国花，象征着希望、自由和自然之美。它代表了该国与自然的联系和文化遗产。"
     }
   },
-
   "minions": {
     "climateChange": {
       "name": "气候变化",
@@ -624,7 +628,6 @@
       "message": "你揭示了故意纵火仆从。生态系统倒退了。我们必须重新开始……"
     }
   },
-
   "guardianCards": {
     "education": {
       "name": "教育",
@@ -651,7 +654,6 @@
       "message": "你激活了通配符守护者。希望与你同在——继续！"
     }
   },
-
   "books": {
     "tome": "卷",
     "prologue": "序言",
@@ -692,7 +694,50 @@
       "subtitle": "传奇继续。发现纳希亚拉旅程的下一章。"
     }
   },
-
+  "globeModal": {
+    "back": "返回",
+    "dragToRotate": "拖动旋转 · 滚动缩放",
+    "loadingModel": "模型加载中...",
+    "botanicalData": "1. 植物学数据",
+    "scientificName": "科学名称",
+    "commonNames": "常用名称",
+    "description": "描述",
+    "culturalHistorical": "2. 文化与历史数据",
+    "historicalOrigin": "📖 历史起源",
+    "nationalStatus": "国家地位",
+    "traditionalUses": "传统用途",
+    "morphology": "3. 形态学",
+    "color": "颜色",
+    "shape": "形状",
+    "size": "大小",
+    "lifeCycle": "生命周期",
+    "habitat": "生境",
+    "distribution": "分布",
+    "conservationData": "4. 保护数据",
+    "iucnStatus": "🌍 IUCN状态",
+    "mainThreats": "⚠️ 主要威胁",
+    "nahiaraMetadata": "5. NAHIARA 元数据",
+    "assignedSAN": "已分配 S.A.N. 代码",
+    "pfnoClassification": "PFNO 分类",
+    "relevantPollinator": "🐝 相关传粉者",
+    "nahiaraMeasure": "6. NAHIARA 测量",
+    "rankGlobally": "· 全球第 {rank} 名",
+    "floralHeartbeat": "花卓心跳（种群）",
+    "culturalMemory": "文化记忆",
+    "publicVoice": "公众声音",
+    "protectionShield": "保护盾牌",
+    "petalOfHope": "希望花瓣",
+    "scorfidonProtocol": "7. SCORFIDON 协议",
+    "scorfidonSubtitle": "威胁及其守护者 — 破坏与恢复之间的平衡。",
+    "petals": "花瓣",
+    "araihanMeasurement": "8. ARAIHAN 测量",
+    "araihanScore": "Araihan 分数",
+    "nahiaraSynthesis": "✅ NAHIARA 综合",
+    "country": "国家",
+    "capital": "首都",
+    "language": "语言",
+    "currency": "货币"
+  },
   "common": {
     "loading": "加载中...",
     "error": "出了点问题",
@@ -721,7 +766,6 @@
     "showLess": "显示更少",
     "seeMore": "查看更多"
   },
-
   "language": {
     "select": "选择语言",
     "english": "English",
@@ -730,7 +774,6 @@
     "french": "Français",
     "currentLanguage": "语言"
   },
-
   "share": {
     "shareText": "🌸 我刚刚在花之守护者游戏中恢复了{flowerName}！\n\n✨ 现在就在 aquamundi.org/game 玩",
     "fallbackText": "🌸 我恢复了{flowerName}！\n在 aquamundi.org/game 玩",
@@ -738,7 +781,6 @@
     "copySuccess": "已复制到剪贴板！",
     "shareError": "无法分享"
   },
-
   "flowers": {
     "pageTitle": "国花",
     "heroTitle": "世界各国国花",

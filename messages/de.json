@@ -24,7 +24,6 @@
     "archiveDesc": "Interaktive 3D-Modelle von Nationalblumen",
     "archiveCta": "Archiv erkunden"
   },
-
   "nav": {
     "home": "Startseite",
     "about": "Was ist AquaMundi?",
@@ -42,7 +41,6 @@
     "cart": "Warenkorb",
     "game": "Spiel spielen"
   },
-
   "navDescriptions": {
     "home": "Zurück zur Hauptglobusansicht",
     "about": "Mission und Zweck",
@@ -55,7 +53,6 @@
     "araihan": "Araihan-Maßnahme-Initiative",
     "professionals": "Exklusiver Zugang für Branchenfachleute"
   },
-
   "footer": {
     "explore": "Erkunden",
     "learn": "Lernen",
@@ -70,7 +67,6 @@
     "copyright": "© {year} AquaMundi. Alle Rechte vorbehalten.",
     "contactSubject": "Kontakt von der AquaMundi-Website"
   },
-
   "landing": {
     "heroTitle": "Internationale Vereinigung zur Verteidigung der Blumen",
     "heroSubtitle": "Proveneya & Nahiara",
@@ -131,7 +127,6 @@
     "loading": "Lädt...",
     "pleaseWait": "Bitte warten Sie, während wir Ihr Erlebnis vorbereiten."
   },
-
   "about": {
     "pageTitle": "Über AquaMundi",
     "heroTitle": "Der digitale Garten, wo Natur auf Technologie trifft",
@@ -193,7 +188,6 @@
     "quoteText": "AquaMundi ist nicht nur eine Website: Es ist ein lebendiger Mantel, der Wissenschaft, Kultur und Hoffnung vereint, wo jede Blume und jeder Bestäuber uns daran erinnert, dass die Erde in Vielfalt blüht.",
     "exploreGarden": "Unseren Garten erkunden"
   },
-
   "pollinators": {
     "pageTitle": "Bestäuber",
     "heroSubtitle": "Die unsichtbaren Wächter des Lebens auf der Erde. Diese wesentlichen Kreaturen halten die Biodiversität unseres Planeten im Gleichgewicht und bestäuben die Pflanzen, die uns alle ernähren.",
@@ -300,7 +294,6 @@
     "antConservation": "Ameisen-Bestäubergilden erhalten eine geschätzte Araihan-Messung von 18/25: hohe lokale Effizienz und starke ökologische Interdependenz, aber anfällig für Pestizide, Lebensraumverlust und Veränderungen im Bodenmikroklima.",
     "araihanMeasure": "Araihan-Messung: 18 / 25 (Stabil)"
   },
-
   "guardians": {
     "pageTitle": "Wächter",
     "heroSubtitle": "Jede Blume hat ihren Wächter",
@@ -337,7 +330,6 @@
     "function3": "Die symbolische Verbindung zwischen Natur und kulturellem Gedächtnis verstehen",
     "function4": "Die schützende Rolle der Wächter bei der Bewahrung des Blumen-Erbes entdecken"
   },
-
   "education": {
     "pageTitle": "Bildung & Gemeinschaft",
     "heroSubtitle": "Lernressourcen und globale Gemeinschaft",
@@ -370,7 +362,6 @@
     "exploreResources": "Ressourcen erkunden",
     "joinCommunityBtn": "Gemeinschaft beitreten"
   },
-
   "impact": {
     "pageTitle": "Wirkung & Transparenz",
     "heroSubtitle": "Wo blüht AquaMundi?",
@@ -420,7 +411,6 @@
     "conclusionTitle": "Fazit",
     "conclusionText": "Wirkung ohne Transparenz ist unvollständig. AquaMundi verpflichtet sich sicherzustellen, dass beide Hand in Hand gehen: messbares Handeln, transparente Kommunikation und geteilte Hoffnung."
   },
-
   "livingArchive": {
     "pageTitle": "Das Lebende Archiv",
     "heroSubtitle": "Kerninhalt des NAHIARA-Universums",
@@ -454,7 +444,6 @@
     "ctaText": "Tauchen Sie durch Bücher, Spiele und interaktive Archive in die reiche Welt von NAHIARA ein",
     "exploreArchive": "Archiv Erkunden"
   },
-
   "araihanMeasure": {
     "pageTitle": "Araihan-Messung",
     "heroSubtitle": "Eine umfassende Initiative zur Bewertung und zum Schutz von Nationalblumen",
@@ -490,7 +479,6 @@
     "exploreFlowers": "Blumen Erkunden",
     "learnMore": "Mehr Erfahren"
   },
-
   "game": {
     "victory": "SIEG!",
     "restoredFlower": "Du hast die Heilige Blume wiederhergestellt",
@@ -523,7 +511,6 @@
     "tip3": "Plane deine Strategie sorgfältig - mit nur 8 Karten zählt jede Wahl!",
     "close": "Schließen"
   },
-
   "gameMessages": {
     "petalCollected": "Blütenblatt gesammelt",
     "minionRevealed": "Minion aufgedeckt",
@@ -544,14 +531,32 @@
     "guardianContinue": "Du hast einen Wächter aktiviert. Die Hoffnung ist bei dir — mach weiter!",
     "guardianSavedFull": "Der Wächter hat dich vor dem Minion geschützt! Setze deine Quest fort."
   },
-
   "araihan": {
     "title": "Araihan",
     "subtitle": "Loyaler Knappe von Nahiara",
     "intro": "Hallo, ich bin Araihan, loyaler Knappe von Nahiara. Willkommen zum Nahiara und die Wächter der Blumen Spiel. Ich bin ein bisschen schläfrig… und ich liebe natürliche Gummis: Erdbeeren, Himbeeren, Brombeeren… Aber ich mag verarbeitete Süßigkeiten überhaupt nicht. Lass uns zusammen Spaß haben. Möchtest du mit mir spielen?"
   },
-
   "countries": {
+    "unitedStates": {
+      "name": "Vereinigte Staaten",
+      "flowerName": "Rose",
+      "scientificName": "Rosa (hybride Kultivare)",
+      "description": "Die Rose ist das offizielle nationale Blumensymbol der Vereinigten Staaten (1986). Sie ist seit über 5.000 Jahren ein weltweites Symbol für Liebe, Schönheit und Erinnerung — von der antiken Rom und der griechischen Mythologie bis zum Rosengarten des Weißen Hauses."
+    },
+    "indiaLotus": {
+      "name": "Indien",
+      "flowerName": "Heiliger Lotus",
+      "commonNames": "Heiliger Lotus, Indischer Lotus, Kamal (कमल), Padma (पद्म)",
+      "botanicalInfo": "Eine ausdauernde Sumpfpflanze mit großen, duftenden rosa oder weißen Blüten von bis zu 30 cm Durchmesser. Der Lotus verfügt über einen bemerkenswerten Selbstreinigungsmechanismus (der 'Lotuseffekt') aufgrund seiner superhydrophoben Blattobersfläche. Seine Samen können jahrhundertelang keimsfähig bleiben: Ein 1.300 Jahre altes Samenkorn wurde 1994 erfolgreich zum Keimen gebracht.",
+      "flowerDescription": "Der Heilige Lotus ist die Nationalblume Indiens und wurde 1950 offiziell angenommen. Er symbolisiert Reinheit, Erleuchtung und Wiedergeburt — er erhebt sich aus schlammigem Wasser, um prächtig zu blühen, und represents die Reise von der Dunkelheit ins Licht. Seine Präsenz in der indischen Zivilisation umspannt mehr als 5.000 Jahre.",
+      "culturalSignificance": "Im Hinduismus und Buddhismus heilig, ist der Lotus der Thron der Gottheiten Lakshmi, Saraswati und Brahma. In der buddhistischen Ikonografie wird der Buddha häufig auf einem Lotusthron sitzend dargestellt. Die Blume repräsentiert göttliche Schönheit, Reinheit und spirituelles Erwachen. Sie erscheint im Rigveda, der ältesten hinduistischen Schrift, und ist in Kunst, Architektur und Philosophie Süd- und Südostasiens verwoben.",
+      "historicalOrigin": "Der Lotus wird im indischen Subkontinent seit der vedischen Zeit (1500 v. Chr.) verehrt. Antike Texte wie der Rigveda, die Bhagavad Gita und das Lotussutra bezeichnen ihn als Symbol der Schöpfung und der kosmischen Ordnung. Auf den ägyptisch-indischen Handelsrouten verband der Lotus zwei der ältesten Zivilisationen der Welt. Die Moguln-Kaiser integrierten Lotusmotive in architektonische Meisterwerke wie das Taj Mahal.",
+      "nationalStatus": "Offizielle Nationalblume Indiens seit 1950, bei Inkrafttreten der Verfassung angenommen",
+      "traditionalUses": "Religiöse Opfergaben und Tempeldekoration; Ayurvedische Medizin (Samen, Rhizome und Blütenblätter für Verdauungs- und Herzpräparate); Küche (Lotuswurzel ist ein Grundnahrungsmittel; Samen geröstet oder in Süßspeisen); Textilfasern aus Stengeln (Lotusseide); Zierpflanzenbau in Tempelbecken und Gärten.",
+      "conservationStatus": "Nicht gefährdet (LC) — Rote Liste der IUCN",
+      "mainThreats": "Trockenlegung und Umwandlung von Feuchtgebieten für die Landwirtschaft; Wasserverschmutzung durch industriellen und landwirtschaftlichen Einleitung; Habitatverlust durch Urbanisierung; Übermäßige Ernte von Rhizomen und Samen in einigen Regionen; Konkurrenz durch invasive Wasserpflanzen.",
+      "nahiaraSynthesis": "Nelumbo nucifera integriert sich in das Nahiara-Universum mit dem Code SAN-F-161,001, bewertet mit 22/25 (Lebende Öko-Wurzel) im Nahiara-Maß — auf Platz 7 weltweit. Als offizielle Nationalblume Indiens seit 1950 ist der Heilige Lotus eine der kulturell bedeutendsten Pflanzen der Menschheit, verehrt im Hinduismus, Buddhismus und der altaegyptischen Zivilisation. Trotz Bedrohungen durch Feuchtgebietsverlust und Klimawandel sichern seine tiefen kulturellen Wurzeln, gesetzlicher Schutz und weitverbreitete Kultivierung sein Fortbestehen."
+    },
     "pakistan": {
       "name": "Pakistan",
       "flowerName": "Jasmin",
@@ -601,7 +606,6 @@
       "description": "Die Kornblume ist Deutschlands Nationalblume und symbolisiert Hoffnung, Freiheit und natürliche Schönheit. Sie repräsentiert die Verbindung des Landes zur Natur und zum kulturellen Erbe."
     }
   },
-
   "minions": {
     "climateChange": {
       "name": "Klimawandel",
@@ -624,7 +628,6 @@
       "message": "Du hast den Vorsätzliches-Feuer-Minion aufgedeckt. Das Ökosystem fällt zurück. Wir müssen von vorne beginnen…"
     }
   },
-
   "guardianCards": {
     "education": {
       "name": "Bildung",
@@ -651,7 +654,6 @@
       "message": "Du hast einen Joker-Wächter aktiviert. Die Hoffnung ist bei dir — mach weiter!"
     }
   },
-
   "books": {
     "tome": "Band",
     "prologue": "Prolog",
@@ -692,7 +694,50 @@
       "subtitle": "Die Saga geht weiter. Entdecke die nächsten Kapitel von Nahiara's Reise."
     }
   },
-
+  "globeModal": {
+    "back": "Zurück",
+    "dragToRotate": "Ziehen zum Drehen · Scrollen zum Zoomen",
+    "loadingModel": "Modell wird geladen...",
+    "botanicalData": "1. BOTANISCHE DATEN",
+    "scientificName": "Wissenschaftlicher Name",
+    "commonNames": "Gebäuchliche Namen",
+    "description": "Beschreibung",
+    "culturalHistorical": "2. KULTURELLE UND HISTORISCHE DATEN",
+    "historicalOrigin": "📖 Historischer Ursprung",
+    "nationalStatus": "Nationaler Status",
+    "traditionalUses": "Traditionelle Verwendungen",
+    "morphology": "3. MORPHOLOGIE",
+    "color": "Farbe",
+    "shape": "Form",
+    "size": "Größe",
+    "lifeCycle": "Lebenszyklus",
+    "habitat": "Lebensraum",
+    "distribution": "Verbreitung",
+    "conservationData": "4. NATURSCHUTZDATEN",
+    "iucnStatus": "🌍 IUCN-Status",
+    "mainThreats": "⚠️ Hauptbedrohungen",
+    "nahiaraMetadata": "5. NAHIARA-METADATEN",
+    "assignedSAN": "Zugewiesener S.A.N.-Code",
+    "pfnoClassification": "PFNO-Klassifikation",
+    "relevantPollinator": "🐝 Relevanter Bestäuber",
+    "nahiaraMeasure": "6. NAHIARA-MASS",
+    "rankGlobally": "· Rang Nr. {rank} weltweit",
+    "floralHeartbeat": "Floraler Herzschlag (Population)",
+    "culturalMemory": "Kulturelles Gedächtnis",
+    "publicVoice": "Öffentliche Stimme",
+    "protectionShield": "Schutzschild",
+    "petalOfHope": "Blütenblatt der Hoffnung",
+    "scorfidonProtocol": "7. SCORFIDON-PROTOKOLL",
+    "scorfidonSubtitle": "Bedrohungen und ihre Hüter — das Gleichgewicht zwischen Zerstörung und Wiederherstellung.",
+    "petals": "Blütenblätter",
+    "araihanMeasurement": "8. ARAIHAN-MESSUNG",
+    "araihanScore": "Araihan-Punktzahl",
+    "nahiaraSynthesis": "✅ NAHIARA-SYNTHESE",
+    "country": "Land",
+    "capital": "Hauptstadt",
+    "language": "Sprache",
+    "currency": "Währung"
+  },
   "common": {
     "loading": "Lädt...",
     "error": "Etwas ist schiefgelaufen",
@@ -721,7 +766,6 @@
     "showLess": "Weniger anzeigen",
     "seeMore": "Mehr sehen"
   },
-
   "language": {
     "select": "Sprache auswählen",
     "english": "Englisch",
@@ -731,7 +775,6 @@
     "german": "Deutsch",
     "currentLanguage": "Sprache"
   },
-
   "share": {
     "shareText": "🌸 Ich habe gerade die {flowerName} im Wächter der Blumen Spiel wiederhergestellt!\n\n✨ Jetzt spielen bei aquamundi.org/game",
     "fallbackText": "🌸 Ich habe die {flowerName} wiederhergestellt!\nSpielen bei aquamundi.org/game",
@@ -739,7 +782,6 @@
     "copySuccess": "In Zwischenablage kopiert!",
     "shareError": "Teilen nicht möglich"
   },
-
   "flowers": {
     "pageTitle": "Nationalblumen",
     "heroTitle": "Nationalblumen der Welt",

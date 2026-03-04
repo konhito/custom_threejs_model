@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { X, MapPin, Flower, Info, Rotate3D, Target, Maximize2, Minimize2, ArrowLeft, Palette } from "lucide-react";
 import { MusicToggleButton } from "./MusicToggleButton";
 import { computeSANCode } from "../lib/sanCode";
+import { useTranslation } from "../lib/useTranslation";
 import Link from "next/link";
 import Image from "next/image";
 import GlobeLoader from "./GlobeLoader";
@@ -42,7 +43,17 @@ async function loadThreeJS() {
 function FlowerDetailModal({ country, isVisible, onClose }) {
   const modelViewerRef = useRef();
   const [isModelLoaded, setIsModelLoaded] = useState(false);
-  const [lang, setLang] = useState("en"); // Default to English for now
+  const { t } = useTranslation();
+
+  // Helper: try to get translated version of a flower data field,
+  // falling back to the raw English value from countriesData.
+  const tField = (field, fallback) => {
+    if (!country?.translationKey) return fallback;
+    const key = `countries.${country.translationKey}.${field}`;
+    const val = t(key);
+    // If the translation hook returns the key itself it means no translation exists
+    return val === key ? fallback : val;
+  };
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -297,7 +308,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('globeModal.back') || 'Back'}
             </button>
             <span className="text-xs rounded-full bg-rose-50 px-3 py-1 text-rose-700 font-medium hidden sm:inline-block">
               {country.country} · {country.flowerName}
@@ -323,13 +334,13 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
             {!isModelLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <div className="w-10 h-10 border-2 border-gray-400 border-t-transparent rounded-full animate-spin mb-3" />
-                <p className="text-sm text-gray-500">Loading model...</p>
+                <p className="text-sm text-gray-500">{t('globeModal.loadingModel') || 'Loading model...'}</p>
               </div>
             )}
 
             <div className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-md rounded-full px-4 py-2 border border-white/50 shadow-sm hidden sm:block">
               <p className="text-xs text-gray-600 font-medium">
-                Drag to rotate • Scroll to zoom
+                {t('globeModal.dragToRotate') || 'Drag to rotate • Scroll to zoom'}
               </p>
             </div>
           </div>
@@ -371,21 +382,21 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {/* Botanical Data */}
               <div className="space-y-4">
                 <h2 className="text-xs uppercase tracking-[0.3em] text-rose-500 font-semibold">
-                  1. BOTANICAL DATA
+                  {t('globeModal.botanicalData') || '1. BOTANICAL DATA'}
                 </h2>
                 <div className="bg-rose-50 rounded-xl p-5 border border-rose-100 space-y-4">
                   <div>
-                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Scientific Name</span>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">{t('globeModal.scientificName') || 'Scientific Name'}</span>
                     <span className="text-gray-800 italic">{country.flowerScientificName}</span>
                   </div>
                   <div>
-                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Common Names</span>
-                    <span className="text-gray-800">{country.flowerName}</span>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">{t('globeModal.commonNames') || 'Common Names'}</span>
+                    <span className="text-gray-800">{tField('commonNames', country.flowerName)}</span>
                   </div>
                   <div>
-                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">Description</span>
+                    <span className="text-xs font-bold text-rose-700 uppercase block mb-1">{t('globeModal.description') || 'Description'}</span>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      {country.botanicalInfo}
+                      {tField('botanicalInfo', country.botanicalInfo)}
                     </p>
                   </div>
                 </div>
@@ -394,30 +405,30 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {/* Cultural Significance */}
               <div className="space-y-4">
                 <h2 className="text-xs uppercase tracking-[0.3em] text-gray-400 font-semibold">
-                  2. CULTURAL & HISTORICAL DATA
+                  {t('globeModal.culturalHistorical') || '2. CULTURAL & HISTORICAL DATA'}
                 </h2>
                 <div className="prose prose-sm text-gray-600">
-                  <p>{country.flowerDescription}</p>
-                  <p className="mt-2">{country.culturalSignificance}</p>
+                  <p>{tField('flowerDescription', country.flowerDescription)}</p>
+                  <p className="mt-2">{tField('culturalSignificance', country.culturalSignificance)}</p>
                 </div>
                 {country.historicalOrigin && (
                   <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 mt-3">
-                    <span className="text-xs font-bold text-purple-700 uppercase block mb-1">📖 Historical Origin</span>
-                    <p className="text-sm text-gray-700 leading-relaxed">{country.historicalOrigin}</p>
+                    <span className="text-xs font-bold text-purple-700 uppercase block mb-1">{t('globeModal.historicalOrigin') || '📖 Historical Origin'}</span>
+                    <p className="text-sm text-gray-700 leading-relaxed">{tField('historicalOrigin', country.historicalOrigin)}</p>
                   </div>
                 )}
                 {(country.nationalStatus || country.traditionalUses) && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                     {country.nationalStatus && (
                       <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
-                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">National Status</span>
-                        <span className="text-sm text-gray-800">{country.nationalStatus}</span>
+                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">{t('globeModal.nationalStatus') || 'National Status'}</span>
+                        <span className="text-sm text-gray-800">{tField('nationalStatus', country.nationalStatus)}</span>
                       </div>
                     )}
                     {country.traditionalUses && (
                       <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
-                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Traditional Uses</span>
-                        <span className="text-sm text-gray-800">{country.traditionalUses}</span>
+                        <span className="text-xs font-bold text-gray-500 uppercase block mb-1">{t('globeModal.traditionalUses') || 'Traditional Uses'}</span>
+                        <span className="text-sm text-gray-800">{tField('traditionalUses', country.traditionalUses)}</span>
                       </div>
                     )}
                   </div>
@@ -428,16 +439,16 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {country.morphology && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-emerald-500 font-semibold">
-                    3. MORPHOLOGY
+                    {t('globeModal.morphology') || '3. MORPHOLOGY'}
                   </h2>
                   <div className="bg-emerald-50 rounded-xl border border-emerald-100 overflow-hidden">
                     <table className="w-full text-sm">
                       <tbody>
                         {[
-                          { label: "Color", value: country.morphology.color },
-                          { label: "Shape", value: country.morphology.shape },
-                          { label: "Size", value: country.morphology.size },
-                          { label: "Life Cycle", value: country.morphology.lifeCycle },
+                          { label: t('globeModal.color') || "Color", value: country.morphology.color },
+                          { label: t('globeModal.shape') || "Shape", value: country.morphology.shape },
+                          { label: t('globeModal.size') || "Size", value: country.morphology.size },
+                          { label: t('globeModal.lifeCycle') || "Life Cycle", value: country.morphology.lifeCycle },
                         ].map((row, i) => (
                           <tr key={row.label} className={i % 2 === 0 ? "bg-emerald-50" : "bg-white"}>
                             <td className="px-4 py-3 font-bold text-emerald-700 uppercase text-xs w-[100px] align-top">{row.label}</td>
@@ -470,19 +481,19 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {(country.conservationStatus || country.mainThreats) && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-blue-500 font-semibold">
-                    4. CONSERVATION DATA
+                    {t('globeModal.conservationData') || '4. CONSERVATION DATA'}
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {country.conservationStatus && (
                       <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">🌍 IUCN Status</span>
-                        <span className="text-sm text-gray-800 font-medium">{country.conservationStatus}</span>
+                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">{t('globeModal.iucnStatus') || '🌍 IUCN Status'}</span>
+                        <span className="text-sm text-gray-800 font-medium">{tField('conservationStatus', country.conservationStatus)}</span>
                       </div>
                     )}
                     {country.mainThreats && (
                       <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">⚠️ Main Threats</span>
-                        <span className="text-sm text-gray-700">{country.mainThreats}</span>
+                        <span className="text-xs font-bold text-blue-700 uppercase block mb-1">{t('globeModal.mainThreats') || '⚠️ Main Threats'}</span>
+                        <span className="text-sm text-gray-700">{tField('mainThreats', country.mainThreats)}</span>
                       </div>
                     )}
                   </div>
@@ -493,7 +504,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {(country.pfnoClassification || country.nahiaraMeasure) && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-violet-500 font-semibold">
-                    5. NAHIARA METADATA
+                    {t('globeModal.nahiaraMetadata') || '5. NAHIARA METADATA'}
                   </h2>
 
                   {/* SAN Code Display */}
@@ -509,13 +520,13 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {country.pfnoClassification && (
                       <div className="bg-violet-50 rounded-lg p-3 border border-violet-100">
-                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">PFNO Classification</span>
+                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">{t('globeModal.pfnoClassification') || 'PFNO Classification'}</span>
                         <span className="text-sm text-gray-800 font-medium">{country.pfnoClassification}</span>
                       </div>
                     )}
                     {country.relevantPollinator && (
                       <div className="bg-violet-50 rounded-lg p-3 border border-violet-100">
-                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">🐝 Relevant Pollinator</span>
+                        <span className="text-xs font-bold text-violet-700 uppercase block mb-1">{t('globeModal.relevantPollinator') || '🐝 Relevant Pollinator'}</span>
                         <span className="text-sm text-gray-700">{country.relevantPollinator}</span>
                       </div>
                     )}
@@ -527,7 +538,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {country.nahiaraMeasure && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-amber-500 font-semibold">
-                    6. NAHIARA MEASURE
+                    {t('globeModal.nahiaraMeasure') || '6. NAHIARA MEASURE'}
                   </h2>
 
                   {/* Total Score */}
@@ -537,7 +548,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
                     </div>
                     <div className="text-sm text-amber-600 font-medium">
                       {country.nahiaraMeasure.statusEN || country.nahiaraMeasure.status}
-                      {country.nahiaraMeasure.rank && ` · Rank #${country.nahiaraMeasure.rank} globally`}
+                      {country.nahiaraMeasure.rank && ` · ${t('globeModal.rankGlobally', { rank: country.nahiaraMeasure.rank }) || '· Rank #' + country.nahiaraMeasure.rank + ' globally'}`}
                     </div>
                   </div>
 
@@ -571,10 +582,10 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {country.scorfidon && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-red-500 font-semibold">
-                    7. SCORFIDON PROTOCOL
+                    {t('globeModal.scorfidonProtocol') || '7. SCORFIDON PROTOCOL'}
                   </h2>
                   <p className="text-xs text-gray-500 italic">
-                    Threats and their guardians — the balance between destruction and restoration.
+                    {t('globeModal.scorfidonSubtitle') || 'Threats and their guardians — the balance between destruction and restoration.'}
                   </p>
                   <div className="space-y-3">
                     {Object.values(country.scorfidon).map((entry) => (
@@ -584,12 +595,12 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
                             <span className="text-xs font-mono text-gray-400">{entry.code}</span>
                             <span className="text-sm font-bold text-gray-800">{entry.threat}</span>
                           </div>
-                          <span className="text-xs font-bold text-red-600">{entry.impact} petals</span>
+                          <span className="text-xs font-bold text-red-600">{entry.impact} {t('globeModal.petals') || 'petals'}</span>
                         </div>
                         <p className="text-xs text-gray-600 mb-2">{entry.description}</p>
                         <div className="flex items-center gap-2 bg-emerald-50 rounded-lg px-3 py-2 border border-emerald-100">
                           <span className="text-xs text-emerald-700">🛡️ {entry.guardian}</span>
-                          <span className="text-xs font-bold text-emerald-600 ml-auto">+{entry.guardianPower} petals</span>
+                          <span className="text-xs font-bold text-emerald-600 ml-auto">+{entry.guardianPower} {t('globeModal.petals') || 'petals'}</span>
                         </div>
                       </div>
                     ))}
@@ -601,11 +612,11 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {country.araihanScore && (
                 <div className="space-y-4">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-indigo-500 font-semibold">
-                    8. ARAIHAN MEASUREMENT
+                    {t('globeModal.araihanMeasurement') || '8. ARAIHAN MEASUREMENT'}
                   </h2>
                   <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-100 text-center">
                     <div className="text-3xl font-bold text-indigo-700 mb-1">{country.araihanScore}</div>
-                    <div className="text-xs text-indigo-500">Araihan Score</div>
+                    <div className="text-xs text-indigo-500">{t('globeModal.araihanScore') || 'Araihan Score'}</div>
                   </div>
                 </div>
               )}
@@ -614,28 +625,28 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               {country.nahiaraSynthesis && (
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
                   <h2 className="text-xs uppercase tracking-[0.3em] text-green-600 font-semibold mb-3">
-                    ✅ NAHIARA SYNTHESIS
+                    {t('globeModal.nahiaraSynthesis') || '✅ NAHIARA SYNTHESIS'}
                   </h2>
-                  <p className="text-sm text-gray-700 leading-relaxed">{country.nahiaraSynthesis}</p>
+                  <p className="text-sm text-gray-700 leading-relaxed">{tField('nahiaraSynthesis', country.nahiaraSynthesis)}</p>
                 </div>
               )}
 
               {/* Country Stats */}
               <div className="pt-6 border-t border-gray-100 grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Country</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{t('globeModal.country') || 'Country'}</p>
                   <p className="font-semibold text-gray-900">{country.country}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Capital</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{t('globeModal.capital') || 'Capital'}</p>
                   <p className="font-semibold text-gray-900">{country.capital}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Language</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{t('globeModal.language') || 'Language'}</p>
                   <p className="font-semibold text-gray-900">{country.language}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Currency</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{t('globeModal.currency') || 'Currency'}</p>
                   <p className="font-semibold text-gray-900">{country.currency}</p>
                 </div>
               </div>
@@ -664,6 +675,7 @@ export default function GlobeComponent({ showOvalBorder = true, showBackground =
   const countriesData = useMemo(() => [
     {
       id: "IN_LOTUS",
+      translationKey: "indiaLotus",
       name: "Sacred Lotus",
       country: "India",
       countryCode: "IN",

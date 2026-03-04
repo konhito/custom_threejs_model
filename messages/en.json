@@ -24,7 +24,6 @@
     "archiveDesc": "Interactive 3D models of national flowers",
     "archiveCta": "Explore Archive"
   },
-
   "nav": {
     "home": "Home",
     "about": "What is AquaMundi?",
@@ -42,7 +41,6 @@
     "cart": "Cart",
     "game": "Play Game"
   },
-
   "navDescriptions": {
     "home": "Return to the main globe view",
     "about": "Mission and purpose",
@@ -55,7 +53,6 @@
     "araihan": "Araihan Measure initiative",
     "professionals": "Exclusive access for industry professionals"
   },
-
   "footer": {
     "explore": "Explore",
     "learn": "Learn",
@@ -70,7 +67,6 @@
     "copyright": "© {year} AquaMundi. All rights reserved.",
     "contactSubject": "Contact from AquaMundi Website"
   },
-
   "landing": {
     "heroTitle": "International Association for the Defense of Flowers",
     "heroSubtitle": "Proveneya & Nahiara",
@@ -131,7 +127,6 @@
     "loading": "Loading...",
     "pleaseWait": "Please wait while we prepare your experience."
   },
-
   "about": {
     "pageTitle": "About AquaMundi",
     "heroTitle": "The Digital Garden Where Nature Meets Technology",
@@ -193,7 +188,6 @@
     "quoteText": "AquaMundi is not just a website: it is a living mantle that unites science, culture, and hope, where each flower and pollinator remind us that the Earth blossoms in diversity.",
     "exploreGarden": "Explore Our Garden"
   },
-
   "pollinators": {
     "pageTitle": "Pollinators",
     "heroSubtitle": "The invisible guardians of life on Earth. These essential creatures keep our planet's biodiversity in balance, pollinating the plants that feed us all.",
@@ -300,7 +294,6 @@
     "antConservation": "Ant pollinator guilds receive an estimated Araihan Measure of 18/25: high local efficiency and strong ecological interdependence, yet vulnerable to pesticides, habitat loss and changes in soil micro‑climate.",
     "araihanMeasure": "Araihan Measure: 18 / 25 (Stable)"
   },
-
   "guardians": {
     "pageTitle": "Guardians",
     "heroSubtitle": "Every Flower Has Its Guardian",
@@ -337,7 +330,6 @@
     "function3": "Understand the symbolic connection between nature and cultural memory",
     "function4": "Discover the protective role of Guardians in preserving floral heritage"
   },
-
   "education": {
     "pageTitle": "Education & Community",
     "heroSubtitle": "Learning Resources and Global Community",
@@ -370,7 +362,6 @@
     "exploreResources": "Explore Resources",
     "joinCommunityBtn": "Join Community"
   },
-
   "impact": {
     "pageTitle": "Impact & Transparency",
     "heroSubtitle": "Where Does AquaMundi Bloom?",
@@ -420,7 +411,6 @@
     "conclusionTitle": "Conclusion",
     "conclusionText": "Impact without transparency is incomplete. AquaMundi commits to ensuring that both walk hand in hand: measurable action, transparent communication, and shared hope."
   },
-
   "livingArchive": {
     "pageTitle": "The Living Archive",
     "heroSubtitle": "Core content of the NAHIARA universe",
@@ -454,7 +444,6 @@
     "ctaText": "Dive into the rich world of NAHIARA through books, games, and interactive archives",
     "exploreArchive": "Explore Archive"
   },
-
   "araihanMeasure": {
     "pageTitle": "Araihan Measure",
     "heroSubtitle": "A comprehensive initiative to evaluate and protect national flowers",
@@ -490,7 +479,6 @@
     "exploreFlowers": "Explore Flowers",
     "learnMore": "Learn More"
   },
-
   "game": {
     "victory": "VICTORY!",
     "restoredFlower": "You Restored the Sacred Flower",
@@ -523,7 +511,6 @@
     "tip3": "Plan your strategy carefully - with only 8 cards, every choice counts!",
     "close": "Close"
   },
-
   "gameMessages": {
     "petalCollected": "Petal collected",
     "minionRevealed": "Minion revealed",
@@ -544,13 +531,11 @@
     "guardianContinue": "You activated a Guardian. Hope is with you — continue!",
     "guardianSavedFull": "The Guardian protected you from the minion! Continue your quest."
   },
-
   "araihan": {
     "title": "Araihan",
     "subtitle": "Loyal Squire of Nahiara",
     "intro": "Hello, I am Araihan, loyal squire of Nahiara. Welcome to the Nahiara and the Guardians of the Flowers Game. I am a bit sleepy… and I love natural gummies: strawberries, raspberries, blackberries… But I don't like processed candies at all. Let's have fun together. Would you like to play with me?"
   },
-
   "countries": {
     "pakistan": {
       "name": "Pakistan",
@@ -582,6 +567,12 @@
       "scientificName": "Guaiacum officinale",
       "description": "The Lignum Vitae is Jamaica's national flower, symbolizing strength, resilience, and natural beauty. It represents the island's unique flora and cultural heritage."
     },
+    "unitedStates": {
+      "name": "United States",
+      "flowerName": "Rose",
+      "scientificName": "Rosa (hybrid cultivars)",
+      "description": "The rose is the official national floral emblem of the United States (1986). It has been a global symbol of love, beauty, and remembrance for over 5,000 years — from ancient Rome and Greek mythology to the White House rose garden."
+    },
     "spain": {
       "name": "Spain",
       "flowerName": "Carnation",
@@ -601,7 +592,6 @@
       "description": "The cornflower is Germany's national flower, symbolizing hope, freedom, and natural beauty. It represents the country's connection to nature and cultural heritage."
     }
   },
-
   "minions": {
     "climateChange": {
       "name": "Climate Change",
@@ -624,7 +614,6 @@
       "message": "You revealed the Intentional Fire minion. The ecosystem falls back. We must start again…"
     }
   },
-
   "guardianCards": {
     "education": {
       "name": "Education",
@@ -651,7 +640,6 @@
       "message": "You activated a Wildcard Guardian. Hope is with you — continue!"
     }
   },
-
   "books": {
     "tome": "Tome",
     "prologue": "Prologue",
@@ -692,7 +680,50 @@
       "subtitle": "The saga continues. Discover the next chapters of Nahiara's journey."
     }
   },
-
+  "globeModal": {
+    "back": "Back",
+    "dragToRotate": "Drag to rotate · Scroll to zoom",
+    "loadingModel": "Loading model...",
+    "botanicalData": "1. BOTANICAL DATA",
+    "scientificName": "Scientific Name",
+    "commonNames": "Common Names",
+    "description": "Description",
+    "culturalHistorical": "2. CULTURAL & HISTORICAL DATA",
+    "historicalOrigin": "📖 Historical Origin",
+    "nationalStatus": "National Status",
+    "traditionalUses": "Traditional Uses",
+    "morphology": "3. MORPHOLOGY",
+    "color": "Color",
+    "shape": "Shape",
+    "size": "Size",
+    "lifeCycle": "Life Cycle",
+    "habitat": "Habitat",
+    "distribution": "Distribution",
+    "conservationData": "4. CONSERVATION DATA",
+    "iucnStatus": "🌍 IUCN Status",
+    "mainThreats": "⚠️ Main Threats",
+    "nahiaraMetadata": "5. NAHIARA METADATA",
+    "assignedSAN": "Assigned S.A.N. Code",
+    "pfnoClassification": "PFNO Classification",
+    "relevantPollinator": "🐝 Relevant Pollinator",
+    "nahiaraMeasure": "6. NAHIARA MEASURE",
+    "rankGlobally": "· Rank #{rank} globally",
+    "floralHeartbeat": "Floral Heartbeat (Population)",
+    "culturalMemory": "Cultural Memory",
+    "publicVoice": "Public Voice",
+    "protectionShield": "Protection Shield",
+    "petalOfHope": "Petal of Hope",
+    "scorfidonProtocol": "7. SCORFIDON PROTOCOL",
+    "scorfidonSubtitle": "Threats and their guardians — the balance between destruction and restoration.",
+    "petals": "petals",
+    "araihanMeasurement": "8. ARAIHAN MEASUREMENT",
+    "araihanScore": "Araihan Score",
+    "nahiaraSynthesis": "✅ NAHIARA SYNTHESIS",
+    "country": "Country",
+    "capital": "Capital",
+    "language": "Language",
+    "currency": "Currency"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
@@ -721,7 +752,6 @@
     "showLess": "Show Less",
     "seeMore": "See More"
   },
-
   "language": {
     "select": "Select Language",
     "english": "English",
@@ -730,7 +760,6 @@
     "french": "Français",
     "currentLanguage": "Language"
   },
-
   "share": {
     "shareText": "🌸 I just restored the {flowerName} in the Guardians of Flowers game!\n\n✨ Play now at aquamundi.org/game",
     "fallbackText": "🌸 I restored the {flowerName}!\nPlay at aquamundi.org/game",
@@ -738,7 +767,6 @@
     "copySuccess": "Copied to clipboard!",
     "shareError": "Unable to share"
   },
-
   "flowers": {
     "pageTitle": "National Flowers",
     "heroTitle": "National Flowers of the World",

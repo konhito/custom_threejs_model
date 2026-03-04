@@ -24,7 +24,6 @@
     "archiveDesc": "Modèles 3D interactifs de fleurs nationales",
     "archiveCta": "Explorer l'Archive"
   },
-
   "nav": {
     "home": "Accueil",
     "about": "Qu'est-ce qu'AquaMundi ?",
@@ -42,7 +41,6 @@
     "cart": "Panier",
     "game": "Jouer"
   },
-
   "navDescriptions": {
     "home": "Retourner à la vue principale du globe",
     "about": "Mission et objectif",
@@ -55,7 +53,6 @@
     "araihan": "Initiative Mesure Araihan",
     "professionals": "Accès exclusif pour les professionnels du secteur"
   },
-
   "footer": {
     "explore": "Explorer",
     "learn": "Apprendre",
@@ -70,7 +67,6 @@
     "copyright": "© {year} AquaMundi. Tous droits réservés.",
     "contactSubject": "Contact depuis le site AquaMundi"
   },
-
   "landing": {
     "heroTitle": "Association Internationale pour la Défense des Fleurs",
     "heroSubtitle": "Proveneya & Nahiara",
@@ -131,7 +127,6 @@
     "loading": "Chargement...",
     "pleaseWait": "Veuillez patienter pendant que nous préparons votre expérience."
   },
-
   "about": {
     "pageTitle": "À propos d'AquaMundi",
     "heroTitle": "Le Jardin Numérique où la Nature Rencontre la Technologie",
@@ -193,7 +188,6 @@
     "quoteText": "AquaMundi n'est pas seulement un site web : c'est un manteau vivant qui unit la science, la culture et l'espoir, où chaque fleur et pollinisateur nous rappelle que la Terre fleurit dans la diversité.",
     "exploreGarden": "Explorer Notre Jardin"
   },
-
   "pollinators": {
     "pageTitle": "Pollinisateurs",
     "heroSubtitle": "Les gardiens invisibles de la vie sur Terre. Ces créatures essentielles maintiennent l'équilibre de la biodiversité de notre planète, pollinisant les plantes qui nous nourrissent tous.",
@@ -300,7 +294,6 @@
     "antConservation": "Les guildes de fourmis pollinisatrices reçoivent une Mesure Araihan estimée de 18/25 : haute efficacité locale et forte interdépendance écologique, mais vulnérables aux pesticides, à la perte d'habitat et aux changements dans le microclimat du sol.",
     "araihanMeasure": "Mesure Araihan : 18 / 25 (Stable)"
   },
-
   "guardians": {
     "pageTitle": "Gardiens",
     "heroSubtitle": "Chaque Fleur a Son Gardien",
@@ -337,7 +330,6 @@
     "function3": "Comprendre la connexion symbolique entre la nature et la mémoire culturelle",
     "function4": "Découvrir le rôle protecteur des Gardiens dans la préservation du patrimoine floral"
   },
-
   "education": {
     "pageTitle": "Éducation et Communauté",
     "heroSubtitle": "Ressources d'Apprentissage et Communauté Mondiale",
@@ -370,7 +362,6 @@
     "exploreResources": "Explorer les Ressources",
     "joinCommunityBtn": "Rejoindre la Communauté"
   },
-
   "impact": {
     "pageTitle": "Impact et Transparence",
     "heroSubtitle": "Où AquaMundi Fleurit-il ?",
@@ -420,7 +411,6 @@
     "conclusionTitle": "Conclusion",
     "conclusionText": "L'impact sans transparence est incomplet. AquaMundi s'engage à garantir que les deux marchent main dans la main : action mesurable, communication transparente et espoir partagé."
   },
-
   "livingArchive": {
     "pageTitle": "L'Archive Vivante",
     "heroSubtitle": "Contenu central de l'univers NAHIARA",
@@ -454,7 +444,6 @@
     "ctaText": "Plongez dans le monde riche de NAHIARA à travers des livres, des jeux et des archives interactives",
     "exploreArchive": "Explorer l'Archive"
   },
-
   "araihanMeasure": {
     "pageTitle": "Mesure Araihan",
     "heroSubtitle": "Une initiative complète pour évaluer et protéger les fleurs nationales",
@@ -490,7 +479,6 @@
     "exploreFlowers": "Explorer les Fleurs",
     "learnMore": "En Savoir Plus"
   },
-
   "game": {
     "victory": "VICTOIRE !",
     "restoredFlower": "Vous Avez Restauré la Fleur Sacrée",
@@ -523,7 +511,6 @@
     "tip3": "Planifiez votre stratégie avec soin — avec seulement 8 cartes, chaque choix compte !",
     "close": "Fermer"
   },
-
   "gameMessages": {
     "petalCollected": "Pétale collecté",
     "minionRevealed": "Sbire révélé",
@@ -544,14 +531,32 @@
     "guardianContinue": "Vous avez activé un Gardien. L'espoir est avec vous — continuez !",
     "guardianSavedFull": "Le Gardien vous a protégé du sbire ! Continuez votre quête."
   },
-
   "araihan": {
     "title": "Araihan",
     "subtitle": "Fidèle Écuyer de Nahiara",
     "intro": "Bonjour, je suis Araihan, fidèle écuyer de Nahiara. Bienvenue dans le jeu de Nahiara et les Gardiens des Fleurs. J'ai un peu sommeil… et j'adore les bonbons naturels : fraises, framboises, mûres… Mais je n'aime pas du tout les bonbons transformés. Amusons-nous ensemble. Voulez-vous jouer avec moi ?"
   },
-
   "countries": {
+    "unitedStates": {
+      "name": "États-Unis",
+      "flowerName": "Rose",
+      "scientificName": "Rosa (cultivars hybrides)",
+      "description": "La rose est l'emblème floral national officiel des États-Unis (1986). Elle est un symbole mondial d'amour, de beauté et de souvenir depuis plus de 5 000 ans — de la Rome antique et la mythologie grecque jusqu'au jardin de roses de la Maison Blanche."
+    },
+    "indiaLotus": {
+      "name": "Inde",
+      "flowerName": "Lotus Sacré",
+      "commonNames": "Lotus Sacré, Lotus Indien, Kamal (कमल), Padma (पद्म)",
+      "botanicalInfo": "Plante aquatique pérenne rhizomateuse aux grandes fleurs parfumées roses ou blanches pouvant atteindre 30 cm de diamètre. Le lotus possède un remarquable mécanisme d'auto-nettoyage (l'effet lotus) grâce à la surface superhydrophobe de ses feuilles. Ses graines peuvent rester viables pendant des siècles : une graine vieille de 1 300 ans a été germée avec succès en 1994.",
+      "flowerDescription": "Le Lotus Sacré est la fleur nationale de l'Inde, officiellement adoptée en 1950. Il symbolise la pureté, l'éveil et la renaissance, émergeant des eaux boueuses pour fleurir magnifiquement, reflétant le voyage des ténèbres vers la lumière. Sa présence dans la civilisation indienne s'étend sur plus de 5 000 ans.",
+      "culturalSignificance": "Sacré dans l'hindouisme et le bouddhisme, le lotus est le siège des divinités Lakshmi, Saraswati et Brahma. Dans l'iconographie bouddhiste, Bouddha est souvent représenté assis sur un trône de lotus. La fleur incarne la beauté divine, la pureté et l'éveil spirituel. Elle apparaît dans le Rigvéda, la plus ancienne écriture hindoue, et est tissée dans l'art, l'architecture et la philosophie de l'Asie du Sud et du Sud-Est.",
+      "historicalOrigin": "Le lotus est vénéré dans le sous-continent indien depuis la période védique (1500 av. J.-C.). Des textes anciens tels que le Rigvéda, la Bhagavad-Gîta et le Sutra du Lotus y font référence comme symbole de création et d'ordre cosmique. Sur les routes commerciales égyptiennes-indiennes, le lotus reliait deux des plus anciennes civilisations du monde. Les empereurs moghols ont intégré des motifs de lotus dans des chefs-dœuvre architecturaux comme le Taj Mahal.",
+      "nationalStatus": "Fleur nationale officielle de l'Inde depuis 1950, adoptée lors de l'établissement de la Constitution",
+      "traditionalUses": "Offrandes religieuses et décoration des temples ; médecine ayurvédique (graines, rhizomes et pétales utilisés pour les remèdes digestifs et cardiaques) ; cuisine (la racine de lotus est un légume de base) ; fibre textile à partir des tiges (soie de lotus) ; culture ornementale dans les bassins des temples et jardins.",
+      "conservationStatus": "Préoccupation mineure (LC) — Liste rouge UICN",
+      "mainThreats": "Drénage et conversion des zones humides pour l'agriculture ; pollution de l'eau par les rejets industriels et agricoles ; perte d'habitat due à l'urbanisation ; récolte excessive de rhizomes et de graines dans certaines régions ; compétition des espèces aquatiques invasives.",
+      "nahiaraSynthesis": "Nelumbo nucifera s'intègre dans l'univers Nahiara avec le code SAN-F-161,001, évaluée au niveau 22/25 (EcoRacine Vivante) dans la Mesure Nahiara — classée 7e au niveau mondial. En tant que fleur nationale officielle de l'Inde depuis 1950, le Lotus Sacré est l'une des plantes les plus culturellement significatives de l'humanité, vénérée dans l'hindouisme, le bouddhisme et l'ancienne civilisation égyptienne. Malgré les menaces liées à la perte des zones humides et au changement climatique, ses profondes racines culturelles, sa protection légale et sa culture généralisée assurent sa pérennité."
+    },
     "pakistan": {
       "name": "Pakistan",
       "flowerName": "Jasmin",
@@ -601,7 +606,6 @@
       "description": "Le bleuet est la fleur nationale de l'Allemagne, symbolisant l'espoir, la liberté et la beauté naturelle. Elle représente le lien du pays avec la nature et son patrimoine culturel."
     }
   },
-
   "minions": {
     "climateChange": {
       "name": "Changement Climatique",
@@ -624,7 +628,6 @@
       "message": "Vous avez révélé le sbire de l'Incendie Volontaire. L'écosystème recule. Nous devons recommencer…"
     }
   },
-
   "guardianCards": {
     "education": {
       "name": "Éducation",
@@ -651,7 +654,6 @@
       "message": "Vous avez activé un Gardien Joker. L'espoir est avec vous — continuez !"
     }
   },
-
   "books": {
     "tome": "Tome",
     "prologue": "Prologue",
@@ -692,7 +694,50 @@
       "subtitle": "La saga continue. Découvrez les prochains chapitres du voyage de Nahiara."
     }
   },
-
+  "globeModal": {
+    "back": "Retour",
+    "dragToRotate": "Glisser pour tourner · Défiler pour zoomer",
+    "loadingModel": "Chargement du modèle...",
+    "botanicalData": "1. DONNÉES BOTANIQUES",
+    "scientificName": "Nom Scientifique",
+    "commonNames": "Noms Communs",
+    "description": "Description",
+    "culturalHistorical": "2. DONNÉES CULTURELLES ET HISTORIQUES",
+    "historicalOrigin": "📖 Origine Historique",
+    "nationalStatus": "Statut National",
+    "traditionalUses": "Usages Traditionnels",
+    "morphology": "3. MORPHOLOGIE",
+    "color": "Couleur",
+    "shape": "Forme",
+    "size": "Taille",
+    "lifeCycle": "Cycle de Vie",
+    "habitat": "Habitat",
+    "distribution": "Distribution",
+    "conservationData": "4. DONNÉES DE CONSERVATION",
+    "iucnStatus": "🌍 Statut UICN",
+    "mainThreats": "⚠️ Principales Menaces",
+    "nahiaraMetadata": "5. MÉTADONNÉES NAHIARA",
+    "assignedSAN": "Code S.A.N. Attribué",
+    "pfnoClassification": "Classification PFNO",
+    "relevantPollinator": "🐝 Pollinisateur Relevant",
+    "nahiaraMeasure": "6. MESURE NAHIARA",
+    "rankGlobally": "· Rang n°{rank} mondial",
+    "floralHeartbeat": "Battement Floral (Population)",
+    "culturalMemory": "Mémoire Culturelle",
+    "publicVoice": "Voix Publique",
+    "protectionShield": "Bouclier de Protection",
+    "petalOfHope": "Pétale d'Espoir",
+    "scorfidonProtocol": "7. PROTOCOLE SCORFIDON",
+    "scorfidonSubtitle": "Menaces et leurs gardiens — l'équilibre entre destruction et restauration.",
+    "petals": "pétales",
+    "araihanMeasurement": "8. MESURE ARAIHAN",
+    "araihanScore": "Score Araihan",
+    "nahiaraSynthesis": "✅ SYNTHÈSE NAHIARA",
+    "country": "Pays",
+    "capital": "Capitale",
+    "language": "Langue",
+    "currency": "Monnaie"
+  },
   "common": {
     "loading": "Chargement...",
     "error": "Une erreur s'est produite",
@@ -721,7 +766,6 @@
     "showLess": "Voir Moins",
     "seeMore": "Voir Plus"
   },
-
   "language": {
     "select": "Sélectionner la Langue",
     "english": "English",
@@ -730,7 +774,6 @@
     "french": "Français",
     "currentLanguage": "Langue"
   },
-
   "share": {
     "shareText": "🌸 Je viens de restaurer la fleur {flowerName} dans le jeu des Gardiens des Fleurs !\n\n✨ Jouez maintenant sur aquamundi.org/game",
     "fallbackText": "🌸 J'ai restauré la fleur {flowerName} !\nJouez sur aquamundi.org/game",
@@ -738,7 +781,6 @@
     "copySuccess": "Copié dans le presse-papiers !",
     "shareError": "Impossible de partager"
   },
-
   "flowers": {
     "pageTitle": "Fleurs Nationales",
     "heroTitle": "Fleurs Nationales du Monde",

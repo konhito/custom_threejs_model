@@ -24,7 +24,6 @@
     "archiveDesc": "Modelos 3D interactivos de flores nacionales",
     "archiveCta": "Explorar Archivo"
   },
-
   "nav": {
     "home": "Inicio",
     "about": "¿Qué es AquaMundi?",
@@ -42,7 +41,6 @@
     "cart": "Carrito",
     "game": "Jugar"
   },
-
   "navDescriptions": {
     "home": "Volver a la vista principal del globo",
     "about": "Misión y propósito",
@@ -55,7 +53,6 @@
     "araihan": "Iniciativa Medida Araihan",
     "professionals": "Acceso exclusivo para profesionales de la industria"
   },
-
   "footer": {
     "explore": "Explorar",
     "learn": "Aprender",
@@ -70,7 +67,6 @@
     "copyright": "© {year} AquaMundi. Todos los derechos reservados.",
     "contactSubject": "Contacto desde el sitio web de AquaMundi"
   },
-
   "landing": {
     "heroTitle": "Asociación Internacional para la Defensa de las Flores",
     "heroSubtitle": "Proveneya & Nahiara",
@@ -131,7 +127,6 @@
     "loading": "Cargando...",
     "pleaseWait": "Por favor espera mientras preparamos tu experiencia."
   },
-
   "about": {
     "pageTitle": "Sobre AquaMundi",
     "heroTitle": "El Jardín Digital Donde la Naturaleza Encuentra la Tecnología",
@@ -193,7 +188,6 @@
     "quoteText": "AquaMundi no es solo un sitio web: es un manto viviente que une ciencia, cultura y esperanza, donde cada flor y polinizador nos recuerda que la Tierra florece en diversidad.",
     "exploreGarden": "Explora Nuestro Jardín"
   },
-
   "pollinators": {
     "pageTitle": "Polinizadores",
     "heroSubtitle": "Los guardianes invisibles de la vida en la Tierra. Estas criaturas esenciales mantienen el equilibrio de la biodiversidad de nuestro planeta, polinizando las plantas que nos alimentan a todos.",
@@ -300,7 +294,6 @@
     "antConservation": "El conjunto de hormigas polinizadoras se evalúa con una Medida Araihan estimada de 18/25: alta eficiencia local y fuerte interdependencia ecológica, pero vulnerable a pesticidas, pérdida de hábitat y cambios en el microclima del suelo.",
     "araihanMeasure": "Medida Araihan: 18 / 25 (Estable)"
   },
-
   "guardians": {
     "pageTitle": "Guardianes",
     "heroSubtitle": "Cada Flor Tiene Su Guardián",
@@ -337,7 +330,6 @@
     "function3": "Comprender la conexión simbólica entre la naturaleza y la memoria cultural",
     "function4": "Descubrir el papel protector de los Guardianes en la preservación del patrimonio floral"
   },
-
   "education": {
     "pageTitle": "Educación y Comunidad",
     "heroSubtitle": "Recursos de Aprendizaje y Comunidad Global",
@@ -370,7 +362,6 @@
     "exploreResources": "Explorar Recursos",
     "joinCommunityBtn": "Unirse a la Comunidad"
   },
-
   "impact": {
     "pageTitle": "Impacto y Transparencia",
     "heroSubtitle": "¿Dónde Florece AquaMundi?",
@@ -420,7 +411,6 @@
     "conclusionTitle": "Conclusión",
     "conclusionText": "El impacto sin transparencia está incompleto. AquaMundi se compromete a asegurar que ambos caminen de la mano: acción medible, comunicación transparente y esperanza compartida."
   },
-
   "livingArchive": {
     "pageTitle": "El Archivo Viviente",
     "heroSubtitle": "Contenido central del universo NAHIARA",
@@ -454,7 +444,6 @@
     "ctaText": "Sumérgete en el rico mundo de NAHIARA a través de libros, juegos y archivos interactivos",
     "exploreArchive": "Explorar Archivo"
   },
-
   "araihanMeasure": {
     "pageTitle": "Medida Araihan",
     "heroSubtitle": "Una iniciativa integral para evaluar y proteger las flores nacionales",
@@ -490,7 +479,6 @@
     "exploreFlowers": "Explorar Flores",
     "learnMore": "Saber Más"
   },
-
   "game": {
     "victory": "¡VICTORIA!",
     "restoredFlower": "Has Restaurado la Flor Sagrada",
@@ -523,7 +511,6 @@
     "tip3": "Planifica tu estrategia cuidadosamente - ¡con solo 8 cartas, cada elección cuenta!",
     "close": "Cerrar"
   },
-
   "gameMessages": {
     "petalCollected": "Pétalo recogido",
     "minionRevealed": "Súbdito revelado",
@@ -544,14 +531,26 @@
     "guardianContinue": "Activaste un Guardián. La esperanza está contigo — ¡continúa!",
     "guardianSavedFull": "¡El Guardián te protegió del súbdito! Continúa tu búsqueda."
   },
-
   "araihan": {
     "title": "Araihan",
     "subtitle": "Leal Escudero de Nahiara",
     "intro": "Hola, soy Araihan, leal escudero de Nahiara. Bienvenido al juego de Nahiara y los Guardianes de las Flores. Tengo un poco de sueño… y me encantan las gomitas naturales: fresas, frambuesas, moras… Pero no me gustan para nada los dulces procesados. Divirtámonos juntos. ¿Te gustaría jugar conmigo?"
   },
-
   "countries": {
+    "indiaLotus": {
+      "name": "India",
+      "flowerName": "Loto Sagrado",
+      "commonNames": "Loto Sagrado, Loto Indio, Kamal (कमल), Padma (पद्म)",
+      "botanicalInfo": "Planta acuática perenne rizomatosa con grandes flores fragantes de color rosa o blanco que pueden alcanzar los 30 cm de diámetro. El loto posee un notable mecanismo de autolimpieza (el 'efecto loto') gracias a su superficie foliar superhidrofobica. Sus semillas pueden permanecer viables durante siglos: una semilla de 1.300 años fue germinada con éxito en 1994.",
+      "flowerDescription": "El Loto Sagrado es la flor nacional de India, adoptado oficialmente en 1950. Simboliza pureza, iluminación y renacimiento, emergiendo de aguas fangosas para florecer magnificamente, representando el viaje de la oscuridad a la luz. Su presencia en la civilización india abarca más de 5.000 años.",
+      "culturalSignificance": "Sagrado en el hinduismo y el budismo, el loto es el asiento de las deidades Lakshmi, Saraswati y Brahma. En la iconografía budista, el Buda es frecuentemente representado sentado en un trono de loto. La flor representa belleza divina, pureza y despertar espiritual. Aparece en el Rigveda, la escritura hindú más antigua, y está entretejida en el arte, la arquitectura y la filosofía de Asia Meridional y Suroriental.",
+      "historicalOrigin": "El loto ha sido venerado en el subcontinente indio desde el período védico (1500 a.C.). Textos antiguos como el Rigveda, la Bhagavad Gita y el Sutra del Loto lo citan como símbolo de creación y orden cósmico. En las rutas comerciales egipcio-indias, el loto conectó dos de las civilizaciones más antiguas del mundo. Los emperadores mogoles incorporaron motivos de loto en obras maestras arquitectónicas como el Taj Mahal.",
+      "nationalStatus": "Flor nacional oficial de India desde 1950, adoptada en el momento de la Constitución",
+      "traditionalUses": "Ofrendas religiosas y decoración de templos; medicina ayurvédica (semillas, rizomas y pétalos usados para remedios digestivos y cardíacos); cocina (la raíz de loto es un vegetal básico; semillas tostadas o en postres); fibra textil de los tallos (seda de loto); cultivo ornamental en estanques de templos y jardines.",
+      "conservationStatus": "Preocupación Menor (LC) — Lista Roja UICN",
+      "mainThreats": "Drenaje de humedales y conversión para agricultura; contaminación del agua por vertidos industriales y agrícolas; pérdida de hábitat por urbanización; cosecha excesiva de rizomas y semillas en algunas regiones; competencia con especies acuáticas invasoras.",
+      "nahiaraSynthesis": "Nelumbo nucifera se integra en el universo Nahiara con el código SAN-F-161,001, evaluada en nivel 22/25 (Raíz EcoViva) en la Medida Nahiara — posicionándose séptima a nivel mundial. Como flor nacional oficial de India desde 1950, el Loto Sagrado es una de las plantas culturalmente más significativas de la humanidad, venerada en el hinduismo, el budismo y la antigua civilización egipcia. A pesar de las amenazas por la pérdida de humedales y el cambio climático, sus profundas raíces culturales, protección legal y cultivo generalizado garantizan su pervivencia."
+    },
     "pakistan": {
       "name": "Pakistán",
       "flowerName": "Jazmín",
@@ -582,6 +581,12 @@
       "scientificName": "Guaiacum officinale",
       "description": "El Lignum Vitae es la flor nacional de Jamaica, simbolizando fuerza, resistencia y belleza natural. Representa la flora única de la isla y su patrimonio cultural."
     },
+    "unitedStates": {
+      "name": "Estados Unidos",
+      "flowerName": "Rosa",
+      "scientificName": "Rosa (cultivares híbridos)",
+      "description": "La rosa es el emblema floral nacional oficial de los Estados Unidos (1986). Ha sido un símbolo global de amor, belleza y recuerdo durante más de 5.000 años — desde la antigua Roma y la mitología griega hasta el jardín de rosas de la Casa Blanca."
+    },
     "spain": {
       "name": "España",
       "flowerName": "Clavel",
@@ -601,7 +606,6 @@
       "description": "El aciano es la flor nacional de Alemania, simbolizando esperanza, libertad y belleza natural. Representa la conexión del país con la naturaleza y su patrimonio cultural."
     }
   },
-
   "minions": {
     "climateChange": {
       "name": "Cambio Climático",
@@ -624,7 +628,6 @@
       "message": "Revelaste al súbdito Incendio Intencional. El ecosistema retrocede. Debemos comenzar de nuevo…"
     }
   },
-
   "guardianCards": {
     "education": {
       "name": "Educación",
@@ -651,7 +654,6 @@
       "message": "Activaste un Guardián Comodín. La esperanza está contigo — ¡continúa!"
     }
   },
-
   "books": {
     "tome": "Tomo",
     "prologue": "Prólogo",
@@ -692,7 +694,50 @@
       "subtitle": "La saga continúa. Descubre los próximos capítulos del viaje de Nahiara."
     }
   },
-
+  "globeModal": {
+    "back": "Volver",
+    "dragToRotate": "Arrastra para rotar · Desplaza para zoom",
+    "loadingModel": "Cargando modelo...",
+    "botanicalData": "1. DATOS BOTÁNICOS",
+    "scientificName": "Nombre Científico",
+    "commonNames": "Nombres Comunes",
+    "description": "Descripción",
+    "culturalHistorical": "2. DATOS CULTURALES E HISTÓRICOS",
+    "historicalOrigin": "📖 Origen Histórico",
+    "nationalStatus": "Estatus Nacional",
+    "traditionalUses": "Usos Tradicionales",
+    "morphology": "3. MORFOLOGÍA",
+    "color": "Color",
+    "shape": "Forma",
+    "size": "Tamaño",
+    "lifeCycle": "Ciclo de Vida",
+    "habitat": "Hábitat",
+    "distribution": "Distribución",
+    "conservationData": "4. DATOS DE CONSERVACIÓN",
+    "iucnStatus": "🌍 Estado UICN",
+    "mainThreats": "⚠️ Principales Amenazas",
+    "nahiaraMetadata": "5. METADATOS NAHIARA",
+    "assignedSAN": "Código S.A.N. Asignado",
+    "pfnoClassification": "Clasificación PFNO",
+    "relevantPollinator": "🐝 Polinizador Relevante",
+    "nahiaraMeasure": "6. MEDIDA NAHIARA",
+    "rankGlobally": "· Puesto n.º{rank} mundial",
+    "floralHeartbeat": "Latido Floral (Población)",
+    "culturalMemory": "Memoria Cultural",
+    "publicVoice": "Voz Pública",
+    "protectionShield": "Escudo de Protección",
+    "petalOfHope": "Pétalo de Esperanza",
+    "scorfidonProtocol": "7. PROTOCOLO SCORFIDON",
+    "scorfidonSubtitle": "Amenazas y sus guardianes — el equilibrio entre destrucción y restauración.",
+    "petals": "pétalos",
+    "araihanMeasurement": "8. MEDIDA ARAIHAN",
+    "araihanScore": "Puntuación Araihan",
+    "nahiaraSynthesis": "✅ SÍNTESIS NAHIARA",
+    "country": "País",
+    "capital": "Capital",
+    "language": "Idioma",
+    "currency": "Moneda"
+  },
   "common": {
     "loading": "Cargando...",
     "error": "Algo salió mal",
@@ -721,7 +766,6 @@
     "showLess": "Mostrar Menos",
     "seeMore": "Ver Más"
   },
-
   "language": {
     "select": "Seleccionar Idioma",
     "english": "English",
@@ -730,7 +774,6 @@
     "french": "Français",
     "currentLanguage": "Idioma"
   },
-
   "share": {
     "shareText": "🌸 ¡Acabo de restaurar la {flowerName} en el juego de los Guardianes de las Flores!\n\n✨ Juega ahora en aquamundi.org/game",
     "fallbackText": "🌸 ¡Restauré la {flowerName}!\nJuega en aquamundi.org/game",
@@ -738,7 +781,6 @@
     "copySuccess": "¡Copiado al portapapeles!",
     "shareError": "No se pudo compartir"
   },
-
   "flowers": {
     "pageTitle": "Flores Nacionales",
     "heroTitle": "Flores Nacionales del Mundo",
