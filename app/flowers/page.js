@@ -39,6 +39,7 @@ const FLOWERS_DATA = [
     scientificName: "Rosa (hybrid cultivars)",
     country: "United States",
     countryCode: "US",
+    translationKey: "usRose",
     glbPath: "/api/glb-proxy?url=" + encodeURIComponent("https://aquamundi-glb-models.s3.ap-south-1.amazonaws.com/Flower_America_Web.glb"),
     sanCode: "SAN-F-083,003",
     botanicalFamily: "Rosaceae",
@@ -78,19 +79,47 @@ const FLOWERS_DATA = [
   },
   {
     id: "ES_CARNATION",
-
     commonName: "Carnation",
     scientificName: "Dianthus caryophyllus L.",
     country: "España (Spain)",
     countryCode: "ES",
+    translationKey: "spainCarnation",
     glbPath: createGLBPath("Espana", "Carnation"),
     sanCode: computeSANCode("Dianthus caryophyllus L.", "F"),
     botanicalFamily: "Caryophyllaceae",
     morphology: "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals and a height of 40‑80 cm.",
     habitat: "Ornamental crops and Mediterranean gardens; native to the Mediterranean basin and widely cultivated in Spain.",
+    distribution: "Widely cultivated across the Mediterranean, with significant commercial production in Spain, Italy, and Colombia.",
+    historicalOrigin: "Cultivated for over 2,000 years, carnations were revered by ancient Greeks and Romans, who used them in garlands and ceremonies. Its scientific name 'Dianthus' means 'flower of the gods'. It became a symbol of Spanish royalty in the 16th century and is deeply intertwined with Spanish culture, especially flamenco.",
+    nationalStatus: "Unofficial national flower of Spain, deeply embedded in cultural identity.",
+    traditionalUses: "Ornamental horticulture, floristry, traditional medicine (mild anti-inflammatory properties), perfumery, and culinary decoration.",
+    conservationStatus: "Cultivated varieties: Not Evaluated (NE). Wild species: Some wild populations in the Mediterranean are vulnerable due to habitat loss.",
+    mainThreats: "Habitat degradation for wild species, susceptibility to fungal diseases (e.g., Fusarium wilt) in intensive cultivation, and climate change impacting water availability in Mediterranean regions.",
+    pfnoClassification: "Cultural Emblem",
+    relevantPollinator: "Bees (Apis mellifera, Bombus spp.) and butterflies are attracted to its nectar-rich flowers.",
+    nahiaraMeasure: {
+      total: 19,
+      max: 25,
+      rank: 10,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 5,
+      vozPublica: 4,
+      escudoProteccion: 3,
+      petaloEsperanza: 3,
+    },
+    araihanScore: 19,
+    scorfidon: {
+      climateChange: { code: "SCF-006", threat: "Climate Change", impact: -2, description: "Increased drought and heatwaves in the Mediterranean threaten wild carnation populations and impact cultivation.", guardian: "Water Conservation", guardianPower: 2 },
+      habitatLoss: { code: "SCF-007", threat: "Habitat Loss", impact: -2, description: "Urbanization and agricultural expansion reduce natural habitats for wild Dianthus caryophyllus.", guardian: "Protected Areas", guardianPower: 2 },
+      disease: { code: "SCF-008", threat: "Disease Outbreaks", impact: -1, description: "Fungal diseases like Fusarium wilt can devastate commercial crops and spread to wild populations.", guardian: "Biosecurity", guardianPower: 1 },
+      exploitation: { code: "SCF-009", threat: "Commercial Exploitation", impact: -1, description: "Intensive cultivation practices can lead to soil degradation and reliance on chemical inputs.", guardian: "Sustainable Farming", guardianPower: 1 },
+      ignorance: { code: "SCF-010", threat: "Ignorance", impact: -1, description: "Lack of awareness regarding the ecological role of wild carnations and their genetic diversity.", guardian: "Education", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Carnation, SAN-F-083,004, holds a Nahiara Measure of 19/25 (Stable), reflecting its deep cultural roots in Spain. While not officially designated, its presence in Spanish art, music, and festivals makes it an undeniable national symbol. Threats include climate change and habitat loss for wild varieties, balanced by strong cultural recognition.",
     cultural: "The Carnation symbolizes true love, passion and resilience. Since the 16th century it has been linked to Spanish royalty and today is inseparable from flamenco, popular festivities and Mediterranean identity.",
-    conservation: "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat‑loss threats.",
-    nahiaraMeasure: "19 / 25 (Stable)",
+    conservation: "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat-loss threats.",
+    nahiaraMeasureLabel: "19 / 25 (Stable)",
   },
   {
     id: "IN_LOTUS",
@@ -98,14 +127,43 @@ const FLOWERS_DATA = [
     scientificName: "Nelumbo nucifera",
     country: "India",
     countryCode: "IN",
+    translationKey: "indiaLotus",
     glbPath: createGLBPath("India", "Lotus"),
     sanCode: computeSANCode("Nelumbo nucifera", "F"),
     botanicalFamily: "Nelumbonaceae",
     morphology: "Large, fragrant pink or white flowers with broad, floating leaves. Aquatic perennial plant that can live for over 1,000 years.",
     habitat: "Ponds, lakes, and slow-moving rivers throughout India and Southeast Asia.",
+    distribution: "Native to tropical Asia and Queensland, Australia. Widely cultivated in India, China, Japan, and Southeast Asian countries.",
+    historicalOrigin: "The lotus has been revered for millennia in Eastern cultures, particularly in Hinduism and Buddhism, symbolizing purity, beauty, and spiritual enlightenment. Ancient texts and art depict its significance in creation myths and religious rituals.",
+    nationalStatus: "National flower of India since 1950.",
+    traditionalUses: "Culinary (seeds, rhizomes, leaves), traditional medicine (Ayurveda, Chinese medicine), religious offerings, ornamental ponds, and textile fibers.",
+    conservationStatus: "Least Concern (LC) globally due to widespread cultivation, but wild populations face localized threats.",
+    mainThreats: "Habitat degradation from pollution (eutrophication), invasive species, and loss of wetlands due to urbanization and agriculture.",
+    pfnoClassification: "National Floral Emblem & Sacred Plant",
+    relevantPollinator: "Bees (Apis spp.), beetles, and other insects are attracted to its large, showy flowers.",
+    nahiaraMeasure: {
+      total: 22,
+      max: 25,
+      rank: 7,
+      status: "Stable EcoRoot",
+      latidoFloral: 4,
+      memoriaCultural: 5,
+      vozPublica: 5,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 22,
+    scorfidon: {
+      pollution: { code: "SCF-011", threat: "Water Pollution", impact: -3, description: "Eutrophication and chemical runoff severely degrade aquatic habitats essential for lotus growth.", guardian: "Clean Water Initiatives", guardianPower: 3 },
+      habitatLoss: { code: "SCF-012", threat: "Wetland Loss", impact: -2, description: "Conversion of wetlands for agriculture and urban development reduces natural lotus habitats.", guardian: "Wetland Restoration", guardianPower: 2 },
+      invasiveSpecies: { code: "SCF-013", threat: "Invasive Species", impact: -1, description: "Competition from invasive aquatic plants can outcompete native lotus populations.", guardian: "Ecosystem Management", guardianPower: 1 },
+      climateChange: { code: "SCF-014", threat: "Climate Change", impact: -1, description: "Changes in rainfall patterns and water levels can disrupt lotus growth cycles.", guardian: "Climate Adaptation", guardianPower: 1 },
+      overharvesting: { code: "SCF-015", threat: "Overharvesting", impact: -1, description: "Unsustainable harvesting of rhizomes and seeds can impact wild populations.", guardian: "Sustainable Practices", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Lotus, SAN-F-083,005, with a Nahiara Measure of 22/25 (Stable EcoRoot), is India's national flower and a profound cultural icon. Its resilience in muddy waters symbolizes purity and spiritual awakening. While widely cultivated, wild populations face threats from water pollution and wetland loss, necessitating conservation efforts.",
     cultural: "Sacred in Hinduism and Buddhism, the lotus represents divine beauty, purity, and spiritual awakening. It rises from muddy waters to bloom magnificently, symbolizing the journey from darkness to light.",
-    conservation: "The lotus is India's national flower with strong cultural and religious significance. Nahiara Measure: 22 / 25 (Stable).",
-    nahiaraMeasure: "22 / 25 (Stable)",
+    conservation: "The lotus is India's national flower with strong cultural and religious significance. Nahiara Measure: 22 / 25 (Stable EcoRoot).",
+    nahiaraMeasureLabel: "22 / 25 (Stable EcoRoot)",
   },
   {
     id: "PK_JASMINE",
@@ -113,14 +171,43 @@ const FLOWERS_DATA = [
     scientificName: "Jasminum officinale",
     country: "Pakistan",
     countryCode: "PK",
+    translationKey: "pakistanJasmine",
     glbPath: createGLBPath("Pakistan", "Jasmine"),
     sanCode: computeSANCode("Jasminum officinale", "F"),
     botanicalFamily: "Oleaceae",
     morphology: "Small, white, star-shaped flowers with a sweet, intoxicating fragrance. Climbing or trailing shrub.",
     habitat: "Gardens, parks, and cultivated areas throughout Pakistan and South Asia.",
+    distribution: "Native to the Caucasus, northern Iran, Afghanistan, Pakistan, the Himalayas, Tajikistan, and China. Widely cultivated globally.",
+    historicalOrigin: "Jasmine has a long history in South Asia, revered for its fragrance and beauty. It's mentioned in ancient Persian and Indian texts and has been used in perfumes, religious ceremonies, and traditional medicine for centuries. It became Pakistan's national flower in 1961.",
+    nationalStatus: "National flower of Pakistan since 1961.",
+    traditionalUses: "Perfumery (essential oil), traditional medicine (anti-inflammatory, antiseptic), religious offerings, tea flavoring, and ornamental gardening.",
+    conservationStatus: "Least Concern (LC) due to widespread cultivation, but some wild populations may face localized threats.",
+    mainThreats: "Habitat loss for wild species, unsustainable harvesting for essential oil production, and susceptibility to pests and diseases in cultivation.",
+    pfnoClassification: "National Floral Emblem & Cultural Symbol",
+    relevantPollinator: "Moths (especially hawk-moths) and bees are attracted to its strong night-time fragrance.",
+    nahiaraMeasure: {
+      total: 20,
+      max: 25,
+      rank: 9,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 5,
+      vozPublica: 4,
+      escudoProteccion: 3,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 20,
+    scorfidon: {
+      habitatLoss: { code: "SCF-016", threat: "Habitat Loss", impact: -1, description: "Urbanization and agricultural expansion reduce natural habitats for wild jasmine species.", guardian: "Habitat Protection", guardianPower: 1 },
+      overharvesting: { code: "SCF-017", threat: "Overharvesting", impact: -2, description: "Intensive harvesting for essential oil production can deplete wild populations.", guardian: "Sustainable Sourcing", guardianPower: 2 },
+      pestsDiseases: { code: "SCF-018", threat: "Pests & Diseases", impact: -1, description: "Cultivated jasmine is susceptible to various pests and fungal diseases.", guardian: "Integrated Pest Management", guardianPower: 1 },
+      climateChange: { code: "SCF-019", threat: "Climate Change", impact: -1, description: "Changes in temperature and rainfall patterns can affect jasmine growth and flowering.", guardian: "Climate Resilience", guardianPower: 1 },
+      ignorance: { code: "SCF-020", threat: "Ignorance", impact: -1, description: "Lack of public awareness about the ecological importance of native jasmine varieties.", guardian: "Botanical Education", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "Jasmine, SAN-F-083,006, Pakistan's national flower, scores 20/25 (Stable) on the Nahiara Measure. Its intoxicating fragrance and cultural significance make it a cherished symbol of purity and grace. While widely cultivated, threats like habitat loss for wild species and unsustainable harvesting require attention to maintain its ecological and cultural vitality.",
     cultural: "Jasmine holds a special place in Pakistani culture, often used in religious ceremonies and traditional celebrations. It symbolizes purity, grace, beauty, and spiritual purity.",
     conservation: "The jasmine is Pakistan's national flower with strong cultural protection. Nahiara Measure: 20 / 25 (Stable).",
-    nahiaraMeasure: "20 / 25 (Stable)",
+    nahiaraMeasureLabel: "20 / 25 (Stable)",
   },
   {
     id: "PE_CANTUTA",
@@ -128,14 +215,43 @@ const FLOWERS_DATA = [
     scientificName: "Cantua buxifolia",
     country: "Peru",
     countryCode: "PE",
+    translationKey: "peruCantuta",
     glbPath: createGLBPath("Peru", "Cantuta"),
     sanCode: computeSANCode("Cantua buxifolia", "F"),
     botanicalFamily: "Polemoniaceae",
     morphology: "Tubular flowers in shades of red, pink, and yellow. Shrub or small tree native to the Andes.",
     habitat: "High-altitude Andean regions, between 2,000 and 3,500 meters above sea level.",
+    distribution: "Native to the Andes mountains of Peru and Bolivia. Found in dry, rocky slopes and inter-Andean valleys.",
+    historicalOrigin: "The Cantuta was a sacred flower to the Incas, symbolizing the sun god Inti and the Inca empire. It was used in religious ceremonies and adorned temples and palaces. Its vibrant colors are often associated with the Inca flag.",
+    nationalStatus: "National flower of Peru (and Bolivia).",
+    traditionalUses: "Ornamental plant, traditional medicine (anti-inflammatory, diuretic), natural dye, and ceremonial decoration.",
+    conservationStatus: "Near Threatened (NT) in some regions due to habitat degradation and overcollection.",
+    mainThreats: "Habitat loss from agricultural expansion and urbanization, overcollection for ornamental purposes, and climate change impacting high-altitude ecosystems.",
+    pfnoClassification: "National Floral Emblem & Sacred Inca Flower",
+    relevantPollinator: "Hummingbirds are primary pollinators, attracted to its tubular, nectar-rich flowers.",
+    nahiaraMeasure: {
+      total: 21,
+      max: 25,
+      rank: 8,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 5,
+      vozPublica: 4,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 21,
+    scorfidon: {
+      habitatLoss: { code: "SCF-021", threat: "Habitat Loss", impact: -2, description: "Agricultural expansion and urban development in the Andes reduce cantuta's natural habitat.", guardian: "Andean Conservation", guardianPower: 2 },
+      overcollection: { code: "SCF-022", threat: "Overcollection", impact: -1, description: "Unsustainable harvesting for ornamental trade and traditional uses impacts wild populations.", guardian: "Sustainable Harvesting", guardianPower: 1 },
+      climateChange: { code: "SCF-023", threat: "Climate Change", impact: -2, description: "Changes in temperature and precipitation patterns in high-altitude ecosystems threaten cantuta's survival.", guardian: "Highland Adaptation", guardianPower: 2 },
+      ignorance: { code: "SCF-024", threat: "Ignorance", impact: -1, description: "Lack of awareness about the conservation status and ecological importance of wild cantuta.", guardian: "Community Education", guardianPower: 1 },
+      deforestation: { code: "SCF-025", threat: "Deforestation", impact: -1, description: "Loss of native Andean forests impacts the microclimates and soil stability needed for cantuta.", guardian: "Reforestation", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Cantuta, SAN-F-083,007, Peru's national flower, achieves a Nahiara Measure of 21/25 (Stable). As a sacred Inca flower, it embodies the resilience and beauty of the Andean people. Despite its cultural significance, it faces threats from habitat loss and climate change in its high-altitude environment, requiring focused conservation efforts.",
     cultural: "The cantuta is Peru's national flower, symbolizing the beauty and resilience of the Andean people. It represents the connection between nature and culture in the highlands.",
     conservation: "The cantuta is Peru's national flower with strong cultural significance. Nahiara Measure: 21 / 25 (Stable).",
-    nahiaraMeasure: "21 / 25 (Stable)",
+    nahiaraMeasureLabel: "21 / 25 (Stable)",
   },
   {
     id: "TZ_CLOVE",
@@ -143,14 +259,43 @@ const FLOWERS_DATA = [
     scientificName: "Syzygium aromaticum",
     country: "Tanzania",
     countryCode: "TZ",
+    translationKey: "tanzaniaClove",
     glbPath: createGLBPath("Tanzania", "Clove"),
     sanCode: computeSANCode("Syzygium aromaticum", "F"),
     botanicalFamily: "Myrtaceae",
     morphology: "Small, aromatic flower buds that are dried and used as a spice. Evergreen tree with glossy leaves.",
     habitat: "Tropical regions, particularly Zanzibar and Pemba islands in Tanzania.",
+    distribution: "Native to the Maluku Islands (Indonesia). Widely cultivated in tropical regions, especially Tanzania (Zanzibar), Madagascar, and Indonesia.",
+    historicalOrigin: "Cloves have been traded for over 2,000 years, originating from the Spice Islands. They were highly valued by ancient Romans, Chinese, and Arabs. Zanzibar became a global center for clove production in the 19th century, shaping its economy and culture.",
+    nationalStatus: "Unofficial national flower of Tanzania, deeply tied to the history and economy of Zanzibar.",
+    traditionalUses: "Spice (culinary), traditional medicine (analgesic, antiseptic), perfumery, and essential oil production.",
+    conservationStatus: "Least Concern (LC) due to widespread cultivation, but wild populations are rare and potentially vulnerable.",
+    mainThreats: "Price fluctuations in the global spice market, climate change impacting rainfall patterns, and pests/diseases in monoculture plantations.",
+    pfnoClassification: "Economic & Cultural Keystone Species",
+    relevantPollinator: "Bees and other insects are attracted to its small, white flowers.",
+    nahiaraMeasure: {
+      total: 19,
+      max: 25,
+      rank: 11,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 4,
+      vozPublica: 4,
+      escudoProteccion: 3,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 19,
+    scorfidon: {
+      marketVolatility: { code: "SCF-026", threat: "Market Volatility", impact: -2, description: "Fluctuating global prices for cloves can destabilize local economies and farmer livelihoods.", guardian: "Economic Diversification", guardianPower: 2 },
+      climateChange: { code: "SCF-027", threat: "Climate Change", impact: -2, description: "Changes in rainfall and temperature patterns threaten clove tree health and yield.", guardian: "Climate-Smart Agriculture", guardianPower: 2 },
+      pestsDiseases: { code: "SCF-028", threat: "Pests & Diseases", impact: -1, description: "Clove trees are susceptible to various pests and diseases, especially in monoculture.", guardian: "Integrated Pest Management", guardianPower: 1 },
+      habitatLoss: { code: "SCF-029", threat: "Habitat Loss", impact: -1, description: "Expansion of other crops or infrastructure can reduce suitable land for clove cultivation.", guardian: "Sustainable Land Use", guardianPower: 1 },
+      ignorance: { code: "SCF-030", threat: "Ignorance", impact: -1, description: "Lack of awareness about sustainable farming practices and the long-term health of clove ecosystems.", guardian: "Farmer Education", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Clove, SAN-F-083,008, with a Nahiara Measure of 19/25 (Stable), is a vital part of Tanzania's heritage, particularly Zanzibar. Its economic and cultural importance as a spice is immense. However, it faces challenges from market volatility and climate change, highlighting the need for sustainable agricultural practices and economic diversification.",
     cultural: "The clove is Tanzania's national flower, symbolizing the country's rich spice heritage and natural abundance. It represents the connection between people and the land.",
     conservation: "The clove is Tanzania's national flower with economic and cultural importance. Nahiara Measure: 19 / 25 (Stable).",
-    nahiaraMeasure: "19 / 25 (Stable)",
+    nahiaraMeasureLabel: "19 / 25 (Stable)",
   },
   {
     id: "NI_SACUANJOCHE",
@@ -158,59 +303,175 @@ const FLOWERS_DATA = [
     scientificName: "Plumeria rubra",
     country: "Nicaragua",
     countryCode: "NI",
+    translationKey: "nicaraguaSacuanjoche",
     glbPath: createGLBPath("Nicaragua", "Sacuanjoche"),
     sanCode: computeSANCode("Plumeria rubra", "F"),
     botanicalFamily: "Apocynaceae",
     morphology: "Fragrant, waxy flowers in white, pink, yellow, or red. Deciduous tree with thick, succulent branches.",
     habitat: "Tropical and subtropical regions, gardens, and coastal areas throughout Central America.",
+    distribution: "Native to Mexico, Central America, and Venezuela. Widely cultivated in tropical and subtropical regions worldwide.",
+    historicalOrigin: "The Sacuanjoche has been cherished in Central America for centuries, often associated with indigenous cultures and their spiritual beliefs. Its beauty and fragrance made it a popular ornamental plant, and it was officially declared Nicaragua's national flower in 1971.",
+    nationalStatus: "National flower of Nicaragua since 1971.",
+    traditionalUses: "Ornamental plant, traditional medicine (latex used for skin conditions), perfumery, and ceremonial decoration.",
+    conservationStatus: "Least Concern (LC) due to widespread cultivation, but wild populations may face localized threats.",
+    mainThreats: "Habitat loss from deforestation and agricultural expansion, susceptibility to rust fungus (Coleosporium plumeriae), and climate change impacting tropical ecosystems.",
+    pfnoClassification: "National Floral Emblem & Tropical Icon",
+    relevantPollinator: "Moths (especially hawk-moths) are attracted to its strong night-time fragrance, though it offers no nectar.",
+    nahiaraMeasure: {
+      total: 20,
+      max: 25,
+      rank: 12,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 4,
+      vozPublica: 4,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 20,
+    scorfidon: {
+      habitatLoss: { code: "SCF-031", threat: "Habitat Loss", impact: -2, description: "Deforestation and agricultural expansion in Central America reduce natural habitats for wild Plumeria rubra.", guardian: "Forest Protection", guardianPower: 2 },
+      disease: { code: "SCF-032", threat: "Rust Fungus", impact: -1, description: "Plumeria rust fungus can severely defoliate trees, impacting their health and aesthetic value.", guardian: "Disease Management", guardianPower: 1 },
+      climateChange: { code: "SCF-033", threat: "Climate Change", impact: -1, description: "Changes in temperature and rainfall patterns can affect sacuanjoche growth and flowering.", guardian: "Climate Adaptation", guardianPower: 1 },
+      ignorance: { code: "SCF-034", threat: "Ignorance", impact: -1, description: "Lack of public awareness about the ecological role of native Plumeria species and their conservation needs.", guardian: "Environmental Education", guardianPower: 1 },
+      exploitation: { code: "SCF-035", threat: "Unsustainable Harvesting", impact: -1, description: "Over-collection of wild specimens for ornamental trade can deplete local populations.", guardian: "Ethical Sourcing", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Sacuanjoche, SAN-F-083,009, Nicaragua's national flower, holds a Nahiara Measure of 20/25 (Stable). It symbolizes the country's tropical beauty and cultural richness. While widely cultivated, wild populations face threats from habitat loss and diseases like rust fungus, emphasizing the need for conservation and sustainable practices.",
     cultural: "The sacuanjoche is Nicaragua's national flower, symbolizing beauty, grace, and spiritual enlightenment. It represents the country's tropical beauty and cultural richness.",
     conservation: "The sacuanjoche is Nicaragua's national flower with strong cultural significance. Nahiara Measure: 20 / 25 (Stable).",
-    nahiaraMeasure: "20 / 25 (Stable)",
-  },
+    nahiaraMeasureLabel: "20 / 25 (Stable)",
+  }, ,
   {
     id: "JM_LIGNUM_VITAE",
     commonName: "Lignum Vitae",
     scientificName: "Guaiacum officinale",
     country: "Jamaica",
     countryCode: "JM",
+    translationKey: "jamaicaLignum",
     glbPath: createGLBPath("Jamaica", "LignumVitae"),
     sanCode: computeSANCode("Guaiacum officinale", "F"),
     botanicalFamily: "Zygophyllaceae",
     morphology: "Small, blue to purple flowers with five petals. Slow-growing evergreen tree with very hard wood.",
     habitat: "Dry coastal forests and limestone areas in the Caribbean, particularly Jamaica.",
+    distribution: "Native to the Caribbean, including Jamaica, Cuba, Hispaniola, and Puerto Rico, and parts of northern South America.",
+    historicalOrigin: "Known as the 'wood of life,' Lignum Vitae has been valued for centuries for its extremely dense and durable wood, used in shipbuilding and machinery. It was declared Jamaica's national flower in 1962, symbolizing the strength and resilience of the nation.",
+    nationalStatus: "National flower of Jamaica since 1962.",
+    traditionalUses: "Wood (shipbuilding, bearings, mallets), traditional medicine (anti-inflammatory, anti-rheumatic), and ornamental tree.",
+    conservationStatus: "Critically Endangered (CR) due to overexploitation for its valuable timber.",
+    mainThreats: "Illegal logging and overexploitation for its timber, habitat loss from coastal development, and slow growth rate making it vulnerable to harvesting pressure.",
+    pfnoClassification: "National Floral Emblem & Critically Endangered Species",
+    relevantPollinator: "Bees and other insects are attracted to its small, vibrant flowers.",
+    nahiaraMeasure: {
+      total: 18,
+      max: 25,
+      rank: 13,
+      status: "Vulnerable",
+      latidoFloral: 2,
+      memoriaCultural: 4,
+      vozPublica: 4,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 18,
+    scorfidon: {
+      overexploitation: { code: "SCF-036", threat: "Overexploitation (Logging)", impact: -5, description: "Illegal logging and unsustainable harvesting for its valuable timber have severely depleted populations.", guardian: "Anti-Poaching & Sustainable Forestry", guardianPower: 5 },
+      habitatLoss: { code: "SCF-037", threat: "Habitat Loss", impact: -2, description: "Coastal development and land conversion reduce its dry forest habitats.", guardian: "Protected Areas & Reforestation", guardianPower: 2 },
+      slowGrowth: { code: "SCF-038", threat: "Slow Growth Rate", impact: -1, description: "Its extremely slow growth makes it highly vulnerable to harvesting pressure and difficult to recover.", guardian: "Long-Term Conservation Planning", guardianPower: 1 },
+      climateChange: { code: "SCF-039", threat: "Climate Change", impact: -1, description: "Changes in rainfall patterns and increased storm intensity can impact its coastal habitats.", guardian: "Coastal Resilience", guardianPower: 1 },
+      ignorance: { code: "SCF-040", threat: "Ignorance", impact: -1, description: "Lack of public awareness about its critically endangered status and the importance of its protection.", guardian: "Public Awareness Campaigns", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Lignum Vitae, SAN-F-083,010, Jamaica's national flower, has a Nahiara Measure of 18/25 (Vulnerable). Symbolizing strength, it is critically endangered due to severe overexploitation for its timber and habitat loss. Urgent and robust conservation efforts, including anti-logging measures and reforestation, are essential for its survival.",
     cultural: "The lignum vitae is Jamaica's national flower, symbolizing strength, endurance, and the island's natural heritage.",
     conservation: "The lignum vitae is Jamaica's national flower. Nahiara Measure: 18 / 25 (Vulnerable).",
-    nahiaraMeasure: "18 / 25 (Vulnerable)",
-  },
+    nahiaraMeasureLabel: "18 / 25 (Vulnerable)",
+  }, ,
   {
     id: "SC_THISTLE",
     commonName: "Thistle",
     scientificName: "Cirsium vulgare",
     country: "Escocia (Scotland)",
     countryCode: "GB-SCT",
+    translationKey: "scotlandThistle",
     glbPath: createGLBPath("Escocia", "Thistle"),
     sanCode: computeSANCode("Cirsium vulgare", "F"),
     botanicalFamily: "Asteraceae",
     morphology: "Purple or pink flower heads with spiny leaves and stems. Biennial or perennial herb.",
     habitat: "Meadows, grasslands, and disturbed areas throughout Scotland and the British Isles.",
+    distribution: "Native to Europe, Western Asia, and North Africa. Widely naturalized in other temperate regions, including North America and Australia.",
+    historicalOrigin: "The thistle has been Scotland's national emblem for centuries, with a legend dating back to the 13th century where its prickles saved sleeping Scottish warriors from a Norse invasion. It symbolizes resilience, defiance, and protection.",
+    nationalStatus: "National emblem of Scotland since the 15th century.",
+    traditionalUses: "Traditional medicine (diuretic, liver support), culinary (young stems, roots), and a valuable nectar source for pollinators.",
+    conservationStatus: "Least Concern (LC) due to its widespread and often weedy nature.",
+    mainThreats: "While not endangered, intensive agriculture and herbicide use can reduce its presence in traditional habitats, impacting pollinator food sources.",
+    pfnoClassification: "National Emblem & Resilient Pioneer",
+    relevantPollinator: "Bees (Apis mellifera, Bombus spp.), butterflies, and other insects are highly attracted to its nectar-rich flowers.",
+    nahiaraMeasure: {
+      total: 20,
+      max: 25,
+      rank: 14,
+      status: "Stable",
+      latidoFloral: 4,
+      memoriaCultural: 5,
+      vozPublica: 4,
+      escudoProteccion: 4,
+      petaloEsperanza: 3,
+    },
+    araihanScore: 20,
+    scorfidon: {
+      habitatDegradation: { code: "SCF-041", threat: "Habitat Degradation", impact: -1, description: "Intensive agriculture and land management practices reduce suitable habitats for wild thistles.", guardian: "Biodiversity-Friendly Farming", guardianPower: 1 },
+      herbicideUse: { code: "SCF-042", threat: "Herbicide Use", impact: -1, description: "Widespread use of herbicides in agricultural and urban areas negatively impacts thistle populations.", guardian: "Ecological Weed Management", guardianPower: 1 },
+      climateChange: { code: "SCF-043", threat: "Climate Change", impact: -1, description: "Shifts in climate patterns could alter its distribution and competitive ability.", guardian: "Ecosystem Monitoring", guardianPower: 1 },
+      ignorance: { code: "SCF-044", threat: "Ignorance", impact: -1, description: "Often viewed as a weed, its ecological value as a pollinator plant is underestimated.", guardian: "Pollinator Awareness", guardianPower: 1 },
+      fragmentation: { code: "SCF-045", threat: "Habitat Fragmentation", impact: -1, description: "Disconnection of natural areas can limit gene flow and resilience of thistle populations.", guardian: "Ecological Corridors", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Thistle, SAN-F-083,011, Scotland's national emblem, scores 20/25 (Stable) on the Nahiara Measure. Its legendary role in Scottish history makes it a powerful symbol of resilience and protection. While generally robust, modern agricultural practices and herbicide use pose threats to its natural habitats and its role as a vital pollinator plant.",
     cultural: "The thistle is Scotland's national flower, symbolizing resilience, protection, and the Scottish spirit. According to legend, it helped defend Scotland from Norse invaders.",
     conservation: "The thistle is Scotland's national flower with strong cultural identity. Nahiara Measure: 20 / 25 (Stable).",
-    nahiaraMeasure: "20 / 25 (Stable)",
-  },
+    nahiaraMeasureLabel: "20 / 25 (Stable)",
+  }, ,
   {
     id: "DE_CORNFLOWER",
     commonName: "Cornflower",
     scientificName: "Centaurea cyanus",
     country: "Alemania (Germany)",
     countryCode: "DE",
+    translationKey: "germanyCornflower",
     glbPath: createGLBPath("Alemania", "Cornflower"),
     sanCode: computeSANCode("Centaurea cyanus", "F"),
     botanicalFamily: "Asteraceae",
     morphology: "Bright blue flower heads with delicate, fringed petals. Annual herbaceous plant.",
     habitat: "Fields, meadows, and roadsides throughout Europe, particularly Germany.",
+    distribution: "Native to Europe. Historically common in cornfields (hence 'cornflower'), now naturalized in many temperate regions.",
+    historicalOrigin: "The cornflower gained prominence in Prussian culture, becoming a favorite of Queen Louise and later associated with Emperor Wilhelm I. It symbolized hope and resilience, especially during times of adversity. It is considered an unofficial national flower of Germany.",
+    nationalStatus: "Unofficial national flower of Germany, with strong historical and cultural ties.",
+    traditionalUses: "Ornamental plant, traditional medicine (anti-inflammatory, eye washes), natural dye, and culinary decoration.",
+    conservationStatus: "Near Threatened (NT) in some parts of Europe due to agricultural intensification.",
+    mainThreats: "Intensive agriculture, widespread use of herbicides, and habitat loss from modern farming practices.",
+    pfnoClassification: "Cultural Symbol & Agricultural Indicator",
+    relevantPollinator: "Bees (Apis mellifera, Bombus spp.) and butterflies are attracted to its nectar and pollen.",
+    nahiaraMeasure: {
+      total: 19,
+      max: 25,
+      rank: 15,
+      status: "Vulnerable",
+      latidoFloral: 3,
+      memoriaCultural: 4,
+      vozPublica: 4,
+      escudoProteccion: 4,
+      petaloEsperanza: 4,
+    },
+    araihanScore: 19,
+    scorfidon: {
+      agriculturalIntensification: { code: "SCF-046", threat: "Agricultural Intensification", impact: -4, description: "Modern farming practices, including monoculture and deep plowing, destroy its traditional habitat.", guardian: "Agroecology", guardianPower: 4 },
+      herbicideUse: { code: "SCF-047", threat: "Herbicide Use", impact: -3, description: "Widespread use of broad-spectrum herbicides eliminates cornflowers from fields.", guardian: "Sustainable Agriculture", guardianPower: 3 },
+      habitatLoss: { code: "SCF-048", threat: "Habitat Loss", impact: -2, description: "Loss of traditional field margins and meadows due to land consolidation.", guardian: "Biodiversity Corridors", guardianPower: 2 },
+      climateChange: { code: "SCF-049", threat: "Climate Change", impact: -1, description: "Changes in temperature and rainfall patterns can affect its germination and growth cycles.", guardian: "Climate Adaptation", guardianPower: 1 },
+      ignorance: { code: "SCF-050", threat: "Ignorance", impact: -1, description: "Often seen as a weed, its ecological importance as a pollinator plant and cultural symbol is overlooked.", guardian: "Public Awareness", guardianPower: 1 },
+    },
+    nahiaraSynthesis: "The Cornflower, SAN-F-083,012, an unofficial national flower of Germany, holds a Nahiara Measure of 19/25 (Vulnerable). Its delicate blue petals symbolize simplicity and resilience. However, intensive agriculture and herbicide use have severely impacted its populations, highlighting the urgent need for biodiversity-friendly farming practices to protect this cultural and ecological gem.",
     cultural: "The cornflower is Germany's national flower, symbolizing simplicity, modesty, and the German countryside. It was historically associated with Prussian culture.",
-    conservation: "The cornflower is Germany's national flower. Nahiara Measure: 19 / 25 (Stable).",
-    nahiaraMeasure: "19 / 25 (Stable)",
+    conservation: "The cornflower is Germany's national flower. Nahiara Measure: 19 / 25 (Vulnerable).",
+    nahiaraMeasureLabel: "19 / 25 (Vulnerable)",
   },
 ];
 
@@ -351,6 +612,17 @@ function Flower3DViewer({ flower, t, isActive = false }) {
   const [isFlowerLoaded, setIsFlowerLoaded] = useState(false);
   const [flowerError, setFlowerError] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+
+  // Translation helper — uses the same pattern as Globe.js:
+  // countries.<translationKey>.<fieldName>, fallback to raw flower data
+  const tField = (fieldName, fallback) => {
+    if (!flower.translationKey) return fallback;
+    const key = `countries.${flower.translationKey}.${fieldName}`;
+    const translated = t(key);
+    // If next-intl returns the key itself (untranslated), fall back to English data
+    if (!translated || translated === key) return fallback;
+    return translated;
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -617,16 +889,16 @@ function Flower3DViewer({ flower, t, isActive = false }) {
                   <span className="font-semibold">
                     {t('flowers.basicMorphology') || "Basic morphology:"}
                   </span>{" "}
-                  {flower.morphology}
+                  {tField('morphology', flower.morphology)}
                 </p>
                 <p>
                   <span className="font-semibold">
                     {t('flowers.habitatDistribution') || "Habitat & distribution:"}
                   </span>{" "}
-                  {flower.habitat}
+                  {tField('habitat', flower.habitat)}
                 </p>
                 {flower.distribution && (
-                  <p className="text-gray-600 italic">{flower.distribution}</p>
+                  <p className="text-gray-600 italic">{tField('distribution', flower.distribution)}</p>
                 )}
               </div>
             </div>
@@ -638,12 +910,12 @@ function Flower3DViewer({ flower, t, isActive = false }) {
               2. CULTURAL &amp; HISTORICAL DATA
             </h3>
             <p className="text-gray-800 text-sm leading-relaxed mb-3">
-              {flower.cultural}
+              {tField('cultural', flower.cultural)}
             </p>
             {flower.historicalOrigin && (
               <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 mb-3">
                 <span className="text-xs font-bold text-purple-700 uppercase block mb-1">📖 Historical Origin</span>
-                <p className="text-sm text-gray-700 leading-relaxed">{flower.historicalOrigin}</p>
+                <p className="text-sm text-gray-700 leading-relaxed">{tField('historicalOrigin', flower.historicalOrigin)}</p>
               </div>
             )}
             {(flower.nationalStatus || flower.traditionalUses) && (
@@ -651,13 +923,13 @@ function Flower3DViewer({ flower, t, isActive = false }) {
                 {flower.nationalStatus && (
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                     <span className="text-xs font-bold text-gray-500 uppercase block mb-1">National Status</span>
-                    <span className="text-sm text-gray-800">{flower.nationalStatus}</span>
+                    <span className="text-sm text-gray-800">{tField('nationalStatus', flower.nationalStatus)}</span>
                   </div>
                 )}
                 {flower.traditionalUses && (
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
                     <span className="text-xs font-bold text-gray-500 uppercase block mb-1">Traditional Uses</span>
-                    <span className="text-sm text-gray-800">{flower.traditionalUses}</span>
+                    <span className="text-sm text-gray-800">{tField('traditionalUses', flower.traditionalUses)}</span>
                   </div>
                 )}
               </div>
@@ -672,16 +944,16 @@ function Flower3DViewer({ flower, t, isActive = false }) {
                 {flower.conservationStatus && (
                   <div className="bg-white/80 rounded-lg p-4 border border-blue-100">
                     <span className="text-xs font-bold text-blue-700 uppercase block mb-1">🌍 IUCN Status</span>
-                    <span className="text-sm text-gray-800 font-medium">{flower.conservationStatus}</span>
+                    <span className="text-sm text-gray-800 font-medium">{tField('conservationStatus', flower.conservationStatus)}</span>
                   </div>
                 )}
                 {flower.mainThreats && (
                   <div className="bg-white/80 rounded-lg p-4 border border-blue-100">
                     <span className="text-xs font-bold text-blue-700 uppercase block mb-1">⚠️ Main Threats</span>
-                    <span className="text-sm text-gray-700">{flower.mainThreats}</span>
+                    <span className="text-sm text-gray-700">{tField('mainThreats', flower.mainThreats)}</span>
                   </div>
                 )}
-                <p className="text-gray-800 text-sm leading-relaxed col-span-2">{flower.conservation}</p>
+                <p className="text-gray-800 text-sm leading-relaxed col-span-2">{tField('conservation', flower.conservation)}</p>
               </div>
             </div>
           )}
@@ -699,13 +971,13 @@ function Flower3DViewer({ flower, t, isActive = false }) {
                 {flower.pfnoClassification && (
                   <div className="bg-white/80 rounded-lg p-3 border border-violet-100">
                     <span className="text-xs font-bold text-violet-700 uppercase block mb-1">PFNO Classification</span>
-                    <span className="text-sm text-gray-800 font-medium">{flower.pfnoClassification}</span>
+                    <span className="text-sm text-gray-800 font-medium">{tField('pfnoClassification', flower.pfnoClassification)}</span>
                   </div>
                 )}
                 {flower.relevantPollinator && (
                   <div className="bg-white/80 rounded-lg p-3 border border-violet-100">
                     <span className="text-xs font-bold text-violet-700 uppercase block mb-1">🐝 Relevant Pollinator</span>
-                    <span className="text-sm text-gray-700">{flower.relevantPollinator}</span>
+                    <span className="text-sm text-gray-700">{tField('relevantPollinator', flower.relevantPollinator)}</span>
                   </div>
                 )}
               </div>
@@ -788,7 +1060,7 @@ function Flower3DViewer({ flower, t, isActive = false }) {
           {flower.nahiaraSynthesis && (
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
               <h3 className="text-sm uppercase tracking-[0.3em] text-green-700 mb-3">✅ NAHIARA SYNTHESIS</h3>
-              <p className="text-sm text-gray-700 leading-relaxed">{flower.nahiaraSynthesis}</p>
+              <p className="text-sm text-gray-700 leading-relaxed">{tField('nahiaraSynthesis', flower.nahiaraSynthesis)}</p>
             </div>
           )}
 
@@ -798,8 +1070,8 @@ function Flower3DViewer({ flower, t, isActive = false }) {
               <h3 className="text-sm uppercase tracking-[0.3em] text-rose-700 mb-4">
                 {t('flowers.culturalSignificance') || "2-5. CULTURE, CONSERVATION & NAHIARA MEASURE"}
               </h3>
-              <p className="text-gray-800 text-sm leading-relaxed mb-3">{flower.cultural}</p>
-              <p className="text-gray-800 text-sm leading-relaxed">{flower.conservation}</p>
+              <p className="text-gray-800 text-sm leading-relaxed mb-3">{tField('cultural', flower.cultural)}</p>
+              <p className="text-gray-800 text-sm leading-relaxed">{tField('conservation', flower.conservation)}</p>
               <div className="mt-4 text-xs text-gray-600">
                 <p><span className="font-mono font-semibold">S.A.N.:</span> {flower.sanCode}</p>
                 <p>{t('flowers.nahiaraMeasure') || "Nahiara Measure:"} {flower.nahiaraMeasureLabel || flower.nahiaraMeasure}</p>
