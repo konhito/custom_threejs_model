@@ -594,7 +594,12 @@
     "usRose": {
       "name": "United States",
       "flowerName": "Rose",
-      "morphology": "Wide chromatic range (red, pink, white, yellow, lavender), highly fragrant flowers with 5–60+ petals; woody perennial shrub 0.3–3 m tall with thorny stems and pinnately compound leaves.",
+      "morphology": {
+        "color": "Wide chromatic range (red, pink, white, yellow, lavender)",
+        "shape": "Highly fragrant flowers with 5–60+ petals",
+        "size": "Woody perennial shrub 0.3–3 m tall",
+        "lifeCycle": "Thorny stems and pinnately compound leaves"
+      },
       "habitat": "Adaptable to temperate zones worldwide — gardens, parks, roadsides; native species in meadows, forest edges, and rocky hillsides across the Northern Hemisphere.",
       "distribution": "Native to Asia, Europe, North America, and North Africa. The US grows approximately 1.2 billion cut roses annually; major cultivation in California, Oregon, and Texas.",
       "historicalOrigin": "Roses have been cultivated for over 5,000 years. Ancient Romans used them in festivals and perfumery. In 1986, President Ronald Reagan signed legislation designating Rosa as the official national floral emblem of the United States. The rose's symbolic power spans Greek mythology (sacred to Aphrodite), Christianity (the Virgin Mary's flower), and heraldry (the Wars of the Roses in England).",
@@ -611,58 +616,138 @@
     "spainCarnation": {
       "name": "Spain",
       "flowerName": "Carnation",
-      "morphology": "Wide chromatic range (white, pink, red, yellow), highly fragrant flowers with toothed petals; herbaceous perennial 40–80 cm tall with glaucous, linear leaves and branching stems.",
+      "botanicalFamily": "Caryophyllaceae",
+      "commonNames": "Carnation, Clove Pink, Clavel",
+      "botanicalInfo": "A perennial flowering plant known for its fringed petals and sweet, spicy fragrance. It thrives in Spain's Mediterranean climate.",
+      "flowerDescription": "The carnation is Spain's national flower, symbolizing passion, love, and the vibrant spirit of the Spanish people.",
+      "culturalSignificance": "Carnations are central to Spanish culture, often worn during festivals and bullfights. They represent the deep-rooted traditions and artistic soul of Spain.",
+      "historicalOrigin": "The carnation (Dianthus, meaning 'flower of the gods') was cultivated by ancient Greeks and Romans for garlands. In Spain, the red carnation (clavel) became deeply associated with folklore, flamenco dancing, and religious festivals. It represents passion and affection in Spanish culture.",
+      "nationalStatus": "Widely regarded as the national flower of Spain, though deeply rooted in popular culture rather than official absolute decree.",
+      "traditionalUses": "Ornamental use in Spanish festivals, particularly during Semana Santa and flamenco performances; commercial cut-flower industry; traditional medicine uses in teas to relieve stress and inflammation.",
       "habitat": "Mediterranean gardens, ornamental fields, and rocky limestone slopes; native to the Mediterranean basin from southern Europe to western Asia.",
-      "distribution": "Cultivated worldwide; Spain is one of the largest producers, with major cut-flower industries in Andalusia and the Canary Islands. Exported to over 150 countries.",
-      "historicalOrigin": "The carnation has been cultivated for over 2,000 years. The Romans called it 'Flos Jovis' (Flower of Jupiter). In Spain, it became a symbol of royalty in the 16th century when it appeared in Velázquez portraits. The Red Carnation Revolution of Portugal (1974) and the carnation's central role in flamenco culture cemented its political and artistic legacy across the Iberian Peninsula.",
-      "nationalStatus": "Most representative cultural flower of Spain; emblem of Andalusia and iconic symbol of flamenco heritage.",
-      "traditionalUses": "Flamenco ornamentation (worn in hair or lapel); religious festival decoration (Corpus Christi, Semana Santa); perfumery (carnation absolute used in high-end fragrances); edible flowers in Mediterranean cuisine; ornamental cut-flower trade as Spain's most exported bloom.",
-      "conservationStatus": "Least Concern (LC) — IUCN Red List. Wild populations of Dianthus caryophyllus in cliff and rocky habitats are locally protected in Spain.",
-      "mainThreats": "Loss of traditional agricultural meadows; intensive monoculture in cut-flower industry; water scarcity driven by climate change in southern Spain; introduction of fungal pathogens (Fusarium wilt) in commercial cultivation.",
-      "pfnoClassification": "Cultural National Symbol",
-      "relevantPollinator": "Macroglossum stellatarum (hummingbird hawk-moth) and Bombus terrestris (buff-tailed bumblebee) — long-tongued pollinators adapted to the tubular calyx. Also visited by Vanessa atalanta (red admiral butterfly).",
-      "cultural": "The carnation symbolizes true love, passion and resilience. Since the 16th century it has been linked to Spanish royalty and today is inseparable from flamenco, popular festivities and Mediterranean identity.",
-      "conservation": "Although not an official national flower, its cultural weight and extensive cultivation give it a stable Nahiara Measure (19/25), with strong cultural protection but exposure to climate and habitat-loss threats.",
-      "nahiaraSynthesis": "Dianthus caryophyllus integrates into the Nahiara universe evaluated at 19/25 (Stable) in the Nahiara Measure — a flower of deep Mediterranean soul. Its 2,000-year cultivation history, flamenco symbolism, and status as Spain's most exported bloom give it exceptional cultural mass. The carnation stands as the Cultural Memory Reference for the Iberian Peninsula within AquaMundi."
+      "distribution": "Native to the Mediterranean region. Cultivated globally as one of the world's most popular cut flowers. Spain is a major European producer.",
+      "morphology": {
+        "color": "Classic reds and pinks, often bi-colored or speckled in cultivated forms",
+        "shape": "Fringed or deeply toothed petals forming a dense, ruffled bloom",
+        "size": "Blooms 3–5 cm in diameter; stems grow 40–80 cm tall",
+        "lifeCycle": "Herbaceous perennial blooming profusely in warm Mediterranean climates"
+      },
+      "conservationStatus": "Least Concern (LC) for cultivated varieties; some wild Dianthus species face local habitat pressures.",
+      "mainThreats": "Intensive agricultural practices in commercial farming depleting local water tables; climate-change induced droughts in the Mediterranean basin.",
+      "pfnoClassification": "National Cultural Symbol",
+      "relevantPollinator": "Lepidoptera (butterflies and moths) — the deep tubular flowers are specialized for long-tongued pollinators.",
+      "nahiaraSynthesis": "Dianthus caryophyllus integrates into the Nahiara universe evaluated at 19/25 (Stable) in the Nahiara Measure. The Spanish carnation is a vibrant expression of human emotion within AquaMundi, representing the intersection of cultural passion and agricultural resilience in arid Mediterranean climates.",
+      "scorfidon": {
+        "SCF-030": {
+          "threat": "Water Scarcity",
+          "description": "Intensifying Mediterranean droughts threaten traditional un-irrigated cultivation methods.",
+          "guardian": "Water Conservation"
+        },
+        "SCF-031": {
+          "threat": "Monoculture Farming",
+          "description": "Industrial cut-flower production limits genetic diversity.",
+          "guardian": "Crop Diversity"
+        }
+      }
     },
     "indiaLotus": {
       "name": "India",
       "flowerName": "Sacred Lotus",
-      "morphology": "Large, fragrant pink or white flowers up to 30 cm in diameter; rhizomatous aquatic perennial with broad floating leaves. Seeds viable for over 1,000 years — a 1,300-year-old seed germinated successfully in 1994.",
-      "habitat": "Ponds, lakes, and slow-moving rivers throughout India and Southeast Asia; thrives in warm, shallow water with nutrient-rich substrate.",
-      "distribution": "Native to South and Southeast Asia; naturalized in China, Australia, and parts of Europe. Widely cultivated throughout India for religious, culinary, and ornamental use.",
-      "historicalOrigin": "Venerated in the Indian subcontinent since the Vedic period (1500 BCE). Ancient texts including the Rigveda, Bhagavad Gita, and Lotus Sutra cite it as a symbol of creation and cosmic order. On Egyptian-Indian trade routes, the lotus connected two of the world's oldest civilizations. Mughal emperors incorporated lotus motifs into architectural masterpieces such as the Taj Mahal.",
-      "nationalStatus": "Official national flower of India since 1950, adopted at the moment of the Constitution.",
-      "traditionalUses": "Religious offerings and temple decoration; Ayurvedic medicine (seeds, rhizomes, and petals for digestive and cardiac remedies); culinary use (lotus root as staple vegetable; seeds roasted or in desserts); textile fiber from stems (lotus silk); ornamental cultivation in temple ponds and gardens.",
-      "conservationStatus": "Least Concern (LC) — IUCN Red List.",
-      "mainThreats": "Wetland drainage and conversion for agriculture; water pollution from industrial and agricultural runoff; habitat loss through urbanization; over-harvesting of rhizomes and seeds in some regions; competition from invasive aquatic species.",
+      "botanicalFamily": "Nelumbonaceae",
+      "commonNames": "Sacred Lotus, Indian Lotus, Bean of India, Kamal (कमल), Padma (पद्म), Tāmarai (தாமரை)",
+      "botanicalInfo": "An aquatic perennial rhizomatous plant with large, fragrant pink or white flowers that can reach 30 cm in diameter. The lotus possesses a remarkable self-cleaning mechanism (the 'lotus effect') due to its superhydrophobic leaf surface. Its seeds can remain viable for centuries — a 1,300-year-old seed was successfully germinated in 1994.",
+      "flowerDescription": "The Sacred Lotus is India's national flower, officially adopted in 1950. It symbolizes purity, enlightenment, and rebirth — rising from muddy waters to bloom magnificently, representing the journey from darkness to light. Its presence in Indian civilization spans over 5,000 years.",
+      "culturalSignificance": "Sacred in Hinduism and Buddhism, the lotus is the seat of deities Lakshmi, Saraswati, and Brahma. In Buddhist iconography, the Buddha is often depicted sitting upon a lotus throne. The flower represents divine beauty, purity, and spiritual awakening. It appears in the Rigveda, the oldest Hindu scripture, and is woven into art, architecture, and philosophy across South and Southeast Asia.",
+      "historicalOrigin": "The lotus has been revered in the Indian subcontinent since the Vedic period (1500 BCE). Ancient texts including the Rigveda, Bhagavad Gita, and Lotus Sutra reference it as a symbol of creation and cosmic order. In Egyptian-Indian trade routes, the lotus connected two of the world's oldest civilizations. The Mughal emperors incorporated lotus motifs into architectural masterworks including the Taj Mahal.",
+      "nationalStatus": "Official national flower of India since 1950, adopted at the time of the Constitution",
+      "traditionalUses": "Religious offerings and temple decoration; Ayurvedic medicine (seeds, rhizomes, petals used for digestive and cardiac remedies); cuisine (lotus root/kamal kakdi is a staple vegetable; seeds eaten roasted or in desserts); textile fiber from stems (lotus silk); ornamental cultivation in temple tanks and gardens",
+      "habitat": "Shallow, warm, still or slow-moving freshwater — lakes, ponds, marshes, flooded paddy fields, and temple tanks across tropical and subtropical regions",
+      "distribution": "Native to the Indian subcontinent, Southeast Asia, and northern Australia. Widely cultivated across East Asia (China, Japan, Korea, Vietnam) and introduced to Egypt, Iran, and parts of the Americas",
+      "morphology": {
+        "color": "Pink to white petals with a golden-yellow receptacle; leaves are blue-green, peltate, and superhydrophobic",
+        "shape": "Large solitary flowers, actinomorphic, with 20–30 petals arranged spirally; distinctive flat-topped seed pod (torus)",
+        "size": "Flowers 15–30 cm diameter; leaves up to 60 cm; plant height 100–150 cm above water",
+        "lifeCycle": "Perennial aquatic herb with thick rhizomes; flowers June–September in the Northern Hemisphere"
+      },
+      "conservationStatus": "Least Concern (LC) — IUCN Red List",
+      "mainThreats": "Wetland drainage and conversion for agriculture; water pollution from industrial and agricultural runoff; habitat loss due to urbanization; over-harvesting of rhizomes and seeds in some regions; invasive aquatic species competition",
       "pfnoClassification": "Official National Flower",
-      "relevantPollinator": "Apis cerana (Eastern honeybee) and Apis dorsata (giant honeybee) — primary pollinators. Also Sarcophaga (flesh flies) and Ceratina (small carpenter bees). The lotus is thermogenic, generating heat to attract insect pollinators.",
-      "cultural": "Sacred in Hinduism and Buddhism, the lotus represents divine beauty, purity, and spiritual awakening. It rises from muddy waters to bloom magnificently, symbolizing the journey from darkness to light.",
-      "conservation": "The lotus is India's national flower with strong cultural and religious significance. Nahiara Measure: 22 / 25 (Living EcoRoot).",
-      "nahiaraSynthesis": "Nelumbo nucifera integrates into the Nahiara universe with code SAN-F-161,001, evaluated at level 22/25 (Living EcoRoot) in the Nahiara Measure — ranking 7th globally. As the official national flower of India since 1950, the Sacred Lotus is one of humanity's most culturally significant plants, venerated in Hinduism, Buddhism, and ancient Egyptian civilization. Despite threats from wetland loss and climate change, its deep cultural roots, legal protection, and widespread cultivation ensure its continuity."
+      "relevantPollinator": "Coleoptera (beetles) — the lotus employs thermogenic cantharophily, raising its flower temperature to attract beetle pollinators. Also visited by Apis cerana (Asian honeybee).",
+      "nahiaraSynthesis": "Nelumbo nucifera integrates into the Nahiara universe with code SAN-F-161,001, evaluated at level 22/25 (Living EcoRoot) in the Nahiara Measure — ranking 7th globally. As the official national flower of India since 1950, the Sacred Lotus is one of humanity's most culturally significant plants, revered across Hinduism, Buddhism, and ancient Egyptian civilization. Despite threats from wetland loss and climate change, its deep cultural roots, legal protection, and widespread cultivation ensure its persistence. The lotus serves as the Master Reference Model for the AquaMundi flower system.",
+      "scorfidon": {
+        "SCF-001": {
+          "threat": "Climate Change",
+          "description": "Rising temperatures and altered monsoon patterns threaten wetland ecosystems essential for lotus habitats.",
+          "guardian": "Natural Balance"
+        },
+        "SCF-002": {
+          "threat": "Deforestation",
+          "description": "Clearing of forested wetlands disrupts the interconnected water systems that sustain lotus populations.",
+          "guardian": "Reforestation"
+        },
+        "SCF-003": {
+          "threat": "Exploitation",
+          "description": "Over-harvesting of lotus rhizomes and seeds for commercial purposes; uncontrolled tourism at sacred lotus lakes.",
+          "guardian": "Floral Justice"
+        },
+        "SCF-004": {
+          "threat": "Ignorance",
+          "description": "Urban populations losing connection with traditional wetland ecosystems and the cultural significance of lotus cultivation.",
+          "guardian": "Education"
+        },
+        "SCF-005": {
+          "threat": "Intentional Fire",
+          "description": "Deliberate burning of wetland margins for land conversion destroys lotus seed banks and rhizome networks.",
+          "guardian": "Water"
+        }
+      }
     },
     "pakistanJasmine": {
       "name": "Pakistan",
       "flowerName": "Jasmine",
-      "morphology": "Small, star-shaped white flowers (2 cm diameter) with a sweet, intoxicating fragrance from benzyl acetate compounds; climbing or trailing deciduous shrub reaching 3–10 m with pinnate leaves of 5–9 leaflets.",
-      "habitat": "Gardens, parks, hedgerows, and cultivated areas throughout Pakistan and South Asia; native to the Himalayas, the Caucasus, and western China at altitudes of 1,500–4,000 m.",
-      "distribution": "Native to the Himalayas and adjacent regions; naturalized across South Asia, the Mediterranean, and parts of the Americas. Pakistan is a major producer of jasmine essential oil in the region.",
-      "historicalOrigin": "Jasmine was brought to South Asia along ancient Silk Road trade routes. In Mughal India, it adorned imperial gardens and was used in attar (essential oil) production. In Pakistan's cultural memory, jasmine—known as 'Chambeli' in Urdu—appears in classical poetry by Mirza Ghalib and Allama Iqbal, symbolizing the beloved and spiritual longing. It was officially recognized as the national flower of Pakistan after the country's founding in 1947.",
+      "botanicalFamily": "Oleaceae",
+      "commonNames": "Common Jasmine, Poet's Jasmine, Chambeli",
+      "botanicalInfo": "A fragrant flowering plant with small, white, star-shaped flowers. Known for its sweet, intoxicating scent, jasmine is widely cultivated in Pakistan's gardens and parks.",
+      "flowerDescription": "The jasmine is Pakistan's national flower, symbolizing purity, grace, and beauty. It represents the country's rich cultural heritage and natural fragrance.",
+      "culturalSignificance": "Jasmine holds a special place in Pakistani culture, often used in religious ceremonies and traditional celebrations. It symbolizes love, beauty, and spiritual purity.",
+      "historicalOrigin": "Jasmine was brought to South Asia along ancient Silk Road trade routes. In Mughal India, it adorned imperial gardens and was used in attar (essential oil) production. In Pakistan, 'Chambeli' appears in classical Urdu poetry by Mirza Ghalib and Allama Iqbal, symbolizing spiritual longing.",
       "nationalStatus": "Official national flower of Pakistan.",
-      "traditionalUses": "Garlands for weddings and religious ceremonies; jasmine attar and essential oil production; hair decoration for women (gajra); brewing of jasmine tea; flavoring in South Asian sweets and welcoming rituals for guests; Ayurvedic and Unani medicine for skin conditions and stress relief.",
+      "traditionalUses": "Garlands for weddings and religious ceremonies; essential oil production; hair decoration for women (gajra); brewing of jasmine tea; Ayurvedic and Unani medicine.",
+      "habitat": "Gardens, parks, hedgerows, and cultivated areas throughout Pakistan and South Asia; native to the Himalayas, the Caucasus, and western China at altitudes of 1,500–4,000 m.",
+      "distribution": "Native to the Himalayas and adjacent regions; naturalized across South Asia, the Mediterranean, and parts of the Americas. Pakistan is a major producer of jasmine essential oil.",
+      "morphology": {
+        "color": "Pure white, star-shaped blossoms known for intense evening fragrance",
+        "shape": "Tubular base opening into five (or more) spreading petals",
+        "size": "Flowers 2-3 cm; sprawling climbing shrub grows up to 10m",
+        "lifeCycle": "Perennial deciduous climbing shrub blooming heavily in summer"
+      },
       "conservationStatus": "Least Concern (LC) — IUCN Red List. Wild populations in Himalayan foothills are stable.",
-      "mainThreats": "Habitat loss in Himalayan foothills from agricultural expansion; climate change altering bloom timing and fragrance intensity; land degradation in Pakistan's river valleys; over-collection from wild populations for essential oil industry.",
+      "mainThreats": "Habitat loss in foothills from agricultural expansion; climate change altering bloom timing; over-collection for essential oil industry.",
       "pfnoClassification": "Official National Flower",
-      "relevantPollinator": "Sphinx moths (Sphingidae) — jasmine is primarily night-pollinated by long-tongued hawk-moths attracted by its nocturnal fragrance. Also visited by Apis mellifera during daytime.",
-      "cultural": "Jasmine holds a special place in Pakistani culture, often used in religious ceremonies and traditional celebrations. It symbolizes purity, grace, beauty, and spiritual devotion.",
-      "conservation": "The jasmine is Pakistan's national flower with strong cultural protection. Nahiara Measure: 20 / 25 (Stable).",
-      "nahiaraSynthesis": "Jasminum officinale integrates into the Nahiara universe evaluated at 20/25 (Stable) in the Nahiara Measure. As Pakistan's official national flower, jasmine carries extraordinary cultural weight in Urdu poetry, Sufi tradition, and Pakistani daily life. Its nocturnal perfume and symbolic depth make it one of the most lyrically potent flowers in the AquaMundi system. The principal challenge is the intersection of climate change and over-collection threatening wild Himalayan populations."
+      "relevantPollinator": "Sphingidae (Sphinx moths) — primarily night-pollinated by long-tongued hawk-moths attracted by its nocturnal fragrance.",
+      "nahiaraSynthesis": "Jasminum officinale integrates into the Nahiara universe evaluated at 20/25 (Stable) in the Nahiara Measure. As Pakistan's official national flower, jasmine carries extraordinary cultural weight in Urdu poetry and Sufi tradition. Its nocturnal perfume makes it one of the most lyrically potent flowers in the AquaMundi system.",
+      "scorfidon": {
+        "SCF-060": {
+          "threat": "Urban Heat Islands",
+          "description": "Increasing temperatures in dense cities interfere with nocturnal scent release.",
+          "guardian": "Cooling Urban Canopies"
+        },
+        "SCF-061": {
+          "threat": "Over-harvesting",
+          "description": "Unregulated picking of wild flowers for essential oils reduces natural seed set.",
+          "guardian": "Sustainable Harvesting"
+        }
+      }
     },
     "peruCantuta": {
       "name": "Peru",
       "flowerName": "Cantuta",
-      "morphology": "Pendulous tubular flowers in vivid combinations of red, pink, yellow, and white; evergreen shrub or small tree 1–3 m tall with small, ovate, softly hairy leaves and arching branches that make the flowers cascade downward.",
+      "morphology": {
+        "color": "Vivid combinations of red, pink, yellow, and white",
+        "shape": "Pendulous tubular flowers",
+        "size": "Evergreen shrub or small tree 1–3 m tall",
+        "lifeCycle": "Small, ovate, softly hairy leaves and arching branches"
+      },
       "habitat": "High-altitude Andean yungas and cloud forest margins between 2,000 and 3,500 m above sea level; grows on rocky slopes, ravines, and forest edges in Peru, Bolivia, and northern Chile.",
       "distribution": "Endemic to the Andes of South America — primarily Peru and Bolivia. A sacred plant of the Inca Empire, now legally protected in both countries as a national symbol.",
       "historicalOrigin": "Known as 'Qantu' in Quechua, the cantuta was the most sacred flower of the Inca Empire, used exclusively in ceremonies dedicated to Inti (the Sun God) and worn by Inca royalty. Its tricolor flowers (red, yellow, white) mirror the Andean Wiphala flag. It appears in ancient Tiwanaku textiles and ceramics dated to 600–1000 CE. In the 19th century, Peruvian independence heroes adopted the cantuta as a symbol of freedom and Andean identity, cementing its place as national flower.",
@@ -679,7 +764,12 @@
     "tanzaniaClove": {
       "name": "Tanzania",
       "flowerName": "Clove",
-      "morphology": "Small, aromatic flower buds (1–2 cm) with crimson petals enclosing a cream-colored center; evergreen tree 8–15 m tall with glossy, elliptical leaves and characteristic clove fragrance from eugenol-rich oils throughout all parts.",
+      "morphology": {
+        "color": "Crimson petals enclosing a cream-colored center",
+        "shape": "Small, aromatic flower buds",
+        "size": "Evergreen tree 8–15 m tall",
+        "lifeCycle": "Glossy, elliptical leaves and characteristic clove fragrance"
+      },
       "habitat": "Tropical humid coastal environments with rich volcanic soil, warm temperatures, and high rainfall; native to the Maluku Islands (Indonesia); cultivated primarily on Zanzibar, Pemba, and the Tanzanian mainland.",
       "distribution": "Tanzania (primarily Zanzibar and Pemba) produces approximately 75% of the world's cloves. Other producers include Indonesia, Madagascar, and Sri Lanka.",
       "historicalOrigin": "Cloves were among the most valuable spices in the ancient world — Arab traders brought them to Europe and the Middle East from the 4th century CE. The Portuguese, Dutch, and eventually the British fought wars over Zanzibar's clove monopoly in the 16th–19th centuries. Sultan Said of Oman introduced clove cultivation to Zanzibar in 1818, transforming the island's economy.",
@@ -696,7 +786,12 @@
     "nicaraguaSacuanjoche": {
       "name": "Nicaragua",
       "flowerName": "Sacuanjoche",
-      "morphology": "Fragrant, waxy, pinwheel-shaped flowers 6–10 cm in diameter in white, pink, yellow, or red; the flower center is always a contrasting warm yellow. Deciduous tree 5–8 m tall with thick, succulent branches.",
+      "morphology": {
+        "color": "White, pink, yellow, or red with a contrasting warm yellow center",
+        "shape": "Fragrant, waxy, pinwheel-shaped flowers",
+        "size": "Flowers 6–10 cm in diameter; tree 5–8 m tall",
+        "lifeCycle": "Deciduous tree with thick, succulent branches"
+      },
       "habitat": "Tropical and subtropical dry forests, garden margins, and coastal areas throughout Central America and the Caribbean; thrives in well-drained soils with full sun and seasonal drought.",
       "distribution": "Native to Mexico, Central America, and the Caribbean; widely naturalized throughout tropical Asia, the Pacific Islands, and East Africa.",
       "historicalOrigin": "The Nahuatl word 'sacuanjoche' predates Spanish colonization. Pre-Columbian Mesoamerican peoples used plumeria in ritual offerings to rain and fertility deities. In Nicaragua, the sacuanjoche was officially declared the national flower in 1971. It remains deeply woven into Nicaraguan folk poetry, including the work of Rubén Darío, the founder of Modernismo, who celebrated its fragrance.",
@@ -713,41 +808,86 @@
     "jamaicaLignum": {
       "name": "Jamaica",
       "flowerName": "Lignum Vitae",
-      "morphology": "Small, star-shaped blue to purple flowers (2–3 cm) with five petals and prominent yellow anthers. Slow-growing evergreen tree 3–10 m tall with the hardest and densest wood of any tree in the world (density: 1.38 g/cm³, so heavy it sinks in water).",
-      "habitat": "Dry coastal forests, limestone karst scrubland, and tropical dry woodlands throughout the Caribbean; tolerates salt spray, alkaline soils, and seasonal drought.",
-      "distribution": "Native to the Caribbean (Jamaica, Cuba, Hispaniola, Puerto Rico) and northern South America (Colombia, Venezuela). Now fragmented due to historical timber extraction.",
-      "historicalOrigin": "Named 'Lignum Vitae' (Latin: Wood of Life) by Spanish colonizers who believed its resin could cure syphilis — a claim that launched a 16th-century global medical trade worth millions. In Jamaica, the lignum vitae became the national flower and is embedded in the national coat of arms with the motto 'Out of Many, One People.'",
-      "nationalStatus": "Official national flower of Jamaica; appears on the national coat of arms.",
-      "traditionalUses": "Guaiac resin for Caribbean folk medicine (joints, respiratory, skin); world's hardest wood for marine bearings, bowling balls, and tool handles; bark used in traditional Jamaican bush medicine for arthritis.",
-      "conservationStatus": "Endangered (EN) — IUCN Red List. Populations have declined by over 50% in the last 150 years due to overlogging. CITES Appendix II listed.",
-      "mainThreats": "Historical over-harvesting for timber and medicinal resin; habitat loss from coastal development and tourism infrastructure; very slow growth rate limiting population recovery; drought stress from climate change.",
-      "pfnoClassification": "Official National Flower — Endangered Species",
-      "relevantPollinator": "Apis mellifera (honeybees) and several species of Bombus (bumblebees) visiting the flower's abundant pollen.",
-      "cultural": "The lignum vitae is Jamaica's national flower, symbolizing strength, endurance, and the island's natural heritage.",
-      "conservation": "The lignum vitae is Jamaica's national flower. Nahiara Measure: 18 / 25 (Vulnerable).",
-      "nahiaraSynthesis": "Guaiacum officinale integrates into the Nahiara universe evaluated at 18/25 (Vulnerable) in the Nahiara Measure — one of AquaMundi's alarm flowers. As Jamaica's national flower and an IUCN Endangered species, the lignum vitae represents the devastating paradox of a tree so valuable it was almost destroyed by that very value. Its 'Wood of Life' name contrasts sharply with its current endangered status. Within AquaMundi, the lignum vitae is the Caribbean Guardian of Resilience."
+      "botanicalFamily": "Zygophyllaceae",
+      "commonNames": "Lignum Vitae, Tree of Life, Guaiacum",
+      "botanicalInfo": "A slow-growing evergreen tree producing clusters of star-shaped blue-purple flowers. It yields one of the densest and hardest woods in the world, and its resin (guaiac) has been used medicinally for centuries.",
+      "flowerDescription": "The Lignum Vitae is Jamaica's national flower, bearing delicate blue-purple blossoms. Its name means 'wood of life' in Latin, reflecting the tree's legendary medicinal properties.",
+      "culturalSignificance": "Adopted as Jamaica's national flower in 1971, the Lignum Vitae represents strength, resilience, and healing — qualities deeply valued in Jamaican culture. The tree is now protected due to over-harvesting.",
+      "historicalOrigin": "Lignum Vitae ('Tree of Life' in Latin) was discovered by Columbus and highly prized in Renaissance Europe as a supposed cure for syphilis. It was adopted as Jamaica's national flower upon independence in 1962.",
+      "nationalStatus": "Official national flower of Jamaica.",
+      "traditionalUses": "The densest trade wood known, historically used for ship propeller shafts, clocks, and police batons; medicinal resin used for arthritis and coughs.",
+      "habitat": "Dry coastal forests, limestone karst scrubland, and tropical dry woodlands throughout the Caribbean; tolerates salt spray and seasonal drought.",
+      "distribution": "Native to the Caribbean islands and northern coast of South America. Jamaica holds significant native populations.",
+      "morphology": {
+        "color": "Vibrant blue to purple blossoms that fade to pale silvery-white",
+        "shape": "Five distinct, slightly twisted petals forming a star-like cluster",
+        "size": "Flowers 2 cm across; slow-growing small tree reaching 10m",
+        "lifeCycle": "Evergreen slow-growing hardwood tree, flowering primarily in spring"
+      },
+      "conservationStatus": "Endangered (EN) — IUCN Red List. Decimated by centuries of over-harvesting for its valuable timber and resin.",
+      "mainThreats": "Coastal development and destruction of dry forest habitats; historical over-exploitation; slow growth rate hindering population recovery.",
+      "pfnoClassification": "Official National Flower",
+      "relevantPollinator": "Hymenoptera (bees) and Lepidoptera (butterflies) — specifically native Caribbean solitary bees.",
+      "nahiaraSynthesis": "Guaiacum officinale integrates into the Nahiara universe evaluated at 20/25 (Stable) in the Nahiara Measure. Jamaica's 'Tree of Life' represents unparalleled botanical resilience and the heavy ecological cost of historical exploitation in AquaMundi.",
+      "scorfidon": {
+        "SCF-100": {
+          "threat": "Timber Poaching",
+          "description": "Illegal logging of mature trees for carving and specialized high-density wood products.",
+          "guardian": "Forest Patrols"
+        },
+        "SCF-101": {
+          "threat": "Coastal Development",
+          "description": "Hotels and infrastructure destroying its native rocky dry coastal habitat.",
+          "guardian": "Protected Coastlines"
+        }
+      }
     },
     "scotlandThistle": {
       "name": "Scotland",
       "flowerName": "Thistle",
-      "morphology": "Vivid purple or pink globular flower heads 2–4 cm across, borne on spiny-winged stems; biennial or perennial herb 50–150 cm tall with deeply lobed, spiny leaves covered in grey-green hairs.",
-      "habitat": "Meadows, grasslands, disturbed ground, roadsides, and field margins throughout Scotland and the British Isles; tolerates poor, rocky soils and coastal wind exposure characteristic of Highland terrain.",
-      "distribution": "Native to Europe and western Asia; naturalized on every inhabited continent. In Scotland, it grows from sea level to 900 m altitude, from the Borders to Orkney.",
-      "historicalOrigin": "The thistle became Scotland's national emblem through a legendary battle in the 13th century: Norse invaders attempted a night raid on a Scottish camp — a barefoot soldier cried out after stepping on a thistle, alerting the Scots who repelled the attack. The first documented use of the thistle as a Scottish royal emblem dates to 1470 under King James III.",
-      "nationalStatus": "Official national emblem of Scotland; appears on the Royal Coat of Arms, the Order of the Thistle, and the Great Seal of Scotland.",
-      "traditionalUses": "Edible — young stems and leaves used in Scottish folk cooking; flower heads brewed in thistle tea for liver and kidney health; thistle seeds historically pressed for oil; roots used in folk medicine as a tonic.",
-      "conservationStatus": "Least Concern (LC) — IUCN Red List. Abundant throughout Britain.",
-      "mainThreats": "Herbicide spraying in intensive agricultural zones; agricultural 'weed' classification conflicts with conservation value; loss of unimproved grassland habitat; climate change altering bloom timing.",
-      "pfnoClassification": "Official National Emblematic Plant",
-      "relevantPollinator": "Bombus hortorum (garden bumblebee) and Bombus muscorum (moss carder bee) — specialist long-tongued bumblebees that co-evolved with thistle florets. Also important for Vanessa cardui (painted lady) and Aglais io (peacock butterfly).",
-      "cultural": "The thistle is Scotland's national flower, symbolizing resilience, protection, and the Scottish spirit. According to legend, it helped defend Scotland from Norse invaders.",
-      "conservation": "The thistle is Scotland's national flower with strong cultural identity. Nahiara Measure: 20 / 25 (Stable).",
-      "nahiaraSynthesis": "Cirsium vulgare integrates into the Nahiara universe evaluated at 20/25 (Stable) in the Nahiara Measure. As Scotland's national emblem for over 700 years, the thistle embodies one of nature's most elegant paradoxes: extreme beauty hidden within formidable defense. Its ecological generosity — hosting over 40 species of butterflies, bees, and birds — mirrors the cultural generosity of Scottish nationalism."
+      "botanicalFamily": "Asteraceae",
+      "commonNames": "Cotton Thistle, Scotch Thistle, Heraldic Thistle",
+      "botanicalInfo": "A robust biennial growing up to 2.5 m tall, with spiny-winged stems and large spherical flower heads of violet-purple florets. It thrives in dry, disturbed ground across Scotland's lowlands and is a vital nectar source for pollinators.",
+      "flowerDescription": "The Thistle is Scotland's national emblem, representing resilience, defiance, and nobility. Its prickly exterior conceals a striking purple flower, much like the fierce spirit of the Scottish people.",
+      "culturalSignificance": "Legend holds that a Norse army's night raid was foiled when a barefoot Viking stepped on a thistle and cried out, alerting the Scots. It has been Scotland's royal emblem since the 13th century and features on the Order of the Thistle, the nation's highest honour.",
+      "historicalOrigin": "According to legend, during a night attack by Norsemen in the 13th century (Battle of Largs, 1263), a barefoot Viking stepped on a thistle and cried out, alerting the sleeping Scottish clans. The thistle was subsequently adopted as the emblem of Scotland.",
+      "nationalStatus": "Official national emblem of Scotland since the reign of Alexander III.",
+      "traditionalUses": "Heraldic symbol used on coins, coats of arms, and the Order of the Thistle; historically used in herbal medicine for digestive issues; the down was used to stuff pillows.",
+      "habitat": "Meadows, grasslands, disturbed ground, roadsides, and field margins throughout Scotland and the British Isles; tolerates poor, rocky soils.",
+      "distribution": "Native to Europe and Western Asia. Introduced widely across the globe.",
+      "morphology": {
+        "color": "Vivid magenta to purple florets emerging from a silver-green base",
+        "shape": "Dense composite flower head protected by formidable, sharp spiny bracts",
+        "size": "Flower heads 3-5 cm; stems grow 1-2.5m tall",
+        "lifeCycle": "Biennial herbaceous plant forming a rosette year 1 and flowering year 2"
+      },
+      "conservationStatus": "Least Concern (LC). A highly successful and adaptable plant.",
+      "mainThreats": "Habitat management practices targeting it as an agricultural weed; intensive herbicide use.",
+      "pfnoClassification": "National Emblem",
+      "relevantPollinator": "Bombus (Bumblebees) and Lepidoptera (butterflies) like the Painted Lady butterfly; an exceptionally rich nectar source.",
+      "nahiaraSynthesis": "Onopordum acanthium integrates into the Nahiara universe evaluated at 18/25 (Stable) in the Nahiara Measure. A symbol of rugged independence, the Scottish thistle in AquaMundi demonstrates how an ordinary 'weed' can become an extraordinary cultural guardian.",
+      "scorfidon": {
+        "SCF-110": {
+          "threat": "Herbicide Campaigns",
+          "description": "Vigorous agricultural eradication programs targeting the plant as a noxious weed.",
+          "guardian": "Pollinator Margins"
+        },
+        "SCF-111": {
+          "threat": "Habitat Homogenization",
+          "description": "Conversion of rough pasture into uniform modern agricultural fields.",
+          "guardian": "Rewilding"
+        }
+      }
     },
     "germanyCornflower": {
       "name": "Germany",
       "flowerName": "Cornflower",
-      "morphology": "Brilliant electric-blue composite flower heads 2–4 cm across with fringed ray florets surrounding purple disc florets; annual or biennial herb 20–90 cm tall with narrow, lanceolate grey-green leaves and wiry, branching stems.",
+      "morphology": {
+        "color": "Brilliant electric-blue with purple disc florets",
+        "shape": "Composite flower heads with fringed ray florets",
+        "size": "Heads 2–4 cm across; herb 20–90 cm tall",
+        "lifeCycle": "Annual or biennial herb with lanceolate leaves and wiry stems"
+      },
       "habitat": "Traditionally a weed of cereal grain fields (rye, wheat, barley) throughout Central Europe; now primarily found in wildflower meadows and conservation grasslands.",
       "distribution": "Native to southeastern Europe and southwestern Asia; historically abundant as a cornfield weed across all of Europe. Now rare in agricultural contexts; common as an ornamental and in wildflower seed mixes globally.",
       "historicalOrigin": "The cornflower's deep blue color inspired its selection as the national flower of Germany. In Prussian tradition, Queen Louise of Prussia (1776–1810) hid her children in a cornfield during Napoleon's advance, weaving cornflower wreaths to keep them calm. Her son, later Kaiser Wilhelm I, adopted the cornflower as a lifelong symbol. By the 20th century the cornflower had become associated with both German Romanticism and working-class movements.",
@@ -764,7 +904,12 @@
     "canadaMaple": {
       "name": "Canada",
       "flowerName": "Maple Leaf",
-      "morphology": "Distinctive 5-lobed palmate leaf, green in summer turning brilliant red, orange, and gold in autumn; deciduous tree 20–40 m tall with grey furrowed bark and paired winged seeds (samaras).",
+      "morphology": {
+        "color": "Green in summer turning brilliant red, orange, and gold in autumn",
+        "shape": "Distinctive 5-lobed palmate leaf",
+        "size": "Deciduous tree 20–40 m tall",
+        "lifeCycle": "Grey furrowed bark and paired winged seeds (samaras)"
+      },
       "habitat": "Temperate deciduous and mixed forests of eastern North America; thrives in well-drained, fertile soils with cold winters and warm humid summers — from Nova Scotia to Manitoba and south through the Appalachians.",
       "distribution": "Native to eastern North America; the Sugar Maple (Acer saccharum) is the principal maple in Canada. Ten native maple species grow across Canada from British Columbia to Nova Scotia.",
       "historicalOrigin": "The maple leaf became a symbol of Canadian identity as early as 1700. French Canadians adopted it as an emblem in the 1800s. It appeared on Canadian coins since 1876, and became the central emblem of the Canadian flag on February 15, 1965 — replacing the Union Jack and French fleur-de-lis with a uniquely Canadian symbol.",
@@ -781,104 +926,224 @@
     "southAfricaProtea": {
       "name": "South Africa",
       "flowerName": "King Protea",
-      "morphology": "Enormous bowl-shaped flower head 12–30 cm in diameter with pink to crimson bracts surrounding a dome of flowers; woody shrub 0.5–2 m with large, leathery dark green glossy leaves and thick fire-resistant stems.",
-      "habitat": "Fynbos biome of the Cape Floral Kingdom — rocky, well-drained sandstone and granite soils with a Mediterranean climate of hot dry summers and cool wet winters; altitude 0–1,500 m.",
-      "distribution": "Endemic to South Africa's Western and Eastern Cape provinces. Requires the unique Fynbos biome conditions. Also cultivated commercially in New Zealand, Australia, Hawaii, and Israel for the cut flower industry.",
-      "historicalOrigin": "The King Protea has been part of the Cape Floral Kingdom for millions of years. Formally declared South Africa's national flower in 1976. The genus Protea was named by Carl Linnaeus after the Greek god Proteus — who could change form — reflecting the extraordinary variety within the family. The flower features on the South African coat of arms and the Proteas cricket team badge.",
+      "botanicalFamily": "Proteaceae",
+      "commonNames": "King Protea, Giant Protea, Honeypot",
+      "botanicalInfo": "A woody shrub with thick stems and large dark green glossy leaves. The flower heads are huge, bowl-shaped, and surrounded by bracts.",
+      "flowerDescription": "The King Protea is South Africa's national flower, symbolizing diversity and courage. It has the largest flower head in the genus.",
+      "culturalSignificance": "It represents the beauty and resilience of the land. Its name comes from the Greek god Proteus due to the many shapes and colors of the flowers.",
+      "historicalOrigin": "The King Protea has been part of the Cape Floral Kingdom for millions of years. It was formally declared South Africa's national flower in 1976. The genus Protea was named by Carl Linnaeus after the Greek god Proteus — who could change form — reflecting the extraordinary variety within the family. The flower features on the South African coat of arms and the Proteas cricket team badge.",
       "nationalStatus": "Official national flower of South Africa since 1976; features on coins and the national cricket team badge.",
-      "traditionalUses": "Ornamental flower in the global cut flower industry; Cape Fynbos honey from protea nectar is a specialty product; seeds eaten historically by indigenous Khoisan peoples; ecological keystone sustaining sugarbirds and sunbirds.",
-      "conservationStatus": "Least Concern (LC) globally — IUCN Red List. However, the Cape Floral Kingdom (Fynbos biome) is a global biodiversity hotspot with many related endemic species under threat.",
-      "mainThreats": "Invasive alien plants (Australian wattles, pines, eucalyptus) smothering Fynbos habitat; inappropriate fire regimes; urban sprawl around Cape Town; climate change altering rainfall patterns; over-collection for the cut flower trade.",
+      "traditionalUses": "Ornamental flower in the global cut flower industry; Fynbos ecosystem keystone for local pollinators; seeds eaten historically by indigenous peoples; honey produced from protea nectar is a Cape specialty.",
+      "habitat": "Fynbos shrubland on acidic, nutrient-poor soils in mountainous and coastal regions of the southwestern Cape.",
+      "distribution": "Endemic to the Cape Floristic Region of South Africa. Cultivated commercially as a cut flower globally, notably in Australia, Hawaii, and Israel.",
+      "morphology": {
+        "color": "Bracts range from pale pink to deep crimson; central flower mass is silvery-white to pink",
+        "shape": "Enormous bowl-to-globe-shaped composite flower head surrounded by stiff petal-like bracts",
+        "size": "Flower heads 12-30 cm across; woody shrub grows 1-2m tall",
+        "lifeCycle": "Evergreen woody shrub adapted to survive and regenerate after wildfires"
+      },
+      "conservationStatus": "Least Concern (LC) globally — IUCN Red List. However, the Cape Floral Kingdom (Fynbos biome) is a global biodiversity hotspot with many related species under threat.",
+      "mainThreats": "Invasive alien plants smothering Fynbos habitat; inappropriate fire regimes; urban sprawl; climate change altering rainfall patterns in the Cape; over-collection for the cut flower trade.",
       "pfnoClassification": "Official National Flower",
-      "relevantPollinator": "Cape Sugarbird (Promerops cafer) and Orange-breasted Sunbird (Nectarinia violacea) — the King Protea is primarily bird-pollinated. Also visited by Cape honey bees (Apis mellifera capensis) and monkey beetles.",
-      "cultural": "The King Protea is South Africa's national flower, symbolizing diversity, courage, and the beauty of the Cape. It represents the country's extraordinary natural heritage.",
-      "conservation": "The King Protea is South Africa's national flower with a global conservation status of Least Concern. Nahiara Measure: 21 / 25 (Stable).",
-      "nahiaraSynthesis": "Protea cynaroides integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. The King Protea is the crown jewel of the Cape Floral Kingdom, one of the world's six plant kingdoms and the most botanically diverse for its area. As South Africa's national flower, it bridges ancient evolutionary lineages and modern conservation imperatives in the AquaMundi system."
+      "relevantPollinator": "Sugarbirds (Promerops cafer) and sunbirds (Nectarinia spp.) — the King Protea is primarily bird-pollinated. Also visited by Cape honey bees (Apis mellifera capensis).",
+      "nahiaraSynthesis": "Protea cynaroides integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. The King Protea is a symbol of the Cape Floral Kingdom, one of the world's six plant kingdoms and the most botanically diverse. As South Africa's national flower, it bridges ancient evolutionary lineages and modern conservation imperatives.",
+      "scorfidon": {
+        "SCF-040": {
+          "threat": "Invasive Alien Plants",
+          "description": "Fast-growing invasive trees like pines and wattles outcompete the Protea for water and light.",
+          "guardian": "Habitat Restoration"
+        },
+        "SCF-041": {
+          "threat": "Unnatural Fire Regimes",
+          "description": "Fires that burn too frequently prevent the slow-growing Protea from reaching maturity.",
+          "guardian": "Ecological Fire Management"
+        }
+      }
     },
     "colombiaOrchid": {
       "name": "Colombia",
-      "flowerName": "Christmas Orchid",
-      "morphology": "Large, showy flowers 10–20 cm in diameter with soft lavender to white petals, a distinctive purple-veined lip (labellum) with yellow center, and a strong sweet fragrance; epiphytic pseudobulb plant with thick, leathery leaves.",
-      "habitat": "Andean cloud forests and wet montane forests of Colombia between 1,500–2,500 m altitude; grows attached to tree branches in humid, misty conditions with abundant rainfall and dappled light.",
-      "distribution": "Endemic to the Colombian Andes. Wild populations remain in the departments of Antioquia, Cundinamarca, and Boyacá. The Colombian Andes hold over 4,000 orchid species — more than any other country on Earth.",
-      "historicalOrigin": "Declared Colombia's national flower on October 16, 1936. Named after Dr. José Jerónimo Triana, a pioneering 19th-century Colombian botanist. Known as the Christmas Orchid (Orquídea de Navidad) as it blooms in December. The orchid became Colombia's most recognized botanical symbol internationally through the work of early 20th-century botanists who introduced it to European collections.",
+      "flowerName": "Cattleya Trianae",
+      "botanicalFamily": "Orchidaceae",
+      "commonNames": "Christmas Orchid, Flor de Mayo",
+      "botanicalInfo": "An epiphytic orchid that grows on trees in the cloud forests of the Andes. It produces large, fragrant flowers.",
+      "flowerDescription": "The Cattleya trianae orchid is Colombia's national flower, chosen for its beauty and because the colors of its lip (yellow, blue, and red) match the Colombian flag.",
+      "culturalSignificance": "Named after Colombian botanist Jerónimo Triana, it represents the rich biodiversity of Colombia, which has the most orchid species in the world.",
+      "historicalOrigin": "Declared Colombia's national flower on October 16, 1936. Named in honor of Dr. José Jerónimo Triana, a pioneering 19th-century Colombian botanist. The Cattleya trianae is also known as the Christmas Orchid (Orquídea de Navidad) as it blooms in December. Colombia is home to over 4,000 orchid species — more than any other country.",
       "nationalStatus": "Official national flower of Colombia since 1936.",
-      "traditionalUses": "Ornamental cultivation and high-end floristry worldwide; ecotourism attraction in Colombian cloud forests; traditional medicine by indigenous Andean communities (Muisca, Emberá); international orchid shows and botanical exhibitions.",
-      "conservationStatus": "Endangered (EN) — IUCN Red List. Wild populations have declined sharply from over-collection and cloud forest habitat loss.",
-      "mainThreats": "Deforestation of Andean cloud forests for agriculture and cattle ranching; illegal wild collection for the orchid trade; climate change altering cloud forest microclimates and rainfall; habitat loss from coca cultivation eradication programs using herbicides.",
+      "traditionalUses": "Ornamental cultivation and high-end floristry; ecotourism attraction in cloud forests; traditional medicine by indigenous Andean communities; international orchid shows and exhibitions.",
+      "habitat": "Andean cloud forests and lower montane forests; grows as an epiphyte on tree branches at altitudes of 800–1,500 m.",
+      "distribution": "Endemic to Colombia, primarily found in the Magdalena, Cauca, and Huila departments.",
+      "morphology": {
+        "color": "Soft lilac-pink petals with a spectacular fringed lip showing deep purple, yellow, and red markings",
+        "shape": "Large classic orchid zygomorphic shape with three sepals, two broad petals, and a striking central ruffled lip",
+        "size": "Flowers 15-20 cm across; plant forms clumps up to 50 cm tall",
+        "lifeCycle": "Epiphytic perennial blooming predominantly in winter (around December)"
+      },
+      "conservationStatus": "Endangered (EN) — IUCN Red List. Its cloud forest habitat is severely threatened and wild populations have declines sharply from over-collection.",
+      "mainThreats": "Deforestation of Andean cloud forests for agriculture and cattle ranching; illegal collection for the orchid trade; climate change altering cloud forest microclimates; habitat loss from coca cultivation eradication programs.",
       "pfnoClassification": "Official National Flower — Endangered Species",
-      "relevantPollinator": "Eulaema meriana and Eulaema polychroma (orchid bees) — male bees collect aromatic compounds from the flower's lip perfume organs (osmophores) for mating displays, achieving pollination in the process.",
-      "cultural": "The Christmas Orchid is Colombia's national flower, representing the rich biodiversity of the Andes and the beauty of Colombian natural heritage.",
-      "conservation": "The Christmas Orchid is Colombia's national flower and is classified as Endangered. Nahiara Measure: 20 / 25 (Stable).",
-      "nahiaraSynthesis": "Cattleya trianae integrates into the Nahiara universe, evaluated at 20/25 (Stable) in the Nahiara Measure. Colombia's Christmas Orchid is one of the most exquisitely beautiful national flowers in AquaMundi. As a cloud forest species, it serves as a sentinel indicator of Andean ecosystem health — its decline mirrors the broader crisis of tropical montane biodiversity. Its unique orchid bee pollination makes it ecologically exceptional."
+      "relevantPollinator": "Eulaema spp. (orchid bees) — long-tongued bees that are the primary pollinators of Cattleya orchids, collecting fragrance compounds from the flowers.",
+      "nahiaraSynthesis": "Cattleya trianae integrates into the Nahiara universe, evaluated at 20/25 (Stable) in the Nahiara Measure. Colombia's Christmas Orchid is one of the most exquisitely beautiful national flowers in AquaMundi. As a cloud forest species, it serves as a sentinel indicator of Andean ecosystem health — its decline mirrors the broader crisis of tropical montane biodiversity.",
+      "scorfidon": {
+        "SCF-050": {
+          "threat": "Deforestation",
+          "description": "Loss of primary cloud forest habitat removes the host trees on which these epiphytes depend.",
+          "guardian": "Cloud Forest Conservation"
+        },
+        "SCF-051": {
+          "threat": "Illegal Collection",
+          "description": "Poaching of wild specimens for the black-market horticultural trade.",
+          "guardian": "Ethical Cultivation"
+        }
+      }
     },
     "argentinaCeibo": {
       "name": "Argentina",
       "flowerName": "Ceibo",
-      "morphology": "Striking coral-red to crimson claw-shaped flowers 5–7 cm, in dense clusters; medium-sized deciduous tree 5–10 m with gnarled branches and compound leaves with 3 oval leaflets; smooth grey-brown bark; tolerates seasonal flooding.",
-      "habitat": "Riparian gallery forests, riverbanks, wetland edges, and floodplain forests along the Río de la Plata basin; also parks and plazas in Buenos Aires and Montevideo; tolerates seasonal flooding and waterlogged soils.",
-      "distribution": "Native to subtropical South America — northeastern Argentina, Uruguay, southern Brazil, and Paraguay. Grows naturally along the Paraná, Uruguay, and Río de la Plata rivers. Now planted as an ornamental across Argentina and Uruguay.",
-      "historicalOrigin": "The ceibo was declared Argentina's national flower on December 2, 1942 by Presidential Decree No. 138.974. Also declared the national tree of Uruguay (since 1966). The Guaraní people wove the ceibo into oral traditions long before European contact. The legend of Anahí — a Guaraní woman who transformed into a ceibo at death — is one of Argentina's best-known indigenous stories.",
+      "botanicalFamily": "Fabaceae",
+      "commonNames": "Cockspur Coral Tree, Ceibo, Seibo",
+      "botanicalInfo": "A deciduous tree reaching 5–10 m, the ceibo produces striking coral-red, claw-shaped flowers in clusters. It thrives along riverbanks and wetlands across the Río de la Plata basin and is also the national tree of Uruguay.",
+      "flowerDescription": "The ceibo is Argentina's national flower, declared in 1942. Its vivid crimson blossoms symbolize the strength, courage, and passionate spirit of the Argentine people.",
+      "culturalSignificance": "Legend tells of Anaí, a Guaraní woman who was burned at the stake but transformed into a ceibo tree, its red flowers representing her undying spirit. The tree is deeply woven into Argentine folklore and identity.",
+      "historicalOrigin": "The ceibo was declared Argentina's national flower on December 2, 1942 by Presidential Decree No. 138.974. It is also the national tree of Uruguay (since 1966). The Guaraní people wove the ceibo into their oral traditions long before European colonization. The Guaraní name 'seibo' predates Spanish contact.",
       "nationalStatus": "Official national flower of Argentina since 1942; also the national tree of Uruguay.",
-      "traditionalUses": "Traditional Guaraní medicine (bark decoctions for skin conditions and infections); ornamental tree along riverbanks, parks, and Buenos Aires plazas; timber used for light construction and handicrafts; nectar-rich flowers vital for hummingbirds and native Xylocopa bees.",
+      "traditionalUses": "Traditional Guaraní medicine (bark for skin conditions); ornamental tree along riverbankss and plazas; timber used for light construction; nectar-rich flowers important for hummingbirds and native bees.",
+      "habitat": "Gallery forests, wetlands, and seasonally flooded riparian zones along the Paraná, Uruguay, and Paraguay rivers.",
+      "distribution": "Native to the Río de la Plata basin spanning Argentina, Uruguay, Brazil, and Paraguay. Widely planted as an ornamental street tree globally.",
+      "morphology": {
+        "color": "Vibrant carmine to crimson-red",
+        "shape": "Distinctive claw-like zygomorphic flowers with a large standard petal wrapping the keel",
+        "size": "Flowers 5 cm long in large drooping racemes; deciduous tree grows 5–10m tall",
+        "lifeCycle": "Deciduous woody tree with a twisted, irregular trunk that blooms in spring and summer"
+      },
       "conservationStatus": "Least Concern (LC) — IUCN Red List. Populations are stable across the Plata basin.",
-      "mainThreats": "Wetland drainage and river canalization disrupting riparian habitats; urbanization of the Río de la Plata and Paraná riverbanks; climate-driven flood and drought extremes; introduction of invasive plants (Ligustrum, Gleditsia) competing in floodplain forests.",
+      "mainThreats": "Wetland drainage and river canalization disrupting riparian habitats; urbanization of Río de la Plata riverbanks; climate-driven flooding and drought cycles affecting seedling establishment.",
       "pfnoClassification": "Official National Flower",
-      "relevantPollinator": "Glittering-bellied Emerald (Chlorostilbon lucidus) and Gilded Hummingbird (Hylocharis chrysura) — the red tubular flowers are specifically adapted for hummingbird pollination. Also visited by large Xylocopa bees.",
-      "cultural": "The ceibo is Argentina's national flower, symbolizing strength, courage, and the spirit of the Argentine people through the legend of Anahí.",
-      "conservation": "The ceibo is Argentina's national flower with stable populations. Nahiara Measure: 19 / 25 (Stable).",
-      "nahiaraSynthesis": "Erythrina crista-galli integrates into the Nahiara universe, evaluated at 19/25 (Stable) in the Nahiara Measure. Argentina's ceibo bridges indigenous Guaraní mythology and modern national identity. As a wetland tree of the Río de la Plata, it is an indicator of ecosystem health and a keystone species for hummingbird migration corridors linking subtropical and temperate South America."
+      "relevantPollinator": "Trochilidae (hummingbirds) — primarily pollinated by the Glittering-bellied Emerald (Chlorostilbon lucidus) and Gilded Hummingbird (Hylocharis chrysura). Also visited by large Xylocopa bees.",
+      "nahiaraSynthesis": "Erythrina crista-galli integrates into the Nahiara universe, evaluated at 19/25 (Stable) in the Nahiara Measure. Argentina's ceibo bridges indigenous Guaraní mythology and modern national identity. As a wetland tree, it is an indicator of Río de la Plata ecosystem health and a keystone species for hummingbird migration corridors.",
+      "scorfidon": {
+        "SCF-070": {
+          "threat": "Riverbank Erosion",
+          "description": "Altered river flows along the Paraná delta destabilize the ceibo's natural gallery forest habitat.",
+          "guardian": "Riparian Restoration"
+        },
+        "SCF-071": {
+          "threat": "Urban Expansion",
+          "description": "Clearing of wetland areas restricts the tree's natural range.",
+          "guardian": "Wetland Protection"
+        }
+      }
     },
     "egyptLotus": {
       "name": "Egypt",
       "flowerName": "Blue Lotus",
-      "morphology": "Star-shaped blue to pale violet flowers 10–15 cm in diameter with numerous narrow petals tapering to points, bright yellow stamens, and a sweet musky fragrance; aquatic perennial with large floating leaves 25–40 cm and long flexible petioles.",
-      "habitat": "Shallow freshwater — Nile Delta lakes, slow-moving canals, sacred pools, and temple basins; thrives in warm, sun-drenched water in tropical and subtropical climates. Originally abundant throughout the Nile Valley.",
-      "distribution": "Native to North and East Africa and the Indian subcontinent; historically abundant throughout the Nile Delta and Upper Nile. Now widely cultivated as an ornamental water plant globally. Wild populations are severely reduced.",
-      "historicalOrigin": "The Blue Lotus has been sacred to Egypt for over 5,000 years. It appears in the earliest hieroglyphic texts and Old Kingdom tomb paintings. In Egyptian cosmology, the creation myth describes the first sunrise emerging from a blue lotus floating on primordial waters. Used in royal ritual and depicted in Tutankhamun's tomb. Alexander the Great encountered it when entering Egypt in 332 BCE.",
-      "nationalStatus": "Iconic national flower of Egypt; UNESCO-recognized symbol of ancient Egyptian civilization. Featured in the Egyptian coat of arms.",
-      "traditionalUses": "Ancient ceremonial use — petals soaked in wine as a mild relaxant in pharaonic ritual and religious ceremony; temple decoration and offering to Ra and other gods; depicted in papyrus art, hieroglyphics, and jewelry; modern ornamental water garden cultivation; scientific research into alkaloids nuciferine and apomorphine for medical applications.",
-      "conservationStatus": "Near Threatened (NT) — IUCN Red List. Wild Nile Delta populations have dramatically declined due to pollution and habitat loss over the past century.",
-      "mainThreats": "Nile pollution and heavy agricultural chemical runoff destroying aquatic habitats; draining of Nile Delta wetlands for agriculture and urban development; Aswan High Dam altering seasonal flood cycles that historically regenerated lotus habitats; over-collection from remaining wild populations.",
+      "botanicalFamily": "Nymphaeaceae",
+      "commonNames": "Blue Lotus, Blue Egyptian Water Lily, Sacred Blue Lily",
+      "botanicalInfo": "An aquatic perennial with floating leaves and star-shaped blue flowers that rise above the water's surface. It contains mild psychoactive alkaloids and was used in ancient Egyptian ceremonies and medicine.",
+      "flowerDescription": "The Blue Lotus, also known as the Blue Water Lily, is Egypt's iconic flower. Revered since ancient times, it symbolizes creation, rebirth, and the sun — blooming at dawn and closing at dusk.",
+      "culturalSignificance": "Sacred to the ancient Egyptians, the Blue Lotus appears extensively in temple art, tomb paintings, and hieroglyphics. It was associated with the sun god Ra and the myth of creation, where the first lotus emerged from primordial waters.",
+      "historicalOrigin": "The Blue Lotus has been sacred to Egypt for over 5,000 years. It appears in the earliest hieroglyphic texts and tomb paintings from the Old Kingdom. In Egyptian cosmology, the creation myth describes the first sunrise emerging from a lotus floating on primordial waters. The flower was used in religious ceremonies by pharaohs and depicted in Tutankhamun's tomb.",
+      "nationalStatus": "Iconic national flower of Egypt; UNESCO-recognized symbol of ancient Egyptian civilization.",
+      "traditionalUses": "Ancient ceremonial use — petals soaked in wine or water as a mild relaxant in pharaonic ritual; temple decoration and offering to the gods; depicted in papyrus art and hieroglyphics; modern use as ornamental water garden plant; research into psychoactive alkaloids (nuciferine, apomorphine).",
+      "habitat": "Shallow, sluggish, or stagnant freshwater habitats — historically the flooding margins of the Nile River and delta marshes.",
+      "distribution": "Native to the Nile River system and broader East Africa. It has been widely extirpated from its historical range in the lower Nile due to modern water management, though it survives in controlled ponds.",
+      "morphology": {
+        "color": "Striking pale to sky blue petals, fading to white at the center, with bright golden-yellow stamens",
+        "shape": "Star-shaped radial flower that rises 10–15 cm above the water surface; leaves are floating, round, and notched",
+        "size": "Flowers 10-15 cm across; floating leaves up to 40 cm across",
+        "lifeCycle": "Perennial aquatic herb; famously opens its flowers in the morning and closes them at dusk"
+      },
+      "conservationStatus": "Near Threatened (NT) — IUCN Red List. Wild populations in the Nile Delta have dramatically declined due to pollution and habitat loss.",
+      "mainThreats": "Nile pollution and agricultural chemical runoff destroying aquatic habitats; draining of Nile Delta wetlands for agriculture and urban development; climate change reducing Nile flood cycles that historically regenerated lotus habitats; over-collection from wild populations.",
       "pfnoClassification": "National Cultural Symbol — Historic Sacred Flower",
-      "relevantPollinator": "Scarab beetles (Scarabaeidae) — the Blue Lotus practices thermogenic beetle pollination, heating its flowers to attract pollinators with warmth and scent, mirroring the mechanism of the Sacred Lotus. Also pollinated by Apis mellifera.",
-      "cultural": "The Blue Lotus is Egypt's iconic national flower, representing creation, rebirth, and the eternal cycle of the sun. It has been revered as a sacred symbol for over 5,000 years.",
-      "conservation": "The Blue Lotus is Egypt's national flower and is Near Threatened in the wild. Nahiara Measure: 21 / 25 (Stable).",
-      "nahiaraSynthesis": "Nymphaea caerulea integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. Egypt's Blue Lotus is one of the oldest sacred flowers in human civilization — connecting pharaonic creation mythology to modern botanical science. Its thermogenic beetle pollination, psychoactive alkaloid compounds, and 5,000-year divine symbolism make it one of the most scientifically and culturally extraordinary species in AquaMundi."
+      "relevantPollinator": "Scarab beetles (Scarabaeidae) — the Blue Lotus practices thermogenic beetle pollination, heating its flowers to attract pollinators, just like the Sacred Lotus. Also pollinated by Apis mellifera.",
+      "nahiaraSynthesis": "Nymphaea caerulea integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. Egypt's Blue Lotus is one of the oldest sacred flowers in human civilization — a symbol that connects pharaonic creation mythology to modern botanical science. Its alkaloid compounds and divine symbolism make it unique in the AquaMundi catalog.",
+      "scorfidon": {
+        "SCF-080": {
+          "threat": "Loss of Flooding Cycles",
+          "description": "Damming of the Nile eliminated the annual floods that naturally rejuvenated habitats.",
+          "guardian": "Hydrological Restoration"
+        },
+        "SCF-081": {
+          "threat": "Water Pollution",
+          "description": "Agricultural runoff and industrial waste poison shallow water environments.",
+          "guardian": "River Purification"
+        }
+      }
     },
     "indonesiaJasmine": {
       "name": "Indonesia",
       "flowerName": "Melati Putih",
-      "morphology": "Small, intensely fragrant, waxy white star-shaped flowers 1.5–2 cm in diameter, blooming in clusters; small evergreen shrub or climber 0.5–3 m with glossy, ovate dark green leaves and slender twining stems.",
-      "habitat": "Tropical lowland gardens, temple courtyards, and cultivated areas throughout Indonesia; thrives in hot, humid tropical climates with abundant sunlight; originally native to South and Southeast Asian tropical forests.",
-      "distribution": "Native to South Asia and Southeast Asia (India, Myanmar, Thailand, Indonesia); widely cultivated across all of Indonesia's 17,000 islands. Indonesia is the world's largest producer of jasmine for ceremonial and commercial use.",
-      "historicalOrigin": "Melati Putih was formally declared one of Indonesia's three national flowers on July 5, 1990 by Presidential Decree. In Javanese court culture (kraton), jasmine has adorned royal ceremonies for over 1,000 years. The scent of melati is used to anoint royal palaces in Yogyakarta and Solo. Ancient Javanese literature (Serat Centhini, 1814) describes melati as the quintessential flower of beauty and spiritual purity.",
-      "nationalStatus": "One of three official national flowers of Indonesia (since 1990) — alongside the Moon Orchid (Phalaenopsis amabilis) and Giant Padma (Rafflesia arnoldii).",
-      "traditionalUses": "Wedding garlands (ronce melati) draped over the bride's hair and groom's attire in Javanese and Sundanese ceremonies; Balinese and Javanese ritual offerings to Hindu deities; jasmine tea (teh melati) — the most widely consumed tea in Indonesia; natural jasmine absolute for perfumery; spiritual protection in Kejawen (Javanese mysticism).",
-      "conservationStatus": "Least Concern (LC) — IUCN Red List. Widely cultivated; wild populations in South and Southeast Asian forests are stable.",
-      "mainThreats": "No significant global conservation threat to cultivated populations. Wild tropical forest habitat loss; demand for synthetic jasmine fragrance compounds reducing traditional cultivation incentives; climate change affecting flowering intensity and fragrance quality.",
+      "botanicalFamily": "Oleaceae",
+      "commonNames": "Arabian Jasmine, Melati Putih",
+      "botanicalInfo": "A small evergreen shrub producing clusters of intensely fragrant, waxy white flowers. It blooms year-round in Indonesia's tropical climate and is widely cultivated for perfumery, tea, and ceremonial use.",
+      "flowerDescription": "The Melati Putih (White Jasmine) is Indonesia's national flower, symbolizing purity, grace, and simplicity. It is deeply embedded in the traditions and daily life of the Indonesian people.",
+      "culturalSignificance": "Jasmine garlands are essential in Javanese and Sundanese weddings, draping the bride and groom. The flower is offered in spiritual ceremonies and adorns sacred spaces, representing sincerity and eternal devotion.",
+      "historicalOrigin": "Melati Putih was formally declared one of Indonesia's three national flowers on July 5, 1990 by Presidential Decree. In Javanese court culture, jasmine has been used in royal ceremonies for over 1,000 years. The scent of melati is used to anoint Sultan palaces in Yogyakarta and Solo.",
+      "nationalStatus": "One of three official national flowers of Indonesia (since 1990) — alongside Moon Orchid and Giant Padma.",
+      "traditionalUses": "Wedding garlands (ronce melati) draping the bride; Javanese and Balinese ritual offerings; jasmine tea (teh melati) — the most popular tea in Indonesia; production of natural jasmine absolute for perfumery; spiritual protection in Kejawen (Javanese mysticism).",
+      "habitat": "Tropical lowland gardens, village courtyards, and agricultural plots across the Indonesian archipelago; thrives in high humidity and constant warmth.",
+      "distribution": "Native to tropical Asia (likely the eastern Himalayas or Bhutan); introduced and naturalized throughout Indonesia centuries ago. Cultivated extensively in Java for the tea and essential oil industries.",
+      "morphology": {
+        "color": "Pure glistening white, intensely aromatic flowers that yellow as they fade",
+        "shape": "Salverform (tube-like ending in flat spreading lobes), usually 5-9 lobed petals arranged in small clusters",
+        "size": "Flowers 2.5 cm across; small evergreen scrambling shrub grows 0.5-3m tall",
+        "lifeCycle": "Evergreen tropical shrub blooming continuously throughout the year"
+      },
+      "conservationStatus": "Least Concern (LC) — IUCN Red List. Widely cultivated; wild populations in tropical Asia stable.",
+      "mainThreats": "No significant conservation threat to cultivated populations. Wild habitat loss in tropical forests; demand for synthetic jasmine fragrance compounds reducing cultivation incentives.",
       "pfnoClassification": "Official National Flower",
-      "relevantPollinator": "Hawk moths (Sphingidae) at night — the intense nocturnal fragrance is an evolutionary adaptation for sphinx moth pollination. Apis cerana (Asian honeybee) and Trigona spp. (stingless bees) during daytime.",
-      "cultural": "Melati Putih is Indonesia's national flower, symbolizing purity, sincerity, and eternal devotion. It is central to Javanese and Sundanese weddings and spiritual ceremonies.",
-      "conservation": "Melati Putih is Indonesia's national flower with stable populations. Nahiara Measure: 20 / 25 (Stable).",
-      "nahiaraSynthesis": "Jasminum sambac integrates into the Nahiara universe, evaluated at 20/25 (Stable) in the Nahiara Measure. Indonesia's Melati Putih is one of the most culturally embedded flowers in Southeast Asia — inseparable from Javanese wedding ceremony, Islamic and Hindu spirituality, and Indonesian national identity across thousands of islands. Its nocturnal pollination strategy and extraordinary fragrance make it unique in the AquaMundi floral catalog."
+      "relevantPollinator": "Sphinx moths (Sphingidae) at night; Apis cerana (Asian honeybee) and Trigona spp. (stingless bees) during daytime. The intense night fragrance is an evolutionary adaptation for moth pollination.",
+      "nahiaraSynthesis": "Jasminum sambac integrates into the Nahiara universe, evaluated at 20/25 (Stable) in the Nahiara Measure. Indonesia's Melati Putih is one of the most culturally embedded flowers in Southeast Asia — inseparable from Javanese wedding ceremony, Islamic spirituality, and Indonesian identity across thousands of islands.",
+      "scorfidon": {
+        "SCF-090": {
+          "threat": "Chemical Farming",
+          "description": "Modern reliance on agricultural chemicals hurts local insect populations tied to the flower.",
+          "guardian": "Traditional Agriculture"
+        },
+        "SCF-091": {
+          "threat": "Cultural Disconnection",
+          "description": "Younger generations moving away from traditional ceremonies utilizing the flowers.",
+          "guardian": "Cultural Education"
+        }
+      }
     },
     "mexicoDahlia": {
       "name": "Mexico",
       "flowerName": "Dahlia",
-      "morphology": "Extraordinary diversity from 2 cm pom-pom forms to dinner-plate blooms exceeding 30 cm; every color except true blue; tuberous perennial 0.3–2.5 m with opposite pinnate leaves; composite flower head (capitulum) with ray and disc florets.",
+      "botanicalFamily": "Asteraceae",
+      "commonNames": "Dahlia, Pinnate Dahlia, Acocoxochitl",
+      "botanicalInfo": "A tuberous perennial in the Asteraceae family with over 40 species and thousands of cultivars. Flowers range from tiny pompons to dinner-plate blooms exceeding 30 cm in diameter, in every color except true blue.",
+      "flowerDescription": "The Dahlia is Mexico's national flower, declared in 1963. Native to the highlands of Mexico and Central America, it dazzles with an extraordinary range of colors, shapes, and sizes.",
+      "culturalSignificance": "The Aztecs cultivated dahlias for food, medicine, and ceremony long before European contact. The hollow stems were used as water pipes. Today the flower is a proud symbol of Mexican botanical heritage and biodiversity.",
+      "historicalOrigin": "The Aztecs called the dahlia 'Acocotli' or 'Cocoxochitl' (hollow-stemmed flower) and cultivated it for waterpiping, food, and medicine. Spanish botanists brought it to Europe in the 18th century. It was named after Swedish botanist Anders Dahl. Mexico declared it the national flower on May 13, 1963.",
+      "nationalStatus": "Official national flower of Mexico since 1963. Mexico is the center of origin and genetic diversity for all dahlia species.",
+      "traditionalUses": "Aztec food source (tubers eaten); hollow stems used as drinking straws and water pipes; traditional medicine for treating fever and skin conditions; ornamental garden plant worldwide; Day of the Dead (Día de Muertos) decoration alongside marigolds.",
       "habitat": "High-altitude Mexican highlands and mountain meadows between 1,500–3,500 m; volcanic soils in pine-oak cloud forests of Oaxaca, Guerrero, and Chiapas; originally a high-altitude meadow plant thriving in cool, well-drained, nutrient-rich volcanic soils.",
       "distribution": "Native to Mexico and Central America — the center of origin and genetic diversity for all 40+ wild dahlia species. Now cultivated worldwide in temperate climates. Over 20,000 registered dahlia cultivars exist globally, all derived from Mexican wild species.",
-      "historicalOrigin": "The Aztecs called the dahlia 'Acocotli' or 'Cocoxochitl' (hollow-stemmed flower) and cultivated it for waterpiping, food, and medicine long before European contact. Spanish botanists brought specimens to Europe in the 18th century. Named after Swedish botanist Anders Dahl. Mexico declared it the national flower on May 13, 1963.",
-      "nationalStatus": "Official national flower of Mexico since 1963. Mexico is the center of origin and genetic diversity center for all dahlia species worldwide.",
-      "traditionalUses": "Aztec food source (tubers eaten, similar to sweet potato); hollow stems used as drinking straws and water pipes; traditional Nahuatl medicine for treating epilepsy and skin conditions; ornamental garden plant worldwide; Day of the Dead (Día de Muertos) altar decoration alongside marigolds; Cempasúchil festival decoration.",
-      "conservationStatus": "Least Concern (LC) — IUCN Red List for widely cultivated species. Several wild Dahlia species endemic to Mexican highlands are Data Deficient or Under Assessment.",
+      "morphology": {
+        "color": "Extraordinary diversity spanning every color except true blue (white, yellow, orange, red, pink, purple, bi-colors).",
+        "shape": "Composite flower head (capitulum) with central disc florets surrounded by ray florets.",
+        "size": "Flowers from 2 cm pom-poms to dinner-plate blooms >30 cm; tuberous perennial 0.3–2.5 m tall.",
+        "lifeCycle": "Herbaceous tuberous perennial; dies back in winter and resprouts in spring."
+      },
+      "conservationStatus": "Least Concern (LC) — IUCN Red List for cultivated species. Several wild Dahlia species endemic to Mexican highlands are Under Assessment.",
       "mainThreats": "Habitat loss in Mexican highland meadows from agricultural expansion; illegal collection of rare wild species; climate change affecting high-altitude habitats and cloud forest ecosystems; hybridization pressure on wild gene pools from cultivated escapes.",
       "pfnoClassification": "Official National Flower",
       "relevantPollinator": "Bombus spp. (bumblebees) and Apis mellifera (honeybees) — the open composite flower head is one of the most accessible structures for generalist pollinators. Also extensively visited by butterflies (Papilio, Danaus), hoverflies (Syrphidae), and beetles.",
-      "cultural": "The Dahlia is Mexico's national flower, representing the rich botanical and cultural heritage of the Aztec civilization and Mexico's extraordinary biodiversity.",
-      "conservation": "The Dahlia is Mexico's national flower with stable cultivated populations. Nahiara Measure: 21 / 25 (Stable).",
-      "nahiaraSynthesis": "Dahlia pinnata integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. Mexico's dahlia is the origin point for one of the world's most diverse cultivated flower groups — from Aztec temple gardens to the global horticultural industry. As Mexico's center of dahlia genetic diversity, its wild highland populations are a living genetic library essential for future breeding, conservation, and botanical science."
+      "nahiaraSynthesis": "Dahlia pinnata integrates into the Nahiara universe, evaluated at 21/25 (Stable) in the Nahiara Measure. Mexico's dahlia is the origin point for one of the world's most diverse cultivated flower groups — from Aztec temple gardens to the global horticultural industry. As Mexico's center of dahlia genetic diversity, wild populations are a living genetic library essential for future breeding, conservation, and botanical science.",
+      "scorfidon": {
+        "SCF-160": {
+          "threat": "Tuber Poaching",
+          "description": "Collection of wild Mexican tubers by enthusiasts threatens original genetic variations.",
+          "guardian": "Gene Bank Protection"
+        },
+        "SCF-161": {
+          "threat": "Highland Degradation",
+          "description": "Conversion of montane pine-oak forests into commercial agricultural lands.",
+          "guardian": "Sustainable Land Use"
+        }
+      }
     }
   },
   "minions": {
