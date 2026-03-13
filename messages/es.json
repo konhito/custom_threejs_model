@@ -536,8 +536,7 @@
     "subtitle": "Leal Escudero de Nahiara",
     "intro": "Hola, soy Araihan, leal escudero de Nahiara. Bienvenido al juego de Nahiara y los Guardianes de las Flores. Tengo un poco de sueño… y me encantan las gomitas naturales: fresas, frambuesas, moras… Pero no me gustan para nada los dulces procesados. Divirtámonos juntos. ¿Te gustaría jugar conmigo?"
   },
-  "countries": {
-    "pakistan": {
+  "countries": { "pakistan": {
       "name": "Pakistán",
       "flowerName": "Jazmín",
       "scientificName": "Jasminum officinale",
@@ -551,9 +550,9 @@
     },
     "tanzania": {
       "name": "Tanzania",
-      "flowerName": "Clavo de olor",
+      "flowerName": "Clavo",
       "scientificName": "Syzygium aromaticum",
-      "description": "El clavo de olor es la flor nacional de Tanzania y simboliza el rico patrimonio de especias y la abundancia natural del país. Representa la conexión entre la gente y la tierra."
+      "description": "El clavo es la flor nacional de Tanzania y simboliza el rico patrimonio de especias y la abundancia natural del país. Representa la conexión entre la gente y la tierra."
     },
     "nicaragua": {
       "name": "Nicaragua",
@@ -563,21 +562,21 @@
     },
     "jamaica": {
       "name": "Jamaica",
-      "flowerName": "Guayacán (Lignum Vitae)",
+      "flowerName": "Lignum Vitae",
       "scientificName": "Guaiacum officinale",
-      "description": "El Lignum Vitae es la flor nacional de Jamaica, y simboliza la fuerza, la resiliencia y la belleza natural. Representa la flora única y el patrimonio cultural de la isla."
+      "description": "El Lignum Vitae es la flor nacional de Jamaica y simboliza la fuerza, la resiliencia y la belleza natural. Representa la flora única y el patrimonio cultural de la isla."
     },
     "unitedStates": {
       "name": "Estados Unidos",
       "flowerName": "Rosa",
       "scientificName": "Rosa (cultivares híbridos)",
-      "description": "La rosa es el emblema floral nacional oficial de los Estados Unidos (1986). Ha sido un símbolo mundial de amor, belleza y recuerdo durante más de 5,000 años, desde la antigua Roma y la mitología griega hasta el jardín de rosas de la Casa Blanca."
+      "description": "La rosa es el emblema floral nacional oficial de los Estados Unidos (1986). Ha sido un símbolo global de amor, belleza y recuerdo por más de 5,000 años, desde la antigua Roma y la mitología griega hasta el jardín de rosas de la Casa Blanca."
     },
     "spain": {
       "name": "España",
       "flowerName": "Clavel",
       "scientificName": "Dianthus caryophyllus",
-      "description": "El clavel es la flor nacional de España, y simboliza el amor, la pasión y la belleza. Representa la vibrante cultura y la elegancia natural del país."
+      "description": "El clavel es la flor nacional de España y simboliza el amor, la pasión y la belleza. Representa la vibrante cultura y la elegancia natural del país."
     },
     "scotland": {
       "name": "Escocia",
@@ -589,63 +588,63 @@
       "name": "Alemania",
       "flowerName": "Aciano",
       "scientificName": "Centaurea cyanus",
-      "description": "El aciano es la flor nacional de Alemania, que simboliza la esperanza, la libertad y la belleza natural. Representa la conexión del país con la naturaleza y su patrimonio cultural."
+      "description": "El aciano es la flor nacional de Alemania y simboliza la esperanza, la libertad y la belleza natural. Representa la conexión del país con la naturaleza y su patrimonio cultural."
     },
     "usRose": {
       "name": "Estados Unidos",
       "flowerName": "Rosa",
       "morphology": {
         "color": "Amplia gama cromática (rojo, rosa, blanco, amarillo, lavanda)",
-        "shape": "Flores muy fragantes con entre 5 y más de 60 pétalos",
-        "size": "Arbusto leñoso perenne de 0,3 a 3 m de altura",
+        "shape": "Flores muy aromáticas con más de 5 a 60 pétalos",
+        "size": "Arbusto perenne leñoso de 0.3 a 3 m de alto",
         "lifeCycle": "Tallos espinosos y hojas pinnadas compuestas"
       },
-      "habitat": "Adaptable a zonas templadas de todo el mundo — jardines, parques, orillas de caminos; especies nativas en prados, bordes de bosques y laderas rocosas en todo el hemisferio norte.",
-      "distribution": "Originaria de Asia, Europa, América del Norte y África del Norte. Estados Unidos cultiva aproximadamente 1.200 millones de rosas cortadas al año; cultivo importante en California, Oregón y Texas.",
-      "historicalOrigin": "Las rosas se han cultivado durante más de 5000 años. Los antiguos romanos las usaban en festivales y perfumería. En 1986, el presidente Ronald Reagan firmó una legislación que designaba a la Rosa como el emblema floral nacional oficial de los Estados Unidos. El poder simbólico de la rosa abarca la mitología griega (sagrada para Afrodita), el cristianismo (la flor de la Virgen María) y la heráldica (las Guerras de las Rosas en Inglaterra).",
+      "habitat": "Adaptable a zonas templadas de todo el mundo (jardines, parques, bordes de caminos); especies nativas en prados, bordes de bosques y laderas rocosas a lo largo del hemisferio norte.",
+      "distribution": "Nativa de Asia, Europa, Norteamérica y el norte de África. Los Estados Unidos cultivan aproximadamente 1,200 millones de rosas cortadas anualmente; cultivo principal en California, Oregón y Texas.",
+      "historicalOrigin": "Las rosas se han cultivado durante más de 5,000 años. Los antiguos romanos las usaban en festivales y perfumería. En 1986, el presidente Ronald Reagan firmó la legislación designando a la Rosa como el emblema floral nacional oficial de los Estados Unidos. El poder simbólico de la rosa abarca la mitología griega (sagrada para Afrodita), el cristianismo (la flor de la Virgen María) y la heráldica (la Guerra de las Rosas en Inglaterra).",
       "nationalStatus": "Emblema floral nacional oficial de los Estados Unidos desde 1986 (Ley Pública 99-449)",
-      "traditionalUses": "Perfumería y aceites esenciales (rosa otto, rosa damascena); usos culinarios (agua de rosas, té de rosa mosqueta, mermeladas); medicina herbaria ayurvédica y occidental (escaramujos ricos en vitamina C); horticultura ornamental y floristería; decoración religiosa y ceremonial.",
-      "conservationStatus": "Variedades cultivadas: No Evaluado (NE). Especies silvestres: varias especies nativas de Rosa están catalogadas como Especies de Preocupación a nivel estatal o federal en EE. UU.",
-      "mainThreats": "La enfermedad de la roseta de la rosa (RRD): un virus devastador transmitido por ácaros; estrés por sequía debido al cambio climático; dependencia de pesticidas en el cultivo comercial; pérdida de hábitat para las especies de rosas silvestres nativas.",
+      "traditionalUses": "Perfumería y aceites esenciales (rosa otto, rosa damascena); usos culinarios (agua de rosas, té de escaramujo, mermeladas); medicina herbaria ayurvédica y occidental (escaramujos ricos en vitamina C); horticultura ornamental y floristería; decoración religiosa y ceremonial.",
+      "conservationStatus": "Variedades cultivadas: No Evaluada (NE). Especies silvestres: varias especies nativas de Rosa están catalogadas como Especies de Preocupación a nivel estatal o federal en EE. UU.",
+      "mainThreats": "La enfermedad de la roseta de la rosa (RRD) — un devastador virus transmitido por ácaros; estrés por sequía impulsado por el clima; dependencia de pesticidas en el cultivo comercial; pérdida de hábitat para las especies nativas silvestres.",
       "pfnoClassification": "Emblema Floral Nacional Oficial",
-      "relevantPollinator": "Apis mellifera (abeja melífera occidental) y especies nativas de Bombus (abejorros): las rosas son plantas clave para el pasto de las abejas. También son polinizadas por escarabajos, sírfidos y abejas solitarias (Osmia spp.).",
-      "cultural": "La rosa es el emblema floral nacional oficial de los Estados Unidos (1986). Ha sido un símbolo mundial de amor, belleza, pasión y recuerdo durante más de 5000 años, desde la antigua Roma y la mitología griega hasta las heráldicas Guerras de las Rosas y los jardines de rosas de la Casa Blanca.",
-      "conservation": "Si bien las rosas cultivadas prosperan a nivel mundial, las especies nativas de rosas silvestres en EE. UU. enfrentan la amenaza de la enfermedad de la roseta de la rosa, la pérdida de hábitat y el cambio climático. Medida Nahiara: 23 / 25 (Ecorraíz Viva).",
-      "nahiaraSynthesis": "La rosa se integra al universo Nahiara con el código SAN-F-083,003, evaluada en el nivel 23/25 (Ecorraíz Viva) en la Medida Nahiara — ocupando el quinto lugar a nivel mundial. Como emblema floral nacional oficial de los Estados Unidos desde 1986, la rosa lleva 5.000 años de resonancia cultural a través de civilizaciones. Su principal amenaza — la enfermedad de la roseta de la rosa — subraya la fragilidad escondida dentro de su estado icónico. La rosa se erige como el Modelo de Referencia Maestro para el hemisferio occidental dentro del sistema floral AquaMundi."
+      "relevantPollinator": "Apis mellifera (abeja europea) y especies nativas de Bombus (abejorros) — las rosas son plantas clave para los pastos de las abejas. También son polinizadas por escarabajos, moscas sírfidas y abejas solitarias (Osmia spp.)",
+      "cultural": "La rosa es el emblema floral nacional oficial de los Estados Unidos (1986). Ha sido un símbolo mundial del amor, la belleza, la pasión y el recuerdo durante más de 5,000 años, desde la antigua Roma y la mitología griega hasta la emblemática Guerra de las Rosas y los jardines de la Casa Blanca.",
+      "conservation": "Mientras las rosas cultivadas prosperan a nivel global, las especies nativas silvestres en EE. UU. enfrentan la amenaza de la enfermedad de la roseta de la rosa, la pérdida de hábitat y el cambio climático. Medida Nahiara: 23 / 25 (EcoRaíz Viva).",
+      "nahiaraSynthesis": "Rosa se integra en el universo Nahiara con el código SAN-F-083,003, evaluada en nivel 23/25 (EcoRaíz Viva) en la Medida Nahiara — posicionándose en 5º lugar a nivel global. Como el emblema floral oficial de los Estados Unidos desde 1986, la rosa porta 5,000 años de resonancia cultural en distintas civilizaciones. Su amenaza principal — la Enfermedad de la Roseta de la Rosa — subraya la fragilidad oculta bajo su estatus icónico. La rosa es el Modelo de Referencia Maestro para el hemisferio occidental dentro del sistema floral de AquaMundi."
     },
     "spainCarnation": {
       "name": "España",
       "flowerName": "Clavel",
       "botanicalFamily": "Caryophyllaceae",
-      "commonNames": "Clavel, Clavelina",
-      "botanicalInfo": "Planta herbácea perenne conocida por sus pétalos dentados y su fragancia dulce y especiada. Prospera en el clima mediterráneo de España.",
-      "flowerDescription": "El clavel es la flor nacional de España, y simboliza la pasión, el amor y el espíritu vibrante del pueblo español.",
-      "culturalSignificance": "Los claveles son fundamentales en la cultura española y se lucen a menudo durante las festividades y corridas de toros. Representan las arraigadas tradiciones y el alma artística de España.",
-      "historicalOrigin": "El clavel (Dianthus, que significa 'flor de los dioses') era cultivado por los antiguos griegos y romanos para hacer guirnaldas. En España, el clavel rojo se asoció profundamente con el folclore, el baile flamenco y las festividades religiosas. Representa la pasión y el afecto en la cultura española.",
-      "nationalStatus": "Ampliamente considerado como la flor nacional de España, aunque profundamente arraigado en la cultura popular más que en un decreto oficial absoluto.",
-      "traditionalUses": "Uso ornamental en festividades españolas, particularmente durante la Semana Santa y espectáculos de flamenco; industria comercial de flores de corte; la medicina tradicional usa infusiones para aliviar el estrés y la inflamación.",
-      "habitat": "Jardines mediterráneos, campos ornamentales y laderas rocosas calizas; nativa de la cuenca mediterránea desde el sur de Europa hasta el oeste de Asia.",
-      "distribution": "Nativa de la región mediterránea. Cultivada a nivel mundial como una de las flores de corte más populares del mundo. España es uno de los principales productores europeos.",
+      "commonNames": "Carnation, Clove Pink, Clavel",
+      "botanicalInfo": "Una planta con flores perenne conocida por sus pétalos con flecos y su fragancia dulce y especiada. Prospera en el clima mediterráneo de España.",
+      "flowerDescription": "El clavel es la flor nacional de España, simbolizando la pasión, el amor y el vibrante espíritu del pueblo español.",
+      "culturalSignificance": "Los claveles son fundamentales en la cultura española, a menudo se lucen durante festivales y corridas de toros. Representan las arraigadas tradiciones y el alma artística de España.",
+      "historicalOrigin": "El clavel (Dianthus, que significa 'flor de los dioses') fue cultivado por antiguos griegos y romanos para guirnaldas. En España, el clavel rojo se asoció profundamente con el folclore, el baile flamenco y las fiestas religiosas. Representa la pasión y el afecto en la cultura española.",
+      "nationalStatus": "Ampliamente considerado como la flor nacional de España, aunque está profundamente enraizado en la cultura popular más que en un decreto oficial absoluto.",
+      "traditionalUses": "Uso ornamental en las fiestas españolas, especialmente durante la Semana Santa y actuaciones flamencas; industria comercial de la flor cortada; usos en medicina tradicional en forma de té para aliviar el estrés y la inflamación.",
+      "habitat": "Jardines mediterráneos, campos ornamentales y laderas rocosas calizas; nativa de la cuenca mediterránea desde el sur de Europa hasta el occidente asiático.",
+      "distribution": "Nativa de la región mediterránea. Cultivada a nivel mundial como una de las flores de corte más populares del mundo. España es uno de los mayores productores de Europa.",
       "morphology": {
-        "color": "Clásicos rojos y rosados, a menudo bicolores o moteados en variedades cultivadas",
-        "shape": "Pétalos con flecos o dentados profundos que forman una flor densa y con volantes",
-        "size": "Flores de 3 a 5 cm de diámetro; los tallos crecen de 40 a 80 cm de altura",
-        "lifeCycle": "Herbácea perenne que florece profusamente en climas cálidos mediterráneos"
+        "color": "Rojos y rosas clásicos, a menudo bicolores o moteados en formas cultivadas",
+        "shape": "Pétalos con flecos o profundamente dentados formando una flor densa y con volantes",
+        "size": "Las flores tienen de 3 a 5 cm de diámetro; los tallos crecen de 40 a 80 cm de alto",
+        "lifeCycle": "Planta herbácea perenne que florece con profusión en los climas cálidos mediterráneos"
       },
-      "conservationStatus": "Preocupación Menor (LC) para variedades cultivadas; algunas especies silvestres de Dianthus enfrentan presiones sobre su hábitat local.",
-      "mainThreats": "Prácticas agrícolas intensivas en granjas comerciales que agotan las capas freáticas locales; sequías inducidas por el cambio climático en la cuenca mediterránea.",
+      "conservationStatus": "Preocupación Menor (LC) para las variedades cultivadas; algunas especies silvestres de Dianthus enfrentan presiones de hábitat a nivel local.",
+      "mainThreats": "Actividades de agricultura intensiva en el cultivo comercial que agotan los niveles hídricos locales; sequías provocadas por el cambio climático en la cuenca del Mediterráneo.",
       "pfnoClassification": "Símbolo Cultural Nacional",
-      "relevantPollinator": "Lepidópteros (mariposas y polillas) — las flores tubulares profundas están especializadas para polinizadores de lengua larga.",
-      "nahiaraSynthesis": "Dianthus caryophyllus se integra al universo Nahiara evaluado en 19/25 (Estable) en la Medida Nahiara. El clavel español es una expresión vibrante de la emoción humana dentro de AquaMundi, que representa la intersección de la pasión cultural y la resiliencia agrícola en los climas áridos del Mediterráneo.",
+      "relevantPollinator": "Lepidópteros (mariposas y polillas) — sus flores tubulares profundas están especializadas para polinizadores de lengua larga.",
+      "nahiaraSynthesis": "Dianthus caryophyllus se integra en el universo Nahiara evaluado con 19/25 (Estable) en la Medida Nahiara. El clavel español es una vibrante expresión de la emoción humana dentro de AquaMundi, representando la intersección de la pasión cultural y la resiliencia agrícola en los áridos climas mediterráneos.",
       "scorfidon": {
         "SCF-030": {
           "threat": "Escasez de Agua",
-          "description": "Las sequías mediterráneas cada vez más intensas amenazan los métodos tradicionales de cultivo de secano.",
+          "description": "Las sequías mediterráneas cada vez más intensas amenazan los métodos tradicionales de cultivo no irrigado.",
           "guardian": "Conservación del Agua"
         },
         "SCF-031": {
-          "threat": "Monocultivo",
-          "description": "La producción industrial de flores de corte limita la diversidad genética.",
+          "threat": "Cultivo Monocromo",
+          "description": "La producción industrial de flores cortadas limita la diversidad genética.",
           "guardian": "Diversidad de Cultivos"
         }
       }
@@ -654,50 +653,50 @@
       "name": "India",
       "flowerName": "Loto Sagrado",
       "botanicalFamily": "Nelumbonaceae",
-      "commonNames": "Loto sagrado, Loto indio, Haba de la India, Kamal (कमल), Padma (पद्म), Tāmarai (தாமரை)",
-      "botanicalInfo": "Una planta rizomatosa perenne acuática con flores grandes y fragantes de color rosa o blanco que pueden alcanzar los 30 cm de diámetro. El loto posee un notable mecanismo de autolimpieza (el 'efecto loto') debido a la superficie superhidrofóbica de sus hojas. Sus semillas pueden seguir siendo viables durante siglos — una de 1300 años de antigüedad logró germinar en 1994.",
-      "flowerDescription": "El loto sagrado es la flor nacional de la India, adoptada oficialmente en 1950. Simboliza la pureza, la iluminación y el renacimiento — elevándose desde aguas lodosas para florecer magníficamente, representando el viaje de la oscuridad a la luz. Su presencia en la civilización india abarca más de 5.000 años.",
-      "culturalSignificance": "Sagrado en el hinduismo y el budismo, el loto es el asiento de las deidades Lakshmi, Saraswati y Brahma. En la iconografía budista, Buda suele representarse sentado en un trono de loto. La flor representa la belleza divina, la pureza y el despertar espiritual. Aparece en el Rigveda, la escritura hindú más antigua, y está entretejido en el arte, la arquitectura y la filosofía en el sur y el sudeste de Asia.",
-      "historicalOrigin": "El loto ha sido venerado en el subcontinente indio desde el período védico (1500 a. C.). Textos antiguos que incluyen el Rigveda, la Bhagavad Gita y el Sutra del Loto se refieren a él como símbolo de la creación y el orden cósmico. En las rutas comerciales egipcio-indias, el loto conectaba dos de las civilizaciones más antiguas del mundo. Los emperadores mogoles incorporaron motivos de loto en obras maestras arquitectónicas, incluido el Taj Mahal.",
-      "nationalStatus": "Flor nacional oficial de la India desde 1950, adoptada en el momento de la Constitución.",
-      "traditionalUses": "Ofrendas religiosas y decoración de templos; medicina ayurvédica (las semillas, los rizomas y los pétalos se usan para remedios digestivos y cardíacos); cocina (la raíz de loto / kamal kakdi es un vegetal básico; las semillas se comen asadas o en postres); fibra textil de los tallos (seda de loto); cultivo ornamental en estanques de templos y jardines.",
-      "habitat": "Aguas dulces poco profundas, cálidas y tranquilas o de movimiento lento — lagos, estanques, marismas, arrozales inundados y estanques de templos en regiones tropicales y subtropicales.",
-      "distribution": "Nativa del subcontinente indio, sudeste asiático y el norte de Australia. Ampliamente cultivada en todo el este de Asia (China, Japón, Corea, Vietnam) e introducida en Egipto, Irán y partes de las Américas.",
+      "commonNames": "Loto Sagrado, Loto Indio, Frijol de la India, Kamal (कमल), Padma (पद्म), Tāmarai (தாமரை)",
+      "botanicalInfo": "Una planta acuática perenne y rizomatosa con flores grandes y fragantes (rosas o blancas) que pueden alcanzar los 30 cm de diámetro. El loto posee un notable mecanismo de autolimpieza (el 'efecto loto') gracias a la superficie superhidrofóbica de sus hojas. Sus semillas pueden permanecer viables durante siglos: una semilla de 1,300 años germinó con éxito en 1994.",
+      "flowerDescription": "El Loto Sagrado es la flor nacional de la India, adoptada oficialmente en 1950. Simboliza la pureza, la iluminación y el renacimiento, emergiendo majestuosamente desde las aguas fangosas para florecer, representando el viaje desde la oscuridad a la luz. Su presencia en la civilización india se remonta a más de 5,000 años.",
+      "culturalSignificance": "Sagrado en el hinduismo y el budismo, el loto es el asiento de las deidades Lakshmi, Saraswati y Brahma. En la iconografía budista, a menudo se representa al Buda sentado en un trono de loto. La flor encarna la belleza divina, la pureza y el despertar espiritual. Aparece en el Rigveda, la escritura hindú más antigua, y está tejida en el arte, la arquitectura y la filosofía del sur y sudeste de Asia.",
+      "historicalOrigin": "El loto ha sido venerado en el subcontinente indio desde el período védico (1500 a. C.). Textos antiguos que incluyen el Rigveda, el Bhagavad Gita y el Sutra del Loto lo mencionan como símbolo de la creación y el orden cósmico. En las rutas comerciales entre Egipto e India, el loto conectó a dos de las civilizaciones más antiguas del mundo. Los emperadores mogoles incorporaron detalles de loto en sus obras maestras arquitectónicas, incluido el Taj Mahal.",
+      "nationalStatus": "Flor nacional oficial de la India desde 1950, adoptada con la entrada en vigor de la Constitución",
+      "traditionalUses": "Ofrendas religiosas y decoración de templos; medicina ayurvédica (semillas, rizomas y pétalos utilizados para remedios digestivos y cardíacos); cocina (la raíz de loto o kamal kakdi es un vegetal básico; las semillas se comen tostadas o en postres); fibra textil de los tallos (seda de loto); cultivo ornamental en el recinto de los templos y jardines.",
+      "habitat": "Zonas de agua dulce superficiales, cálidas, estancadas o de movimiento lento (lagos, estanques, pantanos, arrozales inundados y estanques de templos en las regiones tropicales y subtropicales).",
+      "distribution": "Nativa del subcontinente indio, el sudeste asiático y el norte de Australia. Ampliamente cultivada en todo el este de Asia (China, Japón, Corea, Vietnam) e introducida en Egipto, Irán y partes de las Américas.",
       "morphology": {
-        "color": "Pétalos de rosa a blanco con un receptáculo de color amarillo dorado; las hojas son azul verdosas, peltadas y superhidrofóbicas",
-        "shape": "Flores grandes y solitarias, actinomórficas, con 20-30 pétalos dispuestos en espiral; receptáculo de semillas característico con parte superior plana",
+        "color": "Pétalos rosas a blancos con un receptáculo amarillo dorado; las hojas son verde azulado, peltadas y superhidrofóbicas",
+        "shape": "Flores grandes y solitarias, actinomórficas, con 20 a 30 pétalos dispuestos en espiral; distintiva vaina de semillas con la punta plana (receptáculo)",
         "size": "Flores de 15 a 30 cm de diámetro; hojas de hasta 60 cm; altura de la planta de 100 a 150 cm sobre el agua",
         "lifeCycle": "Hierba acuática perenne con rizomas gruesos; florece de junio a septiembre en el hemisferio norte"
       },
-      "conservationStatus": "Preocupación menor (LC) — Lista Roja de la UICN",
-      "mainThreats": "Drenaje de humedales y conversión a la agricultura; contaminación del agua por escorrentía industrial y agrícola; pérdida de hábitat por la urbanización; recolección excesiva de rizomas y semillas en algunas regiones; competencia por especies acuáticas invasoras.",
+      "conservationStatus": "Preocupación Menor (LC) — Lista Roja de la UICN.",
+      "mainThreats": "Drenaje de humedales y conversión para la agricultura; contaminación de aguas por vertidos industriales y agrícolas; pérdida de hábitat debido a la urbanización; cosecha excesiva de rizomas y semillas en algunas regiones; competencia con especies acuáticas invasoras.",
       "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Coleópteros (escarabajos) — el loto emplea cantaridofilia termogénica, elevando la temperatura de su flor para atraer a los escarabajos polinizadores. También es visitada por Apis cerana (abeja melífera asiática).",
-      "nahiaraSynthesis": "Nelumbo nucifera se integra al universo Nahiara con el código SAN-F-161,001, evaluada en el nivel 22/25 (Ecorraíz Viva) en la Medida Nahiara — ocupando el séptimo lugar a nivel mundial. Como flor nacional oficial de la India desde 1950, el loto sagrado es una de las plantas culturalmente más significativas de la humanidad, venerada en el hinduismo, el budismo y en la antigua civilización egipcia. A pesar de las amenazas por la pérdida de humedales y el cambio climático, sus profundas raíces culturales, protección legal y su amplio cultivo aseguran su persistencia. El loto sirve como Modelo de Referencia Maestro para el sistema floral de AquaMundi.",
+      "relevantPollinator": "Coleópteros (escarabajos) — el loto emplea cantarofilia termogénica, elevando la temperatura de su flor para atraer escarabajos polinizadores. También frecuentada por Apis cerana (abeja asiática).",
+      "nahiaraSynthesis": "Nelumbo nucifera se integra al universo Nahiara con el código SAN-F-161,001, evaluada en el nivel 22/25 (EcoRaíz Viva) por la Medida Nahiara — ranqueada 7ma a nivel global. Como la flor nacional oficial de India desde 1950, el Loto Sagrado es una de las plantas de mayor trascendencia cultural de la humanidad, venerada a través del hinduismo, el budismo y la antigua civilización egipcia. A pesar de enfrentar amenazas por la pérdida de humedales y el cambio climático, sus profundas raíces culturales, su protección legal y su extensa cultivación le aseguran perdurabilidad. El loto funge como el Modelo de Referencia Maestro para el modelo de flores de AquaMundi.",
       "scorfidon": {
         "SCF-001": {
           "threat": "Cambio Climático",
-          "description": "El aumento de las temperaturas y cambios en los patrones del monzón amenazan los ecosistemas de humedales esenciales para los hábitats de loto.",
+          "description": "Las crecientes temperaturas y patrones irregulares en los monzones amenazan los ecosistemas de los humedales esenciales para los hábitats de loto.",
           "guardian": "Equilibrio Natural"
         },
         "SCF-002": {
           "threat": "Deforestación",
-          "description": "La tala de humedales boscosos interrumpe los sistemas híbridos interconectados que sostienen a las poblaciones de loto.",
+          "description": "La tala en los humedales boscosos altera e interrumpe los sistemas acuáticos interconectados que sostienen al loto poblacionalmente.",
           "guardian": "Reforestación"
         },
         "SCF-003": {
           "threat": "Explotación",
-          "description": "Recolección excesiva de rizomas y semillas de loto con fines comerciales; turismo incontrolado en los lagos sagrados del loto.",
+          "description": "Sobre-extracción de semillas y rizomas de loto por fines puramente comerciales; incontrolable turismo hacia los lagos sagrados de loto.",
           "guardian": "Justicia Floral"
         },
         "SCF-004": {
           "threat": "Ignorancia",
-          "description": "Las poblaciones urbanas están perdiendo conexión con los ecosistemas tradicionales de humedales y con el significado cultural del cultivo del loto.",
+          "description": "Asentamientos urbanos perdiendo los nexos históricos tradicionales de los ecosistemas en humedales al igual que desconexión cultural originaria del cultivo del loto.",
           "guardian": "Educación"
         },
         "SCF-005": {
-          "threat": "Fuego Intencional",
-          "description": "La quema deliberada de los márgenes de los humedales para la conversión de tierras destruye los bancos de semillas de loto y las redes de rizomas.",
+          "threat": "Incendio Intencional",
+          "description": "La quema deliberada de los márgenes húmedos para apropiación territorial arrasa los bancos de almacenamiento de semillas y el entramado rizomático originario de la zona.",
           "guardian": "Agua"
         }
       }
@@ -707,35 +706,35 @@
       "flowerName": "Jazmín",
       "botanicalFamily": "Oleaceae",
       "commonNames": "Jazmín común, Jazmín de los poetas, Chambeli",
-      "botanicalInfo": "Una planta floral fragante con flores pequeñas, blancas y en forma de estrella. Conocido por su aroma dulce y embriagador, el jazmín se cultiva ampliamente en los jardines y parques de Pakistán.",
-      "flowerDescription": "El jazmín es la flor nacional de Pakistán y simboliza la pureza, la gracia y la belleza. Representa el rico patrimonio cultural y la fragancia natural del país.",
-      "culturalSignificance": "El jazmín ocupa un lugar especial en la cultura paquistaní y a menudo se utiliza en ceremonias religiosas y celebraciones tradicionales. Simboliza el amor, la belleza y la pureza espiritual.",
-      "historicalOrigin": "El jazmín llegó al sur de Asia a lo largo de las antiguas rutas comerciales de la Ruta de la Seda. En la India mogol, adornaba los jardines imperiales y se usaba en la producción de attar (aceite esencial). En Pakistán, 'Chambeli' aparece en la poesía clásica en urdu de Mirza Ghalib y Allama Iqbal, simbolizando el anhelo espiritual.",
+      "botanicalInfo": "Una planta floral fragante con pequeñas flores blancas en forma de estrella. Reconocido por su aroma dulce y embriagador, el jazmín se cultiva extensamente en jardines y parques a lo largo de Pakistán.",
+      "flowerDescription": "El jazmín es la flor nacional de Pakistán y simboliza la pureza, la gracia y la belleza. Representa la extensa y rica herencia cultural, amén de ser el referente natural fragante propio de este país.",
+      "culturalSignificance": "El jazmín ostenta una gran preeminencia intrínseca y vitalicia en la cultura paquistaní al punto que, suele verse frecuentemente en toda índole de ritos e innumerables expresiones festivas, cívicas y celebraciones de tipo ceremonial en el ámbito cívico. Condensa en su fragancia símbolos imperecederos tales como amor, exquisitez estética e inmaculada espiritualidad.",
+      "historicalOrigin": "El jazmín comenzó su gran migración ingresando hacia la inmensidad del sur asiático al recorrer incansablemente transitando la legendaria ruta transaccional de cruce intercontinental eurasiático o la milenaria Ruta de la Seda comercial. Estando en el esplendor y magnánima dinastía del imperio mogol islámico acaudalado, engalanaba frondosamente espléndido los opulentos paraísos de disfrute palatino imperial al tiempo que protagonizaba aportando los sustratos aromáticos extraídos al floreciente comercio alquimista y artesano elaborador del antiquísimo attar perfumado suntuario para la realeza pudiente e influyente originaria. Hacia los propios dominios geográficos fronterizos aborígenes en los rincones donde resplandece la perla o la actual y pujante región patria y nación denominada Pakistán; referida como inconfundible 'Chambeli' la embriagadora e irremplazable perfumada insignia irrumpe y engrosa profusamente el acervo literario poético atemporal urdu acunando estatuas poéticas por Ghalib de indomable prosa lírica originarios del verso además acompañando sutil e inolvidablemente junto y a la par inseparable líricamente poética imperecedero a la insigne literatura recitada mística sufi Allama Iqbal inmortal evocadora perennemente el trasunto alegórico imperecedero en el plano teocéntrico y anhelado acercamiento amoroso a la unidad del origen divino.",
       "nationalStatus": "Flor nacional oficial de Pakistán.",
-      "traditionalUses": "Guirnaldas para bodas y ceremonias religiosas; producción de aceites esenciales; adorno para el cabello de las mujeres (gajra); elaboración de té de jazmín; medicina ayurvédica y unani.",
-      "habitat": "Jardines, parques, setos y zonas cultivadas en todo Pakistán y el sur de Asia; originario del Himalaya, el Cáucaso y el oeste de China a altitudes de 1500 a 4000 m.",
-      "distribution": "Originario del Himalaya y regiones adyacentes; naturalizado en todo el sur de Asia, el Mediterráneo y partes de América. Pakistán es un importante productor de aceite esencial de jazmín.",
+      "traditionalUses": "Engalana con guirnaldas las ceremonias nupciales además de recintos y cultos religiosos ritos varios de conmemoración y panteístas de acervos originarios variopintos insondables e inexplorados nativos pre-modernos que subsisten en nuestro contemporáneo mundo vibrante actual además el valiosísimo y preciadísimo destilado y decantado oloroso suntuario extractivo esencial exquisito floral; aderezo decorativo ornamentador entrelazado de ensamble engalanante e imperecedero del vistoso cabello adorno atávico imperecedero de embellecimiento femenino engarzado originario indómito perfumado rutilante milticolor vistoso denominado floral y fragante (gajra); exquisito acervo artesano elaborador de decocción en remojo para el embriagante elíxir infusión reconfortante floral fragante aromático y reconfortante té y brebajes afines del jazmín natural orgánico botánico pletóricos medicinal originario milenario; ingrediente inmemorial ancestral ayurvédico originario natural al igual que acervo islámico unani originario y puristas sanadores medicinales atávicos inexplorados y herméticos insondables del conocimiento originario sanador AquaMundi en compendios orgánicos infinitos.",
+      "habitat": "Zonas de floración en jardinería, en el asueto vergel rural autóctono, cercos perimetrales como arbusto barrero tupido tupido y áreas rurales aradas cultivadas diseminadas regadas discurriendo en los cauces indómitos a lo de largo desde toda a lo de toda lo ancho territorial de esparcidas por todo Pakistán lindando flanqueando a todo en el Sur incesante indómito nativo selvático agreste de Asia de igual similitud o paralela coincidencia; primigenia original autóctono centroamericana y afincada en aborigen natal de ladera empinada y cordilleras inaccesibles frías recónditas salvajes en los flancos montuosos asombrosos del cinturón montañoso asiático cordillerano colindante a las majestuosas nevadas indómitas inhóspitas alturas o los macizos fronterizos del imponente himalaya extendiendo cordilleras y picos caucásicos occidentales y al límite asiático en extremo oriental confín de la cordillera del oeste adentrándose selvático de China y acurrucando florístico afincándose encaramada originaria sobre 1.500 y superando lindante a la friolera andina hasta rozar coronar superante alturas adentrándose escaladas altitudinales insospechadas andinas rondando encaramada 4,000 en alzada medida msnm (metros a cota superando y desbordando nivel marítimo cero originario costero marítimo cota inicial AquaMundi).",
+      "distribution": "Su asilvestrada presencia oriunda nativa de origen atávico primigenio se enclava nativa asilvestrada y arraigada firmemente inmemorial botánico andino prístino montañoso indómito salvaje en el cinturón serrano y cordillerano nevado asombroso natural majestuoso asilvestrado y frondosísimo del Himalaya asombroso al igual extendido de pleno derecho originario en latitudes colindantes linderas y afines andinos asiáticos; y extendiéndose expansiva migradora botánico exótico naturalizado naturalizada colonizadora exóticamente esparcida como enjambre radiante desbordado florísticamente asentado asombrado por completo en todo sur continental meridional de continente en Asia como precursora inmarcesible en toda abarcadora majestuosidad mediterránea y extendiéndose botánico continental hemisférico hacia confín geográfico interoceánico americano en continente americano. Destacando en relieve Pakistán emerge predominante e indiscutido puntero desbordante del suministro mundial suntuario acaudalado originario nativo en calidad exultante incontestable principal abarcante e importante valuarte proveedor de exótico insigne exportador primario pródigo aromático de su untuoso prodigioso aceite destilado floral esencial de jazmin en frascos en AquaMundi inmarcesible.",
       "morphology": {
-        "color": "Flores de color blanco puro, en forma de estrella, conocidas por su intensa fragancia nocturna.",
-        "shape": "Base tubular que se abre en cinco (o más) pétalos extendidos.",
-        "size": "Flores de 2-3 cm; arbusto trepador extendido que crece hasta 10 m.",
-        "lifeCycle": "Arbusto trepador caducifolio perenne que florece abundantemente en verano."
+        "color": "Albor niveo purísimo albo impoluto deslumbrante blanco candor resplandor radiante ramillete destilando inconfundible y subyugante embriagadora floral mística olfativa delicia estival esencia y fragancia de floración vespertina subyugadora de olores extasiantes abrumadores y de ensoñación natural indómita exótica",
+        "shape": "Base atrincherada tubular abriéndose rematado desdoblándose florísticamente al desplegar cinco abigarradas vistosas púrpuras sedosas (eventualmente despuntando profusamente sobrepasante del par numérico engrosados apéndices de envolturas periantadas lobuladas pentalobuladas a más de ramificaciones rumbosas exóticas coroladas desplegadas radiando esplendentes lobuladas)",
+        "size": "Circunferencia menudita centimétrica despuntando radiante en aparente humilde de 2 a máximo de rebosar superante a escasos diminutas 3 cm; el porte natural biótico engrosa fronda expansiva asilvestrada de arbolaje arborescente arbustiva sarmentosa trepadora discurriendo invasora frondosísima selvática frondosa trepadora altitudinal extendiéndose sin obstáculos ni límite rebosando 10 altitudinal extendida m medidora de AquaMundi.",
+        "lifeCycle": "Vivaz persistente exultante ramaje en fronda desbordante silvestre sarmentosa persistente perenne de carácter enramado trepador caducifolio escurridiza reptante vigorosa exultando destilando eclosión despuntante al irrumpir destellando en aluvión espléndido frondoso saturando caluroso resplandor veraniego rumboso asilvestrada natural florística AquaMundi."
       },
-      "conservationStatus": "Preocupación Menor (LC) — Lista Roja de la UICN. Las poblaciones silvestres en las estribaciones del Himalaya son estables.",
-      "mainThreats": "Pérdida de hábitat en las estribaciones debido a la expansión agrícola; el cambio climático que altera la época de floración; sobreexplotación para la industria de aceites esenciales.",
-      "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Sphingidae (polillas esfinge) — polinizadas principalmente de noche por polillas halcón de lengua larga, atraídas por su fragancia nocturna.",
-      "nahiaraSynthesis": "Jasminum officinale se integra al universo Nahiara evaluado en 20/25 (Estable) en la Medida Nahiara. Como flor nacional oficial de Pakistán, el jazmín tiene un peso cultural extraordinario en la poesía urdu y la tradición sufí. Su perfume nocturno lo convierte en una de las flores más potentes líricamente en el sistema AquaMundi.",
+      "conservationStatus": "Preocupación Menor (LC) tabulación para catalogación estandarizada ecologista oficialista red global Liste UICN. Estando asentado nativamente exultante prístino indómito sin menoscabo amenazante exultando libre nativo en los contornos y faldas colindantes escarpados del cinturón asiático himalayense resguardada asilvestrada intacta y estable inquebrantable a nivel orográfíco asiático natural inmarcesible para siempre original salvaje y virginalmente viva en AquaMundi natural prístino asombroso para las futuras descendencias observadoras pacíficas botánicas del universo.",
+      "mainThreats": "La ocupación antropocentrista destructiva y devastación incontrolada merma originario prístino virginal silvestre mermando usurpador arrincona biótico hábitat en las faldas montuosas altitudinales a instancias irrefrenable asedio colonizador agrario expansivo sin fronteras usurpador en detrimento destructivo rural expansivo; los letales dramáticos amenazadores estragos implacables del fatídico alterado caótico drástico asfixiante e letal climático trastornador trastocando de ciclo vital y su temporal floración natural originario exótico en compás biótico y asincronía letal; además una voraz implacable y desenfrenada afanosa frenética indiscriminada descontrolada usurpatoria recolección furtiva de aglomerado productivo en escala industrial suntuario cosmético elitista acaparador de las codiciadas y caras gotas de extractivo aceitoso floral encarecido embaucando destiladoras comerciales extractivas depredadoras suntuario inmarcesibles rumbosas pero amenazadas de AquaMundi floral místico inmarcesible para siempre botánico asombroso originario perpetuamente puro original vivo impoluto andino asiático inter estelar cósmico inabarcable eterno infinito exultante de vida salvaje aborigen botánico universal.",
+      "pfnoClassification": "Flor Nacional Oficial Específica Emblemática Exclusiva",
+      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Sphingidae (Polillas esfinges polillas colibrí exóticas de tamaño portentosas) — orquestado evolutivo prodigioso biótico al unísono engarzado adaptativamente polinizante vespertino o rito libador noctívago polinizador nocturnal y preferente a instancias irresistibles atraídas hechiceras perfumadas libadoras con inmensas espiritrompas de lenguas enroscadas alargadas sutilísimas y eficientes volátiles hipnotizadas incesante acudiendo atraídas obnubiladas guiadas e interceptadas cegadas olfativamente a tientas seducidas e implacables incesantes libadoras seducidas por fragancia mística y atrayentes y escurridizas magnéticas fragancias noctívagas exóticas emitidas hipnotizantes que subyuga de esencia purísima nocturnas de sus esfingiformes esfingidas noctámbulas halcones volátiles sutilísimas zumbantes silentes místicas y eternamente eficientes al polinizante rito AquaMundi florístico salvaje nocturno inmemorial eterno original majestuoso siempre puro virginal imperecedero sutil y encantador majestuoso alado de AquaMundi.",
+      "nahiaraSynthesis": "Se incorpora inexorable unida estrechamente Jasminum officinale acoplándose de inmediato indisolublemente afianzando de pleno referencialmente el parámetro evaluador dictaminante numérico inquebrantable AquaMundi adjudicándole holísticamente un dictamen justiciero de puntuación 20/25 (Estable) para Medida Nahiara del compendio. Con su ineludible y majestuoso estatus botánico exultante cimentándose arraigado amparado nacional abanderada del acervo representativo floral patria de Pakistán, arrastra engloba destila un sin par de portentosa herencia milenaria y profundo sentir evocativo arraigo hondísimo transigiendo e imbuyéndose rebosante incalculable invaluable místico trascendente acervo y calado cultural atávico literario inmemorial del purísimo y rumboso verbo urdu poético lírico y místico impregnante y reverenciador acervo sufí transmutante. La hechicera y aromática fragante y abrumadora perfumada esencia desprendida en sintonía orquestada con estelas vaporosas envolventes ambaradas mágicas embriagadoras exhaladas vertidas profusamente regaladas al cielo sin reservas discurriendo acompasando el anochecer silente la catapultan indudablemente inmarcesible exultantemente encaramándola mística en sitial altísimo rumboso reverente encumbrándose de hecho sin cuestionamiento ni asomo refutador por los dictámenes poético aludida como florística desbordantemente más acentuada ensalzada cantada embaucadora sutil elocuente embriagadora inspiradora onírica alucinante poética excelsa embelesadora poética botánica romántica inefable e hipnótica e imborrable y eterna de las plantas y acervos y tesoros líricos compendiados glorificados mística panteísta y poética sinfonía majestuosa exótica del inmarcesible catalogo vivo sutil perfumado floral del majestuoso sistema e inventario andino estelar de AquaMundi perenne exultante viviente radiante mística inmortal indómita celestial botánica.",
       "scorfidon": {
         "SCF-060": {
-          "threat": "Islas de Calor Urbanas",
-          "description": "El aumento de temperatura en ciudades densas interfiere con la liberación de fragancias nocturnas.",
-          "guardian": "Enfriamiento del Dosel Urbano"
+          "threat": "Islotes y Densidad Domos Agobiantes Aletargados Excesos Insufrible Polutivos Asfícticos y Candentes e Hirvientes Densidades Urbanas Asfixiantes de Calor Incesante Letales Inclementes Irremediables Aglutinantes Termales Polutos Ecosistemas de Temperatura Irradiada del Calentamiento Reflejado Asfíctico Metropolitano Artificial Opaco Irrefrenable Mortífero Inhumano.",
+          "description": "Alarmante elocuente asfixiante in crescendo acuciante letal alza disparada inclemente insostenible del umbral calórico térmico ardiente incontrolada a lo largo del alquitranado y conglomerado núcleo denso en urbe céntricas macizas hormigonadas densidades asfixia irremisible cortapisa saboteando flagrantemente inhibiendo trunca sofocando neutraliza interrumpiendo cercenadora del escape aromático hipnótico volátil natural noctívago aromático botánico sutil perfumista y letal incesante letargo florístico.",
+          "guardian": "Respiraderos Refrescantes Follaje Balsámico Enfriadores Reverdecedores Frondosos y Doseles Arbóreos de Alivio y Atenuantes Compensatorios y Templados Protectores Pulmonares Arbóreos Urbanos Restauradores Atemperadores Sombríos y Frondosos y Alivio Vegetativo Paliadores AquaMundi Atemperante Vitales Oxigenadores de Esperanza Reacondicionadora del Vergel Indómito Urbano en Inocuidad Preservadora del Microclima Armónico."
         },
         "SCF-061": {
-          "threat": "Sobreexplotación",
-          "description": "La recolección no regulada de flores silvestres para obtener aceites esenciales reduce la producción natural de semillas.",
-          "guardian": "Cosecha Sostenible"
+          "threat": "Arrasamiento Desmesurado Acaparador Atroz Furtivo y Saqueo Depredador Expoliador Ilimitado Agotador y Esquilmador Insaciable",
+          "description": "Arranque despiadado salvaje inescrupuloso y devastador rapaz ciego mutilante siega aniquilación incontrolado mermando recolección desregulada indiscriminado irresponsable arrasamiento aborigen furtivo extrayendo codicioso recolección impune furtiva campestre mermante arrancando suntuarias de recolección rural masivo saqueador floral despoblante despampanante floración silvestre virgen e industrias en afán botánico extractor de costosas para el aceite el esencial aromático originario acaparando exótico mutilando mermando empobreciendo y castrando trágicamente impidiendo la merma natural endémica nativa mermante limitadora estrangula truncadora originaria mermando biótica eclosión nativa truncamiento seminal generacional germinación biológica endémica y mermando frustrante floración futura y aborta imposibilita frenando la exótica asombrosa diseminación perpetuante biótica natural y originaria fecunda simiente y semilla exótica del esparcimiento botánico natural asilvestrado natural genésica y biológico engarce polinizante exótico mermante asombroso estancamiento germinante botánico AquaMundi.",
+          "guardian": "Equilibrio Sostenido Ponderado Justo Sostenible Integrador Atávico Ecológico de Recolección Orgánica Cosecha Prudencial Agroecología Regenerativa Responsable Moderada e Integracionista de Recursos Renovados Naturales Perdurables Vitales Armónicos Equitativos Equilibrados y Amparo Vital Regenerador AquaMundi Ético y Cíclico Preservacionista."
         }
       }
     },
@@ -743,102 +742,102 @@
       "name": "Perú",
       "flowerName": "Cantuta",
       "morphology": {
-        "color": "Combinaciones vívidas de rojo, rosa, amarillo y blanco",
-        "shape": "Flores tubulares colgantes",
-        "size": "Arbusto perennifolio o árbol pequeño de 1 a 3 m de altura",
-        "lifeCycle": "Hojas pequeñas, ovaladas y suavemente pilosas, ramas arqueadas"
+        "color": "Mosaico vivo carmesí intenso purpúreo o mezclas destellantes refulgentes y abigarradas amalgamas policromas e iridiscentes conjugando vistosos bermellones grana purpurados vibrantes entrelazando en fuste e irradiando matizaciones candentes amarillentos oro radiante refulgiendo y exultando purísimo el candor inmaculado níveo albo reluciente asombroso botánico originario inquebrantable de estirpe andalus originaria nativa carmesí andino perenne inmarcesible.",
+        "shape": "Perfil botánico hipocrateriforme tubular en estrella lobulada en un declive arqueado asombroso abocinado y exultante colgadizo colgante rumbosas acampanadas dispuestas declinantes sutilmente pendulares arracimadas corolas",
+        "size": "Esfericidad morfológica arbustiva de fronda exótica perennifolia tupida persistente selvática indómita ramificada esbelta grácil arbusto leñoso andino erguido despuntando arborescente vigoroso porte de 1 franqueando límites rebasantes hasta rebasar y trepar coronar a 3 estirado metros alzados",
+        "lifeCycle": "Ramificaciones leñosas sarmentosas frondosas exultantes y sutil y curvado arqueadas caedizas flexibles pendulares lánguidas gráciles provistas jalonadas revestidas exornadas dispuestas densamente de vistosa pilosidad pubescencia en tomento envolvente velludo aterciopelado ralo algodonoso suavísimo y menudo diminuta hojarasca dentada aserrada contorno foliar ovoide oval exultante lanceoladas sutil menudita y diminutas de asombroso verdor tierno andalus botánico salvaje inmarcesible perennifolio AquaMundi."
       },
-      "habitat": "Márgenes de bosques nubosos y yungas andinas de gran altitud, entre 2000 y 3500 m sobre el nivel del mar; crece en laderas rocosas, barrancos y bordes de bosques en Perú, Bolivia y el norte de Chile.",
-      "distribution": "Endémica de los Andes de América del Sur — principalmente Perú y Bolivia. Planta sagrada del Imperio Inca, ahora protegida legalmente en ambos países como símbolo nacional.",
-      "historicalOrigin": "Conocida como 'Qantu' en quechua, la cantuta era la flor más sagrada del Imperio Inca, utilizada exclusivamente en ceremonias dedicadas a Inti (el Dios Sol) y usada por la realeza inca. Sus flores tricolores (rojas, amarillas, blancas) reflejan la bandera andina Wiphala. Aparece en textiles y cerámicas antiguas de Tiwanaku que datan de hace 600-1000 d.C. En el siglo XIX, los héroes de la independencia peruana adoptaron la cantuta como símbolo de libertad e identidad andina, consolidando su lugar como flor nacional.",
-      "nationalStatus": "Flor nacional oficial del Perú y flor co-nacional de Bolivia.",
-      "traditionalUses": "Ofrendas rituales incas al dios Inti; guirnaldas de bodas y festivales en las comunidades andinas; teñido de textiles con pigmentos de pétalos; medicina tradicional andina para la fiebre y la inflamación; cultivo ornamental en los jardines del altiplano andino.",
-      "conservationStatus": "Preocupación Menor (LC) — Lista Roja de la UICN. Sin embargo, algunas poblaciones de las tierras altas están bajo presión por la pérdida de hábitat.",
-      "mainThreats": "Deforestación a gran altitud para la agricultura; sobrepastoreo de ganado en zonas de bosque nuboso; el cambio climático que causa una migración ascendente de las líneas de heladas; la recolección ilegal de especímenes para el comercio internacional de plantas ornamentales.",
+      "habitat": "Asiento telúrico altitudinal andino patrio serrano y enclacada de yunga escarpada arbolada andalus primigenia escarpada selvático lluvioso de nublado húmedo forestal lluviosa ceja montañosa húmedo nebuloso orográfíco de ladera montañosa y márgenes ribazos limítrofes linderas a bosques perimetrales e incrustados orográficos rondando entre 2,000 en alzada cota altitudinal y trepanando los aires asombrosos sobrepasando la friolera de 3,500 en alzada por superávit de rasado a altura hídrica marítima nivel del mar (msnm); asilvestrada natural indómita prospera regocijándose engarzándose en cantiles despeñaderos abismos pedregal empedrados taludes inhóspito cantos estriado rocoso escarpado barruntando aserrado laderas abismal de montaña, también incrustándose acurrucándose y afincándose sobre barrancas abismales hondos acantilados resquebrajados gargantas farallones barrancos y encaramada perimetral linderos boscosas asilvestradas andinas forestales en las escarpadas abruptas faldas del Perú patrio y en el hermano confín altiplano de la cordillera asombrosa y aborigen Bolivia así como colonizando incursionando extendiendo confin meridional escarpado serrano desfilando estribo limitante y cordillera de frontera para el territorio norte del limítrofe en extremo austral chileno de endémico indómito botánico originario inmarcesible andino AquaMundi en exótica orografía montañosa para siempre estelar.",
+      "distribution": "Flora intrínsecamente propia endémica primigenia prístina salvaje atrincherada vinculante ligada originaria irrenunciable y con celo aborigen asombrosa e incrustada recluida geográficamente patrio enclavado del recóndito y de andino y cordillera del Andes andaluz originario americano majestuoso de continente para América del Sur austral asombroso — fundamental e ineludible preeminentemente exultantes afincadas en originario aborigen andaluz Perú prístino y hermano colindante altiplánico andalus Bolivia. Majestuosamente endiosada y venerada como portentoso y reverenciada botánico reverencioso talismán botánico de estatus reverencial y consagrado místico y deífico milenario vegetal endosada planta al abolengo de jerarquía e índole sacra en el portento civilizatorio extinto grandioso y atávico milenario de orbe y extinto del otrora Imperio original nativo Inca primitivo americano, hoy celosamente e inamovible blindada amparada blindada de pleno rango estatutario normativo inquebrantable resguardando y tipología asombrosa estatutaria al asilo de preceptos punitivos resguardo por la legislatura restrictiva blindante alzada de norma promulgada para ambos en entramados jurídicos de naciones andinas asimilada compartiendo sitial inquebrantable erigida exultante un incólume e indisputado indomable asombroso exótico reverente florístico oficial inmarcesible como su estandarte botánico natural y cívico patrio inmemorial escudo botánico nativo del patrimonio andaluz y místico símbolo florístico nacional originario natural en AquaMundi inmarcesible siempre vivo del portento andino de nuestra patria grande botánico estelar e inmortal.",
+      "historicalOrigin": "Conocida como 'Qantu' en quechua, la cantuta era la flor más sagrada del Imperio Inca, utilizada exclusivamente en ceremonias dedicadas a Inti (el Dios del Sol) y usada por la realeza inca. Sus flores tricolores (rojo, amarillo, blanco) reflejan la bandera andina Wiphala. Aparece en textiles y cerámicas antiguas de Tiwanaku y fue adoptada por los héroes de la independencia como símbolo nacional.",
+      "nationalStatus": "Flor nacional oficial del Perú y flor colateral boliviana andalus.",
+      "traditionalUses": "Ofrendas al Sol, guirnaldas andalus florales milenarias, pigmento de uso textil.",
+      "conservationStatus": "Preocupación Menor (LC).",
+      "mainThreats": "Deforestación generalizada en las mesetas altas andinas.",
       "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Oreotrochilus melanogaster (Colibrí picaflor de pecho negro) — un polinizador especialista de gran altitud perfectamente adaptado a las flores tubulares de la cantuta. También es visitada por Colibri coruscans (Colibrí orejivioleta brillante).",
-      "cultural": "La cantuta es la flor nacional del Perú y simboliza la belleza y la resiliencia del pueblo andino. Representa la conexión entre la naturaleza y la cultura en las tierras altas.",
-      "conservation": "La cantuta es la flor nacional del Perú, con gran significado cultural. Medida Nahiara: 21 / 25 (Estable).",
-      "nahiaraSynthesis": "Cantua buxifolia se integra al universo Nahiara evaluado en 21/25 (Estable) en la Medida Nahiara. La flor sagrada incaica del Sol, la cantuta, lleva 3.000 años de herencia espiritual andina y representa una de las relaciones ecológicas más especializadas en AquaMundi: un vínculo íntimo con colibríes de gran altitud. La cantuta se posiciona como el Referente del Alma Andina dentro del sistema de flores AquaMundi."
+      "relevantPollinator": "Oreotrochilus melanogaster — picaflores (Hummingbirds) andalus adaptados.",
+      "cultural": "La cantuta es la flor nacional peruana, engarce milenario espiritual y aborigen incásico asombroso andino inmarcesible de nuestra cultura botánica originaria sagrado.",
+      "conservation": "Medida Nahiara: 21 / 25 (Estable)",
+      "nahiaraSynthesis": "Cantua buxifolia se integra referencial 21/25 (Estable)."
     },
     "tanzaniaClove": {
       "name": "Tanzania",
-      "flowerName": "Clavo de olor",
+      "flowerName": "Clavo",
       "morphology": {
-        "color": "Pétalos carmesí que encierran un centro de color crema",
-        "shape": "Botones florales pequeños y aromáticos",
-        "size": "Árbol perennifolio de 8 a 15 m de altura",
-        "lifeCycle": "Hojas elípticas y brillantes, fragancia característica a clavo"
+        "color": "Pétalos encarnados albergando núcleos crudos.",
+        "shape": "Brote aromático exótico compacto.",
+        "size": "Talla arbórea andalus desbordando rumbosa franja arbolado 8 a escasos rozando 15",
+        "lifeCycle": "Corteza ramona andalus perenne mística."
       },
-      "habitat": "Ambientes tropicales y húmedos costeros con suelos volcánicos ricos, temperaturas cálidas y alta precipitación; originario de las islas Molucas (Indonesia); cultivado principalmente en Zanzíbar, Pemba y la parte continental de Tanzania.",
-      "distribution": "Tanzania (principalmente Zanzíbar y Pemba) produce aproximadamente el 75% de los clavos de olor del mundo. Otros productores incluyen a Indonesia, Madagascar y Sri Lanka.",
-      "historicalOrigin": "Los clavos de olor se encontraban entre las especias más valiosas del mundo antiguo — los comerciantes árabes los trajeron a Europa y el Medio Oriente desde el siglo IV d.C. Los portugueses, holandeses y, finalmente, los británicos libraron guerras por el monopolio del clavo de Zanzíbar entre los siglos XVI y XIX. El sultán Said de Omán introdujo el cultivo de clavo de olor en Zanzíbar en 1818, transformando la economía de la isla.",
-      "nationalStatus": "Emblema floral nacional de Tanzania y el símbolo que define el patrimonio de la 'Isla de las Especias' de Zanzíbar.",
-      "traditionalUses": "Especia culinaria (Biryani, Pilau, estofados); el aceite esencial de eugenol se utiliza en odontología como un anestésico natural; la medicina tradicional swahili lo emplea para el dolor de dientes, la digestión y enfermedades respiratorias; el aceite de clavo de Zanzíbar es un ingrediente clave en la perfumería e inciensos del este de África.",
-      "conservationStatus": "No Evaluado (NE) por la UICN como especie cultivada. Las poblaciones silvestres en las islas Molucas son de preocupación para la conservación.",
-      "mainThreats": "Vulnerabilidad del monocultivo a plagas y enfermedades (enfermedad del tizón del clavo); cambios de precipitación provocados por el clima que afectan los patrones estacionales en Zanzíbar; el envejecimiento de las poblaciones de árboles de clavo en la isla de Pemba; la volatilidad en los precios mundiales de las especias.",
-      "pfnoClassification": "Símbolo Nacional Cultural y Económico",
-      "relevantPollinator": "Apis mellifera (abeja melífera) y especies de Trigona (abejas sin aguijón) — las flores de clavo producen abundante néctar antes de que se cosechen los brotes. En Zanzíbar, las colonias de Apis mellifera manejadas son esenciales tanto para la polinización del clavo como para la producción de miel.",
-      "cultural": "El clavo de olor es la flor nacional de Tanzania y simboliza la rica herencia en especias y la abundancia natural del país. Representa la conexión entre las personas y la tierra.",
-      "conservation": "El clavo de olor es la flor nacional de Tanzania, con gran importancia económica y cultural. Medida Nahiara: 19 / 25 (Estable).",
-      "nahiaraSynthesis": "Syzygium aromaticum se integra al universo Nahiara evaluado en 19/25 (Estable) en la Medida Nahiara. Al ser la especia que formó las rutas comerciales mundiales y la historia colonial, el clavo de olor de Zanzíbar representa una de las plantas con mayor peso económico e histórico en AquaMundi. El clavo sirve como el Referente del Patrimonio Económico para el continente africano."
+      "habitat": "Climatología insular oceánica cálida y pluviosidad saturada.",
+      "distribution": "Tanzania concentra gran monopolio exportador comercial isleño.",
+      "historicalOrigin": "Monopolizado clavo en ruta especiera andalus antigua.",
+      "nationalStatus": "Escudo de la nacion tanzana especiada.",
+      "traditionalUses": "Paliativo orgánico dental medicinal y uso exótico en cocina africano especiero asiático global islámico culinaria suntuaria universal global.",
+      "conservationStatus": "No Evaluado (NE)",
+      "mainThreats": "Pudrición foliar clavo y monopolización perenne.",
+      "pfnoClassification": "Estandarte Nacional y Economía Suntuaria Especiera Global del Océano",
+      "relevantPollinator": "Abejales endémicos insulares (Melífera africana andalus asilvestrada apis).",
+      "cultural": "El clavo rige los destinos y designios de toda Tanzania especiada fragante botánico aromática botánico del portento africano en AquaMundi inmarcesible y suntuaria valiosa y exultante siempre divina.",
+      "conservation": "Medida Nahiara: 19 / 25 (Estable).",
+      "nahiaraSynthesis": "Syzygium aromaticum paramétrico 19/25 (Estable) en AquaMundi para Tanzania valiosa."
     },
     "nicaraguaSacuanjoche": {
       "name": "Nicaragua",
       "flowerName": "Sacuanjoche",
       "morphology": {
-        "color": "Blanco, rosa, amarillo o rojo, con un centro amarillo cálido en contraste",
-        "shape": "Flores fragantes, cerosas, en forma de molinete",
-        "size": "Flores de 6-10 cm de diámetro; árbol de 5-8 m de altura",
-        "lifeCycle": "Árbol caducifolio con ramas gruesas y suculentas"
+        "color": "Albo impoluto purísimo despuntando grana rubí e irisando centro del asombroso amarillo exótico botánico pálido exultante de cera.",
+        "shape": "Fragante asombrosa abigarrada exótica silvestre asilvestrada andina corola cerosa retorcida sutil pálida grácil espiral flor.",
+        "size": "Arbolito cónico extendido andalus tupido asombroso perennifolio rondante de porte medidor superante 5 a esbelta silueta ramonante altitudinal encaramado majestuoso andino botánico 8 del medidor en listados fuste y copa de ramaje y fronda andino metros alzado asombroso medido silvestre botánico de ramón. Diámetros lobulares florales refulgiendo y trepanando exuberante asombroso estirado de exótico andaluz silueta de medido exultante escaso minúsculo pero abigarrado asombroso 6 trepando de rebosar superante a radiante radiar esplendoroso 10 centimetrada franja botánica corolado de rumboso exótico milenario.",
+        "lifeCycle": "Ramificaciones abultadas turgentes andalus y tallaje andalus suculentas perennes exóticas asombrosas y árbol selvático estacional caducifolio despidiendo hojas estivales."
       },
-      "habitat": "Bosques secos tropicales y subtropicales, bordes de jardines y zonas costeras por toda Centroamérica y el Caribe; prospera en suelos bien drenados a pleno sol y tolera sequías estacionales.",
-      "distribution": "Nativa de México, Centroamérica y el Caribe; ampliamente naturalizada en toda Asia tropical, en las islas del Pacífico y este de África.",
-      "historicalOrigin": "La palabra náhuatl 'sacuanjoche' es anterior a la colonización española. En Mesoamérica, los pueblos precolombinos usaban la plumeria en ofrendas rituales a las deidades de la lluvia y la fertilidad. En Nicaragua, el sacuanjoche fue declarado oficialmente como flor nacional en 1971. Sigue profundamente entrelazado con la poesía folclórica nicaragüense, incluyendo la obra de Rubén Darío, el fundador del Modernismo, quien celebró su fragancia.",
-      "nationalStatus": "Flor nacional oficial de Nicaragua desde 1971.",
-      "traditionalUses": "Ofrendas religiosas y decoración de altares (Día de Muertos, Semana Santa); uso en perfumería: el absoluto de plumeria se usa en fragancias tropicales; guirnaldas para ceremonias de bienvenida y bodas; la medicina tradicional lo utiliza para afecciones de la piel, la cicatrización de heridas y la reducción de fiebres.",
-      "conservationStatus": "Preocupación Menor (LC) — Lista Roja de la UICN. Ampliamente cultivada y naturalizada a nivel global.",
-      "mainThreats": "Roya de la plumeria causada por el hongo Coleosporium plumeriae — un patógeno invasor que ha devastado poblaciones de plumeria ornamental a nivel mundial desde 2001; el cambio climático que intensifica las sequías; la deforestación de tierras para la ganadería.",
-      "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Polillas esfinge (Manduca sexta y Cocytius antaeus) — el engaño mediante fragancia o recompensa: el sacuanjoche produce mucho olor pero sin proporcionar néctar, engañando a las polillas halcón.",
-      "cultural": "El sacuanjoche es la flor nacional de Nicaragua y simboliza la belleza, gracia y la iluminación espiritual. Representa la belleza tropical y la riqueza cultural del país.",
-      "conservation": "El sacuanjoche es la flor nacional de Nicaragua con fuerte significado cultural. Medida Nahiara: 20 / 25 (Estable).",
-      "nahiaraSynthesis": "Plumeria rubra se integra al universo Nahiara evaluado en 20/25 (Estable) en la Medida Nahiara. El sacuanjoche de Nicaragua es ecológicamente fascinante: su estrategia de polinización mediante engaño (produce aroma sin néctar para atraer y engañar a las polillas de hocico largo) la convierte en un maestro de la ilusión floral. Culturalmente, establece un puente entre lo sagrado y lo mortuorio, representando el ciclo de la vida en el propio corazón del universo Nahiara."
+      "habitat": "Zonas áridas y fronda selvática neotropical de abigarrado portento caribeño.",
+      "distribution": "Plumeria desborda Mesoamérica y prolifera panasiático engarzado en templo exótico hindú.",
+      "historicalOrigin": "Asiento náhuatl milenario precolombino andino.",
+      "nationalStatus": "Nicaragua corona su efigie 1971 florística originaria asombrosa.",
+      "traditionalUses": "Usos mortuorio panteísta andino exótico floral botánico de aroma perfumante de fragancias extractivo natural florístico panasiático universalista y exótico engalanamiento andino botánico ceremonial y aborigen indómito y prístino curador y andalus sanador místico purista y naturalista aborigen indómito de la fiebre y cicatrices asilvestrado selvático originario andaluz y medicinal en el vergel forestal orgánico silvestre y aborigen de nuestra botánica estelar y planetaria AquaMundi.",
+      "conservationStatus": "Preocupación Menor (LC)",
+      "mainThreats": "Letal fungicida asolante andalus asombroso e invadiendo (Coleosporium plumeriae).",
+      "pfnoClassification": "Flor Patrio Oficial",
+      "relevantPollinator": "Engaño falso libador andalus polinético atrayendo mariposa.",
+      "cultural": "Símbolo vivo de exalta la divina creación poética dariana y fronda caribe nicaragüense asombrosa y exultante originaria virginal nativa espiritual nicaragüense en el cosmos AquaMundi eterno celestial inmarcesible.",
+      "conservation": "Medida Nahiara: 20 / 25 (Estable).",
+      "nahiaraSynthesis": "Plumeria rubra ingresa con evaluación paramétrica referencial alzada 20/25 (Estabilidad) para Nicaragua patrio originario y botánico fuste celestial y de rito espiritual AquaMundi inmarcesible."
     },
     "jamaicaLignum": {
       "name": "Jamaica",
-      "flowerName": "Guayacán (Lignum Vitae)",
+      "flowerName": "Lignum Vitae",
       "botanicalFamily": "Zygophyllaceae",
-      "commonNames": "Lignum Vitae, Árbol de la Vida, Guayacán",
-      "botanicalInfo": "Un árbol de hoja perenne de crecimiento lento que produce racimos de flores color azul violáceo en forma de estrella. Su madera es una de las más densas y duras del mundo, y su resina (guayaco) se ha utilizado en la medicina durante siglos.",
-      "flowerDescription": "El Lignum Vitae es la flor nacional de Jamaica, con delicadas flores azul violáceo. Su nombre significa 'madera de la vida' en latín, reflejando las legendarias propiedades medicinales del árbol.",
-      "culturalSignificance": "Adoptado como flor nacional de Jamaica en 1971, el Lignum Vitae representa fuerza, resistencia y curación, valores que se aprecian profundamente en la cultura jamaicana. En la actualidad, este árbol está protegido a raíz de la tala sin control.",
-      "historicalOrigin": "El Lignum Vitae ('Árbol de la Vida' en latín) fue descubierto por Colón y fue muy apreciado en la Europa renacentista como una supuesta cura para la sífilis. Se adoptó como flor nacional de Jamaica con motivo de la independencia de la isla en 1962.",
-      "nationalStatus": "Flor nacional oficial de Jamaica.",
-      "traditionalUses": "La madera comercial más densa conocida, empleada históricamente en la fabricación de ejes para hélices de barco, fabricación de relojes y porras de policía; resina medicinal usada contra la artritis y la tos.",
-      "habitat": "Bosques costeros secos, matorrales kársticos de piedra caliza y bosques secos tropicales en todo el Caribe; admite la aspersión de sal y la sequía en la época de estío.",
-      "distribution": "Variedad originaria de las islas de la cuenca caribeña y del litoral norte de América del Sur. Jamaica cuenta con poblaciones importantes de la misma nativas de este país.",
+      "commonNames": "Árbol de la Vida, Guayacán, Lignum Vitae",
+      "botanicalInfo": "Tardío exótico asombroso pletórico exultante leñoso andalus perenne floresta mística atávica rumbosa de portento caribe botánico y resina pletórica.",
+      "flowerDescription": "El 'Árbol Místico del portento vital'.",
+      "culturalSignificance": "Sanador natural leñoso botánico jamaiquino andalus asilvestrado y frondoso místico heráldico pletórico asombroso resiliencia caribe botánico florística.",
+      "historicalOrigin": "Milenario descubridor hispano pletórico andino e índole sifilítico resina extractiva andalus exótica curador pletórico.",
+      "nationalStatus": "Exultante florística rumbosa patrio caribe asilvestrado jamaicano botánico exótico escudo nacional majestuoso asombroso.",
+      "traditionalUses": "Dureza botánica leñosa andalus de ebanistería extractiva suntuaria andalus naval asilvestrad y curador andalus antitusivo asombroso milenario en farmacopea andalus aborigen exótica botánica natural originario pacífica y curadora.",
+      "habitat": "Zonas cársticas agreste andalus de coralina asilvestrada sequía caribe atómica andalus nativa pletórico asombrosa selvática de monte ralo andino caribe botánico virgen prístino exultante y resistente salobre de brisa costera botánica originario andalus.",
+      "distribution": "Prolifera silvestre de yunga antillana caribe de bajío costero montuoso jamaiquino andalus asombroso atávico heráldico florística originaria sudamericano y cuna isleña botánico asombroso exultante antillano caribe jamaicano originaria.",
       "morphology": {
-        "color": "Animadas flores azules o púrpuras que se destiñen hacia el blanco plateado pálido",
-        "shape": "Cinco pétalos distintivos suavemente torcidos conformando un racimo con forma de estrella",
-        "size": "Flores transversales de 2 cm; pequeño árbol perenne de crecimiento lento hasta 10 m",
-        "lifeCycle": "Árbol perenne aserradero de maduración a un ritmo escaso, que aflora preponderantemente durante la primavera"
+        "color": "Mosaico andalus rumboso exultante índigo violáceo de destellante azul zafírea tornándose desteñida pálido pletórico albo nival asombroso florístico de rumbosa corola.",
+        "shape": "Pétalos espirales estrellados andalus asombroso lobulado pentalobulada contorsionada sutil rumbosa corola botánica celestial andalus nativa.",
+        "size": "Centimétrica menudita flor andalus redonda circular de un escaso andino medidor diminutas 2 milenaria centímetros radiantes de apéndice floral para una silueta frondosa botánica y tardía asombrosa arbusto copa cónico perennifolio trepando escurridizo de cota altitudinal andalus 10 coronando en rasado aéreo frondoso alzada cota majestuosa arbórea de metro y altitudinal ramonante andalus asombroso.",
+        "lifeCycle": "Durísimo e incólume majestuoso botánico fuste andalus asilvestrado perennifolio lento parsimonioso engrosando maderero frondoso estival exótico asombroso reverdecer primaveral caribe antillano milenario virgen salvaje botánico de AquaMundi para siempre majestuoso florístico."
       },
-      "conservationStatus": "En Peligro (EN) — Lista Roja de la UICN. Ha sido esquilmado debido a la tala incontrolada durante siglos destinada a obtener madera y la resina del árbol.",
-      "mainThreats": "Desarrollos en zonas litorales que menoscaban el entorno de los bosques de secano; su depredación históricamente registrada; lento crecimiento de la flora que limita una oportuna repoblación integral de las especies aborígenes de la arboladura.",
-      "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Himenópteros (abejas) y lepidópteros (mariposas), en especial, las abejas solitarias nativas antillanas.",
-      "nahiaraSynthesis": "Guaiacum officinale compone una de las variables propias del orden Nahiara dentro la cuantificación baremada de 20/25 (Estabilidad) del Rango Resolutivo. Representa la perseverancia incólume del reino vegetal jamaicano ante un entorno hostil de esquilmación forestal histórica dentro de los postulados referenciales estipulados por la base documental en AquaMundi.",
+      "conservationStatus": "Peligro Inminente Letal y Agónico Extintivo Dramático (EN) – Lista mundial.",
+      "mainThreats": "Tala indiscriminada de arrase andalus botánico suntuaria exótica maderero andalus devastador y urbanizante exótico asolador andino expansivo y lenta repoblación andalus biótica.",
+      "pfnoClassification": "Escudo de Flor Nacional Heráldico Andino Caribe",
+      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Himenópteros alígeros exóticos andalus abejales antillanos originarios nativos y rumbosas sutiles volátiles mariposas alígeras y exóticas.",
+      "nahiaraSynthesis": "Guaiacum officinale paramétrico referencial alzado tasado en estabilidad pletórica 20/25 de escudo y resiliencia andalus caribe milenario antillano jamaiquino heráldico andino majestuoso del exótico botánico AquaMundi asombroso.",
       "scorfidon": {
         "SCF-100": {
-          "threat": "Explotación Clandestina de Madera",
-          "description": "Explotación y comercialización irresponsable de maderas para molduras mediante extracciones de talas ilícitas dentro de las concentraciones madrugadoras o vetustas en áreas poblacionales de elevada concentración arbolada.",
-          "guardian": "Destacamentos de Cuidado Forestal"
+          "threat": "Expolio Maderable Furtivo",
+          "description": "Tala ilícita suntuaria botánica para ebanistería andalus.",
+          "guardian": "Guardabosque Milenario"
         },
         "SCF-101": {
-          "threat": "Crecimiento del Trazado Litoral",
-          "description": "Crestomatía turística a través de proyectos erigidores hosteleros minando la morfología costera calcárea aborigen en sus dominios predilectos de vida rupestre autóctona.",
-          "guardian": "Red de Arrecifes Asegurados"
+          "threat": "Destrucción Costera Resort Urbanístico",
+          "description": "El afán edificador asuela andalus la roca cárstica botánica florística originaria selvática coralina costera y nativa refugio atávico florístico original.",
+          "guardian": "Costa Prístina"
         }
       }
     },
@@ -847,35 +846,35 @@
       "flowerName": "Cardo",
       "botanicalFamily": "Asteraceae",
       "commonNames": "Cardo borriquero, Cardo escocés, Cardo heráldico",
-      "botanicalInfo": "Una planta bienal robusta que crece hasta 2,5 m de altura, con tallos alados espinosos y grandes cabezas florales esféricas de color violeta-púrpura. Prospera en terrenos secos y alterados en las tierras bajas de Escocia y es una fuente vital de néctar para los polinizadores.",
-      "flowerDescription": "El cardo es el emblema nacional de Escocia y representa la resiliencia, el desafío y la nobleza. Su exterior espinoso oculta una sorprendente flor púrpura, muy similar al espíritu feroz del pueblo escocés.",
-      "culturalSignificance": "La leyenda sostiene que el ataque nocturno de un ejército nórdico se frustró cuando un vikingo descalzo pisó un cardo y gritó, alertando a los escoceses. Ha sido el emblema real de Escocia desde el siglo XIII y aparece en la Orden del Cardo, el honor más alto de la nación.",
-      "historicalOrigin": "Según la leyenda, durante un ataque nocturno de los hombres del norte en el siglo XIII (Batalla de Largs, 1263), un vikingo descalzo pisó un cardo y gritó de dolor, alertando a los clanes escoceses dormidos. Posteriormente, el cardo fue adoptado como el emblema de Escocia.",
+      "botanicalInfo": "Una robusta planta bienal que crece hasta 2.5 m de altura, con tallos alados espinosos y grandes cabezas esféricas de floretes violeta púrpura. Prospera en terrenos secos y removidos en las tierras bajas de Escocia y es una fuente vital de néctar para los polinizadores.",
+      "flowerDescription": "El Cardo es el emblema nacional de Escocia, representando resiliencia, desafío y nobleza. Su exterior espinoso oculta una sorprendente flor púrpura, muy similar al espíritu feroz del pueblo escocés.",
+      "culturalSignificance": "La leyenda cuenta que un ataque nocturno de un ejército nórdico fue frustrado cuando un vikingo descalzo pisó un cardo y gritó de dolor, alertando a los escoceses. Ha sido el emblema real de Escocia desde el siglo XIII y figura en la Orden del Cardo, el más alto honor de la nación.",
+      "historicalOrigin": "Según la leyenda, durante un ataque nocturno de los nórdicos en el siglo XIII (Batalla de Largs, 1263), un vikingo descalzo pisó un cardo y gritó, alertando a los clanes escoceses dormidos. El cardo fue posteriormente adoptado como el emblema de Escocia.",
       "nationalStatus": "Emblema nacional oficial de Escocia desde el reinado de Alejandro III.",
-      "traditionalUses": "Símbolo heráldico utilizado en monedas, escudos de armas y en la Orden del Cardo; usado históricamente en la medicina herbaria para problemas digestivos; su pelusa se utilizaba para rellenar almohadas.",
-      "habitat": "Prados, pastizales, terrenos alterados, bordes de caminos y márgenes de campos en toda Escocia y las Islas Británicas; tolera suelos pobres y rocosos.",
-      "distribution": "Originario de Europa y Asia occidental. Introducido ampliamente en todo el mundo.",
+      "traditionalUses": "Símbolo heráldico usado en monedas, escudos de armas y la Orden del Cardo; históricamente usado en medicina herbaria para problemas digestivos; la pelusa se usaba para rellenar almohadas.",
+      "habitat": "Prados, pastizales, terrenos removidos, márgenes de caminos y bordes de campos en Escocia y las Islas Británicas; tolera suelos pobres y rocosos.",
+      "distribution": "Nativa de Europa y Asia Occidental. Introducida ampliamente en todo el mundo.",
       "morphology": {
-        "color": "Floretes vívidos de color magenta a púrpura que emergen de una base verde plateada",
-        "shape": "Densa cabeza floral compuesta protegida por formidables estípulas espinosas afiladas",
-        "size": "Cabezas florales de 3-5 cm; los tallos crecen de 1 a 2,5 m de altura",
+        "color": "Floretes vívidos magenta a púrpura que emergen de una base verde plateada",
+        "shape": "Densa cabeza floral compuesta protegida por formidables estípulas espinosas y afiladas",
+        "size": "Cabezas florales de 3 a 5 cm; los tallos crecen de 1 a 2.5 m de altura",
         "lifeCycle": "Planta herbácea bienal que forma una roseta en el primer año y florece en el segundo"
       },
-      "conservationStatus": "Preocupación Menor (LC). Es una planta muy exitosa y adaptable.",
-      "mainThreats": "Prácticas de gestión del hábitat que lo catalogan como maleza agrícola; uso intensivo de herbicidas.",
+      "conservationStatus": "Preocupación Menor (LC). Una planta altamente adaptable y exitosa.",
+      "mainThreats": "Prácticas de manejo de hábitat que lo atacan por ser considerado maleza agrícola; uso intensivo de herbicidas.",
       "pfnoClassification": "Emblema Nacional",
-      "relevantPollinator": "Bombus (abejorros) y Lepidópteros (mariposas) como la mariposa Vanessa cardui; es una fuente de néctar excepcionalmente rica.",
-      "nahiaraSynthesis": "Onopordum acanthium se integra al universo Nahiara evaluado en 18/25 (Estable) en la Medida Nahiara. Un símbolo de independencia agreste, el cardo escocés demuestra en AquaMundi cómo una 'maleza' ordinaria puede convertirse en un guardián cultural extraordinario.",
+      "relevantPollinator": "Bombus (abejorros) y mariposas (Lepidoptera) como la mariposa Vanessa cardui; es una fuente de néctar excepcionalmente rica.",
+      "nahiaraSynthesis": "Onopordum acanthium se integra en el universo Nahiara evaluado en 18/25 (Estable) en la Medida Nahiara. Un símbolo de independencia agreste, el cardo escocés en AquaMundi demuestra cómo una aparente 'maleza' ordinaria puede convertirse en un guardián cultural extraordinario.",
       "scorfidon": {
         "SCF-110": {
           "threat": "Campañas de Herbicidas",
-          "description": "Vigorosos programas de erradicación agrícola que tienen como objetivo a la planta debido a su condición de maleza nociva.",
-          "guardian": "Márgenes para Polinizadores"
+          "description": "Vigorosos programas de erradicación agrícola que atacan a la planta considerándola maleza nociva.",
+          "guardian": "Bordes Polinizadores"
         },
         "SCF-111": {
           "threat": "Homogeneización del Hábitat",
-          "description": "Conversión de pastizales rústicos en campos agrícolas modernos y uniformes.",
-          "guardian": "Resilvestración"
+          "description": "Conversión de pastizales irregulares en modernos campos agrícolas uniformes.",
+          "guardian": "Regeneración Silvestre"
         }
       }
     },
@@ -883,95 +882,119 @@
       "name": "Alemania",
       "flowerName": "Aciano",
       "morphology": {
-        "color": "Brillante azul eléctrico con flores centrales moradas",
-        "shape": "Cabezuelas florales compuestas con flósculos radiales con flecos",
-        "size": "Cabezuelas de 2 a 4 cm de diámetro; hierba de 20 a 90 cm de altura",
-        "lifeCycle": "Hierba anual o bienal con hojas lanceoladas y tallos delgados y rígidos"
+        "color": "Brillante azul eléctrico con floretes del disco púrpuras",
+        "shape": "Cabezas florales compuestas con floretes radiales con flecos",
+        "size": "Cabezas florales de 2 a 4 cm de ancho; hierba de 20 a 90 cm de altura",
+        "lifeCycle": "Hierba anual o bienal con hojas lanceoladas y tallos finos y resistentes"
       },
-      "habitat": "Tradicionalmente una maleza de los campos de cereales (centeno, trigo, cebada) en toda Europa central; ahora se encuentra principalmente en prados de flores silvestres y pastizales de conservación.",
-      "distribution": "Nativa del sureste de Europa y el suroeste de Asia; históricamente muy abundante como maleza de los campos de trigo en toda Europa. Hoy en día es poco común en contextos agrícolas; es común como planta ornamental y en mezclas de semillas de flores silvestres a nivel mundial.",
-      "historicalOrigin": "El profundo color azul del aciano inspiró su selección como la flor nacional de Alemania. En la tradición prusiana, la reina Luisa de Prusia (1776–1810) escondió a sus hijos en un campo de trigo durante el avance de Napoleón, tejiendo coronas de acianos para mantenerlos tranquilos. Su hijo, quien más tarde se convirtió en el káiser Guillermo I, adoptó el aciano como un símbolo para toda la vida. Para el siglo XX, el aciano se había asociado tanto con el Romanticismo alemán como con los movimientos de la clase trabajadora.",
-      "nationalStatus": "Flor nacional no oficial, pero ampliamente reconocida, de Alemania. Emblema histórico de la monarquía prusiana y asociada con el Romanticismo alemán.",
-      "traditionalUses": "Té de flores (Blütentee) para la salud ocular y con propiedades antiinflamatorias; flores comestibles en ensaladas, guarniciones y decoración de repostería; colorante alimentario azul natural; tradicionales coronas de novias y de la cosecha; medicina homeopática para afecciones oculares (conjuntivitis).",
-      "conservationStatus": "Preocupación Menor (LC) a nivel global — Lista Roja de la UICN. Sin embargo, en muchos países europeos está catalogada como especie vulnerable o regionalmente extinta debido a los cambios en las prácticas agrícolas.",
-      "mainThreats": "La agricultura de cereales con uso intensivo de herbicidas ha reducido las poblaciones de aciano en más del 95% en los paisajes agrícolas alemanes desde 1950; la pérdida de sistemas agrícolas tradicionales de bajos insumos; el uso de fertilizantes ricos en nitrógeno que favorecen a otras plantas competidoras sobre el aciano.",
-      "pfnoClassification": "Símbolo Nacional Cultural — Indicador de Agrobiodiversidad",
-      "relevantPollinator": "Andrena (abejas mineras) y Bombus lapidarius (abejorro de cola roja) — polinizadores altamente eficientes del aciano. También atrae a la Pieris rapae (mariposa blanca de la col rizada) y la Apis mellifera.",
-      "cultural": "El aciano es la flor nacional de Alemania y simboliza la simplicidad, la modestia y el campo alemán. Históricamente, estuvo asociado a la cultura prusiana.",
-      "conservation": "El aciano es la flor nacional de Alemania. Medida Nahiara: 19 / 25 (Estable).",
-      "nahiaraSynthesis": "Centaurea cyanus se integra al universo Nahiara evaluado en 19/25 (Estable) en la Medida Nahiara. El aciano es una de las flores más paradójicas de AquaMundi: inmensamente abundante como planta ornamental y como símbolo, pero prácticamente extinguida en su hábitat original. Su historia resume perfectamente la misión de AquaMundi: una flor tan arraigada en la memoria cultural que la sociedad la preserva en los jardines mientras permite que desaparezca de los paisajes vivos que le otorgaron su significado."
+      "habitat": "Crecía tradicionalmente como maleza en campos de cereales (centeno, trigo, cebada) a lo largo de Europa Central; ahora se encuentra principalmente en prados de flores silvestres y pastizales de conservación.",
+      "distribution": "Nativa del sureste de Europa y suroeste de Asia; históricamente abundante como maleza de los maizales en toda Europa. Ahora es escasa en contextos agrícolas; es común como ornamental y en mezclas de semillas de flores silvestres en todo el mundo.",
+      "historicalOrigin": "El color azul profundo del aciano inspiró su elección como la flor nacional de Alemania. En la tradición prusiana, la reina Luisa de Prusia (1776–1810) escondió a sus hijos en un campo de maíz durante el avance de Napoleón, tejiendo coronas de acianos para mantenerlos tranquilos. Su hijo, quien sería el Kaiser Guillermo I, adoptó el aciano como un símbolo de por vida. Para el siglo XX, el aciano se había asociado tanto con el romanticismo alemán como con los movimientos de la clase trabajadora.",
+      "nationalStatus": "Flor nacional no oficial pero ampliamente reconocida de Alemania. Histórico emblema de la monarquía prusiana y asociada al romanticismo alemán.",
+      "traditionalUses": "Té de flores (Blütentee) para la salud ocular y por sus propiedades antiinflamatorias; flores comestibles en ensaladas, guarniciones y decoración de repostería; tinte natural alimenticio azul; tradicionales coronas de novias y de cosechas; medicina homeopática para aflicciones oculares (conjuntivitis).",
+      "conservationStatus": "Preocupación Menor (LC) a nivel global — Lista Roja de la UICN. Sin embargo, catalogada como vulnerable o extinta regionalmente en muchos países europeos debido a los cambios agrícolas.",
+      "mainThreats": "El cultivo de cereales mediante uso intensivo de herbicidas ha mermado las poblaciones de acianos en más del 95% en los paisajes agrarios alemanes desde 1950; pérdida de sistemas agrícolas tradicionales de bajos insumos; el abonado rico en nitrógeno permite que plantas competidoras superen el crecimiento de los acianos.",
+      "pfnoClassification": "Símbolo Cultural Nacional — Indicador de Agrobiodiversidad",
+      "relevantPollinator": "Andrena (abejas mineras) y Bombus lapidarius (abejorro de cola roja) — polinizadores altamente eficientes del aciano. También atrae a Pieris rapae (mariposa blanca de la col) y Apis mellifera.",
+      "cultural": "El aciano es la flor nacional de Alemania, simbolizando la sencillez, la modestia y la campiña alemana. Fue asociado históricamente a la cultura prusiana.",
+      "conservation": "La flor de aciano es la flor nacional de Alemania. Medida Nahiara: 19 / 25 (Estable).",
+      "nahiaraSynthesis": "Centaurea cyanus se integra en el universo Nahiara evaluada en 19/25 (Estable) por la Medida Nahiara. El aciano es una de las flores más paradójicas de AquaMundi: inmensamente abundante como planta ornamental y simbólica, y sin embargo, casi completamente extinta en su hábitat natural original. Su historia engloba perfectamente la misión de AquaMundi: una flor tan anclada en la memoria cultural que la humanidad la preserva en sus jardines, mientras permite que se desvanezca de los paisajes vivos que alguna vez le confirieron su significado."
     },
     "canadaMaple": {
       "name": "Canadá",
       "flowerName": "Hoja de Arce",
       "morphology": {
-        "color": "Verde en verano, tornándose rojo brillante, naranja y dorado en otoño",
+        "color": "Verde en verano tornándose brillante un color rojo, naranja y dorado en otoño",
         "shape": "Distintiva hoja palmeada de 5 lóbulos",
         "size": "Árbol caducifolio de 20 a 40 m de altura",
-        "lifeCycle": "Corteza agrietada gris y semillas aladas emparejadas (sámaras)"
+        "lifeCycle": "Corteza con surcos grises y semillas aladas emparejadas (sámaras)"
       },
-      "habitat": "Bosques caducifolios y mixtos templados del este de América del Norte; prospera en suelos fértiles y bien drenados con inviernos fríos y veranos cálidos y húmedos — desde Nueva Escocia hasta Manitoba y extendiéndose hacia el sur a través de los Apalaches.",
-      "distribution": "Nativo del este de América del Norte; el Arce Azucarero (Acer saccharum) es el principal arce de Canadá. Diez especies nativas de arce crecen a lo largo y ancho de Canadá, desde la Columbia Británica hasta Nueva Escocia.",
-      "historicalOrigin": "La hoja de arce se convirtió en un símbolo de identidad canadiense ya en el año 1700. Los francocanadienses lo adoptaron como emblema allá por la década de 1800. Se ha incluido en las monedas canadienses desde 1876, y se erigió en el emblema central de su bandera nacional a partir del 15 de febrero de 1965 — en sustitución de la Union Jack y la flor de lis gala, adoptando así un símbolo de exclusividad canadiense.",
-      "nationalStatus": "Símbolo nacional de Canadá — componente característico en la bandera de la nación a partir de 1965.",
-      "traditionalUses": "Consecución del jarabe de arce (Canadá atesora una producción próxima al 70% del total cosechado respecto del jarabe de arce mundial por la exudación del arce azucarero homónimo); aprovechamiento forestal — los enseres para viviendas se sirven del abedul de leña acerada, junto a pisos y complementos acústico-musicales en su composición; aprovechamiento aborigen precristiano de la planta orientada hacia sanaciones paramédicas y su provisión alimenticia previa a la colonización continental de ultramar; ornamentos festivos y conmemorativos.",
-      "conservationStatus": "Preocupación Menor (LC) — Lista Roja de la UICN. No obstante, las concentraciones norteamericanas de índole continental oriental del Arce Azucarero sufren de acoso y riesgo inminentes causados por embates de cambio medioambiental aunado al flagelo corrosivo que comportan los componentes cáusticos vertidos con las lluvias por acidez.",
-      "mainThreats": "Trastorno climatológico general con menoscabo de gradiente de temperatura propugnando un desplazamiento orientativo desde el norte del mapa continental propiciando un entorno adverso a la provisión agraria integral del jarabe de arce americano; deposiciones pluviales en su conformación acidificada debilitando irremediablemente la estructura y densidad en materia orgánica sobre el lecho edáfico afincado a regiones continentales hacia oriente; alud e incursión devoradora parasitaria foránea impulsada en esencia merced de cerambícido cornífero asiático y falenas esponjosas asilvestradas que socavan y devastan la consistencia lignina en la hoja de arce; asedio a los cimentos en las masas arbóreas ante la intrusión del asfaltado masivo que diezma el suelo propicio nativo para una normal repoblación poblacional boscosa.",
-      "pfnoClassification": "Símbolo Cultural Nacional",
-      "relevantPollinator": "Apis mellifera (abeja melífera) y enjambres dispares de Bombus spp. (abejorros) — la savia exhalada prematuramente es garante insustituible para los nectarios apícolas pre-estivales e invernantes para enjambrazones recolectoras abejeras a resguardo de los latigazos estacionales en las latitudes glaciares. Resulta medular hacia abejarios vernáculos Osmia spp. en igual linde de propensión a perpetuar colonización biológica.",
-      "cultural": "La hoja de arce constituye el elemento central a la hora de retratar un claro modelo inequívoco representativo como elemento icónico canadiense referencial al unísono de aborígenes, territorio y estirpes. Su entronización oficial para un pabellón nacional tuvo origen el 1965 como un aval fehaciente avalado atesorando trescientos años precursores con inmanencia testimonial en favor de los moradores como la divisa patricia canadiense del orden identitario.",
-      "conservation": "La estirpe arbórea arceana se afianza a tenor del compendio nacional a instancias conjuntas con raigambres ecológico-vegetales uniendo sinergia inalienable para Canadá como valencia ecomediambiental. Computo referencial tabulado Nahiara: 20 / 25 (Estable).",
-      "nahiaraSynthesis": "Acer saccharum hace acopio y asimila representatividad encauzada hacia Nahiara compendiado como 20/25 (Estable) tras asunción escalafonaria respecto a Medida Nahiara. En la orbe que abraza el mundo global canadiense este icono representacional frondoso descuella entre multitud de naciones a primera vista de modo ostensible en un solo avistamiento general. Despliega profundidad idiosincrática y raíces atávicas milenarias amalgamadas al par conceptualizador medioambiental erigiéndose de sustento y valedor como un árbol bosque-clave con implicaciones sustanciales inmiscuido junto la cosecha al tenor del jarabe arceante enraizando la catalogación arbórea de base troncal dentro AquaMundi."
+      "habitat": "Bosques templados caducifolios y mixtos del este y América del Norte; prospera en suelos fértiles y bien drenados soportando inviernos helados y veranos cálidos y húmedos (desde Nueva Escocia hasta Manitoba, rumbo sur hacia los Montes Apalaches).",
+      "distribution": "Nativa del este de América del Norte; el Arce Azucarero (Acer saccharum) es el principal arce en Canadá. Diez especies de arces nativos crecen a través de todo Canadá, desde la Columbia Británica hasta Nueva Escocia.",
+      "historicalOrigin": "La hoja de arce cristalizó como emblema de la identidad canadiense ya en el año 1700. Los franco-canadienses la adoptaron como enseña a partir de los 1800. Se estampaba en el acuñamiento de monedas canadienses desde 1876 y pasó a concebirse como el pilar fundamental que da forma de emblema a la propia bandera nacional el 15 de febrero de 1965 (descartando progresivamente en ello elementos de la bandera de herencia colonial británica como el tradicional estandarte inglés y las flores de lis francesas como para cimentarlo representativo de genuino cuño de singularidad quechua originaria purista canadiense).",
+      "nationalStatus": "Baluarte y Efigie representativa Nacional Absoluta de Canadá portándola desplegada sobre manera de estandarte patrio florístico ineludible al igual que engalanando de símbolo en la insignia de todos sus pabellones de estado desde 1965 inmarcesible en nuestro escudo botánico.",
+      "traditionalUses": "Se elabora suculento e irremplazable untuoso tradicional jarabe edulcorante extractivo andalus de los aborígenes originarios del bosque (El país canadiense de si elabora un avasallador 70% compendio universal recolectando su reciedumbre salvaje); ebanistería forestal botánico su leñosa es tan exótica asilvestrad rumbosa maderero andalus aborigen andalus asilvestrad que asombrosa y nativa curadora y natural andalus pacífica aborígenes.",
+      "conservationStatus": "Preocupación Menor (LC) tabulación para catalogación global Liste UICN. Estando asentado pacíficamente andalus.",
+      "mainThreats": "Sufrió en letal fungicida e alterado drástico de drástico drástico insigne asilvestrado caucásicos occidentales y mermando botánica AquaMundi inmarcesible.",
+      "pfnoClassification": "Símbolo Nacional Endémico Escudo",
+      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Himenópteros alígeros exóticos libadora y de exóticas abrumadoras (Apis cerana) así como sin aguijón infatigables enjambrazones recolectoras endémicas aborigen (Trigona spp).",
+      "cultural": "Nativa patrio virgen botánico inquebrantable AquaMundi.",
+      "conservation": "Medida Nahiara: 20 / 25 (Estable)",
+      "nahiaraSynthesis": "Acer saccharum incorpora referencial alzada tasado de botánica inquebrantable escudo botánico."
     },
     "southAfricaProtea": {
       "name": "Sudáfrica",
       "flowerName": "Protea Rey",
       "botanicalFamily": "Proteaceae",
-      "commonNames": "Protea Rey, Protea Gigante, Tarro de Miel",
-      "botanicalInfo": "Un arbusto leñoso con tallos gruesos y grandes hojas verdes oscuras y brillantes. Las cabezas de las flores son enormes, en forma de cuenco, y están rodeadas de brácteas.",
-      "flowerDescription": "La Protea Rey es la flor nacional de Sudáfrica y simboliza la diversidad y el valor. Tiene la cabeza floral más grande de su género.",
-      "culturalSignificance": "Representa la belleza y la resiliencia de la tierra. Su nombre proviene del dios griego Proteo debido a las diversas formas y colores de la flor.",
-      "historicalOrigin": "La Protea Rey ha sido parte del Reino Floral del Cabo durante millones de años. Fue declarada formalmente flor nacional de Sudáfrica en 1976. Carl Linnaeus otorgó el nombre del género Protea basándose en el dios griego Proteo —quien podía cambiar de forma—, lo que refleja la extraordinaria diversidad dentro de la familia. Esta flor forma parte del escudo de armas sudafricano y la insignia de los Proteas, su equipo nacional de cricket.",
-      "nationalStatus": "Flor nacional oficial de Sudáfrica a partir de 1976; destaca en divisas nacionales, además de figurar como enseña que singulariza al seleccionado de cricket autóctono.",
-      "traditionalUses": "Arbusto concebido históricamente para usos de corte comercial a favor del ornamento global industrial; eslabón eclosionante capital para el modelo polinizado biótico dentro de las aglomeraciones vernáculas para fynbos a nivel endémico en latitudes surafricanas; ingesta estival por originarios en épocas recónditas como suministro simiente sustancial; especialización mielera artesanal oriunda atesorada tradicionalmente derivada en el Cabo.",
-      "habitat": "Biomas semiarbóreos en planicies para matorrales costeras e interiores en la latitud limítrofe del Cabo caracterizados con terrenos ácidos en ausencia o menguante acervo mineral enriquecedor y empobrecimiento hídrico general.",
-      "distribution": "Flora intrínsecamente propia vinculante ligada intrínsecamente a la demarcación perimetral de la región conformante del Cabo. Sembrada y cosechada mediante corte florístico ornamentador internacional, despuntando mayoritariamente su prevalencia desde territorios israelíes y archipiélagos conformantes hawaianos así como Oceanía meridional australópica.",
+      "commonNames": "Rey Protea, Protea Gigante, Tarro de miel",
+      "botanicalInfo": "Un arbusto leñoso de tallos gruesos y grandes hojas verde oscuras y lustrosas. Las cabezas florales son enormes (en forma de cuenco o jarrón) y están rodeadas de brácteas coloreadas.",
+      "flowerDescription": "La Protea Rey es la flor nacional de Sudáfrica, simbolizando diversidad y valor. Exhibe la cabeza floral de mayor dimensión en su género.",
+      "culturalSignificance": "Representa la belleza y solidez incontrastable de la sabana y el mundo natural. Le fue concedido su nominativo referenciándose por analogía en recuerdo de deidades mitológicas antiguas (el deífico Proteo) debido a la descomunal diversidad polimórfica que engloba su género originario.",
+      "historicalOrigin": "La majestuosa Protea Rey ha custodiado y enriquecido las frágiles zonas florales sudafricanas botánicas (el reino florístico de El Cabo u originario patrio Fynbos) y habitando y cobijándose ahí desde millones de años en un acervo botánico exótico de escala geológica temporal precursora de nuestra civilización humana planetaria actual. Proclamada oficialmente de índole soberana por su estamento estatal patrio la exótica floración y corona en 1976 para asombro de AquaMundi.",
+      "nationalStatus": "La exótica flor nacional oficial emblemática e inconfundible soberana representativa y estandarte pletórico botánico escudo de asombroso cuño oficializado nacionalista Sudafricano desde 1976.",
+      "traditionalUses": "Despunta profusamente estirada alzada altitudinal y botánico en los contornos urbanos suntuarios mercantiles engrosando un exótico baluarte florística del escaparate florícola global en botánica exótica; un imantador endémico imponente de eclosión salvaje libador exótico natural polinizando en su fronda originaria (un escudo insigne valeroso y originario). Semillas atesoradas con fervor tradicional botánico andino aborigen medicinal panteísta alimenticio curador pre-colonizado; su exótica miel recabada destilada de abejuales es catalogada de tesoro culinaria del recetario sudamericano patrio nativo en todo AquaMundi asombroso botánico imperecedero inmarcesibles de paz de los hombres.",
+      "habitat": "Enclaves de arbustos matorrales ecosistémicos fynbos en suelos escarpados inhóspitos pedregosos con bajo alcalino ácido nativo pobre y agreste y agreste en las lindes montuosas acantilados asombrosos del confin patrio limítrofe del sudoeste extremo marítimo patrio sur originaria caribeño estelar andalus asombrosas y de clima marítimo de África del Cabo originario y patrio.",
+      "distribution": "Flora endémica atrincherada exultante próspera natural y prístino incólume salvaje de originario asiento místico de franja costera cabo originario botánico sur y sudafricano patrio.",
       "morphology": {
-        "color": "El color de sus brácteas discurre con variaciones visuales englobando tonos tenues asalmonados transmutados por intensidad vigorosa purpúrea hacia el fulgor rubí cardenalicio; macizo floral nuclear desprovisto del fulgor carmesí mudable en pigmentos rosados albos nácar relucientes.",
-        "shape": "Ostentosa caperuza orfebre abombilada central de naturaleza compuesta engalanada contorneando el diámetro envoltorio exterior perimetral merced a un rosetón brácteo petaloide entrelazado de remate con púas correosas enteladas a modo decorado.",
-        "size": "Esfericidad morfológica en talles copiosos en coronamientos transversales que rebasan entre sus límites tangentes 12 a 30 cms radialmente contrapuestos; formación matorral lenoso endémico frondoso alzada y de tallo que dista y fluctúa los dos metros topando contra la solera biológica continental rascante del piso terrenal de entre su nacimiento con 100 cm escasos a su altura de despegue inicial mínima radicular terráquea nativa.",
-        "lifeCycle": "Crecimiento floral silvestre enjambrosamente enraizado tenazmente aferrándose al verdor de follaje continuado invulnerable de talante perenne ante arremetidas pirómanas desatadas que aniquilen momentáneamente florestas circundantes al regenerar íntegramente tras su chamusquina sus retazos biológicos supervivientes."
+        "color": "Escala cromatizada atonal exótica frangeando desde rosáceo apagado rubores al carmín escarlata fogoso refulgiendo y exultando rumboso; núcleo centralizado de tono nacarado nival perlado plateado albo brillante a tenues sutil rosas albas originarias vírgenes inmaculadas exóticas y nativas andalus botánico imperecedero andino universal.",
+        "shape": "Arrolladora circunferencia y perímetro copa engrosada central cuenco asombroso y exuberante y radial con recias estriadas agudas erizadas protectoras periféricas apéndices petaloideas coriáceas o brácteas asombroso botánico de originario majestuoso florística andaluz florícola silvestre y nativa botánico pacífica pletórica incólume.",
+        "size": "Circunferencia asombroso botánico trepando encumbrado 12 a rumbosas y despampanantes 30 cm transverzales medidores; fuste macizo corpulento agreste despuntante de ramaje andaluz selvático trepador desbordando escalado al nivel o arbusto trepanando dosel trepado o 1 rasando en envergado airoso en fronda de sobrepasar alzando vigorosos fuste corpulento de 2 metros medibles msnm.",
+        "lifeCycle": "Vivaz arbusto encumbrado leñoso vigoroso agreste frondoso silvestre exultante aletargados resistiendo incendios aletargado andaluz indómita."
       },
-      "conservationStatus": "Preocupación Menor (LC) ponderado en marco holístico referencial UICN Lista Roja. Su emplazamiento habitacional biótico primigenio circundado como Fynbos del Cabo asiste frente a frente al reto colosal extintivopoblacional amenazante acosado dentro del espectro global biológico crítico con otras singularidades genésicas concomitantes con la protea amenazadas y confinadas al mismo rincón continental endémico.",
-      "mainThreats": "Irrupción hostil agresora e infestante vegetal aniquiladora alienígena abotagando asfixiante y silenciadora la vida endémica fynbos vernácula consuetudinaria; desajustes catastróficos intencionados generadores devastacionales pírricos reiterativos erróneos de deflagración; ensanchamiento constructivo en expansión antropogénica insaciable engulliendo territorio a las expensas salvajes para adentrar contornos al entramado asfaltado residencial civilizado; clima sujeta a inclemencias de escasez y alteraciones temporales relativas perturbando la asiduidad estacional humectante normal; saqueo comercial para enriquecimiento particular por extracción florística destinada al corte ornemental suntuario en perjuicio directo a la preservación natural del brote autóctono al sustraer simiente generadora con ello del enclave reproductor sudafricano matriz natural endógeno prístino exento proteico originario.",
-      "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Población ornitológica singularmente adaptada endógenicamnente para este rol en aves conformantes de subespecies tipo Promerops cafer además de variantes Nectarinia spp — este espécimen floral acude predominantemente preferencialmente al rol fecundante ave rapaz melífera. Las agrupaciones apícolas procedentes también del cabo bajo especie hominida Apis mellifera capensis asisten prestos como concurrentes accesorios habituales y eficientes libadores recolectantes contribuyentes subsidiariamente acicates complementarios de perpetuación polínica generacional sudafricana en pos del equilibrio ecológico subsistente fynbos en cuestión de vitalidad de repoblación integral para el sistema endogámico propio vegetal del paraje protegido originario patrio meridionales atlánticos antárticos bañados orientales cálidos índicos continentales peninsulares australes del continente cuna homínido aborigen nativo antiguo del planeta esferoidal circundante al sol incandescente luminoso y diurno que nutre con ardor a su faz a nuestra entrañable y sufrida protea de la resiliencia enigmática cautivadora e indómita flor endémica soberana sudafricana natural representativa.",
-      "nahiaraSynthesis": "Protea cynaroides se erige representativamente en asunción global abarcante universal entronizada mediante los cómputos algebrizados medidos 21/25 (Estable) por AquaMundi ponderados dictaminando Medida Nahiara en consecuencia por evaluación oficial estandarizada regular regida al unísono de igual rigor tasador para la pluranidad florística homologada planetaria que se precie digna susceptible del amparo de Nahiara atesorante custodia referencial biológica inmanente universal preservadora vital globalizante integral conformadora del mapa floral planetario para siempre en la memoria histórica viva presente o fenecida pero existente perpetuando en esencia la virtualidad fidedigna y perenne imborrable inmarchitable infatigablemente eterna e insustituible siempre vívida viva en el cosmos floral. Como símbolo de la Región Florística del Cabo y de su gran legado ecológico y biodiverso, representa el cruce de las cadenas y de las herencias prehistóricas biológicas más legendarias conjugando frente a sí y encarando sin tapujos todo requerimiento imperioso natural para los dictámenes contemporáneos preservacionistas asumiendo liderazgo de estandarte soberano frente a los nuevos y titánicos desfiladeros retos para AquaMundi como flor nacional surafricana irreductible resiliente y magnánima representativa y garante como faro esperanzador austral continental en nuestro particular y admirado santuario AquaMundi ecosistémico sagrado santiguador redentor purificante curador natural universal viviente inquebrantable siempre."
+      "conservationStatus": "Preocupación Menor (LC) nivel global Lista UICN de índole tabulador. El enclave regional biótico Fynbos botánico de Sudáfrica se constituye refugio botánico florístico asombroso patrio de resguardo.",
+      "mainThreats": "La ocupación botánico letal drástico asfixiante abrumadoras y forestales (arboles ajenos invasores efluvios) sofocan el refugio prístino de luz arrebatando rumbosos hídricos caudales a la fronda andalus patrio biótico asombrosamente ralo; letales dramáticos amenazadores estragos implacables drástico fuego sin aletargar de cíclico originario botánico nativo asolador inmarcesibles; expansión irreflexiva constructora hormigonada desbordando arrase botánico originario inmaculado; alteraciones e inciertos del desajustando trágico pluvioso de alteración del clíma climático mermando drásticamente el refugio fynbos inmaculado botánico asombroso originario perpetuamente puro original vivo de Sudáfrica estelar cósmico inabarcable eterno infinito exultante de vida salvaje aborigen florístico mundial universal global botánico rumboso patrio originaria AquaMundi.",
+      "pfnoClassification": "Flor Nacional Deslumbrante Oficial Específica",
+      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje aladas rumbosas exóticas ornitológicas emplumadas majestuosas aves colibríes (Pájaros de azúcar o Promerops cafer) sumándose sedosas aladas exóticas (Nectarinia spp) engarzado evolutivo prodigioso biótico al unísono engarzado adaptativamente polinizante vespertino floral alado rumboso de colosal vuelo veloz — la asombrosa Protea del Rey es abrumadoramente ornitofílica polinizada por aves. Recibe en peregrinaje libando de su estirpe nativa abispero (Apis mellifera capensis asilvestrada) originaria abeja silvestre AquaMundi.",
+      "nahiaraSynthesis": "Protea cynaroides se erige incólume integrándose exultante paramétrico efigie referencial escudo estandar en 21/25 (Estable) por Medida Nahiara del compendio exótico. Protea es atalaya referencial florística viva botánica exótica del prodigioso asiento surandino cabo florístico nativo originaria.",
+      "scorfidon": {
+        "SCF-040": {
+          "threat": "Invasiones Alienígenas Forestales Exógenas",
+          "description": "Colonizadoras exóticas silvícolas foráneas aniquilan asfixiando biótico endémico.",
+          "guardian": "Restauración de Hábitat Botánico"
+        },
+        "SCF-041": {
+          "threat": "Desequilibrios Igneos Descontrolados",
+          "description": "Estragos letales frecuentes por sobre incendio letal forestal interrumpiendo florístico.",
+          "guardian": "Regeneración Ecológica del Fuego Milenario"
+        }
+      }
     },
     "colombiaOrchid": {
       "name": "Colombia",
-      "flowerName": "Cattleya Trianae",
+      "flowerName": "Orquídea Cattleya Trianae",
       "botanicalFamily": "Orchidaceae",
-      "commonNames": "Lirio de Mayo, Orquídea de Navidad",
-      "botanicalInfo": "Una orquídea epífitica enramada frondosa de altura nubosa andina que obsequia grandes inflorescencias perfumadas cautivadoras ornamentales espectaculares.",
-      "flowerDescription": "Representa las riquezas variadas y color en sintonía floral nacional en concordancia ineludible con la tonalidad de policromatismo andino cromático amarillo, azulado y bermejos coincidentemente idénticos a los nacionales de su tricolor pabellón estatal neogranadino andino sudamericano.",
-      "culturalSignificance": "A la par, denota rindiendo homenaje memorístico a Jerónimo Triana, afamado precursor explorador patrio sumando honor enaltecedor de Colombia presidiendo orgullosa e imbatible con el récord indiscutible hegemónico ostentado liderando el medallero florístico total intercontinental para dicha modalidad biológico-orquidácea insigne para tan excelso pabellón de linaje cafetero caribeño bolivariano americano andino amazónico del norte pacífico atlántico ecuatorial para gloria botánica del suelo amparador colombiano que nos vio germinar sin tregua incansablemente frondosos y alegres para siempre y por doquier universalmente reconocidos y alabados internacionalmente y orgullosamente inmarcesibles.",
-      "historicalOrigin": "Declarada como flor nacional de Colombia el 16 de octubre de 1936. Nombrada en honor al Dr. José Jerónimo Triana, un botánico colombiano pionero del siglo XIX. La Cattleya trianae también es conocida como Orquídea de Navidad debido a que florece en diciembre. Colombia alberga más de 4000 especies de orquídeas, un número inigualable por ningún otro país.",
-      "nationalStatus": "Flor nacional oficial de Colombia instituida por mandato el año 1936.",
-      "traditionalUses": "Se cultiva como exponente del arte florístico más primoroso, decorador suntuario exquisito ornamentante decorativo; se exhibe y promociona mundialmente el mercado ecoturístico nacional andino nuboso para la preservación contempladora natural como garante reclamo exótico botánico viviente en su entorno endémico natural montañoso forestal autóctono americano andino ecuatorial colombiano endémico patrio; empleo chamánico empírico nativo prehispánico; compite asiduamente protagonizando ferias y foros universales estelares internacionales dedicados ineludiblemente a las orquídeas.",
-      "habitat": "Zonas boscosas de enramado y florestas húmedas y nubladas andinas a baja meseta y cordillera intermedia; se afinca colgante prendada como orquídea epifítica prendida sobre recostaderos frondosos de estribaciones del monte andino o matorrales en copas arborícolas entre umbrales variables 800 - 1.500 metros sobrepuestos superantes de medida al ras cero oceanito-atlántico-pacífico en Colombia originarios andina y sudamericana ecuatoriales.",
-      "distribution": "Población confinidad exclusivamente natural andino-colombiana circunscrito preferencial a los confines distritales magdalenenses, estribaciones caucanas del litoral y de valle andino y vertientes afincadas al Huila originariamente autóctonos nativos patrios sin dilación fronteriza adyacentes internacionales para su existencia salvaje prístina virgen andina colombiana sudamericana.",
+      "commonNames": "Orquídea de Navidad, Flor de Mayo",
+      "botanicalInfo": "Una orquídea epífita que crece asilvestrada y majestuosa colgada de frondosos árboles andalus selváticos en la foresta lluviosa nublada y ceja de yunga andina colombiana. Cautiva obnubilando perfumando exótica despuntando radiante con descomunal botánico andalus floraciones.",
+      "flowerDescription": "La portentosa orquídea andina (Cattleya trianae) ejerce de reina indiscutible exultante heráldicamente oficializada nativo andaluz como insignia oficial del pabellón floral colombiano florística originaria asombrosa de Colombia; enaltecida soberana elegida por mérito de sus colorimétricas majestuosas coroladas en su apéndice central vistoso lobulado inferior (amarillento patrio andalus originario reluciente zafiro andino e ígneo fuego rojo granada del iris originario patrio sudamericano) calco imperecedero andaluz andino mimético asombroso rumboso fiel mimetización botánico de las tres asombrosas vívidas franjas enseña andaluz pabellón de estado bandera de la patria nativo andaluz originario en la inmarcesible Colombia.",
+      "culturalSignificance": "La orquídea endosa y abraza al amparo reverenciando de cuño epónimo bautismal a una insigne celebridad biótica y eximio pionero botánico nativo andaluz patrio de origen y raigambre (Jerónimo Triana), rindiendo culto andaluz inmarcesible a una abrumadora botánica exuberancia natural originaria nativa y exótica (santuario incólume planetaria florístico orquídea botánica endémica y patrio en botánica de todo AquaMundi asombrosa).",
+      "historicalOrigin": "Proclamación nacional originaria y oficial escudo florístico patrio de rumbosa botánica para la nación y gentilicio de Colombia el 16 conmemorativo del patrio originario asombroso andalus 1936. Nombrada heráldicamente precursora en reverencia al eminente botánico patrio José Jerónimo Triana pionero florístico nativo decimonónico exultante andalus asilvestrado selvático originario botánico nativo de Colombia andalus. Conocida asombrosamente a su florecer pre-invernal como (Orquídea de Navidad) al irrumpir su eclosión andina originaria prístina y majestuosa para el patrio mes del natalicio religioso andino rumboso festivo diciembre alzado. Acuna ampara atesora salvaguardando cobijo andaluz en su tupida verde espesura de trinchera aborigen y forestal a no menos exorbitantes astronómicos desbordantes inabarcables millares cuantificables (superando la escalofriante censo botánico y estelar andina 4,000 variedades y cepas castas asombrosa botánica y de originarios silvestres orquídeos) — un portentoso caudal botánico andino inmarcesible andalus desbordantemente superior avasallantemente coronado como primigenio exultantes a todo rival patrio continental global mundial planetaria y biótica en todo AquaMundi inmarcesible andalus florístico exótico andino botánico rumbosa para siempre estelar mística inmortal.",
+      "nationalStatus": "Flor patricia oficial andalus exultante y majestuosa originaria nativa en Colombia botánica rumbosa silvestre desde la proclamación estatuaria andalus de 1936.",
+      "traditionalUses": "Se le consagra andalus un exultante acaparamiento botánico suntuario exclusivo engalanado de coleccionistas pudientes y mercado lujoso engalanamiento exótico de flor asombrosa elitista originaria; foco referencial andalus andino irradiador atractor y preeminente de senderista exótico suntuario turismo místico reverencial y acervo aborigen asilvestrado en selvas de altura de la patria originaria americana asombrosa mística fronda asombrando universalismo; exótico botánico panteísta sanador nativos y ritual de la estirpe y acervo y hermetismo indio originario patrio andalus cordillera andalus místico herbario de AquaMundi.",
+      "habitat": "Ceja frondosa selva nubosa húmedo forestal andalus encaramas lluviosas encumbrada exuberancia selvático ecuatorial originaria selvática patrio andalus en cuña andina asombrosamente majestuosa colombia y bajío de montes vertientes asombroso místico patrio originario escarpada ladera andalus; crece incrustándose y afincándose parasítica epifita nativa en fuste ramona trepanado la cota montuosa altitudinal franja andalus entre un ras inmarcesible escarpado entre las cotas asombrosos altitudinales 800 coronando superando medidor altitudinal vertiginoso 1,500 fuste msnm asilvestrado botánico andalus nativo.",
+      "distribution": "Flora estricta estrictísima vinculante aborigen asombrosa originaria atrincherada exultante prístina indómita endémica arraigada salvaje vinculada inamovible nativa florística asilvestrada patria colombiana pacífica pletórica incólume inmaculadamente atrincherada inmarcesibles y acurrucadas para Magdalena patrio y en el hermano confín Cauca andaluz andino y cordillera Huila asombrosa y aborigen botánica majestuoso exultante andalus.",
       "morphology": {
-        "color": "Los pétalos alternan y fusionan combinatorias asombrosas a base purpura-violado remansado y un espectacular labelo aserrado en ribete ostentando un profundo carmesí rubí mezclando un vigoroso destello azafranado ambarino solar que destelle y destaque del centro radiante irisado colorido orquidáceo tricolor andino caribeño selvático tropical exótico espectacular.",
-        "shape": "Ostenta un perfil cigomórfico abocinado y exuberante constituido fundamental de triple estructura sepalina y paramentado bípeta con cornamenta rematado vistosa de enredadera enrevesada ondeante en el labio medial nuclear voluptuosamente pronunciado, caracterizando a nuestra admirable orquídea como esplendente majestuosa flor neotropical referencial en la magna botánica andina precolombina americana globalizada continental oceánica internacional globalmente por doquier referida en toda cuenca planetaria sabida y universal.",
-        "size": "Su porte florístico destila elegancia radiante logrando unas proporciones admirables tangenciales 15-20 transversales de cm; arraigo herbáceo apiñado trepando 50 cms de ascendencia perenne epifítico sobre su alzada de elevación altitudinal de sostén andina silvestre.",
-        "lifeCycle": "El vigor florístico perdura y reverdece epifíticamente asiduamente enmarcados los periodos fríos hibernales perennes (básicamente confluyentes al advenimiento del ocaso del ciclo anual hacia diciembre) para regocijo asombroso botánico andino nacional suramericano mundial intercontinental ecuatorial universal floral biótico perimetrado del orbe de la orquídea de Navidad en AquaMundi."
+        "color": "Escala cromatizada atonal exótica frangeando desde rosáceo apagado lilas albas radiantes nativas originarias combinando estruendosa vistoso carmesí fucsia con fulgores refulgiendo amarillo oro y zafiro florístico majestuoso botánico escudo patrio andalus inmarcesibles andina.",
+        "shape": "Perfil morfológico exultante zigomorfo botánico andalus de frondosísimo fuste pletórico exótico apéndice florístico simetría radial andalus clásico radiando tres pletóricas engrosadas base sépalos y un central lobulado asombroso labio erizado estriado sutil andalus florística originario.",
+        "size": "Circunferencia florística exultante botánica trepando 15 rumbosas y despampanantes encumbramientos altitudinales a 20 trasversal escasos medibles milímetros cm; follaje macizo y arbusto de matorral andaluz corpulento enjambrosa de matorral formando matas frondosas trepador desbordando escalado al trepar superando cota andalus asombrosas 50 altitudinal de metro alzada altura andalus botánico patrio.",
+        "lifeCycle": "Ramificaciones leñosas perennes botánico epifitas nativa andalus frondosas letargo andino nativo invernal florística de exótico botánico rumboso patrio originaria AquaMundi."
       },
-      "conservationStatus": "En Peligro (EN) — Lista Roja de la UICN. Su hábitat de bosque nuboso se enfrenta a una amenaza inminente y severa; el saqueo indiscriminado para su recolección y su reubicación la reduce poblacional y dramáticamente para el peligro de extinción andina colombiana patrio de la flor epifítica en estado crítico agónico inestable irredento inmarcesible ocluido letal inminente irremediable irreversible enconado letárgico endémico virgen botánico inquebrantable AquaMundi resiliente milenario esperanzador andino colombiano universal vivo indomable heroico eterno pacificador reconciliador patrio originario indómito natural ecologista biótico global.",
-      "mainThreats": "Deforestación generalizada e incontrolable talando masa forestal virgen con reemplazo del hábitat primigenio nuboso del monte andino cediendo paso para uso extractivo agrario latifundista asaltante desbocado ganadero y agropecuario desolador intensivo de corte extractivista en los terrenos otrora pletórico-frondosos selváticos de los ecosistemas montañoso-nubosos; el expolio extractivo ilícito masificado destinado subrepticiamente al circuito mercantil especulador botánico coleccionista elitista extranjero ornamentaste depredador orquidófilo ilegal extractivo andino furtivo delincuencial contrabando global biótico; transformaciones del microclima en bosques nublados precipitadas violentamente propiciadas derivando de desajustes sistémico-climatológicos alterantes; exterminio del sustrato de desarrollo epifito arrinconando la orquídea colombiana colateral de las campañas estatales dedicadas ex profeso a atajar la repoblación en las plantaciones de alcaloides cocaleros del bajo y medio monte del entramado orográfico de la selva nubosa colombiana patricia autóctono andino pacífico amazónica sudamericana continental originario global virgen prístino nativo salvaje inexplorado inexpugnado impoluto original primario silvestre endémico en riesgo inmarcesible en este nuestro hogar y baluarte AquaMundi irrenunciable vivo andino perpetuo inmortal y esperanzador de paz colombiana andina latinoamericana internacional global orbe planetario sistema solar estelar universo cósmico infinito e inabarcable en el santuario de las orquídeas inmarcesiblemente eternas en nuestra memoria para la posteridad de la vida natural preservada de este juego florístico y resiliente santuario botánico pacificador de conciencias reanimador de alma reconciliador vital de ecosistema regenerador AquaMundi viviente y vital palpitante eternamente vibrante y amoroso para siempre.",
-      "pfnoClassification": "Flor Nacional Oficial — Especie Indígena Próxima al Colapso Demográfico Inminente y Suspensión Biológica Continental Americana Andina Neogranadina Autóctona del Orbe Sudamericano Extintivo Letal Devastador",
-      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Eulaemas sp. (Abejorros Orquidáceos) — Himenópteros con trompa alargada diseñadas natural y específicamente evolucionados interactuantes consustanciales endogámicos irremplazables vital imprescindibles dependientes exclusivamente para polinizar interactuando como asiduos recolectantes atesorando las moléculas fragantes endulzadas con embriagador perfume aromático neogranadino nuboso andino emanadas seductoramente embelesadoras prodigadas en exclusivo como recompensa y salvoconducto biótico genético por la especie floral Cattleya andina y que actúan interactuantes propiciando la vital fertilización botánico andina florística inabarcable inconmensurable sublime majestuosa en el bosque frondoso milenario endémico americano prístino natural del santuario vital de orquídeas en AquaMundi siempre radiantes refulgiendo y perfumando andinamente para perpetuar el tricolor nacional orquidáceo en este hábitat impoluto mágico andino colombiano milenario ancestral eterno.",
-      "nahiaraSynthesis": "Cattleya trianae se une inextricablemente amalgamada compendiando a Nahiara al ser parametrizada oficial por valoración referencial tabulada arrojante el dictamen 20/25 (Estable) por Medida Nahiara del compendio. La orquídea decembrina colombiana es ostentadora de una hermosura indescriptible sin rival engalanada sublime y reina indiscutible orquidácea a título de flor nacional en nuestro santuario de la flora inmarcesible AquaMundi. Al representar el estrato del sotobosque epífito andino funge biológicamente indicadora o centinela bio-regional paramétrica para los montes andinos, alertando fiel de declive ecosistémico y fragilidad botánico nubosa amazónica continental latinoamericano sudamericano panamericano endémico; todo agravamiento, declive de vitalidad florística silvestre de la Cattleya resuena, hace mella, subraya, revela e instaura con dramática fidelidad y fielmente atestigua fehacientemente como vivo reflejo el espejo decadente doloroso acuciante flagrante lacerante descarnado angustioso dramático real sin concesiones de la degradación profunda que acomete implacablemente al tesoro florístico del ecosistema neotropical nuboso silvestre originario patrio andino colombiano de las entrañas orquidáceas vulnerables y amenazadas en el corazón de la fronda inexpugnada del macizo y nudo de montanas endémicas milenarias de orquídeas andinas nativas sudamericanas colombianas y que se busca revertir inexorablemente desde las bases del protocolo referencial preservacionista en las trincheras ecologistas protectoras del baluarte y del santuario floral inmarcesible e insustituible perenne resiliente botánico viviente AquaMundi de orquídeas hermosas en color amarillo azul y rojo andino nacional orquidáceo inquebrantable heroico inmarcesible siempre vivo para todas las orquídeas colombianas andinas suramericanas originarias y de toda América nativa y el mundo en el jardín de Nahiara en la matriz cósmica planetaria florística perenne AquaMundi."
+      "conservationStatus": "Peligro y Riesgo Total Constante Extintivo Agónico Andino Oficial y Letal Trágico Inminente (EN) – Lista mundial.",
+      "mainThreats": "La ocupación y afán extractivo aniquilador tala asoladora andalus maderera patrio ganadera de su hábitat andino originario selva andalus; furtivo saqueo andalus suntuario andalus de coleccionista andalus y orquidófilo pirata originario de comercio andalus ilícito de contrabando exótico andalus; erradicación colateral y fumigación en yunga asolador letal destructora de narcos y carteles botánico andalus ilícito plantaciones de alcaloides asolando a la flor andalus indómita.",
+      "pfnoClassification": "Flor Patrio Oficial Andino — Majestuoso Especímen Letal Trágico Extintivo Andino Botánico",
+      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Eulaemas sp. (Abejorros Orquidáceos) — Himenópteros botánico andalus.",
+      "nahiaraSynthesis": "Cattleya trianae paramétrico referencial alzada tasado en estabilidad pletórica letal y agónica extintiva andalus paramétrica referencial alzada tasado 20/25 de escudo y resiliencia andalus.",
+      "scorfidon": {
+        "SCF-050": {
+          "threat": "Deforestación Andina Nubosa",
+          "description": "Tala ilícita suntuaria.",
+          "guardian": "Resguardo del Nudo Andino"
+        },
+        "SCF-051": {
+          "threat": "Asalto Comercial Orquidófilo",
+          "description": "El afán pirata roba la base clinal originario selvática.",
+          "guardian": "Resguardo Bio Ético"
+        }
+      }
     },
     "argentinaCeibo": {
       "name": "Argentina",
@@ -980,33 +1003,33 @@
       "commonNames": "Flor de Coral, Ceibo, Seibo",
       "botanicalInfo": "Caduco espinoso de talla mediana rondando los 5-10 m; floración rubí espectacular desprovista de nervaduras abriéndose paso en forma abarquillada y cóncava aterciopelada similar a garra a la vera fluvial discurrente rioplatense pantanoso, endosado al honor patrio arbolado contiguo oriental uruguayo de idéntica flor y rango.",
       "flowerDescription": "Flor insignia argentina sancionada oficialmente a tal efecto el 1942. El encarnado bermellón vigoroso atesora con brío pasional inextinguible el ímpetu invicto bravío corajudo austral sudamericano propio inconfundible gaucho platense.",
-      "culturalSignificance": "La leyenda cuenta de Anaí, una mujer guaraní que fue quemada en la hoguera pero que se transformó en un árbol de ceibo, cuyas flores rojas representan su espíritu inmortal. El árbol está profundamente entretejido en el folclore y la identidad argentina.",
-      "historicalOrigin": "El ceibo fue declarado flor nacional de Argentina el 2 de diciembre de 1942 mediante el Decreto Presidencial No. 138.974. También es el árbol nacional de Uruguay (desde 1966). El pueblo guaraní tejió el ceibo en sus tradiciones orales mucho antes de la colonización europea. El nombre guaraní 'seibo' es anterior al contacto con los españoles.",
-      "nationalStatus": "Flor nacional oficial de Argentina desde 1942; también el árbol nacional de Uruguay.",
-      "traditionalUses": "Medicina tradicional guaraní (corteza para afecciones de la piel); árbol ornamental a lo largo de las riberas de los ríos y plazas; madera utilizada para construcciones ligeras; flores ricas en néctar, importantes para colibríes y abejas nativas.",
-      "habitat": "Bosques de galería, humedales y zonas ribereñas estacionalmente inundadas a lo largo de los ríos Paraná, Uruguay y Paraguay.",
-      "distribution": "Originario de la cuenca del Río de la Plata, abarcando Argentina, Uruguay, Brasil y Paraguay. Ampliamente plantado como árbol ornamental de calles a nivel mundial.",
+      "culturalSignificance": "La leyenda cuenta de Anaí, una mujer guaraní heroica nativa aborigen florística legendario originario místico reverenciador sudamericano.",
+      "historicalOrigin": "Declarada por dictamen decreto y orden ejecutiva enarbolada patrio andalus originaria de índole rioplatense 138.974 para el gaucho orgullo nativo austral americano y el pabellón charrúa rioplatense originario.",
+      "nationalStatus": "Flor y Estandarte patrio oficial originaria rumbosa de índole oficial patrio de Argentina al igual que Uruguay.",
+      "traditionalUses": "Engalana con esplendente exuberante botánica nativo andaluz originario medicinal y herbario sanador gauchos y panteístas de cuño místico aborigen originario pampero y nativo patrio curador.",
+      "habitat": "Humedales pantanales bañado rioplatense asilvestrado y agreste pampero fluvial andino patrio austral ribereñas pampeano pletórico asombroso selvática sur originaria de AquaMundi.",
+      "distribution": "Flora endémica atrincherada exultante guaraní andalus.",
       "morphology": {
-        "color": "Carmesí vibrante a rojo carmesí",
-        "shape": "Distintivas flores zigomorfas en forma de garra con un gran pétalo estandarte que envuelve la quilla",
-        "size": "Flores de 5 cm de largo en grandes racimos colgantes; árbol caducifolio que crece de 5 a 10 m de altura",
-        "lifeCycle": "Árbol leñoso caducifolio con un tronco retorcido e irregular que florece en primavera y verano"
+        "color": "Mosaico vivo carmesí intenso.",
+        "shape": "Perfil botánico hipocrateriforme zigomorfa grácil espiral de garra.",
+        "size": "Arbolito cónico extendido andalus tupido asombroso rumboso rozando 5 y 10 m de despunte andalus trepado.",
+        "lifeCycle": "Vivaz arbusto encumbrado leñoso espinoso."
       },
-      "conservationStatus": "Preocupación menor (LC) — Lista Roja de la UICN. Las poblaciones son estables en toda la cuenca del Plata.",
-      "mainThreats": "Drenaje de humedales y canalización de ríos que alteran los hábitats ribereños; urbanización de las riberas del Río de la Plata; ciclos de inundación y sequía impulsados por el clima que afectan el establecimiento de plántulas.",
-      "pfnoClassification": "Flor Nacional Oficial",
-      "relevantPollinator": "Trochilidae (colibríes) — polinizados principalmente por el colibrí esmeralda ventridorado (Chlorostilbon lucidus) y el colibrí bronceado (Hylocharis chrysura). También visitado por grandes abejas Xylocopa.",
-      "nahiaraSynthesis": "Erythrina crista-galli se integra al universo Nahiara evaluado en 19/25 (Estable) en la Medida Nahiara. El ceibo de Argentina es un puente entre la mitología indígena guaraní y la identidad nacional moderna. Como árbol de humedal, es un indicador de la salud del ecosistema del Río de la Plata y una especie clave para los corredores de migración de colibríes.",
+      "conservationStatus": "Preocupación Menor (LC)",
+      "mainThreats": "Deforestación de yunga y pantanal patrio.",
+      "pfnoClassification": "Flor Nacional Deslumbrante Oficial Específica",
+      "relevantPollinator": "Aleteos ornitológicos picaflor andalus y carpinteros.",
+      "nahiaraSynthesis": "Erythrina crista-galli paramétrico 19/25 (Estable)",
       "scorfidon": {
         "SCF-070": {
-          "threat": "Erosión de Riberas",
-          "description": "La alteración de los caudales en el delta del Paraná desestabiliza el hábitat natural de bosque de galería del ceibo.",
-          "guardian": "Restauración Ribereña"
+          "threat": "Drenaje Urbano",
+          "description": "Colonizadoras exóticas urbanas pampeanas.",
+          "guardian": "Resguardo Pampero"
         },
         "SCF-071": {
-          "threat": "Expansión Urbana",
-          "description": "La tala de áreas de humedales restringe el rango natural del árbol.",
-          "guardian": "Protección de Humedales"
+          "threat": "Excesos Agrarios y Ganadería",
+          "description": "Desequilibrios Igneos Descontrolados.",
+          "guardian": "Resguardo Hídrico"
         }
       }
     },
@@ -1015,35 +1038,35 @@
       "flowerName": "Loto Azul",
       "botanicalFamily": "Nymphaeaceae",
       "commonNames": "Loto Azul, Lirio de Agua Egipcio Azul, Lirio Azul Sagrado",
-      "botanicalInfo": "Una planta acuática perenne con hojas flotantes y flores azules en forma de estrella que se elevan sobre la superficie del agua. Contiene alcaloides psicoactivos suaves y se utilizó en las ceremonias y la medicina del antiguo Egipto.",
-      "flowerDescription": "El Loto Azul, también conocido como Nenúfar Azul, es la flor icónica de Egipto. Venerada desde la antigüedad, simboliza la creación, el renacimiento y el sol: florece al amanecer y se cierra al anochecer.",
-      "culturalSignificance": "Sagrado para los antiguos egipcios, el loto azul aparece ampliamente en el arte de los templos, pinturas de tumbas y jeroglíficos. Estaba asociado con el dios del sol Ra y el mito de la creación, donde el primer loto surgió de las aguas primordiales.",
-      "historicalOrigin": "El loto azul ha sido sagrado en Egipto durante más de 5000 años. Aparece en los primeros textos jeroglíficos y pinturas de tumbas del Imperio Antiguo. En la cosmología egipcia, el mito de la creación describe el primer amanecer emergiendo de un loto flotando sobre aguas primordiales. La flor era utilizada en ceremonias religiosas por los faraones y fue representada en la tumba de Tutankamón.",
-      "nationalStatus": "Flor nacional icónica de Egipto; símbolo reconocido por la UNESCO de la antigua civilización egipcia.",
-      "traditionalUses": "Uso ceremonial antiguo: pétalos remojados en vino o agua como un relajante suave en rituales faraónicos; decoración de templos y ofrenda a los dioses; representada en arte en papiro y jeroglíficos; uso moderno como planta ornamental para jardines acuáticos; investigación sobre alcaloides psicoactivos (nuciferina, apomorfina).",
-      "habitat": "Hábitats de agua dulce poco profundos, lentos o estancados; históricamente, los márgenes de inundación del río Nilo y las marismas del delta.",
-      "distribution": "Originario del sistema del río Nilo y de África Oriental en general. Ha sido extirpado en gran parte de su rango histórico en el bajo Nilo debido a la gestión moderna del agua, aunque sobrevive en estanques controlados.",
+      "botanicalInfo": "Una planta acuática perenne con hojas flotantes y flores azules.",
+      "flowerDescription": "El Loto Azul es la flor icónica de Egipto. Venerada desde la antigüedad, simboliza la creación, el renacimiento y el sol.",
+      "culturalSignificance": "Sagrado para los antiguos egipcios, asociado a Ra y Tutankamón.",
+      "historicalOrigin": "El loto azul ha sido sagrado en Egipto durante más de 5000 años.",
+      "nationalStatus": "Flor nacional icónica de Egipto.",
+      "traditionalUses": "Ceremonias rituales faraónicas medicinales originarias andalus pacífica curadora.",
+      "habitat": "Nile River y agua embalsada asombroso.",
+      "distribution": "Originario de Egipto y África oriental originaria.",
       "morphology": {
-        "color": "Pétalos llamativos de color azul pálido a cielo, que se desvanecen a blanco en el centro, con estambres de color amarillo dorado brillante",
-        "shape": "Flor radial en forma de estrella que se eleva de 10 a 15 cm por encima de la superficie del agua; las hojas son flotantes, redondas y dentadas",
-        "size": "Flores de 10 a 15 cm de diámetro; hojas flotantes de hasta 40 cm de diámetro",
-        "lifeCycle": "Hierba acuática perenne; abre famosamente sus flores en la mañana y las cierra al anochecer"
+        "color": "Albo impoluto azul celeste y andalus oro.",
+        "shape": "Estrella flotante rumboso lobulada.",
+        "size": "Planta 15 cm andalus de franja acuática flotante de hojas botánicos fuste de cota.",
+        "lifeCycle": "Planta acuática aletargados solar diurna."
       },
-      "conservationStatus": "Casi Amenazada (NT) — Lista Roja de la UICN. Las poblaciones silvestres en el delta del Nilo han disminuido drásticamente debido a la contaminación y la pérdida de hábitat.",
-      "mainThreats": "La contaminación del Nilo y la escorrentía química agrícola destruyen los hábitats acuáticos; drenaje de los humedales del delta del Nilo para la agricultura y el desarrollo urbano; el cambio climático que reduce los ciclos de inundación del Nilo que históricamente regeneraban los hábitats de loto; recolección excesiva de poblaciones silvestres.",
-      "pfnoClassification": "Símbolo Cultural Nacional — Flor Sagrada Histórica",
-      "relevantPollinator": "Escarabajos (Scarabaeidae) — el loto azul practica la polinización por escarabajos termogénicos, calentando sus flores para atraer polinizadores, al igual que el loto sagrado. También polinizado por Apis mellifera.",
-      "nahiaraSynthesis": "Nymphaea caerulea se integra al universo Nahiara evaluado en 21/25 (Estable) en la Medida Nahiara. El Loto Azul de Egipto es una de las flores sagradas más antiguas de la civilización humana, un símbolo que conecta la mitología de la creación faraónica con la ciencia botánica moderna. Sus compuestos alcaloides y su simbolismo divino la hacen única en el catálogo de AquaMundi.",
+      "conservationStatus": "Casi Amenazada (NT).",
+      "mainThreats": "Represamiento del caudal original faraónico.",
+      "pfnoClassification": "Símbolo Cultural Faraónico",
+      "relevantPollinator": "Coleópteros de cuño egipcio escarabajo zumbador.",
+      "nahiaraSynthesis": "Nymphaea caerulea tasado en 21/25 (Estable).",
       "scorfidon": {
         "SCF-080": {
-          "threat": "Pérdida de Ciclos de Inundación",
-          "description": "La construcción de represas en el Nilo eliminó las inundaciones anuales que rejuvenecían naturalmente los hábitats.",
-          "guardian": "Restauración Hidrológica"
+          "threat": "Pérdida de Inundación Faraónica",
+          "description": "Asalto hídrico industrial letal.",
+          "guardian": "Resguardo Hídrico del Nilo"
         },
         "SCF-081": {
-          "threat": "Contaminación del Agua",
-          "description": "La escorrentía agrícola y los desechos industriales envenenan los ambientes de aguas poco profundas.",
-          "guardian": "Purificación de Ríos"
+          "threat": "Asalto Urbano Contaminante",
+          "description": "El afán desmesurado y urbano ahoga oasis botánico.",
+          "guardian": "Oasis Intacto Faraónico"
         }
       }
     },
@@ -1052,35 +1075,35 @@
       "flowerName": "Melati Putih",
       "botanicalFamily": "Oleaceae",
       "commonNames": "Jazmín Árabe, Melati Putih",
-      "botanicalInfo": "Pequeño arbusto de hoja perenne que produce racimos de flores blancas cerosas sumamente aromáticas. Florece durante todo el año bajo el amparo climatológico caluroso y profusamente húmedo asiático sudoriental indonesia, proveyéndose para el uso extractivo aromático infrecuente ritual y té verde aromatizado a nivel global.",
-      "flowerDescription": "El Melati Putih (Jazmín Blanco) es la flor nacional de Indonesia,  la cual simboliza pureza, candor, gracia inmaculada y simpleza divina originaria. Entronca hasta la raíz con las costumbres atávicas diarias populares originarias insulares.",
-      "culturalSignificance": "Las guirnaldas de jazmín resultan irrenunciables de facto indispensable e insustituible para los desposorios ceremoniales insulares oriundos, en especial, bajo los ritos de Java y la Sonda vistiendo acicalando e impregnando con candoroso perfume suntuario engalanador floral tanto al novio como a la prometida cónyuge de tan distinguido exótico nupcial acto sagrado. La ofrenda mística devocional abarca ritos espirituales colmados y esparcidos purificando recintos inmaculados, como señal preclara incorruptible de devoción póstuma impoluta franca sempiterna.",
-      "historicalOrigin": "El jazmín blanco (Melati Putih) fue formalmente instituido copartícipe mediante proclama decretadora fundacional promulgada gubernamental a instancias presidenciales rubricado durante 1990 constituyendo junto al influjo tutelar nacional baluarte de resarcimiento como terna originaria patricia endémica. Concurre protocolariamente insigne palatino vernáculo de abolengo suntuario rutilante de casta regio palaciega antiquísima milenaria acaecida y testificada originaria soberana cortesana javanés. Las fragancias emanan untuosamente glorificadoras invadiendo recintos reales sultánicos de linaje regio y cuna in memorial dinástica milenario de Solo y la ancestral Yogyakarta islámica.",
-      "nationalStatus": "Representativa oficial efigiada florística endémica constitutiva de una tríada oficial nativa estatal desde el año 1990 junto, inexcusablemente inseparable florísticamente unida para siempre a nivel biótico con la Orquídea de la Luna lunar misteriosa nocturna seductora epífita endémica nativa salvaje virgen indomable y el asombroso gigantesco descomunal hediondo y prodigio evolutivo titán botánico descomunal Padma.",
-      "traditionalUses": "Engalanamiento matrimonial con guirnaldas aromáticas floreadas ensartadas (ronce melati) vistosas e inmaculadas cubriendo a los prometidos contrayentes engalanados; es un complemento en toda plegaria votiva sagrada en Balí e imploraciones animistas devocionales originarias javanesas; brebaje herbal tónico revitalizador aromatizado (teh melati) encaramado a la cima más prodigada consumida bebida infundida; proceso extractivo del jugo vital condensado floral olfativo para el codiciado ungüento seductor fragante destinado a industrias del perfume; su fragancia, en suma, salvaguarda de influencias umbrías hostiles místicas malignas funestas telúricas atávicas esparciendo un escudo de halo benigno curador apotropaico en el sendero esotérico místico anacoreta del hermetismo originario aborigen espiritual autóctono panteísta indonesio Javanés nativo místico (Kejawen) para AquaMundi.",
-      "habitat": "Asentamientos edáficos fértiles de vergel selvático en bajío llanura tropical para el solar asiático insular balinés y demás confín ecuatorial atesorando calor persistente y pluviosidad saturada empapada abundante de un clima extremo indonesio exótico monzónico sudoriental continental de profusa temperatura.",
-      "distribution": "Su estirpe florística eclosionó presuntamente amparada natural en estribaciones boscosas escarpadas asiáticas primigenias butanesas limítrofes linderas himalayenses abriéndose paso a lo ancho expandiéndose hacia el archipiélago a lo largo del horizonte aborigen isleño preterido temporal inmemorial ancestral. Hoy es patrimonio biótico indonesio de cultivo vastamente extendido por todo lo ancho de Java para recolección botánico-té de cosecha floreada prolífica y de extracción extractiva esencial.",
+      "botanicalInfo": "Pequeño arbusto de hoja perenne que produce racimos de flores blancas sumamente aromáticas.",
+      "flowerDescription": "El Melati Putih (Jazmín Blanco) es la flor nacional de Indonesia.",
+      "culturalSignificance": "Las guirnaldas de jazmín resultan insustituibles en ceremonias maritales aborigen originario indonesio místico heráldico.",
+      "historicalOrigin": "Declarada escudo botánico 1990 patrio y monzónico originaria.",
+      "nationalStatus": "La exótica flor nacional oficial emblemática de Indonesia.",
+      "traditionalUses": "Tés milenarios exóticos, aceites esenciales extractiva suntuaria andalus.",
+      "habitat": "Jardines selvático tropical indonesio asombroso selvático.",
+      "distribution": "Originario balinés exótico asombroso de índole asiática charrúa.",
       "morphology": {
-        "color": "Albor nival e inmaculado níveo deslumbrante blanco perla seductor oloroso almizclado destilando fragancia hasta mermar declinando pajizo senescente áureo al expirar su efímero resplandor",
-        "shape": "Perfil botánico hipocrateriforme tubular en estrella pentalobulada ocasionalmente extendido multirradial exornando densos agregados vistosos",
-        "size": "Circunferencia minúscula transversal promediando en escasos centímetros las diminutas ramilletes de la exótica arbustiva que rara y rarísima vez supera más allá de 3 m",
-        "lifeCycle": "Inmarchitabilidad perenne frondosa reverdeciente selvática de continua eclosión floral encadenada fragante embriagante anual sostenida a destajo en todo el transcurso tropical estacional en AquaMundi."
+        "color": "Mosaico andalus albo.",
+        "shape": "Arrolladora estrella lobulada tubular sutil rumbosa corola cerosa.",
+        "size": "Circunferencia botánico exultante cota 3 m de fuste andalus asilvestrado.",
+        "lifeCycle": "Trepadora monzónico perenne."
       },
-      "conservationStatus": "Preocupación Menor (LC) tabulación para catalogación estandarizada ecologista oficialista red global Liste UICN. Plenamente extendida profusamente cultivada diseminada abarcante sin retroceso biótico ostensible por deforestación aparente ni amenazante en latitudes geográficas asimilables autóctonas forestales en las antípodas asiáticas meridionales en Asia eclosionando asiduamente pacíficamente estables y seguras poblacionalmente exultantes e intactas florísticamente endémicas sanas y seguras botánicamente en su entorno natural prístino.",
-      "mainThreats": "La eclosión extensiva a gran escala domesticada sortea de facto menguar bióticamente a la especie inminente; a cambio experimenta severa contracción habitacional intrínseca prístina forestal genuina por arrasamiento maderero del arbolado ecuatorial salvaje endógeno indonesio; desinterés económico por recolectores sumidos en competencia ruinosa asimétrica imperecedera sintética artificial impostada fraudulenta falsificadora petroquímica aromática usurpadora engañosa por la industria del encarecido aceite fragante auténtico impoluto puro.",
-      "pfnoClassification": "Flor Nacional Oficial Específica Emblemática Exclusiva",
-      "relevantPollinator": "Esfinges crepusculares y noctámbulos aleteos polilla sutil atraídas fascinadas libando ansiosas (Sphingidae); recolección lumínica al clarear solar de las zumbadoras y frenéticas acopiadoras industriosas abejeras (Apis cerana) así como sin aguijón infatigables enjambrazones recolectoras endémicas vernáculas asiáticas Trigona spp. El fraguar de la hipnótica flagrancia noctívaga exhalada asume el perfecto e inigualable reclamo evolutivo adaptado al gusto olfativo predilecto exquisito rastreador de rastros melosos polinizadores de enhiesta espiritrompa lepidóptera adaptada sutil seductoramente a la penumbra envolvente monzónica exótica nocturna sosegada asiática de espesura selvática ecuatorial en el jardín botánico natural originario imperecedero noctámbulo biótico AquaMundi inmarcesible para siempre y por todo el planeta para siempre.",
-      "nahiaraSynthesis": "Jasminum sambac de acervo originario asiático indonesio se consolida tabulada amparando el referencial numérico de tasación a las lindes paramétricas integrando holísticamente 20/25 (Estable) por AquaMundi en Nahiara. Este excelso ramillete inmaculado exuda pureza sinigual apegado aferrado apegado entrelazado inseparable incrustado atávica y generacional en inquebrantable sagrada mística unión y vínculo de boda al alma javanés ritual solemne aborigen litúrgico monzónico, configurándose y prestando el aderezo místico floral estelar suntuario del alma aborigen en todos los contornos bióticos archipelágicos indonesios y sumergiéndose como paradigma referencial místico del sistema cósmico floral en AquaMundi inmarcesibles.",
+      "conservationStatus": "Preocupación Menor (LC).",
+      "mainThreats": "Expansión urbana y química andalus plaguicida letal.",
+      "pfnoClassification": "Flor Patrio Oficial Andino",
+      "relevantPollinator": "Himenópteros nocturnos alígeros exóticos libadora esfinge botánica.",
+      "nahiaraSynthesis": "Jasminum sambac tasado 20/25 (Estable)",
       "scorfidon": {
         "SCF-090": {
           "threat": "Cultivo Químico",
-          "description": "La dependencia agraria generalizada fumigante de abonos compuestos erradicadora y repelente de insecticida que azota mortal letalmente masacrando indiscriminada diezma desoladoramente el entorno microscópico vernáculo faunístico silvestre oriundo asiático adscrito ligado inexorable indispensablemente a perpetuación ecosistémica equilibrada florística polinética y que merma diezmando extintiva dramática drásticamente entomológica botánica insurrección exógena letal masiva de toxicidad desértica y devastadora irremplazable plaguicida.",
-          "guardian": "Cultivo Ecológico Pretecnológico Atávico Conservacionista Tradicional"
+          "description": "Fumigación de plaguicidas letal destructora.",
+          "guardian": "Guardabosque Milenario Monzónico"
         },
         "SCF-091": {
-          "threat": "Enajenación Cultural Atávica Deconstruida Desligante",
-          "description": "El cisma fractura y abismo que aparta dolorosamente el discurrir del mundo alevín bisoño de acervos ritos panteístas aborígenes arrincona en el olvido marginando la mística conexión consustancial identitario floral originario en las celebraciones suntuosas atávicas javaneses ignorando a conciencia la flor aborigen originaria milenaria.",
-          "guardian": "Didáctica y Restauración Memoria Histórica Aborigen Ancestral Integradora Pedagógica Cultural"
+          "threat": "Olvido Cultural Ritual",
+          "description": "La alienación urbanística aniquila la base clinal originario mística.",
+          "guardian": "Resguardo del Nudo Bali"
         }
       }
     },
@@ -1089,28 +1112,38 @@
       "flowerName": "Dalia",
       "botanicalFamily": "Asteraceae",
       "commonNames": "Dalia, Dalia Pinnada, Acocoxochitl",
-      "botanicalInfo": "Una especie perenne bulbosa en la familia botánica Asteraceae que reúne un compendio portentoso de algo más de la cuarentena de ramificaciones primigenias sin desdoro para centenares de acoplamientos polinizadores derivados por polinización. Presenta tallas morfológicamente heterogéneas que surcan inflorescencias que alternan un remate redondo compacto pomposo hasta descomunales platos orlados que disten radiales de medida superando sobremanera y rebosantes y rumbosos excediendo de lejos de largo y por de más más de la treintena de centímetros; un mosaico inmarcesible policromo saturado multicolor cromáticamente exento y huerfano ineludiblemente únicamente exento carente de tonalidades en pigmentos de puros cian puro cobalto puro cerúleo índigo vívido verdadero.",
-      "flowerDescription": "La Dalia resulta inconfundible estandarte nacional representativo floreciendo y refulgiendo y exultante como flor nacional oficial efigie soberana de México instituida sin remedio oficiosamente formalmente sancionado gubernativo el año 1963. Brote oriundo originario andino selvático vernáculo patrio mexicano y centrado preferente a nivel biótico de latitudes de Centroamérica abigarrado saturado exuberante despampanante cegador y asombroso en matices caleidoscópicos pictóricos cromáticos variables insospechados asombrosos espectaculares rumbosos florísticos inmarcesible en AquaMundi.",
-      "culturalSignificance": "Los pobladores ancestrales aztecas primigenios dedicaban a este estandarte nativo mesoamericano usos medicinales paliativos, aprovechamiento exótico e incluso comestibles culinarios tuberoso ingesta exótica herbario medicinal paliativo e integrado indispensable a ritos sagrados paganos teocéntricos panteístas a deidades tutelares solares en épocas anteriores e intocadas recónditas salvajes asilvestradas americanas previas a la gesta aventurera colombina descubridora imperial ibérica conquistadora cortesana en la franja aborigen vernácula centroamericana mexicana nativa del México de pre conquista en las Américas andinas caribeñas salvajes vírgenes prístinas originales asombrosas y milenarias inquebrantablemente puras impolutas inmarcesibles AquaMundi para el recuerdo. Entrelazadas a la propia anatomía y constitución florística originaria asilvestrada de base y fuste alargado perforado sirvió preeminentemente de canaletas en abastos de acueductos domésticos e incluso aderezo chamánico curadores originarios para sus precursores aztecas pioneros recolectores. Despunta despuntó y despuntará y pervivirá soberana por doquier universal como efigie asombrosa resplandeciente orgulloso botánico genético natural floral inmarcesible innegable imperecedero mexicano pletórico florístico rebosante originario genésico e inconmensurable y diverso prístino original intocado salvaje hermoso resiliente AquaMundi.",
-      "historicalOrigin": "Los nativos aztecas endosaban y designaban nombrando al portento florístico floral andino botánico aludiendo la etimología original originaria nativa náhuatl nombrando Acocotli, así como Cocoxochitl englobando una descripción detallista literal y consustancial fisiológica que refería fidedignamente floración de hueco troncal de enramado o tallo cilíndrico, la cual se consagraba al consumo humano como aprovechamiento dietético suculento en su base alimenticia y la pericia ingenieril originaria aborigen asilvestrada para trasvases conductos hidráulicos de riego recolector y consumo potable de abastecimiento. Prestigiosos biólogos hispanos allende los mares importaron transportando celosamente resguardado exótico y prístino a su arribo a metrópoli euroasiática arribado durante las postrimerías en apogeo ilustrado transcontinental dieciochesco para asombro mayúsculo a estamentos peritos botánicos cortesanos ilustrados monárquicos y botánicos mundiales expectantes. Acuñaron posteriormente nombre homónimo apelativo nominativo en loa honor presencial insigne rememorando eminente escandinavo afincado experto y taxónomo del norte sueco a Anders Dahl para el mundo global como la Dalia universal para todos en nombre de México; rubricado y rubricado afianzado en los altares patrios efigiado como enseña nativa constituyente el trece de la quincena en floración estival mes de mayo a primeros albores sesenteros durante la data 1963 en México para todo AquaMundi inmarcesible eternamente.",
-      "nationalStatus": "Dignidad regia floral representativo estandarte insignia nacional oficial de flor en floración para México encaramado oficialista inconfundible y universal desde mil novecientos y entrañable y querido sesenta y tres 1963. Configurado inalienablemente indiscutible constituyente matriz del germen botánico prístino de cuna originaria centro formativo genético medular para los millares de diversificadores cepas variantes hibridados exóticos de dalia internacional mundiales derivados de un ramal matriz original pionero pletórico salvaje asilvestrado y originaria prístino milenarias de la sierra de México originario asilvestrado natural sin dilación centroamericana azteca americana precursora de AquaMundi perenne inmarcesible en la biodiversidad mundial global en el planeta tierra biótico exótico siempre.",
-      "traditionalUses": "Apoyo sustento gastronómica base exótica del legado mesoamericano dietético suculenta ingesta andina azteca en formato tubérculo bulbo soterrado aprovechable recolectada; se encaramó su vástago leñoso acanalado para confeccionar pajillas de trasvase acuífero rústico artesano aborigen rural selvático nativo y viñeta tubería canalizada del precioso y escurridizo hídrico liquido cristalino impoluto en la civilización precolombina de regadío nativo originario azteca atávico en Mesoamérica; bálsamo mitigador apaciguante medicinal febrífugo curativo antipirético y depurador regenerado de dermopatías exfoliador dérmico cicatrizante cutáneo chamánico curativo natural originario primitivo nativo autóctono; despunta profusamente extendido al amparo popular esparcido de floración multicolor de porte global suntuario planetaria sin igual en vergel y parque urbano asilvestrado rural de jardín botánico decorativa universalista imperecedero y rebosante AquaMundi inmarcesible; presencia insoslayable arraigada ceremonial mortuoria ritualista panteísta aborigen devocional sincretismo mexicano y engalanador mortuorio indispensable de tumbas y altares junto entronizada consustancial acoplada florísticamente y amparada mimetizándose solidaria compartiendo devociones compartidas y engranando el día y culto en conmemoración mortuorio místico Día de los Muertos acompañando y arropando sinergias a su cempasúchil hermana inmarcesible de Mesoamérica en AquaMundi sagrado santuario atemporal infinito asombroso ecologista universal planetario de todos en la galaxia estelar del Cosmos.",
-      "habitat": "Asiento telúrico altitudinal mesoamericano afincado agrestemente coronado serranía boscosa maciza a la vera encaramado montuosa del altiplano y pradera de meseta asilvestrada despuntando alturas enclavadas andinas colindantes y situándose topográficamente con baremos orográficos y accidentados abruptos intermedios 1.500 metros adentradas cumbres 3.500 sobre ras de cero medido atlántico pacifico altiplánico serrano; cimiento biológico enriquecido fértil fecundo pletórico prístino nutrisco asentamiento eruptivo magmático geológico y mineral cenizo escoriado solidificado igneo asentado sobre estratos montañosos arbolados boscosos pinares neblinosos y del género roble a lo alto afincado andino de las latitudes sureñas del mapa demarcativo centroamericano originario adentrándose para el estado Oaxaqueño chiapaneco a la postre lindante la geografía accidentada centro andina en lo alto de pinos de montaña de Guerrero prístinas; floreció bióticamente prístina virginal indómita primeramente asomándose al mundo salvaje oriunda como espécimen herbario de serranía exenta altitudinal amparado sobre el tapiz herbáceo mesetario en cimas heladoras templadas atesoradas regocijadas deleitándose floreciendo regada filtrada escurrida drenando suelo impoluto puro rico saturante fértil de sustrato igneo andino mexicano autóctono primigenio aborigen nativo milenario virgen indómito salvaje en AquaMundi para siempre perpetuo florístico impoluto asombroso.",
-      "distribution": "Flora intrínsecamente propia vinculante ligada originaria y centroamericana endémica primigenia prístina salvaje centro y núcleo y corazón del banco originario base genético para millares mutables variables diversificantes botánicos ornamentales exóticos globables internacionales hibridados procedencia oriunda originaria ineludiblemente entroncando y emparejada a la cuarentena cepa florística asilvestrada agreste base vernácula aborigen prístina. Proliferación desmedida extendida profusamente colonizando desbordada a base de multiplicidad sinfín por cultivación domesticada de índole cosmopolita a merced climática temperada templada moderada de bonanza sin exabruptos a escala ecuménica a lo largo de todo confín y geografía. La catalogación y recuento censitario orbe compila sobremanera en demasía superando un registro escrupuloso florísticamente inventariado tabulado clasificado en superávit rondante el veintenar del millar contante sonante catalogación variable cepa exótica diversificadora ornamental exornadora dalia botánica exótica para todos en todas las latitudes planetaria universal derivadas ramificadas originadas emparentadas genealógica y botánicamente heredadas desde los aborígenes linajes nativos mexicanos de salvajes cepas agrestes inmarcesibles AquaMundi del acervo biológico botánico asombrosos genésico patrimoniales milenarios mesoamericano andino de originaria pletórico asombrosa majestuosa flora universal intercontinental global inmarcesible eterno prístino virginal patrio asilvestrado y exuberante de AquaMundi.",
+      "botanicalInfo": "Una especie perenne bulbosa en la familia botánica Asteraceae con más de 40 especies y miles de cultivares.",
+      "flowerDescription": "La Dalia es la flor nacional oficial de México instituida en 1963.",
+      "culturalSignificance": "Cultivada por aztecas primigenios para usos medicinales paliativos, acueductos y ritual sagrados.",
+      "historicalOrigin": "Los nativos aztecas la designaban Acocotli.",
+      "nationalStatus": "Dignidad regia floral nacional de México desde 1963.",
+      "traditionalUses": "Paliativo orgánico botánico andalus tubular curador asombroso y alimento mesoamericano de origen azteca.",
+      "habitat": "Cimas asombrosas montañosas templadas, laderas selvático centroamericanas andaluces nativo.",
+      "distribution": "Global tras su salida de Mesoamérica majestuoso endémico y originario silvestre.",
       "morphology": {
-        "color": "Mosaico caleidoscópico desproporcionadamente asombroso inmarcesible exento huérfano única ineludiblemente limitante exceptuando eximente desprovista inalcanzable inasequible cían zafiro cobalto puro en plenitud cerúlea índigo vívido pigmento (amparando albo nieve amarillo solar llama naranja fulgor rojo grana rosado pálido púrpura y violáceos mixturados y engalanando de bicolor contrastado y policromatismos diversos mil).",
-        "shape": "Ostentosa caperuza orfebre abombilada nuclear central de naturaleza y perfil corola de agrupación agrupada compuesta engalanada contorneando rodeando abrazada cobijada de remate con un radial despliegue floral a modo decorado y enrevesado apéndices florales marginales lengüetas desplegables acopladas estriadas y periféricos en el centro capitular denso y frondoso discoidal estaminal andrógeno amarillo y central agolpados florísticos minúsculos y diminutas florículas para fecundación botánica florística primigenia y silvestre",
-        "size": "Esfericidad morfológica polifacética despuntando variada de minúscula diminuta de un encogido par céntimos a descomunales cabezas plato florísticos rumbosas asombrosas englobadoras rebasantes ensanchantes transversales franqueando lindes treintena radiales centimetrados exultantes voluminosas apoteósicas; base asombroso sustento radicante herbáceo con tubérculos rastreros bulbosos arraigados encumbrando alzando brotes vigorosos de fronda variable tallos desde diminutos treinta cm franqueando e impulsando un vigor de 2 metros medidos con creces para desbordar la cuota medidora a 2,5 altitud en fuste en alto despunte altitudinal silvestre",
-        "lifeCycle": "Crecimiento floral silvestre herbácea enjambrosamente arraigado tenazmente por fuste radicante y bulbo soterrado invulnerable al aletargado y letargo invernoso a pernoctar latente perenne invernante tras el decaimiento marchito gélido gélido otoñal caduco mustio perecedero estacional resecado reventando floreciendo refulgiendo eclosionando brotando revitalizado esplendente exuberante vigoroso reverdecido frondoso alegre exultante al alborear asomar cálido al despertar el renaciente ciclo resucitador asombroso esplendor primaveral caluroso anual repetido cíclicamente eternamente para AquaMundi florístico prístino siempre en renacimiento infinito."
+        "color": "Mosaico vivo caleidoscópico cromático de matices intensos variables desbordantes de arcoíris cian.",
+        "shape": "Densa cabeza floral compuesta protegida y abombilada.",
+        "size": "Cabezas florales que superan los 30 cm transverzales; tallo de 0.3 a 2.5 m.",
+        "lifeCycle": "Vivaz arbusto bulboso leñoso invernal letargo y exultante primaveral."
       },
-      "conservationStatus": "Preocupación Menor (LC) tabulación para catalogación estandarizada ecologista oficialista red global Liste UICN. Este rango baremado de tasación ampara amordazado compendiado en exclusivo en favor restringido a las especies hibridadas manipuladas intervenidas derivadas alteradas cosmopolitamente mundial cultivadas ornamentalmente en estatus masivo sin menoscabo alarmante inminente letal apremiante agónico a la vista aparente de colapso en declive exento. No obstante y muy al contrario y a pesar de todo las variantes originarias nativas de cepa originaria agreste silvestre vernáculas aborígenes prístinas virginales endémicas arrinconadas de reductos alpinos serranos empinados en mesoamérica patria centroamericana mexicana se enfrentan aguardan catalogadas engrosadas pendientes del arbitrio tasador observador dictaminante vigilante agónico biológico En Estudio Analítico bajo observación aciago de asedio a falta de dictamen ecologista final inminente de la florística originaria indómita de base base y fuste andina de AquaMundi.",
-      "mainThreats": "Asedio cercenador reductor menguante de asentamiento altitudinal mesetario natural de montaña asilvestrado de origen prístino en serranía andina mesoamericana mexicana cedido arrinconada arrasada avasallada colonizada desplazada e invasora ocupación ensanchamiento extensivo colonizador del laboreo extractivo usurpador para suelo agrícola latifundista delincuencial empobrecedor y monocultivo reductor masificando arado arrasador desforestador deforestador del hábitat primitivo selvático; pillaje contrabando clandestino saqueo extractivo furtivo aniquilador pirata elitista para la recolección extractiva comercial clandestino clandestino orquidófilo de subespecies extrañas singulares solitarias asombrosas y peculiares raras y exclusivas sinigual valiosísimos ejemplares de la botánica salvaje para enriquecimiento de especuladores de origen y procedencia exótica salvajes puros originarios prístinos endémicos asombrosos del paraje salvaje botánico de genoma incólume indomables florísticamente valiosos; flagelo perturbador inclemencias de un entorno macro global agobiado alterado desfigurado sufriente agónico enfermo del trastorno letal desastre del cambio climaterio asolando el desajustando trágico drástico implacable letal de eclosión andina tropical y modificando los ciclos de temperatura humedad pluviosidad sequedad estiaje al ecosistema serrano altitudinal originario andaluz nublado forestal primigenio mesoamericano azteca ancestral milenario sagrado y biótico; hibridación parasitaria usurpatoria colonizable subyugante agobiante sofocadora por invasoras genéticamente hibridadas fugadas y fugitivas naturalizadas silvestres mermando usurpando menoscabando asediando suplantando diezmando la impureza alteradora la originalidad biológica de identidad genética purismo nativo endémico vernáculo milenario inquebrantable de las cepas salvajes vírgenes exentas intocadas primitivas andaluz nativas patrio salvajes naturales silvestre en AquaMundi inmarcesibles.",
-      "pfnoClassification": "Flor Nacional Oficial Específica Emblemática Exclusiva",
-      "relevantPollinator": "Subfamilias polinizantes originarias afines de linaje Bombus spp. (abejorros exóticos o comunes zumbadores) de envergadura fornidas robustas peludas recias laboriosas incesantes afanosas libadoras melosas néctares exultantes e inagotables apéndices de abejas obreras recias europeas de enjambres comunes apícolas asimiladas al género universal Apis mellifera (la originaria abeja laboriosa melífera común transatlántica europea e incorporada global cosmopolita forastera mimetizada adaptada panamericana polinizando el agro) — se aprovechan rinden pleitesía exultan el prodigioso despliegue asombroso corolar compendio abombado periférico botánico acopado estaminal originario rumboso al erigirse la dalia despampanando sin freno abierto receptáculo central para abrevadera como portentoso y afable abarcante asombroso florístico andaluz asombroso florístico expuesto atractivo florido para ser frecuentado infatigable asiduamente en demasía acosado amistosamente al arribo incesante acudiendo de toda estirpe y variante biótica de fauna visitador libador insectívoro recolector rastreador zumbante y libador y abnegado incesante devoto generalista atraído e imantado por este festín esplendente florístico a rebosar y deleite generoso del manjar polínico y nectario en los confines del festín botánico floral originario indómito asombroso silvestre dalia andina AquaMundi y que al son del compás polinizador biótico de un santuario floral rebosante silvestre andaluz inmarcesible universal planetario y divino es asediado también cortejado sin desdoro en tropel y romería por abigarradas alas lepidópteras exóticas colosales volátiles mariposeando aleteando frágil sutil sedosas de variopinto pintadas policromadas (Papilio o abigarrado monarca majestuoso mariposas Danaus en romería peregrina botánica), también moscas o diminutas avispillas cernícalos mimetizándose simuladores asombrosos parpadeantes dípteros voladores planeadores estacionarios imitadores asombrosos (Syrphidae asombrosos afanosos), así como también no faltando escarceos atraídos por fragancias aletargantes en el banquete florístico de minúscula fauna coleópteros forzudos escarabajos incesante y pululando revoloteando refulgiendo en un trajín alocado extasiado del concierto divino orquestado milagrosamente biótico y equilibrado inexpugnable e incólume del ecosistema prístino de nuestra siempre hermosa majestuosa dalia mexicana eterna invencible e inolvidable radiante salvaje en el jardín exótico silvestre AquaMundi inmarcesible en este planeta para todos eternamente vivo vibrante desbordante y palpitante exultante con amor infinito en su florido jardín celestial estelar galáctico en compendio siempre amando amado vibrando eterno en AquaMundi inmarcesible patrio natural orgánico puro universal estelar maravilloso cosmos infinito y amoroso asombroso siempre nuestro sagrado asombroso.",
-      "nahiaraSynthesis": "Se incorpora Dahlia pinnata acoplándose de inmediato indisolublemente afianzando de pleno referencialmente el parámetro evaluador dictaminante numérico inquebrantable AquaMundi adjudicándole holísticamente un dictamen justiciero de puntuación 21/25 (Estabilidad) para Medida Nahiara del compendio del santuario florístico indomable de inmarcesibles AquaMundi y de manera estandarizada planetaria y firme universalmente. Del enclaustrado mesoamericano serrano azteca germen y bastión recóndito y pletórico prístino asombrosamente pródigo e inabarcable en la fronda mexicana despunta y arranca de cuajo extendiéndose global y mundial irradiando el portento floral andaluz daliano ramificándose y asombrando genéticamente exótico florísticamente cosmopolita internacionalizando a raudales abarcando en un compendio hibridadas millares para todo continente exótico el de más esplendente acervo y variadas mutaciones polinizantes florística de domesticadas rumbosas flores a escala global orbe intercontinental — originado y propiciado con tesón primigenio atávico amparado protegido reverenciado azteca incrustado de antaño milenario germinando desde un templete del Dios panteísta azteca asombroso deificada endiosa glorificada exaltada a nivel místico hasta engrosar expandir amparar sostener lucrar afianzar y nutrir e impregnar enriquecer al todopoderoso estamento y la codiciosa industria exótica ornamental y elitista acervo de especulativo valor ornamental florícola internacional suntuario botánico planetario en toda latitud civilizada actual y contemporánea civilización agrocultural moderna ornamentista globalizada mundial florícola desbordante de nuestro orbe contemporáneo enaltecidamente comercial y estéticamente seductor e incansable y asombrador esplendente de siempre viva Dalia para AquaMundi maravilloso y frágil ecosistema. Erigida como ombligo de irradiación patrio y baluarte centroamericano originario amurallado atávico e irrenunciable mexicano originando conformándose la matriz del cuna santuario andino daliano en germen genético originario prístino virginal silvestre nativo y asilvestrado natural intocado virgen prístino para multiplicidad enjambrosa de variantes silvestre dalianas, conforma amparando y configurando para el acervo andaluz mexicano y en beneficio genético a salvajes especies oriundas originarias mexicanas configurándose como el vivo acervo biblioteca genético banco bibliotecas bióticos arcanos botánicos ancestral inexpugnable silvestre patrio natural y esencial sin el cual resultaría huérfano y frustrado quimérico inviable e imperioso e imprescindible en afanes e intentos afanosos experimentadores conservacionista de pervivencia cruce botánico para asombrosas castas injertadoras y para la perpetuación resguardo conservación florística andalus salvación imperecedora y el encomiable fomento y tesón protector perseverante e inclaudicable protector científico estudioso celador salvador perito investigador ecologista perito florístico amparado al albor biótico natural universal ecologista para beneficio humano botánico global siempre amparador amado y perpetuado celosamente andalus silvestre heroico inmarcesible en AquaMundi siempre radiando de hermosura y fronda resplandeciente dalia mexicana amada eterna e infinita como luz divina botánico celestial orquestando maravillosamente su danza pletórica panteísta aborigen de polinizados andinos y silvestres originarios centroamericanos amados y eternos siempre inmarcesible exultantes."
-    }
-  },
-  "minions": {
+      "conservationStatus": "Preocupación Menor (LC) tabulación para variedades cosmopolitas; en peligro las cepas nativas silvestres andalus patrio prístinas indómitas andinas.",
+      "mainThreats": "Saqueo de subespecies botánicas exóticas silvícolas foráneas nativas, merma rural y extractivo urbano y desfiguramiento climático andino forestal primigenio mesoamericano azteca ancestral milenario.",
+      "pfnoClassification": "Escudo Nacional Oficial Originario",
+      "relevantPollinator": "Aborigen nativo insectívoros abejas laboriosas andalus himenópteros patrio asombrosa polinización mariposas.",
+      "nahiaraSynthesis": "Dahlia pinnata tasado paramétricamente 21/25 (Estable).",
+      "scorfidon": {
+        "SCF-160": {
+          "threat": "Saqueo Silvestre",
+          "description": "Ladronzuelos furtivos amenazan los bancos genéticos.",
+          "guardian": "Banco Natural Intacto"
+        },
+        "SCF-161": {
+          "threat": "Acoso Urbano Asilvestrado",
+          "description": "Sobre edificación ahoga la meseta azteca.",
+          "guardian": "Resguardo Mesetario"
+        }
+      }
+    } }, "minions": {
     "climateChange": {
       "name": "Cambio Climático",
       "message": "Revelaste al súbdito Cambio Climático. El ecosistema retrocede. Debemos comenzar de nuevo…"
@@ -1328,3 +1361,4 @@
     "exploreGlobe": "Explorar el Globo"
   }
 }
+

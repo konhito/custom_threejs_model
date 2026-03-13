@@ -536,24 +536,23 @@
     "subtitle": "Loyaler Knappe von Nahiara",
     "intro": "Hallo, ich bin Araihan, loyaler Knappe von Nahiara. Willkommen zum Nahiara und die Wächter der Blumen Spiel. Ich bin ein bisschen schläfrig… und ich liebe natürliche Gummis: Erdbeeren, Himbeeren, Brombeeren… Aber ich mag verarbeitete Süßigkeiten überhaupt nicht. Lass uns zusammen Spaß haben. Möchtest du mit mir spielen?"
   },
-  "countries": {
-    "pakistan": {
+  "countries": { "pakistan": {
       "name": "Pakistan",
       "flowerName": "Jasmin",
       "scientificName": "Jasminum officinale",
-      "description": "Jasmin ist die Nationalblume Pakistans und symbolisiert Reinheit, Anmut und Schönheit. Er repräsentiert das reiche kulturelle Erbe und den natürlichen Duft des Landes."
+      "description": "Jasmin ist die Nationalblume Pakistans und symbolisiert Reinheit, Eleganz und Schönheit. Er repräsentiert das reiche kulturelle Erbe und den natürlichen Duft des Landes."
     },
     "peru": {
       "name": "Peru",
-      "flowerName": "Kantute",
+      "flowerName": "Cantuta",
       "scientificName": "Cantua buxifolia",
-      "description": "Die Kantute ist die Nationalblume Perus und symbolisiert die Schönheit und die Widerstandsfähigkeit des andinen Volkes. Sie repräsentiert die Verbindung zwischen Natur und Kultur im Hochland."
+      "description": "Die Cantuta ist die Nationalblume Perus und symbolisiert die Schönheit und Widerstandsfähigkeit der Andenvölker. Sie steht für die tiefe Verbindung zwischen Natur und Kultur im Hochland."
     },
     "tanzania": {
       "name": "Tansania",
       "flowerName": "Gewürznelke",
       "scientificName": "Syzygium aromaticum",
-      "description": "Die Gewürznelke ist die Nationalblume Tansanias und symbolisiert das reiche Gewürzerbe und den natürlichen Reichtum des Landes. Sie steht für die Verbundenheit zwischen den Menschen und der Erde."
+      "description": "Die Gewürznelke ist die Nationalblume Tansanias und symbolisiert das reiche Gewürzerbe und den natürlichen Überfluss des Landes. Sie steht für die tiefe Verbindung zwischen den Menschen und dem Land."
     },
     "nicaragua": {
       "name": "Nicaragua",
@@ -563,600 +562,351 @@
     },
     "jamaica": {
       "name": "Jamaika",
-      "flowerName": "Pockholz (Lignum Vitae)",
+      "flowerName": "Pockholz",
       "scientificName": "Guaiacum officinale",
-      "description": "Pockholz ist die Nationalblume Jamaikas und symbolisiert Stärke, Widerstandsfähigkeit und natürliche Schönheit. Es repräsentiert die einzigartige Flora und das kulturelle Erbe der Insel."
+      "description": "Das Pockholz, auch als Lebensbaum bekannt, ist die Nationalblume Jamaikas und symbolisiert Stärke, Widerstandsfähigkeit und natürliche Schönheit. Es repräsentiert die einzigartige Flora und das kulturelle Erbe der Insel."
     },
     "unitedStates": {
       "name": "Vereinigte Staaten",
       "flowerName": "Rose",
-      "scientificName": "Rosa (Hybridsorten)",
-      "description": "Die Rose ist das offizielle nationale Blumenemblem der Vereinigten Staaten (1986). Sie ist seit über 5.000 Jahren ein weltweites Symbol für Liebe, Schönheit und Erinnerung – vom antiken Rom und der griechischen Mythologie bis hin zum Rosengarten des Weißen Hauses."
+      "scientificName": "Rosa (Hybriden)",
+      "description": "Die Rose ist das offizielle nationale Blumensymbol der Vereinigten Staaten (1986). Seit über 5.000 Jahren, von der antiken römischen und griechischen Mythologie bis zum Rosengarten des Weißen Hauses, ist sie ein weltweites Symbol für Liebe, Schönheit und Gedenken."
     },
     "spain": {
       "name": "Spanien",
       "flowerName": "Nelke",
       "scientificName": "Dianthus caryophyllus",
-      "description": "Die Nelke ist die Nationalblume Spaniens und symbolisiert Liebe, Leidenschaft und Schönheit. Sie repräsentiert die lebendige Kultur und die natürliche Eleganz des Landes."
+      "description": "Die Nelke ist die Nationalblume Spaniens und symbolisiert Liebe, Leidenschaft und Schönheit. Sie repräsentiert die lebendige Kultur und die natürliche Anmut des Landes."
     },
     "scotland": {
       "name": "Schottland",
       "flowerName": "Distel",
       "scientificName": "Onopordum acanthium",
-      "description": "Die Distel ist die Nationalblume Schottlands und symbolisiert Widerstandsfähigkeit, Schutz und Nationalstolz. Sie repräsentiert die raue Schönheit und den unabhängigen Geist des Landes."
+      "description": "Die Distel ist die Nationalblume Schottlands und symbolisiert Widerstandsfähigkeit, Schutz und Nationalstolz. Sie repräsentiert die raue natürliche Schönheit und den unabhängigen Geist des Landes."
     },
     "germany": {
       "name": "Deutschland",
       "flowerName": "Kornblume",
       "scientificName": "Centaurea cyanus",
-      "description": "Die Kornblume ist die Nationalblume Deutschlands und symbolisiert Hoffnung, Freiheit und natürliche Schönheit. Sie repräsentiert die Verbundenheit des Landes mit der Natur und seinem kulturellen Erbe."
+      "description": "Die Kornblume ist die Nationalblume Deutschlands und symbolisiert Hoffnung, Freiheit und natürliche Schönheit. Sie repräsentiert die tiefe Verbindung des Landes zur Natur und seinem kulturellen Erbe."
     },
     "usRose": {
       "name": "Vereinigte Staaten",
       "flowerName": "Rose",
       "morphology": {
-        "color": "Großes Farbspektrum (rot, rosa, weiß, gelb, lavendel)",
-        "shape": "Sehr duftende Blüten mit 5 bis über 60 Blütenblättern",
-        "size": "Ausdauernder verholzender Strauch, 0,3 bis 3 m hoch",
-        "lifeCycle": "Dornige Stängel und gefiederte Blätter"
+        "color": "Ausgedehntes Spektrum (Rot, Rosa, Weiß, Gelb, Flieder usw.)",
+        "shape": "Hochgradig duftend mit komplexer Blütenblattstruktur (5 bis über 60)",
+        "size": "Mehrjährige holzige Sträucher, Klettern oder Schleppen (0,3 bis 3 Meter)",
+        "lifeCycle": "Bewaffnet mit dornigen Stängeln und gefiederten Blättern"
       },
-      "habitat": "Anpassungsfähig an gemäßigte Zonen der ganzen Erde — Gärten, Parks, Wegränder; heimische Wildarten in Wiesen, an Waldrändern und Felshängen in der gesamten nördlichen Hemisphäre.",
-      "distribution": "Heimisch in Asien, Europa, Nordamerika und Nordafrika. Die Vereinigten Staaten züchten jährlich etwa 1,2 Milliarden Schnittrosen; bedeutender Anbau in Kalifornien, Oregon und Texas.",
-      "historicalOrigin": "Rosen werden seit über 5000 Jahren kultiviert. Die alten Römer verwendeten sie für Festivitäten und in der Parfümerie. 1986 unterzeichnete Präsident Ronald Reagan das Gesetz, das die Rose zum offiziellen floralen Wahrzeichen der Vereinigten Staaten machte. Ihre symbolische Bedeutung reicht von der griechischen Mythologie über das Christentum bis zur Heraldik (Rosenkriege).",
-      "nationalStatus": "Offizielles nationales Blumenemblem der Vereinigten Staaten seit 1986.",
-      "traditionalUses": "Parfümerie (Rosenöl); kulinarisch (Rosenwasser, Hagebuttentee, Marmeladen); traditionelle Heilpflanze (vitamin-C-reiche Hagebutten); Zierpflanze; religiöse Dekoration.",
-      "conservationStatus": "Kultivierte Sorten: Nicht beurteilt (NE). Wildarten: Mehrere in den USA heimische Rosa-Arten gelten als bedroht oder gefährdet.",
-      "mainThreats": "Rosen-Rosetten-Krankheit (RRD); klimabedingter Trockenstress; Pestizidabhängigkeit im gewerblichen Anbau; Lebensraumverlust für einheimische Wildrosen.",
-      "pfnoClassification": "Offizielles nationales Blumenemblem",
-      "relevantPollinator": "Apis mellifera (Honigbiene) und heimische Bombus-Arten (Hummeln) — Rosen sind wichtige Bienenweiden. Auch bestäubt von Käfern, Schwebfliegen und Mauerbienen (Osmia spp.).",
-      "cultural": "Die Rose steht in den Vereinigten Staaten (1986) ganz offiziell als nationale Blume des Landes. Sie bleibt das weltweite Symbol ewiger Schönheit und inniger Verbundenheit.",
-      "conservation": "Wildrosen kämpfen weltweit gegen Lebensraumverlust. Nahiara-Maßstab: 23 / 25.",
-      "nahiaraSynthesis": "Rosa fügt sich als SAN-F-083,003 in das Nahiara-Universum ein. Der Nahiara-Maßstab bewertet sie mit stabilen 23 / 25. Die Meisterreferenz im AquaMundi-System."
+      "habitat": "Anpassungsfähig an globale gemäßigte Zonen (Gärten, Parks, Straßenränder); Wildarten kommen auf Wiesen, an Waldrändern und felsigen Hängen der nördlichen Hemisphäre vor.",
+      "distribution": "Heimisch in Asien, Europa, Nordamerika und Nordafrika. Die USA pflanzen jährlich etwa 1,2 Milliarden Schnittrosen; Hauptregionen sind Kalifornien, Oregon und Texas.",
+      "historicalOrigin": "Seit über 5.000 Jahren kultiviert. Von den Römern in Festen und Parfums verwendet, wurde die Rose 1986 durch eine von Präsident Ronald Reagan unterzeichnete Proklamation zum offiziellen nationalen Blumensymbol der USA erklärt. Ihre symbolische Kraft erstreckt sich über die griechische Mythologie (verbunden mit Aphrodite), das Christentum (die Blume der Jungfrau Maria) und die Heraldik (die englischen Rosenkriege).",
+      "nationalStatus": "Offizielles nationales Blumensymbol der USA seit 1986 (Public Law 99-449).",
+      "traditionalUses": "Parfümierung und ätherische Öle (Rosen-Otto, Rosen-Absolue); kulinarische Verwendungen (Rosenwasser, Hagebuttentee, Marmeladen); Ayurveda und westliche Kräutermedizin (Hagebutten sind reich an Vitamin C); Ziergartenbau und Blumenindustrie; und dekorativer Einsatz in Religion und Zeremonien.",
+      "conservationStatus": "Sorten: Nicht gefährdet (NE). Einheimische Wildarten: In den USA gelten mehrere heimische Rosa-Arten auf bundesstaatlicher oder staatlicher Ebene als Arten von besonderem Interesse.",
+      "mainThreats": "Die Rosettenkrankheit (RRD) - ein verheerendes, von Milben übertragenes Virus; klimabedingter Trockenstress; Abhängigkeit von Pestiziden im kommerziellen Anbau; und Lebensraumverlust für einheimische Wildrosen.",
+      "pfnoClassification": "Offizielles nationales Blumensymbol",
+      "relevantPollinator": "Apis mellifera (Europäische Honigbiene) und verschiedene einheimische Bombus (Hummeln). Exzellente Nektarquelle. Zieht auch Käfer, Schwebfliegen und Mauerbienen (Osmia) an.",
+      "cultural": "Die Rose ist das offizielle nationale Blumensymbol der USA (1986). Seit über 5.000 Jahren, von der römischen und griechischen Mythologie bis zu den Rosenkriegen und dem Rosengarten des Weißen Hauses, ist sie ein globales Symbol für Liebe, Schönheit, Leidenschaft und Gedenken.",
+      "conservation": "Während kultivierte Rosen weltweit gedeihen, sind wilde einheimische US-Rosen von der Rosettenkrankheit, Lebensraumverlust und dem Klimawandel bedroht. Nahiara-Messung: 23/25 (Vitalität).",
+      "nahiaraSynthesis": "Die Rose ist im Nahiara-Universum (SAN-F-083,003) mit einer Punktzahl von 23/25 integriert – unter den Top 5 weltweit. Als US-Symbol seit 1986 trägt sie durch 5.000 Jahre in verschiedenen Zivilisationen eine tiefe kulturelle Resonanz. In AquaMundi dient sie als fundamentales Basismodell für die westliche Hemisphäre.",
+      "scorfidon": {
+        "SCF-080": {
+          "threat": "Rosettenkrankheit",
+          "description": "Milbenübertragenes Virus, das kultivierte und wilde Rosen in den USA verwüstet.",
+          "guardian": "Resistenz und Phytosanitäre Kontrolle"
+        },
+        "SCF-081": {
+          "threat": "Kommerzielle Pestizidabhängigkeit",
+          "description": "Die industrielle Blumenproduktion stützt sich stark auf Agrochemikalien, die lokale Bestäuberpopulationen schädigen.",
+          "guardian": "Regenerative Gartenbaupraktiken"
+        }
+      }
     },
     "spainCarnation": {
       "name": "Spanien",
       "flowerName": "Nelke",
-      "botanicalFamily": "Caryophyllaceae",
-      "commonNames": "Nelke, Clavel",
-      "botanicalInfo": "Eine mehrjährige krautige Pflanze mit starkem Duft. Sehr tolerant gegenüber Trockenheit und mediterranem Klima.",
-      "flowerDescription": "Die Nelke symbolisiert weltweit Leidenschaft und spanisches Temperament.",
-      "culturalSignificance": "Nelken (Clavel) sind ein grundlegender Bestandteil spanischer Feste, des Flamencos und des gesellschaftlichen Lebens.",
-      "historicalOrigin": "Dianthus bedeutet „Blume Gottes“. Sie wird in der Geschichte vielfach erwähnt und ist fest im Mittelmeerraum verwurzelt. Besonders als „clavel“ eng mit der Folklore verknüpft.",
-      "nationalStatus": "Nicht-offizielle Nationalblume, jedoch tief in der Seele Spaniens verwurzelt.",
-      "traditionalUses": "Zierpflanze für Feste (Semana Santa); Heiltees gegen Stress-Symptome.",
-      "habitat": "Mittelmeergärten, Steinhänge und Kalkböden Süd- und Westeuropas.",
-      "distribution": "Heimisch in Südeuropa.",
+      "botanicalFamily": "Nelkengewächse (Caryophyllaceae)",
+      "commonNames": "Nelke, Gartennelke",
+      "botanicalInfo": "Eine mehrjährige Blütenpflanze, die für ihre gefransten Blütenblätter und ihren süßen, würzigen Duft bekannt ist. Gedeiht hauptsächlich in Spaniens mediterranem Klima.",
+      "flowerDescription": "Die Nelke ist die Nationalblume Spaniens und symbolisiert Leidenschaft, Liebe und den lebendigen Geist der Spanier.",
+      "culturalSignificance": "Nelken stehen im Zentrum der spanischen Kultur, oft in Festen und Stierkämpfen verwendet. Sie repräsentieren tief verwurzelte Traditionen und die künstlerische Seele Spaniens.",
+      "historicalOrigin": "Verwendet im antiken Griechenland und Rom für Kränze (Dianthus bedeutet 'Blume der Götter'). In Spanien ist die rote Nelke eng mit Folklore, Flamenco und religiösen Festen verbunden, wo sie Leidenschaft und Emotionen hervorhebt.",
+      "nationalStatus": "Weitgehend als Spaniens Nationalblume angesehen, tief verankert in der Volkskultur, wenn auch oft ohne absoluten, offiziellen politischen Erlass.",
+      "traditionalUses": "Hauptsächlich dekorativ auf spanischen Festen (insbesondere Karwoche und Flamenco); Handelsschnittblumenindustrie; in der traditionellen Medizin als Tee zur Stresslinderung und gegen Entzündungen.",
+      "habitat": "Mediterrane Gärten, Zierfelder und Kalksteinhänge. Heimisch im Mittelmeerraum von Südeuropa bis Westasien.",
+      "distribution": "Heimisch im Mittelmeerraum. Weltweit als eine der beliebtesten Schnittblumen angebaut, wobei Spanien zu den führenden europäischen Produzenten gehört.",
       "morphology": {
-        "color": "Meist rot und rosa, oft gesprenkelt.",
-        "shape": "Gezackte kleine feine Blütenblätter.",
-        "size": "Kompakte Wuchshöhe, kräftige Triebe von 40–80 cm Höhe.",
-        "lifeCycle": "Mehrjährige krautige Pflanze in Gebieten mit wärmerem Mikroklima."
+        "color": "Klassisches Rot und Rosa; in Kultursorten oft zweifarbig oder gesprenkelt.",
+        "shape": "Gefranste oder gezackte Blütenränder zu einer vollen, ruffeligen Blüte geformt.",
+        "size": "Durchmesser der Blüte ca. 3 bis 5 cm; die Stängel wachsen 40 bis 80 cm hoch.",
+        "lifeCycle": "Mehrjährig krautig; gedeiht am besten in einem warmen, mediterranen Klima."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Intensive Landwirtschaft und Wassermangel in Südeuropa.",
-      "pfnoClassification": "Kulturell Nationales Symbol",
-      "relevantPollinator": "Lepidoptera (Schmetterlinge).",
-      "nahiaraSynthesis": "Dianthus caryophyllus integriert sich stabil (19/25) in Nahiara als Ausdruck südeuropäischer Trockenresistenz in AquaMundi.",
+      "conservationStatus": "Kultursorten: Nicht gefährdet (LC). Wilde Sorten leiden gebietsweise unter Habitatrückgang.",
+      "mainThreats": "Intensive Landwirtschaft verbraucht lokale Wasserreserven; das Mittelmeerklima leidet zunehmend unter Dürreperioden durch den Klimawandel.",
+      "pfnoClassification": "Nationales Kulturelles Symbol",
+      "relevantPollinator": "Lepidoptera (Schmetterlinge und Motten), speziell durch die tiefen Röhren der Blüte an langrüsselige Insekten angepasst.",
+      "nahiaraSynthesis": "Mit einer Wertung von 19/25 im Nahiara-Universum integriert. Die spanische Nelke repräsentiert in AquaMundi eine lebendige Ausdrucksform der kulturellen Leidenschaft, verbunden mit landwirtschaftlicher Anpassungsfähigkeit an trockenes Klima.",
       "scorfidon": {
         "SCF-030": {
-          "threat": "Dürrebedrohung",
-          "description": "Erderwärmung zwingt zur Umstrukturierung des Anbaus im Mittelmeerraum.",
-          "guardian": "Wasserschutz"
+          "threat": "Wasserknappheit im Mittelmeerraum",
+          "description": "Zunehmende Dürren bedrohen traditionelle Anbausysteme ohne künstliche Bewässerung.",
+          "guardian": "Wassersparen"
         },
         "SCF-031": {
-          "threat": "Monokultur",
-          "description": "Der Handel zerstört genetische Diversitäten der Nelke.",
-          "guardian": "Pflanzenvielfalt"
+          "threat": "Monokulturaler Anbau",
+          "description": "Industrielle Schnittblumenproduktion gefährdet die Erhaltung der genetischen Vielfalt.",
+          "guardian": "Genetische Artenvielfalt"
         }
       }
     },
     "indiaLotus": {
       "name": "Indien",
-      "flowerName": "Heiliger Lotos",
-      "botanicalFamily": "Nelumbonaceae",
-      "commonNames": "Heilige Lotosblume, Indischer Lotos",
-      "botanicalInfo": "Eine mehrjährige, rhizomatöse Wasserpflanze mit großen weißen oder rosa Blüten.",
-      "flowerDescription": "Symbolisiert in Indien Reinheit, Erleuchtung und Wiedergeburt.",
-      "culturalSignificance": "Heilig in Hinduismus und Buddhismus. Verkörpert göttliche Schönheit.",
-      "historicalOrigin": "Wurde seit 1500 v. Chr. im alten Indien verehrt. Seit 1950 Nationalblume.",
-      "nationalStatus": "Offizielle Nationalblume von Indien.",
-      "traditionalUses": "Göttliche Tempelopfer, ayurvedische Medizin, Wasserpflanze.",
-      "habitat": "Flache, ruhige Süßgewässer und Tempelteiche.",
-      "distribution": "Heimisch auf dem indischen Subkontinent, Südostasien und Nordaustralien.",
+      "flowerName": "Indischer Lotos",
+      "botanicalFamily": "Lotosgewächse (Nelumbonaceae)",
+      "commonNames": "Lotos, Asiatische Seerose, Kamal (कमल), Padma (पद्म)",
+      "botanicalInfo": "Eine mehrjährige, im Wasser lebende Rhizompflanze mit riesigen Blüten. Bekannt für ihre erstaunlichen wasserabweisenden Eigenschaften ('Lotos-Effekt') und die Fähigkeit der Samen, Jahrhunderte lang überlebensfähig zu bleiben.",
+      "flowerDescription": "Seit 1950 Nationalblume Indiens. Sie symbolisiert Reinheit, Erleuchtung und Wiedergeburt. Ihre Eigenschaft, makellos aus schlammigem Wasser emporzusteigen, steht metaphorisch für geistiges Wachstum.",
+      "culturalSignificance": "Zentral in der hinduistischen und buddhistischen Ikonographie. Der Lotos ist mit Göttern wie Vishnu, Brahma und Lakshmi assoziiert; Buddha wird traditionell auf einem Lotos thronend dargestellt.",
+      "historicalOrigin": "Seit vedischen Zeiten (1500 v. Chr.) verehrt. Sie findet sich in Texten wie dem Rigveda und wurde später durch Handelsrouten als architektonisches Muster verbreitet, auch bei den Mogulkaisern, z. B. im Taj Mahal.",
+      "nationalStatus": "Offizielle Nationalblume Indiens, parallel zur Verabschiedung der indischen Verfassung 1950.",
+      "traditionalUses": "Religiöse Zeremonien und Dekorationen; eine wichtige Rolle in der Ayurveda-Medizin. Die ganze Pflanze (Wurzeln, Samen, Blüten) ist zudem ein fester Bestandteil vieler asiatischer Küchen.",
+      "habitat": "Flache, langsame Süßgewässer in tropischen bis ozeanischen Gebieten (Teiche, Sümpfe, Tempelbecken).",
+      "distribution": "Heimisch auf dem indischen Subkontinent, Südostasien und Nordaustralien; in weiten Teilen Asiens kultiviert und bis in den Nahen Osten sowie Amerika verbreitet.",
       "morphology": {
-        "color": "Blassrosa bis tiefweiß mit einem leuchtend gelben Zentrum",
-        "shape": "Große Einzelblüte, actinomorphe Struktur",
-        "size": "Kräftige Wuchshöhe, überragt die Wasseroberfläche um 1–1,5m",
-        "lifeCycle": "Mehrjährige Wasserstaude. Blüht vor allem in der Sommerzeit."
+        "color": "Blüten von leuchtend rosa bis strahlend weiß, mit einer auffälligen gelben Mitte. Blätter sind bläulich-grün.",
+        "shape": "Große, sternförmige Blüte mit mehr als 20 spiralförmigen Blütenblättern um einen einzigartigen zentraoen Samenstand.",
+        "size": "Blüten erreichen bis zu 30 cm Durchmesser; Blätter bis zu 60 cm Breite.",
+        "lifeCycle": "Mehrjährige krautige Wasserpflanze, Blütezeit im Sommer (Juni bis September)."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Trockenlegung von Lebensraum, Wasserverschmutzung.",
-      "pfnoClassification": "Offizielle Nationale Blume",
-      "relevantPollinator": "Wärme anziehende Käfer.",
-      "nahiaraSynthesis": "Die Lotosblume ist eines der spirituellsten Symbole in AquaMundi (22/25).",
+      "conservationStatus": "Nicht gefährdet (LC) weltweit, aber lokal stark dezimiert.",
+      "mainThreats": "Umwandlung von Feuchtgebieten in landwirtschaftliche Nutzflächen, Wasserverschmutzung durch Industrieabwässer, und unregulierte Ernte von Rhizomen/Samen, sowie invasive gebietsfremde Fische.",
+      "pfnoClassification": "Offizielle Staatliche Blume",
+      "relevantPollinator": "Käfer und verschiedene Bienenarten (wie die Asiatische Honigbiene). Die Blüte produziert aktiv Wärme (Thermogenese), um Bestäuber anzuziehen.",
+      "nahiaraSynthesis": "Als Nelumbo nucifera in Nahiara erfasst, mit 22/25 Punkten in der Rangliste. Repräsentiert das tief verwurzelte spirituelle Gedächtnis des östlichen Kulturkreises und bildet wegen seiner extremen Überlebensfähigkeit eines der wichtigsten Referenzmodelle.",
       "scorfidon": {
         "SCF-001": {
-          "threat": "Klimawandel",
-          "description": "Erderwärmung schadet Feuchtgebieten.",
-          "guardian": "Natürliches Gleichgewicht"
+          "threat": "Verlust von Feuchtgebieten",
+          "description": "Unkontrollierte städtische Entwicklung, die die traditionellen Wasserökosysteme und Habitate zerstört.",
+          "guardian": "Wiederherstellung von Lebensräumen"
         },
         "SCF-002": {
-          "threat": "Abholzung",
-          "description": "Zerstörung des Umfelds.",
-          "guardian": "Wiederaufforstung"
-        },
-        "SCF-003": {
-          "threat": "Ausbeutung",
-          "description": "Zu intensiver Tourismus.",
-          "guardian": "Florale Gerechtigkeit"
-        },
-        "SCF-004": {
-          "threat": "Unwissenheit",
-          "description": "Kultureller Verlust bei den Menschen.",
-          "guardian": "Bildung"
-        },
-        "SCF-005": {
-          "threat": "Vorsätzliche Brände",
-          "description": "Zerstört die Flora an Ufern.",
-          "guardian": "Wasser"
+          "threat": "Wasserverschmutzung",
+          "description": "Verunreinigung durch chemische Einträge in natürliche und religiöse Gewässer.",
+          "guardian": "Filterung und Reinheit"
         }
       }
     },
     "pakistanJasmine": {
       "name": "Pakistan",
       "flowerName": "Jasmin",
-      "botanicalFamily": "Oleaceae",
-      "commonNames": "Weißer Jasmin, Dichterjasmin",
-      "botanicalInfo": "Ein stark duftender Kletterstrauch mit reinweißen sternförmigen Blüten.",
-      "flowerDescription": "Jasmin ist die Nationalblume von Pakistan.",
-      "culturalSignificance": "Steht für Anmut, Poesie und spirituelle Reinheit.",
-      "historicalOrigin": "Wurde über alte Seidenstraßen in Südasien heimisch gemacht.",
-      "nationalStatus": "Offizielle Nationalblume.",
-      "traditionalUses": "Kranz für Bräute, Duftöle (Attar).",
-      "habitat": "Gärten, Parks, Bergketten am Himalaya.",
-      "distribution": "Heimisch im Himalaya und Südasien.",
+      "botanicalFamily": "Ölbaumgewächse (Oleaceae)",
+      "commonNames": "Echter Jasmin, Chambeli, Poet's Jasmine",
+      "botanicalInfo": "Eine sehr stark duftende Kletterpflanze mit sternförmigen, meist weißen Blüten. Er gilt weltweit als einer der wichtigsten Rohstoffe für die Parfümherstellung.",
+      "flowerDescription": "Als stolze Nationalblume Pakistans ist der weiße Jasmin ein Inbegriff von Anmut, Reinheit und ein Sinnbild für die friedliche Ausstrahlung des Landes.",
+      "culturalSignificance": "Jasmin ist fest im nationalen Bewusstsein der Pakistaner verankert. Er findet weitreichend Anwendung bei Feierlichkeiten, religiösen Ritualen und traditionellen Hochzeiten, und hat große poetische Bedeutung in Urdu.",
+      "historicalOrigin": "Er breitete sich bereits in der Antike entlang der Seidenstraße aus dem zentral- und südasiatischen Raum aus. Später kultivierten vor allem mogolische Kaiser ihn intensiv in royalen Palastgärten wegen des außerordentlichen Dufts.",
+      "nationalStatus": "Offizielle Nationalblume Pakistans.",
+      "traditionalUses": "Blumengirlanden und Raumdekoration; Gewinnung von hochwertigem Jasmin-Absolue für Düfte und Kosmetikprodukte; sowie als traditionelles Mittel gegen Stress und Schmerzen in Form von Tee und Salben.",
+      "habitat": "Offenes Grasland, Waldränder und Gärten; gedeiht exzellent an Rankhilfen oder in Sträuchern des südasiatischen Hügellands in mittleren bis höheren Höhenlagen.",
+      "distribution": "Bevorzugt weite Teile Zentralasiens, von Nordpakistan und Nordindien über das Himalaya-Massiv bis tief nach China; heute weltweit als Zierpflanze in warm-gemäßigten Regionen beliebt.",
       "morphology": {
-        "color": "Reinweiß",
-        "shape": "Sternförmig",
-        "size": "Kletterpflanze, bis 10m hoch.",
-        "lifeCycle": "Mehrjährig. Blüht üppig im Sommer."
+        "color": "Matiertes, klares Weiß, das nachts stark leuchtet.",
+        "shape": "Zarte, fünfblättrige Sterne, die sich röhrenförmig zur Mitte hin verengen.",
+        "size": "Kletterpflanze, deren Triebe bis zu 10 Meter empor ranken können; Blüten um die 2-3 cm.",
+        "lifeCycle": "Mehrjährige, sommergrüne Kletter- oder Kriechpflanze."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Verlust von Bergkettenhabitaten, Klimawandel.",
-      "pfnoClassification": "Nationale Blume",
-      "relevantPollinator": "Nachtaktive Schwärmer (Sphingidae).",
-      "nahiaraSynthesis": "Jasmin (20/25) repräsentiert in AquaMundi nächtliche Poesie.",
+      "conservationStatus": "Nicht gefährdet.",
+      "mainThreats": "Frühe und allzu radikale Ernte für die parfümverarbeitende Industrie, urbane Überwucherung sowie zunehmender Klimawandel in Südasien.",
+      "pfnoClassification": "Kulturelles und Repräsentatives Wahrzeichen",
+      "relevantPollinator": "Nachtaktive Falter, darunter Schwärmer (Sphingidae), die den Duft wahrnehmen, wenn er abends am intensivsten ist.",
+      "nahiaraSynthesis": "Mit soliden 20/25 in Nahiara verzeichnet. Die Fähigkeit des Jasmin, sich auch auf widrigem Terrain an Hänge zu klammern und gleichzeitig den betörendsten Duft abzusondern, repräsentiert eine sanfte Resilienz.",
       "scorfidon": {
         "SCF-060": {
-          "threat": "Städtische Hitze",
-          "description": "Verhindert die nächtliche Freisetzung von Duftstoffen.",
-          "guardian": "Urbane Abkühlung"
-        },
-        "SCF-061": {
-          "threat": "Übererntung",
-          "description": "Unerlaubte Sammlungen für Öle reduzieren die Population.",
-          "guardian": "Nachhaltige Ernte"
+          "threat": "Urbaner Temperaturanstieg",
+          "description": "Die sogenannten unnatürlichen Hitzeinseln in Städten stören den empfindlichen nächtlichen Rhythmus der Duftabgabe.",
+          "guardian": "Wächter des Mikroklimas"
         }
       }
     },
     "peruCantuta": {
       "name": "Peru",
-      "flowerName": "Kantuta",
-      "botanicalFamily": "Polemoniaceae",
-      "commonNames": "Magische Inka-Blume",
-      "botanicalInfo": "Ein kleiner Strauch, der farbenprächtige Röhrenblüten bildet.",
-      "flowerDescription": "Die Nationalblume der Andenrepublik Peru.",
-      "culturalSignificance": "War dem Sonnengott der Inka geweiht.",
-      "historicalOrigin": "Stammt aus dem antiken Inkareich.",
-      "nationalStatus": "Offizielle Nationalblume Perus.",
-      "traditionalUses": "Blumenopfer, traditionelle andine Medizin.",
-      "habitat": "Hochandenlandschaften ab 2000m.",
-      "distribution": "Endemisch in Peru und Bolivien.",
+      "flowerName": "Cantuta",
       "morphology": {
-        "color": "Strahlendes Rot, Gelb und Weiß",
-        "shape": "Lange Röhrenblüten",
-        "size": "Kompakter Strauch, ca. 2-3m hoch",
-        "lifeCycle": "Immergrüner Strauch im Andenklima."
+        "color": "Starke, intensive Rote, Rosa- und Gelbtöne.",
+        "shape": "Röhrenförmige oder glockenförmige hängende große Blüten.",
+        "size": "Ein kräftiger Strauch, der bis zu 3 Meter Höhe erreicht.",
+        "lifeCycle": "Mehrjährig, robust und holzig."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Habitatverlust in extremen Höhen.",
-      "pfnoClassification": "Nationale Blume",
-      "relevantPollinator": "Nektar saugende Kolibris.",
-      "nahiaraSynthesis": "Die heilige Inka-Blume im Herzen von AquaMundi (21/25).",
+      "habitat": "Extreme Höhen, häufig kriechend an Felswänden der Anden in bis zu 3800 Metern.",
+      "distribution": "Fast ausschließlich auf die peruanischen und bolivianischen Anden beschränkt.",
+      "historicalOrigin": "Eine heilige Pflanze seit der Zeit der Inka, gewidmet der Sonne.",
+      "nationalStatus": "Der offizielle Nationalblüten-Stolz von Peru (und auch Bolivien).",
+      "traditionalUses": "Wurde für das Waschen und Färben von wertvollen Stoffen sowie für den Inkakönig als alleiniger Schmuck verwendet.",
+      "conservationStatus": "Nicht gefährdet.",
+      "mainThreats": "Verlust von einheimischen Bergwäldern in den Anden aufgrund von massiver menschlicher Überausbeutung.",
+      "pfnoClassification": "Nationale Wahrzeichen",
+      "relevantPollinator": "Hochspezialisierte Anden-Kolibris wie Oreotrochilus melanogaster.",
+      "nahiaraSynthesis": "Werte bei 21/25, wegen der puren Überlebenskraft der Anden-Geschichte in einer harschen Umwelt und wird als eines der stabilsten Kulturdokumente gelistet.",
       "scorfidon": {
-        "SCF-040": {
-          "threat": "Höhenabholzung",
-          "description": "Abholzung für andine Bauern.",
-          "guardian": "Anden-Aufforstung"
+        "SCF-120": {
+          "threat": "Abholzung der Andenwälder",
+          "description": "Verdrängung nativer Schutzräume im Hochland.",
+          "guardian": "Andine Regeneratoren"
         }
       }
     },
     "tanzaniaClove": {
       "name": "Tansania",
       "flowerName": "Gewürznelke",
-      "botanicalFamily": "Myrtaceae",
-      "commonNames": "Nelke",
-      "botanicalInfo": "Immergrüner tropischer Baum mit duftenden Blütenknospen.",
-      "flowerDescription": "Die wirtschaftlich und kulturell wichtigste Blüte Tansanias.",
-      "culturalSignificance": "Sinnbild für den Handel auf Sansibar, der Gewürzinsel.",
-      "historicalOrigin": "Aus Indonesien eingeführt im 19. Jahrhundert.",
-      "nationalStatus": "Emblem Tansanias.",
-      "traditionalUses": "Würze, Nelkenöl, Zahnmedizin.",
-      "habitat": "Tropische Meeresklimate auf Vulkangestein.",
-      "distribution": "Sansibar, Pemba und Teile Asiens.",
       "morphology": {
-        "color": "Dunkelrote Knospen, blassgelbe Blüte",
-        "shape": "Nagelähnliche getrocknete Knospen",
-        "size": "Baum bis 15m hoch",
-        "lifeCycle": "Immergrüner Baum tropischer Klimazonen."
+        "color": "Starkes Karminrot im Reifestadium, hart, ledrig.",
+        "shape": "Geschlossene Blütenknospe in Nagelform.",
+        "size": "Der Baum kann beachtliche 8 bis 15 Meter erreichten.",
+        "lifeCycle": "Immergrüner Baum mit langer Überlebensspanne."
       },
-      "conservationStatus": "Für Plantagen nicht beurteilt, in Wildbahn teils bedroht.",
-      "mainThreats": "Pflanzenkrankheiten, veraltete Baumbestände auf Pemba.",
-      "pfnoClassification": "Kulturelles Emblem",
-      "relevantPollinator": "Tropische Honigbienen.",
-      "nahiaraSynthesis": "Die mächtige Gewürzhistorie von AquaMundi (19/25).",
+      "habitat": "Feucht-tropische Bereiche, primär entlang mariner Küstenwinde.",
+      "distribution": "Tansania (Sanzibar) zählt zu den allergrößten Anbaugebieten dieses ostafrikanischen Prunks.",
+      "historicalOrigin": "Eines der wertvollsten Gewürze, das die historischen Gewürzrouten über die Weltmeere prägte.",
+      "nationalStatus": "National blühendes Symbol von Tansania.",
+      "traditionalUses": "Hochgeschätzt auf dem Gewürzmarkt, aber auch stark in der Schmerzbekämpfung im dentalen Medizinbereich zur Anwendung gekommen.",
+      "conservationStatus": "Bisher nicht kritisch beurteilt (NE).",
+      "mainThreats": "Sogenannte \"Sudden-Death-Disease\" der Bäume und massiver Pilzbefall.",
+      "pfnoClassification": "Offizielles Gewürz & Blume",
+      "relevantPollinator": "Spezialisierte tropische afrikanische Bienen.",
+      "nahiaraSynthesis": "Score von 19/25, verankert die wirtschaftliche und landwirtschaftliche Bedeutung von Aroma in AquaMundi.",
       "scorfidon": {
-        "SCF-050": {
-          "threat": "Monokultur",
-          "description": "Verletzlich durch Krankheiten aufgrund von Plantagenwirtschaft.",
-          "guardian": "Agroforstwirtschaft"
+        "SCF-130": {
+          "threat": "Erreger der Krise",
+          "description": "Pilz-Krankheiten rauben den Plantagen oft ganze Lebensgrundlagen.",
+          "guardian": "Hüter der Wurzelgesundheit"
         }
       }
     },
     "nicaraguaSacuanjoche": {
       "name": "Nicaragua",
       "flowerName": "Sacuanjoche",
-      "botanicalFamily": "Apocynaceae",
-      "commonNames": "Frangipani, Plumeria",
-      "botanicalInfo": "Sukkulenter, laubabwerfender Baum mit intensiv duftenden, wachsartigen Blüten.",
-      "flowerDescription": "Nationalblume Nicaraguas.",
-      "culturalSignificance": "Symbolischer und spiritueller Mittelpunkt Mittelamerikas.",
-      "historicalOrigin": "Wurde bereits 1971 offiziell anerkannt.",
-      "nationalStatus": "Offizielle Nationalblume Nicaraguas.",
-      "traditionalUses": "Girlanden, Altardekoration, Medizinalpflanze.",
-      "habitat": "Tropische und subtropische Trockenwälder.",
-      "distribution": "Zentralamerika und Karibik, weltweit in Tropen eingeführt.",
       "morphology": {
-        "color": "Weiß/Gelb, manchmal rosafarbene Ränder",
-        "shape": "Fünf propellerartig angeordnete Blütenblätter",
-        "size": "Strauch/kleiner Baum, 5-8 m.",
-        "lifeCycle": "Laubabwerfend in Trockenzeiten, blüht sehr üppig."
+        "color": "Weiße Petalen umrahmen ein strahlend leuchtendes zitronengelbes Inneres.",
+        "shape": "Makellos geformte Sternblätter in spiraliger Anordnung, dick und wachsartig.",
+        "size": "Blüten von bis zu 10 cm, auf einem breiten Baum von bis zu 8 Meter Höhe.",
+        "lifeCycle": "Wirft während der extremen Trockenzeit der Tropen alle Blätter ab."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Plumeria-Rost, Kahlschlag.",
-      "pfnoClassification": "Nationalblume",
-      "relevantPollinator": "Nachtfalter (getäuscht durch Duft ohne Nektar).",
-      "nahiaraSynthesis": "Die Meisterin der Illusion in AquaMundi (20/25).",
+      "habitat": "Sonnenexponierten Vulkanhänge sowie pazifische Flachländer.",
+      "distribution": "Weitverbreitet als ikonische Zierde durch Zentralamerika.",
+      "historicalOrigin": "Schon von den indigenen Völkern in vor-kolumbianischer Kultur sehr geschätzt.",
+      "nationalStatus": "Offiziell 1971 als Nationalblume Nicaraguas von der Verfassung geehrt.",
+      "traditionalUses": "Medizin-Rinden, aromatische Zwecke und Tempelschmuck-Geschenke.",
+      "conservationStatus": "Nicht gefährdet.",
+      "mainThreats": "Plagender Rost-Pilz auf den großen Blättern treibt sie oft zum kompletten Blattverlust.",
+      "pfnoClassification": "Wahrzeichen",
+      "relevantPollinator": "Sphinx-Motten, angetrieben vom tiefen Aroma der Nächte, wenngleich er meist auf reinen \"Betrug\" basiert und eigentlich nie süßen Nektar enthält.",
+      "nahiaraSynthesis": "Solide 20er Wertung, festigt die Verbindung aus vulkanischer Kraft und der Subtilität von Duft.",
       "scorfidon": {
-        "SCF-070": {
-          "threat": "Rostpilz",
-          "description": "Pilzinfektionen schwächen die Bestände weltweit.",
-          "guardian": "Pflanzengesundheit"
+        "SCF-140": {
+          "threat": "Pilzlicher Verfall",
+          "description": "Aggressiver Rostpilz zerstört alljährlich die Blätterkapazitäten der Kulturen.",
+          "guardian": "Pilzfeindlicher Wächter der Trockenheit"
         }
       }
     },
     "jamaicaLignum": {
       "name": "Jamaika",
       "flowerName": "Pockholz",
-      "botanicalFamily": "Zygophyllaceae",
-      "commonNames": "Lebensbaum, Lignum Vitae",
-      "botanicalInfo": "Ein extrem langsam wachsender, immergrüner Baum mit blauen bis violetten Blüten.",
-      "flowerDescription": "Die Nationalblume von Jamaika. Pockholz bedeutet 'Holz des Lebens'.",
-      "culturalSignificance": "Symbolisiert Stärke und Ausdauer des jamaikanischen Volkes.",
-      "historicalOrigin": "Wurde bereits 1962 nach Erlangung der Unabhängigkeit zur Nationalblume gekürt.",
-      "nationalStatus": "Offizielle Nationalblume Jamaikas.",
-      "traditionalUses": "Seefahrt (Schiffsbau wegen extrem hartem Holz), Harz für medizinische Zwecke.",
-      "habitat": "Trockene Buschlandschaften und Kalksteinböden.",
-      "distribution": "Heimisch in der Karibik und im tropischen Amerika.",
+      "botanicalFamily": "Jochblattgewächse (Zygophyllaceae)",
+      "commonNames": "Lebensbaum, Pockholz, Eisenholz",
+      "botanicalInfo": "Ein extrem dichtes, schweres und harzreiches Nutzholz, gekrönt mit malerischen blauen Blüten, das im rauen Küstenklima bestens wächst.",
+      "flowerDescription": "Ein Symbol unerschütterlicher Kraft, gekrönt mit königlicher Blütenzier. Das absolute Identifikationsmerkmal der Nation.",
+      "culturalSignificance": "Jamaikaner spiegeln den Stolz und die extrem schwer beugsame eigene Natur über dieses mächtige Gehölz wider.",
+      "historicalOrigin": "In der alten Hemisphäre für angeblich wundertätige Eigenschaften medizinisch verehrt; zudem ein elementares Holz im klassischen Schiffsbau der frühen Karibik.",
+      "nationalStatus": "Offizielle Nationalblume des Landes Jamaika.",
+      "traditionalUses": "Nutzholz für Bowlingkugeln, Achslager in U-Booten (!), Schiffbau sowie die stark arzneiliche Extraktion.",
+      "habitat": "Stark kalkhaltige Gebiete, Salz und Trockenheit vor der direkten Meeresküste erregen ihn nicht.",
+      "distribution": "Weit verstreut auf karibischen Inseln, aber stark von massiven Exportkampagnen abgebaut.",
       "morphology": {
-        "color": "Blau bis Violett, verblassend zu blassblau",
-        "shape": "Sternförmig, fünf Blütenblätter",
-        "size": "Blüten ca. 2 cm im Durchmesser; Baum bis 10 m hoch",
-        "lifeCycle": "Immergrüner, langlebiger Laubbaum."
+        "color": "Blüten variieren von hellblau über zart violett fast ins gänzlich Weiße.",
+        "shape": "Fünf markante und etwas verdreht strukturierte Blütenblätter.",
+        "size": "Kleine feine Blüten (2 cm) wachsen an extrem markanten Bäumen von oft über 10 Metern Baumkrone.",
+        "lifeCycle": "Bleibt ewig immergrün, aber extrem langsame Zunahme und Baumstreckung."
       },
-      "conservationStatus": "Stark gefährdet (EN).",
-      "mainThreats": "Übernutzung für das sehr harte Holz und Lebensraumverlust.",
-      "pfnoClassification": "Nationale Blume",
-      "relevantPollinator": "Heimische karibische Bienen.",
-      "nahiaraSynthesis": "Das „Holz des Lebens“ ist in AquaMundi mit 19/25 bewertet (Gefährdete Stärke).",
+      "conservationStatus": "Weltweit als Stark Gefährdet gekennzeichnet (EN).",
+      "mainThreats": "Jahrhunderte dauernder selektiver Fällung als Wunderholz forderten extreme Populationsrückgänge auf natürliche Waldflächen.",
+      "pfnoClassification": "Natürliches Überleben",
+      "relevantPollinator": "Exotische Insekten und lokale Karibische Bienen schwärmen ihm aus.",
+      "nahiaraSynthesis": "Erzielt die Score der extremen Wehrfähigkeit 20 in Nahiara, es gilt als Schutzschildelement durch das robusteste Holz-Material in der Akte AquaMundi.",
       "scorfidon": {
-        "SCF-080": {
-          "threat": "Illegale Holzerei",
-          "description": "Wilderei des dichten, schweren Holzes.",
-          "guardian": "Baumschutz"
+        "SCF-150": {
+          "threat": "Übertriebene Extraktion",
+          "description": "Die hohe, dauerhafte Ausbeutung ließ starke natürliche Verknappung entstehen.",
+          "guardian": "Wächter des alten Küstenholzes"
         }
       }
     },
     "scotlandThistle": {
       "name": "Schottland",
       "flowerName": "Distel",
-      "botanicalFamily": "Asteraceae",
+      "botanicalFamily": "Korbblütler (Asteraceae)",
       "commonNames": "Eselsdistel, Schottische Distel",
-      "botanicalInfo": "Zweijährige kräftige Pflanze (bis 2,5 m) mit purpurrotem Blütenkopf.",
-      "flowerDescription": "Ein starkes, kratziges und tief violettes Symbol des Landes.",
-      "culturalSignificance": "Laut Legende haben Disteln schottische Krieger im 13. Jh. vor plündernden Winkinger-Piraten gerettet.",
-      "historicalOrigin": "Wappenblume von Schottland seit dem 13. Jahrhundert (König Alexander III).",
-      "nationalStatus": "Nationalblume und Wahrzeichen.",
-      "traditionalUses": "Herstellung von Schlaf-Füllungen (Samenhaare), Heilkraut, Wappensymbol (Orden von der Distel).",
-      "habitat": "Trockene Weiden, Ödland und steinige Wiesen Großbritanniens.",
-      "distribution": "Ursprünglich Europa/Asien, heute in vielen Teilen der Welt heimisch.",
+      "botanicalInfo": "Eine zweijährige krautige Pflanze mit dornigen, silbergrauen Blättern und einer markanten violetten Blütenhülle. Die gesamte Pflanze ist mit scharfen Stacheln bedeckt, die der Abwehr von Pflanzenfressern dienen.",
+      "flowerDescription": "Die Distel wird stolz für ihre raue Schönheit präsentiert und ist ein ikonisches schottisches Blumensymbol, das Verteidigung und unbezwingbaren Mut darstellt.",
+      "culturalSignificance": "Seit dem 15. Jahrhundert ist die 'Distel' ein wichtiges nationales Emblem Schottlands und ein zentrales Symbol für Verteidigung und Tapferkeit. In der schottischen Poesie und Tradition repräsentieren die Dornen der Distel Widerstandsfähigkeit im Angesicht von Widrigkeiten und eine kompromisslose Haltung.",
+      "historicalOrigin": "Der Legende nach versuchte im 13. Jahrhundert während der Herrschaft von Alexander III. eine von König Haakon geführte Invasionsarmee der Norweger, ein schottisches Lager bei Nacht heimlich anzugreifen. Um sich leise zu bewegen, zogen sie ihre Schuhe aus, traten aber in ein Feld voller dorniger Disteln. Ein Soldat schrie vor Schmerz auf, weckte die schottische Armee und ermöglichte es ihnen, der Gefahr zu entkommen. Seitdem wird die Distel als die 'Wächter-Distel' verehrt und erschien ab König James III. von Schottland auf Münzen. Darüber hinaus ist der 'Distelorden' der höchste und älteste Ritterorden Schottlands.",
+      "nationalStatus": "Offizielle Nationale Symbolpflanze von Schottland",
+      "traditionalUses": "Wird primär in Schottland und ganz Europa umfassend als heraldisches Symbol verwendet; hat historische Verwendung als eine Art schützende Grenzvegetation gefunden; ihre getrockneten Blütenköpfe können zum Kardieren von Wolle verwendet werden; in der Volksmedizin besitzt sie zudem eine leichte antibakterielle Wirkung.",
+      "habitat": "Äußerst anpassungsfähig an eher marginales Brachland; wächst kräftig in trockenen Regionen, Bergökosystemen und auf gestörten natürlichen Wiesen.",
+      "distribution": "Gedeiht auf der gesamten Nordhalbkugel und in europäischen Gebieten; besetzt primär in den schottischen Hochländern und Mooren eine einzigartige natürliche und kulturelle Nische; wurde später auch in Teile der gemäßigten Zonen der Welt und Nordamerikas eingeführt und verbreitet.",
       "morphology": {
-        "color": "Kräftiges Purpurrot bis dunkles Magenta",
-        "shape": "Kugelige Form, geschützt von unzähligen harten Stacheln",
-        "size": "Blüten 3-5 cm breit; krautige Stängel, die unglaubliche 2,5 m Höhe erreichen",
-        "lifeCycle": "Zweijährige oder mehrjährige raue krautige Pflanze."
+        "color": "Zeigt eine auffällige und lebendige violette Röhrenblüte sowie große silbergraue Blätter auf einem kräftigen Grundstamm.",
+        "shape": "Der Blütenkopf weist eine halbkugelförmige Struktur aus dicht gedrängten violetten Röhren auf, die von einer geometrisch angeordneten, stacheligen Hülle umschlossen sind.",
+        "size": "Blütenkopfgröße beträgt 3 bis 5 cm; während der extrem dornige und dicke Hauptstamm eine beeindruckende Höhe von 1,5 bis hin zu 3 Metern erreichen kann.",
+        "lifeCycle": "Erzeugt einen vollständigen Blütenzyklus alle zwei Jahre (zweijährig) und ist äußerst wetterresistent, wächst üppig in extrem kaltem und regnerischem Klima."
       },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Pestizide zur Unkrautvernichtung.",
-      "pfnoClassification": "Kulturelles Emblem",
-      "relevantPollinator": "Brummende Bienen und prächtige Distelfalter.",
-      "nahiaraSynthesis": "Die wehrhafte Verteidigerin in AquaMundi (18/25).",
+      "conservationStatus": "Nicht gefährdet (LC)",
+      "mainThreats": "Abgesehen vom totalen Habitatverlust aufgrund massiver landschaftlicher Veränderungen oder Grundstücksentwicklungen besitzt diese Pflanze extreme natürliche Widerstandsfähigkeit und nur sehr wenige Überlebensschwächen. Im Gegenteil, sie verhält sich eher wie eine hochanpassungsfähige und widerstandsfähige Pflanze (in einigen eingeführten Gebieten sogar als invasive Art eingestuft).",
+      "pfnoClassification": "Spezifischer Repräsentativer Nationaler Blumenvertreter",
+      "relevantPollinator": "Hummeln und zahlreiche große Schmetterlingsarten mit Vorliebe für Nektarsuche.",
+      "nahiaraSynthesis": "Mit einem hohen Nahiara-Parameterwert von 18/25 im universellen System steht sie als die perfekte Verkörperung einer unnachgiebigen nationalen Seele, die in der Lage ist, extremem Druck in einer feindlichen Umwelt standzuhalten. Sie stellt ein wesentliches Überlebensmodell für die florale Welt dar, das Härte und Unbeugsamkeit symbolisiert.",
       "scorfidon": {
-        "SCF-090": {
-          "threat": "Agrochemikalien",
-          "description": "Zerstörung von Feldern mittels Pestiziden.",
-          "guardian": "Brachland"
+        "SCF-080": {
+          "threat": "Übertriebene Unkrautbekämpfung",
+          "description": "Ihre starke Fortpflanzungsfähigkeit und manchmal invasiven Merkmale außerhalb ihres heimischen Habitats führen zu ihrer weitverbreiteten blinden Ausrottung, wobei ihr Wert als effektive Nahrungsquelle im natürlichen Ökosystem oft übersehen wird.",
+          "guardian": "Umsetzung gesetzlicher Schutzmaßnahmen zur Erhaltung der Vielfalt und zum Schutz nützlicher Pflanzen"
         }
       }
     },
     "germanyCornflower": {
       "name": "Deutschland",
       "flowerName": "Kornblume",
-      "botanicalFamily": "Asteraceae",
-      "commonNames": "Zentaure, Kornblume",
-      "botanicalInfo": "Einjähriges Ackerwildkraut der Gemäßigten Breiten.",
-      "flowerDescription": "Eine tiefblaue Blüte, oft auf Korn- und Weizenfeldern zu sehen.",
-      "culturalSignificance": "Repräsentierte im 19. Jh. das Preußische Königreich, die Romantik und ungebrochene Treue.",
-      "historicalOrigin": "Lieblingsblume Kaiser Wilhelms I. Wichtig im goldenen Korn.",
-      "nationalStatus": "Offizielle (traditionelle) Blume.",
-      "traditionalUses": "Teeaufgüsse, Naturblaufärbemittel in der Konditorei, Dekoration.",
-      "habitat": "Nährstoffarme Getreideäcker, Raine, sonnige Standorte.",
-      "distribution": "Mittel- und Südeuropa.",
+      "botanicalFamily": "Korbblütler (Asteraceae)",
+      "commonNames": "Kornblume, Zyane",
+      "botanicalInfo": "Eine in Europa heimische, einjährige Blütenpflanze. Der äußere Ring der Blüte besteht aus vergrößerten, röhren- und trichterförmigen, strahlend blauen Blütenblättern. Dieses in der Natur ziemlich extrem seltene Blau ist atemberaubend intensiv und markant.",
+      "flowerDescription": "Bekannt für ihr außergewöhnlich klares 'Kornblumenblau', fungiert sie als Symbol für Eleganz und die Sehnsucht nach freier, uneingeschränkter Natur. Sie dient als spontanes Symbol für Romantik und die unabhängige, befreite florale Natur Deutschlands.",
+      "culturalSignificance": "Sie trägt nicht nur eine zutiefst tief verwurzelte Verbindung zu Deutschland und Preußen, sondern hielt auch im Deutschen Kaiserreich des 19. Jahrhunderts große politische Bedeutung. Sie glänzte hell in zahlreichen Werken der deutschen Kunst und Poesie als Repräsentation der Freiheit ohne Unterdrückung – und symbolisiert die widerstandsfähige, reine und romantische Seele Deutschlands.",
+      "historicalOrigin": "Laut Geschichte und Legende suchte Königin Luise von Preußen in den schwersten Zeiten der Napoleonischen Kriege mit ihren Kindern in diesen Blumen Zuflucht und versteckte sich vor der französischen Armee. Während dieser Zeit flocht sie Kränze aus den blauen Blüten für ihren Sohn – den späteren Wilhelm I., der ein vereintes Deutschland formte und dessen erster Kaiser wurde. Seitdem wurde die Kornblume zum unvergesslichen Repräsentanten der Einheit und des unnachgiebigen deutschen und preußischen Seelengeistes. Später wurde ihr markantes Blau zur wichtigen Quelle für die als 'Preußisch Blau' bekannte Farbe.",
+      "nationalStatus": "Bedeutende Kulturelle und Natürliche Repräsentative Blume",
+      "traditionalUses": "Häufig als dekorative und farbgebende Zutat in natürlichen Tees wie verschiedenen Kräutermischungen verwendet; besitzt leichte entzündungshemmende, stressabbauende und beruhigende natürliche Eigenschaften; historisch zur Gewinnung natürlicher Pflanzenfarbstoffe verwandt und großflächig als geschätzte Zierblume für Vorder- und Hintergärten in deutschen Haushalten kultiviert.",
+      "habitat": "Bevorzugt Symbiose-Zustände oder das Wachstum am Rande von landwirtschaftlichen Feldern (wie Weizenfeldern). Breitet sich auf weiten, leicht kargen Flächen und ungenutzten Feldern in ganz Europa aus, wo der Boden eher rau ist.",
+      "distribution": "Ursprünglich vom europäischen Festland bis ins gesamte Mittelmeerraum verbreitet. Ist als zentrale Repräsentation in ganz Deutschland stark verankert. Hat sich mittlerweile weitreichend eingebürgert und bis nach Nordamerika ausgedehnt.",
       "morphology": {
-        "color": "Märchenhaftes Kornblumenblau (oder Rosa/Weiß in Kultur)",
-        "shape": "Korbblütler, tiefe, trichterförmige Randbüten",
-        "size": "20–90 cm hoch, schmale Blätter",
-        "lifeCycle": "Einjährige, raue Ackerpflanze."
+        "color": "Besitzt eine spektakulär reine, himmelsähnliche, tiefblaue Farbe mit einem leichten violetten Schimmer, die scheinbar magisch und kaum in der natürlichen Welt zu finden ist.",
+        "shape": "Sie besteht aus röhrenförmigen Blüten mit stark gefransten Rändern an der Außenseite, und in der Mitte drängen sich viele kleinere Blüten sternförmig zusammen, was eine runde Krone von markanter Form erzeugt.",
+        "size": "Der aufrechte Stamm wächst in der Regel nicht höher als einen Meter, während die bläulichen, kornähnlichen Blüten etwa drei Zentimeter breit werden.",
+        "lifeCycle": "Sie gedeiht nur für ein flüchtiges Jahr als einjährige Pflanze und gibt jeden Sommer aufs Neue ihre intensiv mystische Blaufärbung frei."
       },
-      "conservationStatus": "Regional stark zurückgehend (Europa) wegen Düngung.",
-      "mainThreats": "Überdüngung (Eutrophierung), Pestizide und Herbizide.",
-      "pfnoClassification": "Traditionelles Naturerbe",
-      "relevantPollinator": "Sandbienen und Hummeln, sowie Tagfalter.",
-      "nahiaraSynthesis": "Die blaue Blume der Poesie und Kornfelder in AquaMundi (19/25).",
+      "conservationStatus": "Nicht gefährdet (LC)",
+      "mainThreats": "Extrem gefährdet durch moderne, massenhafte chemische Insektizide und Herbizide, die den landwirtschaftlichen Raum säubern. Sie wird oft zusammen mit anderen Beikräutern rigoros aus landwirtschaftlichen Flächen 'herausgefegt', wodurch ihr natürlicher Bestand in der Wildnis stark dramatisch zurückgegangen ist und bedroht ist.",
+      "pfnoClassification": "Offizielle und stark vom Volk geschätzte Identifikationsblume",
+      "relevantPollinator": "Ihre Nektarblüten ziehen eine große Menge an Wild- und Honigbienen an, sowie zahlreiche Schmetterlinge, für die sie eine unglaublich attraktive Quelle darstellen.",
+      "nahiaraSynthesis": "Wurde mit beeindruckenden 20 Punkten im Basisranking des großen universalen Bewertungssystems bewertet. Sie gilt dort als absolute Exzellenz-Verkörperung der blauen Flora. Nahiara listet sie als einen von tiefer Stärke und Frieden zeugenden Pfeiler innerhalb ihres weltumspannenden Aufzeichnungsportfolios.",
       "scorfidon": {
-        "SCF-100": {
-          "threat": "Überdüngung",
-          "description": "Zu viel Stickstoff lässt Gräser schneller wachsen und erstickt die Kornblume.",
-          "guardian": "Ökologische Landwirtschaft"
+        "SCF-090": {
+          "threat": "Flächendeckende Ausrottung der Ackerränder und Herbizid-Dramatik",
+          "description": "Massive chemische Säuberungen und die unkontrollierten landwirtschaftlichen Reinigungsbestrebungen für eine unkrautfreie Monokultur sind zur absoluten Hauptgefährdung dieser Pflanze herangewachsen.",
+          "guardian": "Förderung vielseitigen Schutzes, Reduktion giftiger chemischer Ausrottungspraktiken und das konsequente Bewahren von Acker-Schutzstreifen."
         }
       }
-    },
-    "canadaMaple": {
-      "name": "Kanada",
-      "flowerName": "Ahornblatt",
-      "botanicalFamily": "Sapindaceae",
-      "commonNames": "Zuckerahorn (häufigste repräsentative Art)",
-      "botanicalInfo": "Mächtige Waldbäume des nordamerikanischen Kontinents.",
-      "flowerDescription": "Das kanadische Ahornblatt im roten Gewand.",
-      "culturalSignificance": "Wahrzeichen Kanadas (auf Flagge seit 1965).",
-      "historicalOrigin": "Seit dem 18. Jahrhundert Identitätssymbol franko-kanadischer Pioniere.",
-      "nationalStatus": "Offizielles Symbol.",
-      "traditionalUses": "Ahornsirup, Holz für edle Möbel.",
-      "habitat": "Misch- und Laubwälder.",
-      "distribution": "Östliches Nordamerika.",
-      "morphology": {
-        "color": "Leuchtendes Rot im Herbst",
-        "shape": "Handförmig (meist 5 Lappen)",
-        "size": "Baum wird 20-40 m hoch",
-        "lifeCycle": "Laubbaum"
-      },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Klimawandel, saurer Regen, asiatischer Laubholzbockkäfer.",
-      "pfnoClassification": "Offizielles Symbol",
-      "relevantPollinator": "Wind, einige kleine Fliegen.",
-      "nahiaraSynthesis": "Das goldene Herz des Ahorn-Waldes (20/25).",
-      "scorfidon": {
-        "SCF-110": {
-          "threat": "Saurer Regen",
-          "description": "Verschmutzung entzieht dem Boden lebenswichtige Nährstoffe.",
-          "guardian": "Saubere Luft"
-        }
-      }
-    },
-    "southAfricaProtea": {
-      "name": "Südafrika",
-      "flowerName": "Königsprotea",
-      "botanicalFamily": "Proteaceae",
-      "commonNames": "Riesenprotea",
-      "botanicalInfo": "Der größte Blütenkopf der Proteafamilie.",
-      "flowerDescription": "Die prächtige südafrikanische Königin der Blumen.",
-      "culturalSignificance": "Sinnbild für Vielfalt im Land (Cricket-Team heißen The Proteas).",
-      "historicalOrigin": "Teil des Capensis-Florenreiches.",
-      "nationalStatus": "Offizielle Blume (seit 1976).",
-      "traditionalUses": "Honigproduktion, Zierpflanze weltweit.",
-      "habitat": "Mediterrane Fynbos-Vegetation am Kap.",
-      "distribution": "Endemisch in Südafrika.",
-      "morphology": {
-        "color": "Cremeweiß bis Tiefrot",
-        "shape": "Ein gigantischer Kelch aus spitzen Hochblättern",
-        "size": "Blüte bis zu 30 cm breit. Busch wird 2m hoch.",
-        "lifeCycle": "Immergrüner, robust verholzter Strauch. Überlebt Brände (Feuerkeimer)."
-      },
-      "conservationStatus": "Nicht gefährdet, aber das Makro-Ökosystem ist bedrohnt.",
-      "mainThreats": "Invasive australische Akazien, Klimawandel, Ernte für den Blumenmarkt.",
-      "pfnoClassification": "Nationalblume (Official)",
-      "relevantPollinator": "Nektarvögel (Kolibris ähnlich).",
-      "nahiaraSynthesis": "Fynbos-Beschützer in AquaMundi (21/25).",
-      "scorfidon": {
-        "SCF-120": {
-          "threat": "Fremdartige Pflanzen",
-          "description": "Eingeschleppte Arten rauben Wasser und Raum.",
-          "guardian": "Vegetationsbereinigung"
-        }
-      }
-    },
-    "colombiaOrchid": {
-      "name": "Kolumbien",
-      "flowerName": "Cattleya-Orchidee",
-      "botanicalFamily": "Orchidaceae",
-      "commonNames": "Weihnachtsorchidee, Maiblume",
-      "botanicalInfo": "Eine auffällige epiphyte Orchidee mit den Nationalfarben.",
-      "flowerDescription": "Trägt die prachtvollen Farben Kolumbiens.",
-      "culturalSignificance": "Symbolisiert das edelste florale Erbe der kolumbianischen Anden.",
-      "historicalOrigin": "Wurde 1936 zu Ehren des Botanikers J. Triana zur Nationalblume (Cattleya trianae).",
-      "nationalStatus": "Offizielle Blume Kolumbiens.",
-      "traditionalUses": "Wird von leidenschaftlichen Orchideensammlern kultiviert; Ökotourismus.",
-      "habitat": "Nebelwälder der kolumbianischen Anden als Aufsitzerpflanze auf großen Bäumen.",
-      "distribution": "Endemisch beschränkt auf die Cordilleras von Kolumbien.",
-      "morphology": {
-        "color": "Strahlend gelbe, blaue und intensiv violette/rote Töne",
-        "shape": "Zygomorphe große Blüte mit gerüschter, auffälliger Lippe",
-        "size": "Blütendurchmesser bis über 15-20 cm. Zwiebeln oft über 50 cm hoch.",
-        "lifeCycle": "Immergrüner, lang blühender Epiphyt (mehrjährig)."
-      },
-      "conservationStatus": "Stark gefährdet (EN).",
-      "mainThreats": "Lebensraumverlust durch Viehzucht, illegale Orchideensammlerei und Klimaveränderung in den Anden.",
-      "pfnoClassification": "Kritische bedrohte Nationalblume",
-      "relevantPollinator": "Spezialisierte, flinke Prachtbienen und Kolibris.",
-      "nahiaraSynthesis": "Die Cattleya repräsentiert die absolute Orchideen-Kunst in AquaMundi (18/25 – Starke Gefährdung).",
-      "scorfidon": {
-        "SCF-130": {
-          "threat": "Sammlerwilderei",
-          "description": "Diebstahl seltener Blüten durch Exotensammler.",
-          "guardian": "Botanik-Ranger"
-        }
-      }
-    },
-    "argentinaCeibo": {
-      "name": "Argentinien",
-      "flowerName": "Ceibo (Korallenbaum)",
-      "botanicalFamily": "Fabaceae",
-      "commonNames": "Korallenbaum, Hahnenkammbaum",
-      "botanicalInfo": "Ein dorniger Laubbaum mit wunderschönen karminroten Schmetterlingsblüten.",
-      "flowerDescription": "Nationalblume Argentiniens und Uruguays.",
-      "culturalSignificance": "Die Legende von der indianischen Kriegerin Anahi.",
-      "historicalOrigin": "Durch Regierungsdekret von 1942.",
-      "nationalStatus": "Offizielle Blumenart Argentiniens.",
-      "traditionalUses": "Leichtes Holz zum Schnitzen, Heilbäder, Parkbäume.",
-      "habitat": "Feuchtgebiete, Flussränder entlang der Flüsse Paraná und Río de la Plata.",
-      "distribution": "Südamerika südliches Amazonasbecken.",
-      "morphology": {
-        "color": "Kräftiges Scharlachrot",
-        "shape": "Typische Papilionoiden-Form mit großem Segel",
-        "size": "Baum wird 5-10 m hoch.",
-        "lifeCycle": "Laubabwerfend. Große Blühaktivität von Oktober bis April."
-      },
-      "conservationStatus": "Nicht gefährdet (LC).",
-      "mainThreats": "Uferzerstörung und städtische Expansion.",
-      "pfnoClassification": "Nationales Emblem",
-      "relevantPollinator": "Exzellente Nahrung für Nektarvögel / Kolibris.",
-      "nahiaraSynthesis": "Anahis Geist blüht rötlich im AquaMundi System (19/25).",
-      "scorfidon": {
-        "SCF-140": {
-          "threat": "Flussbau",
-          "description": "Verlust heimischer Uferzonen an den Flusssufern.",
-          "guardian": "Uferschutz"
-        }
-      }
-    },
-    "egyptLotus": {
-      "name": "Ägypten",
-      "flowerName": "Blauer Lotus",
-      "botanicalFamily": "Nymphaeaceae",
-      "commonNames": "Ägyptischer Blauer Lotus, Heilige Seerose",
-      "botanicalInfo": "Ausdauernde tropische Wasserlilie, deren sternförmige blaue Blüten sich morgens heben.",
-      "flowerDescription": "Das heilige Mysterium der Pharaonen.",
-      "culturalSignificance": "Symbol der Schöpfung und Wiedergeburt.",
-      "historicalOrigin": "Verziert Kunstwerke in den Pharaonengräbern und Tempelanlagen.",
-      "nationalStatus": "Inoffizielles Erbe, Nationalblume der Pharaonenzeit.",
-      "traditionalUses": "Heilige Rituale, milde psychoaktive Infusion, blaue Öle.",
-      "habitat": "Schilfzonen am Nilufer, warme Flussmündungen.",
-      "distribution": "Nord- / Ostafrika.",
-      "morphology": {
-        "color": "Himmelblau mit goldenem Sternenherz",
-        "shape": "Gerade stehende sternförmige Blätter über dem Wasser",
-        "size": "Wächst als Wasserpflanze aus Knollen.",
-        "lifeCycle": "Mehrjährige Knollenpflanze. Schließt sich pünktlich jeden Abend."
-      },
-      "conservationStatus": "Nahezu vom Aussterben bedroht am Ur-Habitat.",
-      "mainThreats": "Assuan-Staudamm zerstörte saisonale Überflutungen, Uferbau.",
-      "pfnoClassification": "Pharaonische Heilige Blume",
-      "relevantPollinator": "Wasser- und Pollenkäfer.",
-      "nahiaraSynthesis": "Göttliche Sonnenblume im AquaMundi Universum (21/25).",
-      "scorfidon": {
-        "SCF-150": {
-          "threat": "Dammbauten",
-          "description": "Zerstört den fließenden Zyklus der Überflutungen am Nil.",
-          "guardian": "Wiederherstellung von Feuchtgebieten"
-        }
-      }
-    },
-    "indonesiaJasmine": {
-      "name": "Indonesien",
-      "flowerName": "Weißer Jasmin (Melati Putih)",
-      "botanicalFamily": "Oleaceae",
-      "commonNames": "Melati, Arabischer Jasmin",
-      "botanicalInfo": "Ein stark duftender immergrüner Tropenstrauch.",
-      "flowerDescription": "Die nationale Herzensblume der Hochzeitspaare.",
-      "culturalSignificance": "Reinheit, Eleganz und bedingungslose Treue bei malaiischen Hochzeiten.",
-      "historicalOrigin": "Wurde 1990 zusammen mit Rafflesia und der Orchidee zur Nationalblume ernannt (Puspa Bangsa - Blume der Nation).",
-      "nationalStatus": "Nationale Blume Puspa Bangsa.",
-      "traditionalUses": "Jasmintee, Haar- und Brautschmuck (Melati-Netze).",
-      "habitat": "Regenwälder Südostasiens, Hausgärten.",
-      "distribution": "Südostasien.",
-      "morphology": {
-        "color": "Matt-Weiß glänzend",
-        "shape": "Mehrschichtige weiche kleine Sternblüten",
-        "size": "Kompakter Strauch",
-        "lifeCycle": "Immergrüner Busch."
-      },
-      "conservationStatus": "Kulturpflanze - häufig.",
-      "mainThreats": "Künstliche Duftextrakte bedrohen den Markt für natürliche Ernten.",
-      "pfnoClassification": "Nationale Pflanze (Puspa Bangsa)",
-      "relevantPollinator": "Nachtschwärmer.",
-      "nahiaraSynthesis": "Puspa Bangsa glänzt im AquaMundi (20/25).",
-      "scorfidon": {
-        "SCF-160": {
-          "threat": "Synthetische Duftstoffe",
-          "description": "Zerstören den Anbau echter Agrarflächen für Parfümerien.",
-          "guardian": "Grüne Parfümerie"
-        }
-      }
-    },
-    "mexicoDahlia": {
-      "name": "Mexiko",
-      "flowerName": "Dahlie (Acocoxóchitl)",
-      "botanicalFamily": "Asteraceae",
-      "commonNames": "Dalieda, Acocoxóchitl (Nahuatl)",
-      "botanicalInfo": "Pflanzen mit dicken unterirdischen Knollen und oft großen fülligen Blüten.",
-      "flowerDescription": "Nationalblume aus den wilden mexikanischen Bergen.",
-      "culturalSignificance": "Die „Acocoxóchitl“ diente schon den Azteken im vorkolumbischen Zeitalter als Nahrung und Heilkraut.",
-      "historicalOrigin": "Seit 1963 durch Präsident Adolfo López Mateos offiziell ernannt.",
-      "nationalStatus": "Nationalblume (Dalia).",
-      "traditionalUses": "Gekochte Knollen als Nahrungsmittel, Wasserrohr, zeremonielle Kunst.",
-      "habitat": "Berghänge und Pinienwälder des mexikanischen Hochlands.",
-      "distribution": "Heimisch und wild vorkommend in Mexiko, Zentralamerika.",
-      "morphology": {
-        "color": "Machtvolle Regenbogenfarben von Zartrosa bis Gelb",
-        "shape": "Rosettenartiger riesiger Asteraceae-Kopf",
-        "size": "Buschig, 50 cm bis zu gewaltigen 2,5 m Höhe.",
-        "lifeCycle": "Überwintert in der Knolle."
-      },
-      "conservationStatus": "Wildarten (Wilddahlien) stark gefährdet.",
-      "mainThreats": "Waldrodungen im Hochland.",
-      "pfnoClassification": "Mexikanische Blume",
-      "relevantPollinator": "Hummeln, mexikanische Bienen, Schwebfliegen.",
-      "nahiaraSynthesis": "Die aztekische Dahlie im AquaMundi Herzen (20/25).",
-      "scorfidon": {
-        "SCF-170": {
-          "threat": "Landwirtschaft",
-          "description": "Vernichtung wilder Knollenbestände.",
-          "guardian": "Artenschutz"
-        }
-      }
-    }
-  },
-  "minions": {
+    } }, "minions": {
     "climateChange": {
       "name": "Klimawandel",
       "message": "Du hast den Klimawandel-Minion aufgedeckt. Das Ökosystem fällt zurück. Wir müssen von vorne beginnen…"
@@ -1375,3 +1125,4 @@
     "exploreGlobe": "Den Globus Erkunden"
   }
 }
+
