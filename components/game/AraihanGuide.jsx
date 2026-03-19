@@ -63,10 +63,22 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
   };
 
   const finalMessage = getContextMessage();
+  const dismissMessage = () => {
+    setIsManuallyDismissed(true);
+    setIsVisible(false);
+    if (isIntro && onAction) onAction();
+  };
 
   useEffect(() => {
     if (!finalMessage) {
       setDisplayedMessage("");
+      return;
+    }
+
+    if (isIntro) {
+      // Show full intro instantly to avoid lag on long first-time message
+      setDisplayedMessage(finalMessage);
+      setIsTyping(false);
       return;
     }
 
@@ -82,10 +94,10 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         setIsTyping(false);
         clearInterval(typeInterval);
       }
-    }, isIntro ? 40 : (showAction ? 45 : 35)); // Slower typing speed for better readability
+    }, showAction ? 45 : 35); // Slower typing speed for better readability
 
     return () => clearInterval(typeInterval);
-  }, [finalMessage, showAction]);
+  }, [finalMessage, showAction, isIntro]);
 
   // Auto-dismiss gameplay messages after longer duration (but not intro messages)
   // Calculate duration based on message length to ensure users can read it
@@ -114,162 +126,41 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
     }
   }, [finalMessage]);
 
-  // For intro message at bottom left, show larger notification. For gameplay messages, show subtle notification
+  if (!isVisible) return null;
+
+  // First-time intro message from localStorage gate
   if (isIntro) {
-    // Intro message - bottom left notification style - Mobile optimized
     return (
-      <div className="fixed bottom-4 left-2 sm:left-4 right-2 sm:right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-lg animate-fade-in">
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-3 sm:p-4 md:p-5 flex items-start gap-2 sm:gap-3 md:gap-4">
-          {/* Araihan - Abstract Light/Aura Representation - Mobile optimized */}
-          <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0 relative">
-            {/* Outer glow ring */}
-            <div className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-200/40 via-amber-200/30 to-transparent animate-pulse" />
-            
-            {/* Central luminous core */}
-            <div className="relative w-full h-full flex items-center justify-center">
-              {/* Light particles - floating */}
-              {Array.from({ length: 8 }).map((_, i) => {
-                const angle = (i / 8) * Math.PI * 2;
-                const radius = 12;
-                return (
-                  <div
-                    key={i}
-                    className="absolute rounded-full bg-yellow-300/60"
-                    style={{
-                      width: '4px',
-                      height: '4px',
-                      left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-                      top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-                      transform: 'translate(-50%, -50%)',
-                      animation: `float-particle ${2 + i * 0.3}s ease-in-out infinite`,
-                      animationDelay: `${i * 0.2}s`,
-                      boxShadow: '0 0 8px rgba(251, 191, 36, 0.8)',
-                    }}
-                  />
-                );
-              })}
-              
-              {/* Faceless luminous silhouette - abstract form */}
-              <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12">
-                {/* Main aura shape - organic, flowing */}
-                <div 
-                  className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-300/80 via-amber-200/60 to-yellow-100/40"
-                  style={{
-                    filter: 'blur(2px)',
-                    animation: 'aura-pulse 3s ease-in-out infinite',
-                  }}
-                />
-                
-                {/* Inner light core */}
-                <div 
-                  className="absolute inset-2 rounded-full bg-gradient-radial from-white via-yellow-200 to-transparent"
-                  style={{
-                    filter: 'blur(1px)',
-                    animation: 'core-glow 2s ease-in-out infinite',
-                  }}
-                />
-                
-                {/* Energy waves */}
-                <div 
-                  className="absolute inset-0 rounded-full border-2 border-yellow-300/40"
-                  style={{
-                    animation: 'energy-wave 2.5s ease-out infinite',
-                  }}
-                />
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-1rem)] max-w-3xl animate-fade-in">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-amber-200/70 shadow-[0_10px_30px_rgba(0,0,0,0.12)] p-3.5 sm:p-4 md:p-5">
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 bg-amber-50 border border-amber-200 text-amber-700 font-bold text-sm shadow-sm">
+              A
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-amber-700 font-bold mb-1">
+                    Araihan
+                  </p>
+                  <p className="text-gray-800 text-sm sm:text-base leading-relaxed break-words" style={{ wordWrap: "break-word", overflowWrap: "break-word" }}>
+                    {displayedMessage}
+                    {isTyping && <span className="inline-block w-0.5 h-4 bg-gray-700 ml-1 animate-pulse align-middle">|</span>}
+                  </p>
+                </div>
+
+                {!showAction && (
+                  <button
+                    onClick={dismissMessage}
+                    className="flex-shrink-0 w-7 h-7 rounded-full hover:bg-amber-50 border border-transparent hover:border-amber-200 flex items-center justify-center transition-all"
+                    aria-label="Close message"
+                  >
+                    <X className="w-4 h-4 text-gray-500" />
+                  </button>
+                )}
               </div>
             </div>
-            
-            {/* CSS Animations */}
-            <style jsx>{`
-              @keyframes float-particle {
-                0%, 100% {
-                  transform: translate(-50%, -50%) scale(1);
-                  opacity: 0.6;
-                }
-                50% {
-                  transform: translate(-50%, -50%) scale(1.3) translateY(-4px);
-                  opacity: 1;
-                }
-              }
-              @keyframes aura-pulse {
-                0%, 100% {
-                  transform: scale(1);
-                  opacity: 0.8;
-                }
-                50% {
-                  transform: scale(1.1);
-                  opacity: 1;
-                }
-              }
-              @keyframes core-glow {
-                0%, 100% {
-                  opacity: 0.7;
-                }
-                50% {
-                  opacity: 1;
-                }
-              }
-              @keyframes energy-wave {
-                0% {
-                  transform: scale(1);
-                  opacity: 0.6;
-                }
-                100% {
-                  transform: scale(1.5);
-                  opacity: 0;
-                }
-              }
-            `}</style>
-          </div>
-          
-          {/* Message and Action Button - Mobile optimized */}
-          <div className="flex-1 min-w-0 flex flex-col gap-2 sm:gap-3">
-            <div className="flex items-start justify-between gap-2">
-              <p className="text-gray-800 text-xs sm:text-sm md:text-base leading-relaxed break-words flex-1" style={{ 
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word',
-                lineHeight: '1.5'
-              }}>
-                {displayedMessage}
-                {isTyping && (
-                  <span className="inline-block w-1 h-3 bg-gray-800 ml-1 animate-pulse">|</span>
-                )}
-              </p>
-              
-              {/* Manual dismiss button */}
-              {!isTyping && !showAction && (
-                <button
-                  onClick={() => {
-                    setIsManuallyDismissed(true);
-                    setIsVisible(false);
-                  }}
-                  className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full hover:bg-gray-200/50 flex items-center justify-center transition-colors"
-                  aria-label="Close message"
-                >
-                  <X className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" />
-                </button>
-              )}
-            </div>
-            
-            {/* Action Button - Nature-themed */}
-            {onAction && actionText && !isTyping && (
-              <button
-                onClick={onAction}
-                className="group relative self-start px-4 sm:px-6 py-2 sm:py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs sm:text-sm rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 overflow-hidden"
-              >
-                {/* Shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                </div>
-                
-                {/* Button content with nature emojis */}
-                <span className="relative z-10 flex items-center gap-1.5">
-                  <span className="text-sm">🌸</span>
-                  <span>{actionText}</span>
-                  <span className="text-sm">🌿</span>
-                </span>
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -333,8 +224,6 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
   }
 
   // Gameplay messages - elegant notification style - Mobile optimized
-  if (!isVisible) return null;
-  
   // Badge style based on card type
   const getBadgeStyle = () => {
     if (cardType === "minion") {
