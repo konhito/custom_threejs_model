@@ -72,7 +72,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [collectedPetals, setCollectedPetals] = useState([]); // Track which petal cards were collected
   const [lastRevealedCard, setLastRevealedCard] = useState(null); // Track last revealed card for display
-  const [bumpedCardId, setBumpedCardId] = useState(null); // Which card's stone is animating
+  const [bumpedCardId, setBumpedCardId] = useState(null); // unused but kept for future use
   const { t } = useTranslation();
 
   // Initialize deck
@@ -301,30 +301,26 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       {/* Game Status Bar - UNO Style - Mobile Optimized - Scaled up */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0">
         {/* Petal Counter Card */}
-        <div className="bg-white border-2 border-purple-200 rounded-xl px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 shadow-lg flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 w-full max-w-md overflow-hidden">
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
-            <div className="text-xl sm:text-2xl md:text-3xl flex-shrink-0">🌸</div>
-            <div className="flex flex-col min-w-0">
-              <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
-              <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
-                {petalsCollected} / {PETAL_COUNT}
-              </div>
+        <div className="bg-white border-2 border-purple-200 rounded-xl px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 shadow-lg flex items-center justify-between w-full max-w-md overflow-hidden">
+          <div className="flex flex-col min-w-0 flex-shrink-0">
+            <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
+            <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
+              {petalsCollected} / {PETAL_COUNT}
             </div>
           </div>
-          <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0">
-            {Array.from({ length: PETAL_COUNT }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border-2 transition-all duration-300 flex items-center justify-center flex-shrink-0 ${i < petalsCollected
-                  ? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-300 scale-110 shadow-lg ring-2 ring-purple-200"
-                  : "bg-gray-100 border-gray-300 scale-100"
-                  }`}
-              >
-                {i < petalsCollected && (
-                  <span className="text-white text-xs sm:text-sm md:text-base">✓</span>
-                )}
-              </div>
-            ))}
+          <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0 items-center">
+            {Array.from({ length: PETAL_COUNT }).map((_, i) => {
+              const collected = i < petalsCollected;
+
+              return (
+                <div
+                  key={i}
+                  className={`text-lg sm:text-xl md:text-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${collected ? 'scale-110' : 'scale-100 opacity-30 grayscale'}`}
+                >
+                  🌸
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -527,65 +523,65 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         </div>
       </div>
 
-      {/* Help Button - Top Left - Adjusted for mobile sidebar - Scaled up */}
+      {/* Help Button - Bottom Right */}
       <button
         onClick={() => setShowHowToPlay(true)}
-        className="fixed top-16 left-4 md:top-24 md:left-6 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 z-[9997] text-2xl sm:text-3xl md:text-4xl font-bold touch-manipulation"
+        className="fixed bottom-4 right-16 md:bottom-6 md:right-20 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/80 backdrop-blur-md hover:bg-white text-amber-800 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-200 z-[9997] text-base sm:text-lg md:text-xl font-bold touch-manipulation border border-amber-200/50"
         aria-label="How to Play"
       >
         ?
       </button>
 
-      {/* Cards Grid - 1 stone per card - Mobile Optimized */}
-      <div className="flex justify-center items-start px-3 sm:px-5 py-3 md:py-4 flex-1 overflow-visible pb-24 md:pb-6">
-        <style>{`
-          @keyframes stone-bump {
-            0%, 100% { transform: rotate(-90deg) scale(1); }
-            50% { transform: rotate(-90deg) scale(1.05); }
-          }
-        `}</style>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-5 w-full max-w-3xl">
-          {cards.map((card, index) => {
-            const isFlipped = flippedCards.has(card.id);
-            const totalCards = cards.length;
-            const isGuardian = card.type === "guardian" && isFlipped;
-            const isBumping = bumpedCardId === card.id;
+      {/* Cards — individually positioned across the stone table */}
+      <div
+        className="fixed inset-0 z-20 pointer-events-none"
+      >
+        {cards.map((card, index) => {
+          const isFlipped = flippedCards.has(card.id);
+          const totalCards = cards.length;
 
-            return (
-              <div
-                key={card.id}
-                className="relative flex flex-col items-center justify-end animate-scale-in min-h-[200px] sm:min-h-[220px] md:min-h-[240px]"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                {/* Stone - very large platform base (rotated) - positioned higher */}
-                <div className="absolute bottom-[-40px] sm:bottom-[-50px] md:bottom-[-100px] left-1/2 -translate-x-1/2 w-[350px] h-[450px] sm:w-[400px] sm:h-[500px] md:w-[450px] md:h-[550px] lg:w-[430px] lg:h-[400px] flex items-center justify-center pointer-events-none">
-                  <img
-                    src="/game_stone.png"
-                    alt=""
-                    aria-hidden="true"
-                    className="w-full h-full object-contain object-center select-none"
-                    style={{
-                      transform: "rotate(-90deg)",
-                      animation: isBumping ? "stone-bump 0.4s ease-out" : "none",
-                    }}
-                  />
-                </div>
-                {/* Card - sits above the stone */}
-                <div className="relative z-10 flex flex-col items-center justify-center mb-0">
-                  <Card
-                    card={card}
-                    isFlipped={isFlipped}
-                    onFlip={handleCardFlip}
-                    disabled={isProcessing}
-                    index={index}
-                    totalCards={totalCards}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          // 8 positions spread across the stone table surface
+          const positions = [
+            // Row 1 (upper part of table)
+            { left: '22%', top: '30%', rotate: -2 },
+            { left: '38%', top: '28%', rotate: 1.5 },
+            { left: '54%', top: '29%', rotate: -1 },
+            { left: '70%', top: '30%', rotate: 2 },
+            // Row 2 (lower part of table)
+            { left: '22%', top: '56%', rotate: 1.5 },
+            { left: '38%', top: '58%', rotate: -2 },
+            { left: '54%', top: '57%', rotate: 1 },
+            { left: '70%', top: '56%', rotate: -1.5 },
+          ];
+
+          const pos = positions[index] || positions[0];
+
+          return (
+            <div
+              key={card.id}
+              className="absolute pointer-events-auto animate-scale-in"
+              style={{
+                left: pos.left,
+                top: pos.top,
+                transform: `translate(-50%, -50%) rotate(${pos.rotate}deg)`,
+                animationDelay: `${index * 0.08}s`,
+                filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.55))",
+              }}
+            >
+              <Card
+                card={card}
+                isFlipped={isFlipped}
+                onFlip={handleCardFlip}
+                disabled={isProcessing}
+                index={index}
+                totalCards={totalCards}
+              />
+            </div>
+          );
+        })}
       </div>
+      {/* Spacer so the page still has correct scroll height */}
+      <div className="flex-1" />
 
 
 
@@ -593,74 +589,58 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
       {/* How to Play Modal */}
       {showHowToPlay && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4" onClick={() => setShowHowToPlay(false)}>
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{t('game.howToPlay')}</h2>
+          <div
+            className="relative max-w-lg w-full max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl border border-amber-300/40"
+            style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 30%, #f5f0e1 60%, #d9f99d 100%)' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="sticky top-0 z-10 px-6 py-4 flex items-center justify-between rounded-t-2xl border-b border-amber-300/30" style={{ background: 'linear-gradient(135deg, #92400e, #78350f)' }}>
+              <h2 className="text-xl md:text-2xl font-bold text-amber-100 tracking-wide">{t('game.howToPlay')}</h2>
               <button
                 onClick={() => setShowHowToPlay(false)}
-                className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 text-xl font-bold transition-colors"
+                className="w-8 h-8 rounded-lg bg-amber-100/20 hover:bg-amber-100/40 flex items-center justify-center text-amber-100 text-lg font-bold transition-colors"
               >
                 ×
               </button>
             </div>
-            <div className="p-6 md:p-8 space-y-6">
+
+            <div className="p-5 md:p-6 space-y-5">
               {/* Objective */}
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🎯</span> {t('game.objective')}
-                </h3>
-                <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-amber-200/40">
+                <h3 className="text-base md:text-lg font-bold text-amber-900 mb-2">{t('game.objective')}</h3>
+                <p className="text-amber-800 text-sm md:text-base leading-relaxed">
                   {t('game.collectAllPetals')}
                 </p>
               </div>
 
               {/* Card Types */}
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🃏</span> {t('game.cards')}
-                </h3>
-                <div className="space-y-4">
-                  <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-2xl">🌸</span>
-                      <h4 className="font-bold text-purple-900 text-lg">{t('game.petalCards')}</h4>
-                    </div>
-                    <p className="text-purple-800 text-sm md:text-base">
-                      {t('game.petalCardsDesc')}
-                    </p>
-                  </div>
+              <div className="space-y-3">
+                <h3 className="text-base md:text-lg font-bold text-amber-900 px-1">{t('game.cards')}</h3>
 
-                  <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-2xl">👹</span>
-                      <h4 className="font-bold text-red-900 text-lg">{t('game.minionCards')}</h4>
-                    </div>
-                    <p className="text-red-800 text-sm md:text-base">
-                      {t('game.minionCardsDesc')}
-                    </p>
-                  </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-pink-200/50">
+                  <h4 className="font-semibold text-pink-900 text-sm md:text-base mb-1">{t('game.petalCards')}</h4>
+                  <p className="text-pink-800/80 text-xs md:text-sm">{t('game.petalCardsDesc')}</p>
+                </div>
 
-                  <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-2xl">🛡️</span>
-                      <h4 className="font-bold text-green-900 text-lg">{t('game.guardianCards')}</h4>
-                    </div>
-                    <p className="text-green-800 text-sm md:text-base">
-                      {t('game.guardianCardsDesc')}
-                    </p>
-                  </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-red-200/50">
+                  <h4 className="font-semibold text-red-900 text-sm md:text-base mb-1">{t('game.minionCards')}</h4>
+                  <p className="text-red-800/80 text-xs md:text-sm">{t('game.minionCardsDesc')}</p>
+                </div>
+
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-emerald-200/50">
+                  <h4 className="font-semibold text-emerald-900 text-sm md:text-base mb-1">{t('game.guardianCards')}</h4>
+                  <p className="text-emerald-800/80 text-xs md:text-sm">{t('game.guardianCardsDesc')}</p>
                 </div>
               </div>
 
               {/* Tips */}
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="text-2xl">💡</span> {t('game.tips')}
-                </h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
-                  <li>{t('game.tip1')}</li>
-                  <li>{t('game.tip2')}</li>
-                  <li>{t('game.tip3')}</li>
+              <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-amber-200/40">
+                <h3 className="text-base md:text-lg font-bold text-amber-900 mb-2">{t('game.tips')}</h3>
+                <ul className="space-y-2 text-amber-800/90 text-xs md:text-sm">
+                  <li className="flex gap-2"><span className="text-amber-600 font-bold">•</span> {t('game.tip1')}</li>
+                  <li className="flex gap-2"><span className="text-amber-600 font-bold">•</span> {t('game.tip2')}</li>
+                  <li className="flex gap-2"><span className="text-amber-600 font-bold">•</span> {t('game.tip3')}</li>
                 </ul>
               </div>
             </div>

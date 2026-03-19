@@ -1,432 +1,325 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getCompleteFlowerPath, getCompleteFlowerPathFallbacks } from "@/lib/gameData";
 import { useTranslation } from "@/lib/useTranslation";
-import Image from "next/image";
+
+const PETALS = Array.from({ length: 18 });
+const SPARKLES = Array.from({ length: 24 });
+
+// Extract dominant vivid color from an image via canvas pixel sampling
+function extractDominantColor(imgEl) {
+  try {
+    const canvas = document.createElement("canvas");
+    const SIZE = 80; // downsample for speed
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imgEl, 0, 0, SIZE, SIZE);
+    const data = ctx.getImageData(0, 0, SIZE, SIZE).data;
+
+    // Bucket pixels by hue, skip near-white/black/grey
+    const buckets = {};
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+      if (a < 100) continue; // skip transparent
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      const saturation = max === 0 ? 0 : (max - min) / max;
+      const lightness = (max + min) / 510;
+      if (saturation < 0.25 || lightness < 0.08 || lightness > 0.92) continue; // skip grey/white/black
+      // quantize hue to 36 buckets (10° each)
+      const h = Math.round(getHue(r, g, b) / 10) * 10;
+      buckets[h] = (buckets[h] || 0) + 1;
+    }
+
+    const topHue = Object.entries(buckets).sort((a, b) => b[1] - a[1])[0]?.[0];
+    if (topHue == null) return null;
+
+    const h = parseInt(topHue);
+    return { h, rgb: hslToRgb(h, 0.75, 0.6) };
+  } catch {
+    return null;
+  }
+}
+
+function getHue(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  if (d === 0) return 0;
+  let h = max === r ? ((g - b) / d + (g < b ? 6 : 0)) / 6
+        : max === g ? ((b - r) / d + 2) / 6
+        : ((r - g) / d + 4) / 6;
+  return Math.round(h * 360);
+}
+
+function hslToRgb(h, s, l) {
+  const a = s * Math.min(l, 1 - l);
+  const f = (n) => { const k = (n + h / 30) % 12; return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+  return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+}
 
 export default function FlowerFormation({ country, onComplete }) {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [showFlower, setShowFlower] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [accentColor, setAccentColor] = useState({ h: 150, rgb: [52, 211, 153] }); // default emerald
+  const imgRef = useRef(null);
   const { t } = useTranslation();
 
-  // Play sounds
   const playSound = (type) => {
     if (typeof window !== "undefined") {
-      import("@/lib/soundUtils").then((module) => {
-        if (
-          module.default.audioContext &&
-          module.default.audioContext.state === "suspended"
-        ) {
-          module.default.audioContext.resume();
-        }
-        module.default.play(type);
+      import("@/lib/soundUtils").then((m) => {
+        if (m.default.audioContext?.state === "suspended") m.default.audioContext.resume();
+        m.default.play(type);
       });
     }
   };
 
   useEffect(() => {
-    // Preload complete flower image with improved error handling and case-insensitive fallbacks
     const loadImage = async () => {
-      const svgFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'svg');
-      const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'png');
-      
-      let loadedSuccessfully = false;
-      let finalImagePath = svgFallbacks[0];
+      const svgFallbacks = getCompleteFlowerPathFallbacks(country.folder, "svg");
+      const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, "png");
 
-      // Try loading image with multiple fallback paths
-      const tryLoadImage = (imagePaths) => {
-        return new Promise((resolve) => {
-          let currentIndex = 0;
-          let timeoutId = null;
-          
-          const tryNext = () => {
-            // Clear any existing timeout
-            if (timeoutId) {
-              clearTimeout(timeoutId);
-              timeoutId = null;
-            }
-            
-            if (currentIndex >= imagePaths.length) {
-              resolve(false);
-              return;
-            }
-            
+      const tryLoad = (paths) =>
+        new Promise((resolve) => {
+          let i = 0;
+          const next = () => {
+            if (i >= paths.length) { resolve(false); return; }
             const img = new window.Image();
-            const currentPath = imagePaths[currentIndex];
-            const indexToCheck = currentIndex; // Capture index for timeout check
-            
-            img.onload = () => {
-              if (timeoutId) clearTimeout(timeoutId);
-              loadedSuccessfully = true;
-              finalImagePath = currentPath;
-              console.log(`Successfully loaded: ${currentPath}`);
-              resolve(true);
-            };
-            
-            img.onerror = () => {
-              if (timeoutId) clearTimeout(timeoutId);
-              console.warn(`Failed to load ${currentPath}, trying next fallback...`);
-              currentIndex++;
-              tryNext();
-            };
-            
-            img.src = currentPath;
-            
-            // Timeout after 3 seconds per path
-            timeoutId = setTimeout(() => {
-              if (!loadedSuccessfully && currentIndex === indexToCheck) {
-                console.warn(`Timeout loading ${currentPath}`);
-                currentIndex++;
-                tryNext();
-              }
-            }, 3000);
+            const t = setTimeout(() => { i++; next(); }, 3000);
+            img.onload = () => { clearTimeout(t); resolve(true); };
+            img.onerror = () => { clearTimeout(t); i++; next(); };
+            img.src = paths[i];
           };
-          
-          tryNext();
+          next();
         });
-      };
 
-      // Try SVG paths first (with all fallbacks)
-      const svgLoaded = await tryLoadImage(svgFallbacks);
-      
-      // If SVG failed, try PNG paths (with all fallbacks)
-      let imageLoaded = svgLoaded;
-      if (!svgLoaded) {
-        const pngLoaded = await tryLoadImage(pngFallbacks);
-        imageLoaded = pngLoaded;
-        if (!pngLoaded) {
-          console.error(`Failed to load complete flower for ${country.folder}. Tried all SVG and PNG fallbacks.`);
-        }
-      }
+      const loaded = (await tryLoad(svgFallbacks)) || (await tryLoad(pngFallbacks));
+      if (loaded) playSound("flower-complete");
 
-      // Always set loaded to true to show the UI, even if image failed
-      setIsLoaded(true);
-
-      // Play flower complete sound
-      if (imageLoaded) {
-        playSound("flower-complete");
-      }
-
-      // Show flower with animation after brief delay (even if image failed)
-      setTimeout(() => {
-        setShowFlower(true);
-        if (imageLoaded) {
-          playSound("flower-appear");
-        }
-      }, 300);
-
-      // Show text content after flower appears (always show, even if image failed)
-      setTimeout(() => {
-        setShowContent(true);
-      }, 1200);
+      setTimeout(() => { setShowFlower(true); if (loaded) playSound("flower-appear"); }, 300);
+      setTimeout(() => setShowContent(true), 1000);
     };
 
     loadImage();
   }, [country]);
+
+  const handleImageLoad = (e) => {
+    const color = extractDominantColor(e.target);
+    if (color) setAccentColor(color);
+  };
 
   const handleContinue = () => {
     playSound("button-click");
     onComplete();
   };
 
+  const [r, g, b] = accentColor.rgb;
+  const rgb = `${r},${g},${b}`;
+
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-start overflow-y-auto overflow-x-hidden">
-      {/* Beautiful gradient background */}
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden">
+      {/* Deep dark background */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "radial-gradient(ellipse at center, #fef9c3 0%, #fef3c7 25%, #fce7f3 50%, #f5f3ff 75%, #ecfdf5 100%)",
+          background: `radial-gradient(ellipse at 50% 40%, rgba(${rgb},0.12) 0%, #0a0a0a 50%, #050505 100%)`,
         }}
       />
 
-      {/* Soft animated particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 30 }).map((_, i) => (
+      {/* Ambient glow behind flower — uses accent color */}
+      <div
+        className="absolute"
+        style={{
+          width: "70vw",
+          height: "70vw",
+          maxWidth: "600px",
+          maxHeight: "600px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -55%)",
+          background: `radial-gradient(circle, rgba(${rgb},0.1) 0%, rgba(${rgb},0.04) 40%, transparent 70%)`,
+          filter: "blur(50px)",
+          animation: "ambient-pulse 4s ease-in-out infinite",
+          opacity: showFlower ? 1 : 0,
+          transition: "opacity 1.5s ease, background 1s ease",
+        }}
+      />
+
+      {/* Falling petals */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {PETALS.map((_, i) => (
           <div
-            key={i}
-            className="absolute rounded-full"
+            key={`petal-${i}`}
+            className="absolute"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${4 + Math.random() * 8}px`,
-              height: `${4 + Math.random() * 8}px`,
-              background: ["#fcd34d", "#f9a8d4", "#c4b5fd", "#86efac"][
-                Math.floor(Math.random() * 4)
-              ],
-              opacity: 0.4,
-              animation: `float-particle ${8 + Math.random() * 6
-                }s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
+              left: `${5 + (i * 5.5) % 90}%`,
+              top: `-20px`,
+              animation: `fall-petal ${6 + (i % 5)}s linear infinite`,
+              animationDelay: `${(i * 0.4) % 8}s`,
+              opacity: 0.5 + (i % 3) * 0.15,
+              fontSize: `${10 + (i % 3) * 6}px`,
             }}
-          />
+          >
+            🌸
+          </div>
         ))}
       </div>
 
-      {/* Golden light rays emanating from flower */}
-      {showFlower && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 12 }).map((_, i) => (
+      {/* Sparkle ring — uses accent color */}
+      <div className="absolute inset-0 pointer-events-none">
+        {SPARKLES.map((_, i) => {
+          const angle = (i / SPARKLES.length) * Math.PI * 2;
+          const dist = 150 + (i % 3) * 80;
+          return (
             <div
-              key={`ray-${i}`}
-              className="absolute left-1/2 top-1/2 origin-bottom"
+              key={`sp-${i}`}
+              className="absolute w-1.5 h-1.5 rounded-full"
               style={{
-                width: "2px",
-                height: "150%",
-                background:
-                  "linear-gradient(to top, rgba(251, 191, 36, 0.3) 0%, transparent 60%)",
-                transform: `translate(-50%, -100%) rotate(${i * 30}deg)`,
-                animation: "ray-pulse 4s ease-in-out infinite",
-                animationDelay: `${i * 0.2}s`,
+                left: `calc(50% + ${Math.cos(angle) * dist}px)`,
+                top: `calc(45% + ${Math.sin(angle) * dist}px)`,
+                background: `rgb(${rgb})`,
+                opacity: showFlower ? 1 : 0,
+                animation: `sparkle-drift ${2 + (i % 3)}s ease-in-out infinite`,
+                animationDelay: `${i * 0.12}s`,
+                boxShadow: `0 0 4px rgba(${rgb},0.6)`,
+                transition: "opacity 1s ease",
               }}
             />
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
-      {/* Main Content Container - Scrollable with proper spacing */}
-      <div className="relative z-10 flex flex-col items-center justify-start w-full min-h-screen py-4 px-4">
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full px-6 gap-6" style={{ marginTop: "-2rem" }}>
 
-        {/* Flower Name and Country - Top Section */}
+        {/* Flower name */}
         <div
-          className="text-center w-full max-w-2xl mb-3"
+          className="text-center"
           style={{
             opacity: showContent ? 1 : 0,
-            transform: showContent ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.8s ease-out",
+            transform: showContent ? "translateY(0)" : "translateY(16px)",
+            transition: "all 0.8s ease-out 0.1s",
           }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-purple-800 mb-2">
+          <h2
+            className="font-black leading-none mb-2"
+            style={{
+              fontSize: "clamp(1.8rem, 5vw, 3rem)",
+              color: "#ffffff",
+              textShadow: `0 0 20px rgba(${rgb},0.6), 0 2px 4px rgba(0,0,0,0.5)`,
+            }}
+          >
             {country.flowerName}
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-purple-600 italic">
+          <p
+            className="text-lg font-medium"
+            style={{ color: "#ffffff", letterSpacing: "0.15em" }}
+          >
             {country.country}
           </p>
         </div>
 
-        {/* The Complete Flower Image - Middle Section */}
+        {/* Flower image — no box, just floating */}
         <div
-          className="relative w-full flex items-center justify-center mb-4"
+          className="relative flex items-center justify-center"
           style={{
-            minHeight: "200px",
+            width: "min(80vw, 440px)",
+            height: "min(80vw, 440px)",
+            opacity: showFlower ? 1 : 0,
+            transform: showFlower ? "scale(1) translateY(0)" : "scale(0.7) translateY(30px)",
+            transition: "all 1.2s cubic-bezier(0.34, 1.4, 0.64, 1)",
           }}
         >
-          {/* Soft glow behind flower */}
-          {showFlower && (
-            <div
-              className="absolute -inset-12 sm:-inset-16 md:-inset-20 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)",
-                animation: "glow-pulse 3s ease-in-out infinite",
-              }}
-            />
-          )}
+          {/* Halo glow */}
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `radial-gradient(circle, rgba(${rgb},0.12) 0%, rgba(${rgb},0.04) 50%, transparent 75%)`,
+              animation: "halo-spin 8s linear infinite",
+            }}
+          />
 
-          {/* Complete Flower Image Container */}
-          {isLoaded && (
-            <div
-              className="relative rounded-2xl shadow-2xl overflow-hidden bg-white/50 backdrop-blur-sm"
-              style={{
-                width: "100%",
-                maxWidth: "min(85vw, 650px)",
-                minHeight: "200px",
-                opacity: showFlower ? 1 : 0,
-                transform: showFlower ? "scale(1)" : "scale(0.5)",
-                transition: "all 1s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                animation: showFlower
-                  ? "flower-breathe 4s ease-in-out infinite"
-                  : "none",
-                boxShadow:
-                  "0 25px 80px -20px rgba(251, 191, 36, 0.5), 0 15px 40px -15px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <div className="relative w-full p-4 sm:p-6 md:p-8 min-h-[200px] flex items-center justify-center">
-                <img
-                  src={getCompleteFlowerPath(country.folder, 'svg')}
-                  alt={`${country.flowerName} - ${country.country}`}
-                  className="w-full h-auto block mx-auto"
-                  draggable={false}
-                  style={{
-                    imageRendering: "auto",
-                    backfaceVisibility: "hidden",
-                    maxHeight: "50vh",
-                    objectFit: "contain",
-                  }}
-                  onError={(e) => {
-                    // Prevent infinite loops by tracking attempts
-                    if (!e.target.dataset.errorCount) {
-                      e.target.dataset.errorCount = '0';
-                    }
-                    const errorCount = parseInt(e.target.dataset.errorCount) + 1;
-                    e.target.dataset.errorCount = errorCount.toString();
-                    
-                    // Stop after 3 attempts to prevent redirect loops
-                    if (errorCount > 3) {
-                      console.error(`Too many errors loading image for ${country.folder}. Stopping fallback attempts.`);
-                      e.target.style.display = 'none';
-                      // Show placeholder if not already shown
-                      if (!e.target.parentElement.querySelector('.image-placeholder')) {
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'image-placeholder text-center text-purple-600 text-lg';
-                        placeholder.textContent = `${country.flowerName}`;
-                        e.target.parentElement.appendChild(placeholder);
-                      }
-                      return;
-                    }
-                    
-                    const currentSrc = e.target.src;
-                    const isPng = currentSrc.includes('.png');
-                    const fallbacks = getCompleteFlowerPathFallbacks(country.folder, isPng ? 'png' : 'svg');
-                    
-                    // Find current path index
-                    const currentIndex = fallbacks.findIndex(path => {
-                      const fileName = path.split('/').pop();
-                      return currentSrc.includes(fileName);
-                    });
-                    
-                    const nextIndex = currentIndex + 1;
-                    
-                    if (nextIndex < fallbacks.length) {
-                      console.log(`Trying fallback ${nextIndex + 1}/${fallbacks.length} for ${country.folder}...`);
-                      e.target.src = fallbacks[nextIndex];
-                    } else {
-                      // If all SVG fallbacks failed, try PNG fallbacks
-                      if (!isPng) {
-                        const pngFallbacks = getCompleteFlowerPathFallbacks(country.folder, 'png');
-                        console.log(`All SVG paths failed, trying PNG fallbacks for ${country.folder}...`);
-                        e.target.src = pngFallbacks[0];
-                      } else {
-                        console.error(`All paths failed for ${country.folder}. Last tried: ${currentSrc}`);
-                        e.target.style.display = 'none';
-                        // Show placeholder if not already shown
-                        if (!e.target.parentElement.querySelector('.image-placeholder')) {
-                          const placeholder = document.createElement('div');
-                          placeholder.className = 'image-placeholder text-center text-purple-600 text-lg';
-                          placeholder.textContent = `${country.flowerName}`;
-                          e.target.parentElement.appendChild(placeholder);
-                        }
-                      }
-                    }
-                  }}
-                  onLoad={(e) => {
-                    console.log(`Successfully loaded complete flower for ${country.folder}`);
-                    // Reset error count on successful load
-                    if (e.target.dataset.errorCount) {
-                      e.target.dataset.errorCount = '0';
-                    }
-                  }}
-                />
-              </div>
-
-              {/* Subtle shimmer overlay */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%)",
-                  animation: "shimmer 3s ease-in-out infinite",
-                }}
-              />
-            </div>
-          )}
+          <img
+            src={getCompleteFlowerPath(country.folder, "svg")}
+            alt={`${country.flowerName} - ${country.country}`}
+            className="relative z-10 w-full h-full"
+            draggable={false}
+            style={{
+              objectFit: "contain",
+              mixBlendMode: "screen",
+              filter: `drop-shadow(0 0 20px rgba(${rgb},0.4))`,
+              animation: showFlower ? "flower-float 5s ease-in-out infinite" : "none",
+            }}
+            onLoad={handleImageLoad}
+            onError={(e) => {
+              if (!e.target.dataset.errorCount) e.target.dataset.errorCount = "0";
+              const count = parseInt(e.target.dataset.errorCount) + 1;
+              e.target.dataset.errorCount = count.toString();
+              if (count > 3) { e.target.style.display = "none"; return; }
+              const fallbacks = getCompleteFlowerPathFallbacks(country.folder, e.target.src.includes(".png") ? "png" : "svg");
+              const idx = fallbacks.findIndex((p) => e.target.src.includes(p.split("/").pop()));
+              if (idx + 1 < fallbacks.length) {
+                e.target.src = fallbacks[idx + 1];
+              } else if (!e.target.src.includes(".png")) {
+                e.target.src = getCompleteFlowerPathFallbacks(country.folder, "png")[0];
+              } else {
+                e.target.style.display = "none";
+              }
+            }}
+          />
         </div>
 
-        {/* Continue Button - Bottom Section */}
+        {/* Continue button */}
         <div
-          className="text-center w-full max-w-2xl"
           style={{
             opacity: showContent ? 1 : 0,
             transform: showContent ? "translateY(0)" : "translateY(20px)",
-            transition: "all 0.8s ease-out",
-            transitionDelay: "0.2s",
+            transition: "all 0.8s ease-out 0.3s",
           }}
         >
           <button
             onClick={handleContinue}
-            className="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 bg-gradient-to-r from-yellow-100 via-pink-100 to-green-100 text-purple-700 text-lg sm:text-xl md:text-2xl font-bold rounded-full border-2 border-purple-200 shadow-lg hover:shadow-xl hover:bg-white/90 hover:text-purple-900 transform hover:scale-105 transition-all duration-300 overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="group relative px-10 py-4 font-bold text-lg rounded-full overflow-hidden transition-all duration-300 hover:scale-105 focus:outline-none"
             style={{
-              animation: "button-glow 2s ease-in-out infinite",
+              background: `linear-gradient(135deg, rgba(${rgb},0.12) 0%, rgba(${rgb},0.22) 100%)`,
+              border: `1px solid rgba(${rgb},0.4)`,
+              color: `rgb(${rgb})`,
+              boxShadow: `0 0 30px rgba(${rgb},0.15), inset 0 1px 0 rgba(255,255,255,0.05)`,
+              letterSpacing: "0.05em",
             }}
           >
-            {/* Button shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-60 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
-            <span className="relative z-10 drop-shadow-sm">
-              {t('game.continueToNext')} →
-            </span>
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: `linear-gradient(135deg, rgba(${rgb},0.1), rgba(${rgb},0.2))` }}
+            />
+            <span className="relative z-10">{t("game.continueToNext")} →</span>
           </button>
         </div>
       </div>
 
-      {/* CSS Animations */}
       <style jsx>{`
-        @keyframes flower-breathe {
-          0%,
-          100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.02);
-          }
+        @keyframes ambient-pulse {
+          0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 0.8; }
+          50% { transform: translate(-50%, -55%) scale(1.1); opacity: 1; }
         }
-
-        @keyframes glow-pulse {
-          0%,
-          100% {
-            opacity: 0.6;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.1);
-          }
+        @keyframes halo-spin {
+          from { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(180deg) scale(1.05); }
+          to { transform: rotate(360deg) scale(1); }
         }
-
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%) rotate(0deg);
-          }
-          100% {
-            transform: translateX(100%) rotate(0deg);
-          }
+        @keyframes flower-float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
         }
-
-        @keyframes float-particle {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0);
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          50% {
-            transform: translateY(-10px) translateX(-5px);
-          }
-          75% {
-            transform: translateY(-30px) translateX(5px);
-          }
+        @keyframes fall-petal {
+          0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.3; }
+          100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
         }
-
-        @keyframes ray-pulse {
-          0%,
-          100% {
-            opacity: 0.2;
-          }
-          50% {
-            opacity: 0.5;
-          }
-        }
-
-        @keyframes button-glow {
-          0%,
-          100% {
-            box-shadow: 0 10px 40px -10px rgba(147, 51, 234, 0.5);
-          }
-          50% {
-            box-shadow: 0 15px 50px -10px rgba(147, 51, 234, 0.7);
-          }
+        @keyframes sparkle-drift {
+          0%, 100% { opacity: 0.4; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.3); }
         }
       `}</style>
     </div>

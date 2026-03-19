@@ -37,7 +37,7 @@ export default function Card({ card, isFlipped, onFlip, disabled, index = 0, tot
 
   return (
     <div
-      className={`relative cursor-pointer transition-all duration-300 w-[100px] h-[140px] sm:w-[110px] sm:h-[155px] md:w-[120px] md:h-[170px] lg:w-[130px] lg:h-[185px] ${
+      className={`relative cursor-pointer transition-all duration-300 w-[80px] h-[112px] sm:w-[90px] sm:h-[126px] md:w-[105px] md:h-[147px] lg:w-[115px] lg:h-[161px] ${
         disabled || isFlipped ? "cursor-not-allowed" : "cursor-pointer hover:scale-110"
       }`}
       onClick={handleClick}
@@ -46,9 +46,9 @@ export default function Card({ card, isFlipped, onFlip, disabled, index = 0, tot
       style={{ 
         perspective: "1000px",
         transform: isHovered && !isFlipped 
-          ? 'translateY(-50px) scale(1.25) rotate(0deg)' 
+          ? 'translateY(-30px) scale(1.2) rotate(0deg)' 
           : isFlipped 
-          ? 'translateY(-20px) scale(1.1) rotate(0deg)' 
+          ? 'translateY(-12px) scale(1.08) rotate(0deg)' 
           : 'translateY(0) scale(1) rotate(0deg)',
         zIndex: isFlipped ? 1000 : (isHovered ? 500 : totalCards - index),
         filter: isHovered && !isFlipped 

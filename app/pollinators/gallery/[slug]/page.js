@@ -22,7 +22,6 @@ const getLocalizedContent = (content, lang = 'en') => {
 // ── 3D Model Viewer ──────────────────────────────────────
 function PollinatorModelViewer({ glbPath }) {
     const canvasRef = useRef(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [isMounted, setIsMounted] = useState(false);
 

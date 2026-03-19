@@ -621,6 +621,9 @@ function Flower3DViewer({ flower, t, isActive = false }) {
     const translated = t(key);
     // If next-intl returns the key itself (untranslated), fall back to English data
     if (!translated || translated === key) return fallback;
+    // Some locale files store rich objects (e.g., morphology breakdown).
+    // This view expects plain text, so keep fallback string to avoid React child errors.
+    if (typeof translated === "object") return fallback;
     return translated;
   };
 

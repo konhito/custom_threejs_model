@@ -1,7 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 import { cookies } from 'next/headers';
 
-export const locales = ['en', 'es', 'zh', 'fr', 'de'];
+export const locales = ['en', 'es', 'zh', 'fr', 'de', 'it'];
 export const defaultLocale = 'en';
 
 // Country to language mapping
@@ -58,6 +58,11 @@ export const countryToLocale = {
   'DE': 'de', // Germany
   'AT': 'de', // Austria
   'LI': 'de', // Liechtenstein
+  
+  // Italian speaking countries
+  'IT': 'it', // Italy
+  'SM': 'it', // San Marino
+  'VA': 'it', // Vatican City
   // Note: Switzerland (CH) is split - French regions use 'fr', German regions use 'de'
   // Defaulting CH to 'de' for now, can be refined based on region
   

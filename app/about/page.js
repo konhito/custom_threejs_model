@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { 
@@ -119,9 +119,9 @@ const getMilestones = (t) => [
 const FloralDecoration = ({ className, delay = 0 }) => (
   <motion.div
     className={`absolute pointer-events-none ${className}`}
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ delay, duration: 1, ease: "easeOut" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay, duration: 0.5, ease: "easeOut" }}
   >
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -169,16 +169,17 @@ const GlowingOrb = ({ className, color = "blue", delay = 0, size = "md" }) => {
 
   return (
     <motion.div
-      className={`absolute rounded-full bg-gradient-radial ${colorClasses[color]} ${sizeClasses[size]} blur-3xl pointer-events-none ${className}`}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, duration: 1.5, ease: "easeOut" }}
+      className={`absolute rounded-full bg-gradient-radial ${colorClasses[color]} ${sizeClasses[size]} blur-2xl pointer-events-none ${className}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
     />
   );
 };
 
 export default function AboutPage() {
   const { t, isLoading } = useTranslation();
+  const shouldReduceMotion = useReducedMotion();
   
   // Get translated data
   const teamMembers = getTeamMembers(t);
@@ -212,7 +213,7 @@ export default function AboutPage() {
         
         {/* Animated aurora streaks */}
         <div 
-          className="absolute inset-0 animate-aurora opacity-20"
+          className={`absolute inset-0 opacity-20 ${shouldReduceMotion ? "" : "animate-aurora"}`}
           style={{
             backgroundImage: `
               repeating-linear-gradient(
@@ -230,14 +231,18 @@ export default function AboutPage() {
       </div>
 
       {/* Decorative elements */}
-      <GlowingOrb className="top-20 -right-20" color="purple" delay={0.2} size="xl" />
-      <GlowingOrb className="top-1/3 -left-32" color="blue" delay={0.4} size="lg" />
-      <GlowingOrb className="bottom-1/4 right-10" color="pink" delay={0.6} size="md" />
-      <GlowingOrb className="bottom-40 left-1/4" color="teal" delay={0.8} size="lg" />
-      
-      <FloralDecoration className="top-32 right-20 opacity-60" delay={1} />
-      <FloralDecoration className="top-1/2 left-10 opacity-40" delay={1.2} />
-      <FloralDecoration className="bottom-60 right-1/3 opacity-50" delay={1.4} />
+      {!shouldReduceMotion && (
+        <>
+          <GlowingOrb className="top-20 -right-20" color="purple" delay={0.1} size="xl" />
+          <GlowingOrb className="top-1/3 -left-32" color="blue" delay={0.15} size="lg" />
+          <GlowingOrb className="bottom-1/4 right-10" color="pink" delay={0.2} size="md" />
+          <GlowingOrb className="bottom-40 left-1/4" color="teal" delay={0.25} size="lg" />
+
+          <FloralDecoration className="top-32 right-20 opacity-60" delay={0.3} />
+          <FloralDecoration className="top-1/2 left-10 opacity-40" delay={0.35} />
+          <FloralDecoration className="bottom-60 right-1/3 opacity-50" delay={0.4} />
+        </>
+      )}
 
       <Navigation />
 
@@ -246,9 +251,9 @@ export default function AboutPage() {
         <section className="px-4 sm:px-6 lg:px-8 mb-24">
           <div className="max-w-6xl mx-auto text-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {/* Decorative line */}
               <div className="flex items-center justify-center gap-4 mb-8">

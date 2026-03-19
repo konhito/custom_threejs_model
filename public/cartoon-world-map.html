@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cartoon World Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a0a00;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    font-family: 'Fredoka One', cursive;
+  }
+  .map-container {
+    width: 100vw; max-width: 1400px;
+    aspect-ratio: 2/1;
+    position: relative;
+  }
+  svg { width: 100%; height: 100%; }
+
+  /* Animated wave lines */
+  @keyframes waveShift {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-120px); }
+  }
+  .wave-line { animation: waveShift 4s linear infinite; }
+  .wave-line2 { animation: waveShift 6s linear infinite reverse; }
+  .wave-line3 { animation: waveShift 5s linear infinite; animation-delay: -2s; }
+
+  /* Floating clouds */
+  @keyframes cloudDrift {
+    0%   { transform: translateX(0px); }
+    50%  { transform: translateX(18px); }
+    100% { transform: translateX(0px); }
+  }
+  .cloud1 { animation: cloudDrift 8s ease-in-out infinite; }
+  .cloud2 { animation: cloudDrift 11s ease-in-out infinite; animation-delay: -3s; }
+  .cloud3 { animation: cloudDrift 9s ease-in-out infinite; animation-delay: -5s; }
+
+  /* Compass spin on hover */
+  @keyframes compassPulse {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.05); }
+  }
+  .compass-group { animation: compassPulse 3s ease-in-out infinite; transform-origin: 1780px 880px; }
+
+  /* Ship bob */
+  @keyframes shipBob {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+  }
+  .ship { animation: shipBob 3s ease-in-out infinite; }
+  .ship2 { animation: shipBob 3.8s ease-in-out infinite; animation-delay: -1.5s; }
+
+  /* Star twinkle */
+  @keyframes twinkle {
+    0%,100% { opacity: 0.9; }
+    50%      { opacity: 0.3; }
+  }
+  .star1 { animation: twinkle 2s ease-in-out infinite; }
+  .star2 { animation: twinkle 2.8s ease-in-out infinite; animation-delay: -1s; }
+  .star3 { animation: twinkle 3.5s ease-in-out infinite; animation-delay: -2s; }
+
+  /* Sea monster bob */
+  @keyframes monsterBob {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-8px) rotate(3deg); }
+  }
+  .monster { animation: monsterBob 4s ease-in-out infinite; }
+
+  /* Title bounce */
+  @keyframes titlePop {
+    0%   { transform: scale(0.8); opacity: 0; }
+    70%  { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .map-title { animation: titlePop 0.8s ease-out forwards; }
+</style>
+</head>
+<body>
+<div class="map-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid meet">
+<defs>
+  <!-- Sky/ocean gradient -->
+  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#a8d8f0"/>
+    <stop offset="35%"  stop-color="#7ec8e8"/>
+    <stop offset="100%" stop-color="#4ab0d8"/>
+  </linearGradient>
+  <!-- Ocean base -->
+  <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#3bb8e8"/>
+    <stop offset="100%" stop-color="#1a82b8"/>
+  </linearGradient>
+  <!-- Land gradients -->
+  <linearGradient id="landGreen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#6ecb5a"/>
+    <stop offset="100%" stop-color="#3a9e30"/>
+  </linearGradient>
+  <linearGradient id="landDesert" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#e8c96a"/>
+    <stop offset="100%" stop-color="#c8a040"/>
+  </linearGradient>
+  <linearGradient id="iceGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#eaf7ff"/>
+    <stop offset="100%" stop-color="#c0e8f8"/>
+  </linearGradient>
+  <!-- Paper/parchment border -->
+  <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%"   stop-color="#f5d98a"/>
+    <stop offset="50%"  stop-color="#e8c060"/>
+    <stop offset="100%" stop-color="#c8962a"/>
+  </linearGradient>
+  <!-- Drop shadow for land -->
+  <filter id="landShadow" x="-4%" y="-4%" width="108%" height="108%">
+    <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#1a5a10" flood-opacity="0.5"/>
+  </filter>
+  <filter id="cloudShadow">
+    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#5090b0" flood-opacity="0.3"/>
+  </filter>
+  <filter id="titleShadow">
+    <feDropShadow dx="3" dy="3" stdDeviation="2" flood-color="#7a4000" flood-opacity="0.7"/>
+  </filter>
+  <filter id="compassShadow">
+    <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+  </filter>
+
+  <!-- Wave pattern -->
+  <pattern id="wavePattern" x="0" y="0" width="120" height="40" patternUnits="userSpaceOnUse">
+    <path d="M0,20 Q15,10 30,20 Q45,30 60,20 Q75,10 90,20 Q105,30 120,20" 
+          fill="none" stroke="#2a90c8" stroke-width="1.8" opacity="0.35"/>
+    <path d="M0,30 Q15,20 30,30 Q45,40 60,30 Q75,20 90,30 Q105,40 120,30"
+          fill="none" stroke="#2a90c8" stroke-width="1.2" opacity="0.2"/>
+  </pattern>
+</defs>
+
+<!-- ═══ PARCHMENT BORDER ═══ -->
+<rect x="0" y="0" width="2000" height="1000" rx="18" ry="18" fill="url(#borderGrad)" stroke="#8a5a10" stroke-width="6"/>
+<!-- Inner border decorative -->
+<rect x="12" y="12" width="1976" height="976" rx="12" ry="12" fill="none" stroke="#c8962a" stroke-width="2" stroke-dasharray="8,6" opacity="0.7"/>
+<rect x="20" y="20" width="1960" height="960" rx="8" ry="8" fill="none" stroke="#f5d98a" stroke-width="1" opacity="0.5"/>
+
+<!-- ═══ OCEAN BACKGROUND ═══ -->
+<rect x="28" y="28" width="1944" height="944" rx="6" fill="url(#oceanGrad)"/>
+
+<!-- Wave texture across whole ocean -->
+<g class="wave-line">
+  <rect x="28" y="28" width="2200" height="944" fill="url(#wavePattern)" opacity="0.6"/>
+</g>
+
+<!-- ═══ DECORATIVE CORNER ORNAMENTS ═══ -->
+<!-- Top-left -->
+<g transform="translate(28,28)">
+  <path d="M0,0 L60,0 L60,8 L8,8 L8,60 L0,60 Z" fill="#c8962a"/>
+  <circle cx="34" cy="34" r="14" fill="#e8b030" stroke="#c8962a" stroke-width="2"/>
+  <text x="34" y="39" text-anchor="middle" font-family="Fredoka One" font-size="14" fill="#7a4000">✦</text>
+</g>
+<!-- Top-right -->
+<g transform="translate(1972,28) scale(-1,1)">
+  <path d="M0,0 L60,0 L60,8 L8,8 L8,60 L0,60 Z" fill="#c8962a"/>
+  <circle cx="34" cy="34" r="14" fill="#e8b030" stroke="#c8962a" stroke-width="2"/>
+  <text x="34" y="39" text-anchor="middle" font-family="Fredoka One" font-size="14" fill="#7a4000">✦</text>
+</g>
+<!-- Bottom-left -->
+<g transform="translate(28,972) scale(1,-1)">
+  <path d="M0,0 L60,0 L60,8 L8,8 L8,60 L0,60 Z" fill="#c8962a"/>
+  <circle cx="34" cy="34" r="14" fill="#e8b030" stroke="#c8962a" stroke-width="2"/>
+  <text x="34" y="39" text-anchor="middle" font-family="Fredoka One" font-size="14" fill="#7a4000">✦</text>
+</g>
+<!-- Bottom-right -->
+<g transform="translate(1972,972) scale(-1,-1)">
+  <path d="M0,0 L60,0 L60,8 L8,8 L8,60 L0,60 Z" fill="#c8962a"/>
+  <circle cx="34" cy="34" r="14" fill="#e8b030" stroke="#c8962a" stroke-width="2"/>
+  <text x="34" y="39" text-anchor="middle" font-family="Fredoka One" font-size="14" fill="#7a4000">✦</text>
+</g>
+
+<!-- ═══ LATITUDE/LONGITUDE LINES ═══ -->
+<g stroke="#1a78b0" stroke-width="0.8" opacity="0.25">
+  <line x1="28" y1="195" x2="1972" y2="195"/>
+  <line x1="28" y1="362" x2="1972" y2="362"/>
+  <line x1="28" y1="528" x2="1972" y2="528"/>
+  <line x1="28" y1="695" x2="1972" y2="695"/>
+  <line x1="28" y1="862" x2="1972" y2="862"/>
+  <line x1="390" y1="28" x2="390" y2="972"/>
+  <line x1="695" y1="28" x2="695" y2="972"/>
+  <line x1="1000" y1="28" x2="1000" y2="972"/>
+  <line x1="1305" y1="28" x2="1305" y2="972"/>
+  <line x1="1610" y1="28" x2="1610" y2="972"/>
+</g>
+<!-- Equator - bolder -->
+<line x1="28" y1="528" x2="1972" y2="528" stroke="#e87820" stroke-width="1.5" stroke-dasharray="10,6" opacity="0.6"/>
+
+<!-- ═══ OCEAN LABELS (cartoon style) ═══ -->
+<g font-family="'Fredoka One', cursive" fill="#1460a0" opacity="0.55">
+  <text x="500" y="440" font-size="22" text-anchor="middle" font-style="italic">Atlantic</text>
+  <text x="500" y="465" font-size="16" text-anchor="middle" font-style="italic">Ocean</text>
+  <text x="1700" y="380" font-size="22" text-anchor="middle" font-style="italic">Pacific</text>
+  <text x="1700" y="405" font-size="16" text-anchor="middle" font-style="italic">Ocean</text>
+  <text x="340" y="750" font-size="16" text-anchor="middle" font-style="italic">S. Atlantic</text>
+  <text x="1130" y="620" font-size="18" text-anchor="middle" font-style="italic">Indian Ocean</text>
+  <text x="1650" y="750" font-size="18" text-anchor="middle" font-style="italic">S. Pacific</text>
+</g>
+
+<!-- ═══ CONTINENTS ═══ -->
+
+<!-- ─── NORTH AMERICA ─── -->
+<g filter="url(#landShadow)">
+  <path d="
+    M 330,95 L 340,88 L 358,86 L 374,90 L 386,98 L 392,108 L 388,116
+    L 376,118 L 370,126 L 374,136 L 382,140 L 386,150 L 380,158 L 372,162
+    L 360,164 L 350,172 L 344,182 L 340,196 L 336,210 L 328,224 L 322,240
+    L 318,256 L 316,272 L 318,288 L 314,298 L 306,304 L 298,306 L 290,302
+    L 284,294 L 278,290 L 270,292 L 264,300 L 258,312 L 252,328 L 246,340
+    L 244,356 L 240,368 L 234,376 L 228,380 L 218,382 L 208,378 L 198,370
+    L 192,360 L 190,350 L 192,340 L 196,330 L 198,318 L 194,308 L 186,300
+    L 178,296 L 168,296 L 158,300 L 150,308 L 144,318 L 138,330 L 134,344
+    L 132,360 L 128,372 L 120,380 L 112,384 L 100,384 L 90,378 L 82,368
+    L 76,354 L 74,340 L 76,326 L 82,312 L 90,300 L 98,290 L 106,280
+    L 108,266 L 104,252 L 96,240 L 88,230 L 84,218 L 86,206 L 92,196
+    L 100,188 L 110,182 L 122,178 L 136,176 L 148,172 L 158,164 L 166,154
+    L 170,142 L 168,130 L 162,120 L 156,112 L 154,102 L 158,94 L 166,88
+    L 178,84 L 192,82 L 208,82 L 224,84 L 240,88 L 256,90 L 272,90
+    L 288,90 L 304,90 L 318,90 Z
+  " fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Alaska -->
+  <path d="M 76,136 L 88,130 L 102,128 L 114,132 L 122,140 L 126,152 L 120,160 L 108,164 L 96,162 L 84,156 L 76,148 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Florida -->
+  <path d="M 192,360 L 196,372 L 198,386 L 196,398 L 190,404 L 184,400 L 182,388 L 184,374 L 188,362 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Central America -->
+  <path d="M 190,382 L 194,392 L 198,404 L 200,416 L 196,424 L 190,428 L 184,426 L 180,418 L 180,406 L 184,394 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 208,378 L 214,388 L 212,398 L 204,402 L 196,398 L 196,386 L 202,380 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+</g>
+
+<!-- GREENLAND (icy) -->
+<g filter="url(#landShadow)">
+  <path d="M 364,52 L 382,44 L 404,42 L 424,46 L 440,56 L 448,70 L 446,86
+    L 436,98 L 420,106 L 400,108 L 380,104 L 364,94 L 356,80 L 356,66 Z"
+    fill="url(#iceGrad)" stroke="#90c8e0" stroke-width="2.5" stroke-linejoin="round"/>
+</g>
+
+<!-- ─── SOUTH AMERICA ─── -->
+<g filter="url(#landShadow)">
+  <path d="
+    M 230,430 L 242,424 L 256,422 L 270,426 L 284,434 L 296,446 L 304,460
+    L 310,476 L 314,494 L 316,512 L 314,530 L 310,546 L 306,562 L 302,578
+    L 298,594 L 294,610 L 290,626 L 284,640 L 276,652 L 266,660 L 254,664
+    L 242,664 L 230,658 L 220,648 L 212,636 L 208,622 L 208,608 L 210,594
+    L 214,580 L 216,566 L 214,550 L 210,536 L 206,520 L 204,504 L 206,488
+    L 210,472 L 214,458 L 218,446 L 222,436 Z
+  " fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M 242,424 L 252,416 L 262,414 L 272,418 L 278,428 L 274,436 L 264,440 L 252,438 L 242,432 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 314,512 L 324,508 L 330,516 L 326,524 L 316,524 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+</g>
+
+<!-- ─── EUROPE ─── -->
+<g filter="url(#landShadow)">
+  <path d="M 888,126 L 900,120 L 916,118 L 930,122 L 942,130 L 950,142 L 952,156
+    L 948,168 L 940,178 L 928,184 L 914,186 L 900,184 L 886,178 L 876,168
+    L 872,156 L 874,144 Z" fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M 872,180 L 878,190 L 882,204 L 882,218 L 876,228 L 866,234
+    L 856,232 L 848,222 L 846,208 L 848,196 L 856,186 L 866,180 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 886,178 L 900,176 L 916,174 L 932,176 L 948,178 L 960,186
+    L 968,198 L 966,210 L 958,218 L 946,222 L 932,222 L 918,218 L 906,210
+    L 896,200 L 886,190 Z" fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 936,118 L 948,108 L 962,102 L 976,100 L 988,106 L 994,118
+    L 990,132 L 980,140 L 966,142 L 952,138 L 942,128 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 948,108 L 952,96 L 958,88 L 966,86 L 972,92 L 970,102 L 962,106 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 862,130 L 872,124 L 882,124 L 888,132 L 886,142 L 878,148 L 868,146 L 862,138 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 852,136 L 858,132 L 864,134 L 864,142 L 858,146 L 852,142 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 930,208 L 936,218 L 938,232 L 934,244 L 926,250 L 918,248
+    L 914,238 L 916,224 L 922,214 Z" fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 922,252 L 928,250 L 932,256 L 930,262 L 922,262 L 918,256 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 960,210 L 966,218 L 966,228 L 960,234 L 954,230 L 952,220 L 956,212 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 940,148 L 946,144 L 950,150 L 948,158 L 942,158 L 938,152 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 960,148 L 972,144 L 982,148 L 982,158 L 974,162 L 962,158 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+</g>
+
+<!-- ─── AFRICA ─── (desert + green mix) -->
+<g filter="url(#landShadow)">
+  <path d="
+    M 902,246 L 916,240 L 932,238 L 948,242 L 962,250 L 974,262 L 982,278
+    L 986,296 L 986,316 L 982,336 L 976,356 L 970,376 L 964,396 L 958,416
+    L 952,436 L 946,456 L 940,474 L 932,490 L 922,502 L 910,510 L 896,514
+    L 882,512 L 868,506 L 856,494 L 848,480 L 844,464 L 844,448 L 848,432
+    L 852,416 L 852,400 L 848,384 L 840,368 L 832,352 L 830,336 L 834,320
+    L 840,306 L 848,294 L 858,284 L 870,276 L 882,268 L 892,258 Z
+  " fill="url(#landDesert)" stroke="#b07820" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- North Africa coast green -->
+  <path d="M 862,240 L 878,238 L 892,238 L 902,244 L 906,254 L 900,262
+    L 888,264 L 874,262 L 862,254 L 858,244 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Horn of Africa -->
+  <path d="M 984,328 L 996,322 L 1004,328 L 1002,338 L 992,340 L 982,336 Z"
+        fill="url(#landDesert)" stroke="#b07820" stroke-width="1.5"/>
+  <!-- Madagascar -->
+  <path d="M 996,430 L 1004,422 L 1012,424 L 1014,436 L 1010,448 L 1002,454 L 994,450 L 992,438 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+</g>
+
+<!-- ─── ASIA ─── -->
+<g filter="url(#landShadow)">
+  <path d="
+    M 960,118 L 980,110 L 1004,106 L 1030,106 L 1058,110 L 1086,118
+    L 1114,128 L 1140,140 L 1164,154 L 1184,168 L 1198,182 L 1206,196
+    L 1208,210 L 1204,222 L 1194,230 L 1180,234 L 1166,234 L 1152,230
+    L 1140,222 L 1128,218 L 1116,218 L 1104,222 L 1094,228 L 1082,232
+    L 1070,232 L 1058,228 L 1046,222 L 1034,220 L 1022,222 L 1012,228
+    L 1004,234 L 998,242 L 992,250 L 986,256 L 978,258 L 968,254 L 960,246
+    L 954,236 L 952,224 L 956,212 L 962,202 L 966,192 L 964,180 L 958,170
+    L 952,160 L 950,150 L 952,140 L 956,130 Z
+  " fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Middle East / Arabia (desert) -->
+  <path d="M 1000,256 L 1014,252 L 1026,252 L 1036,258 L 1040,270 L 1038,284
+    L 1030,294 L 1020,298 L 1008,296 L 998,288 L 994,276 L 996,264 Z"
+        fill="url(#landDesert)" stroke="#b07820" stroke-width="2"/>
+  <path d="M 1010,296 L 1022,300 L 1030,310 L 1028,322 L 1016,326 L 1004,320 L 1000,308 Z"
+        fill="url(#landDesert)" stroke="#b07820" stroke-width="2"/>
+  <!-- India -->
+  <path d="M 1086,236 L 1100,232 L 1114,232 L 1126,238 L 1132,250 L 1132,264
+    L 1126,278 L 1116,288 L 1104,294 L 1092,292 L 1082,282 L 1076,268
+    L 1076,254 L 1080,242 Z" fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 1098,296 L 1104,294 L 1108,300 L 1104,308 L 1096,306 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- SE Asia -->
+  <path d="M 1194,228 L 1208,224 L 1222,224 L 1234,230 L 1240,242 L 1238,256
+    L 1228,264 L 1214,266 L 1200,260 L 1192,248 L 1192,236 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 1228,264 L 1236,270 L 1238,282 L 1232,292 L 1222,294 L 1212,288 L 1210,276 L 1218,268 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Borneo -->
+  <path d="M 1240,290 L 1252,284 L 1264,286 L 1270,298 L 1266,312 L 1254,318 L 1242,314 L 1236,302 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Sumatra -->
+  <path d="M 1196,290 L 1212,286 L 1224,290 L 1228,302 L 1222,312 L 1208,314 L 1196,308 L 1192,298 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Japan -->
+  <path d="M 1272,164 L 1282,156 L 1294,156 L 1300,166 L 1296,178 L 1284,182 L 1274,176 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 1264,186 L 1272,182 L 1278,188 L 1274,196 L 1266,196 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- Korea -->
+  <path d="M 1246,172 L 1256,166 L 1264,168 L 1264,180 L 1256,186 L 1246,182 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- Siberia east -->
+  <path d="M 1200,106 L 1230,100 L 1260,98 L 1290,102 L 1316,112 L 1330,124
+    L 1326,134 L 1310,138 L 1290,132 L 1270,122 L 1248,116 L 1226,114 L 1204,116 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <!-- Kamchatka -->
+  <path d="M 1310,130 L 1318,122 L 1328,124 L 1332,136 L 1326,148 L 1316,150 L 1308,142 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- Philippines -->
+  <path d="M 1272,246 L 1280,240 L 1288,242 L 1290,252 L 1284,260 L 1274,258 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <path d="M 1280,260 L 1286,256 L 1292,260 L 1290,270 L 1282,272 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- Taiwan -->
+  <path d="M 1250,228 L 1256,224 L 1262,228 L 1260,238 L 1252,238 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+</g>
+
+<!-- ─── AUSTRALIA ─── -->
+<g filter="url(#landShadow)">
+  <path d="
+    M 1440,538 L 1460,526 L 1484,520 L 1510,518 L 1536,522 L 1560,530
+    L 1580,544 L 1594,560 L 1600,578 L 1598,598 L 1590,616 L 1576,630
+    L 1558,640 L 1538,644 L 1516,642 L 1494,634 L 1476,620 L 1460,604
+    L 1448,586 L 1440,568 Z
+  " fill="url(#landDesert)" stroke="#b07820" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M 1560,530 L 1572,520 L 1578,530 L 1572,542 L 1562,542 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 1520,648 L 1528,644 L 1534,650 L 1530,660 L 1520,660 L 1516,652 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="1.5"/>
+  <!-- New Zealand -->
+  <path d="M 1616,626 L 1626,618 L 1636,620 L 1638,632 L 1630,640 L 1618,638 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+  <path d="M 1612,642 L 1622,636 L 1630,640 L 1628,654 L 1618,660 L 1608,654 Z"
+        fill="url(#landGreen)" stroke="#2a7a1a" stroke-width="2"/>
+</g>
+
+<!-- ─── ANTARCTICA ─── -->
+<path d="M 28,930 Q 200,910 400,930 Q 600,950 800,926 Q 1000,906 1200,928
+         Q 1400,948 1600,924 Q 1800,904 1972,926 L 1972,972 L 28,972 Z"
+     fill="url(#iceGrad)" stroke="#90c8e0" stroke-width="2"/>
+<!-- Ice bumps -->
+<g fill="url(#iceGrad)" stroke="#a0d0e8" stroke-width="1.5">
+  <ellipse cx="200" cy="928" rx="40" ry="18"/>
+  <ellipse cx="500" cy="922" rx="55" ry="22"/>
+  <ellipse cx="820" cy="918" rx="48" ry="20"/>
+  <ellipse cx="1100" cy="924" rx="50" ry="18"/>
+  <ellipse cx="1400" cy="920" rx="45" ry="20"/>
+  <ellipse cx="1750" cy="918" rx="52" ry="22"/>
+</g>
+
+<!-- ═══ TREES on continents (cartoon) ═══ -->
+<g fill="#2a8a20" stroke="none">
+  <!-- NA trees -->
+  <polygon points="180,250 195,215 210,250" /><rect x="192" y="248" width="6" height="10" fill="#7a4010"/>
+  <polygon points="130,310 145,275 160,310" /><rect x="142" y="308" width="6" height="10" fill="#7a4010"/>
+  <polygon points="240,300 255,265 270,300" /><rect x="252" y="298" width="6" height="10" fill="#7a4010"/>
+  <!-- SA trees -->
+  <polygon points="240,520 256,484 272,520" fill="#1a9a20"/><rect x="253" y="518" width="6" height="10" fill="#7a4010"/>
+  <polygon points="270,580 286,544 302,580" fill="#1a9a20"/><rect x="283" y="578" width="6" height="10" fill="#7a4010"/>
+  <!-- Africa trees (palms) -->
+  <line x1="880" y1="430" x2="880" y2="400" stroke="#7a4010" stroke-width="3"/>
+  <ellipse cx="880" cy="396" rx="12" ry="8" fill="#3aaa20"/>
+  <line x1="920" y1="480" x2="920" y2="450" stroke="#7a4010" stroke-width="3"/>
+  <ellipse cx="920" cy="446" rx="12" ry="8" fill="#3aaa20"/>
+  <line x1="950" y1="360" x2="950" y2="330" stroke="#7a4010" stroke-width="3"/>
+  <ellipse cx="950" cy="326" rx="12" ry="8" fill="#3aaa20"/>
+  <!-- Asia trees -->
+  <polygon points="1060,160 1075,125 1090,160" fill="#2a8a20"/><rect x="1072" y="158" width="6" height="10" fill="#7a4010"/>
+  <polygon points="1150,180 1165,145 1180,180" fill="#2a8a20"/><rect x="1162" y="178" width="6" height="10" fill="#7a4010"/>
+  <!-- Australia trees (sparse) -->
+  <line x1="1490" y1="580" x2="1490" y2="550" stroke="#7a4010" stroke-width="3"/>
+  <ellipse cx="1490" cy="546" rx="10" ry="7" fill="#5aaa30" opacity="0.8"/>
+  <line x1="1540" y1="600" x2="1540" y2="570" stroke="#7a4010" stroke-width="3"/>
+  <ellipse cx="1540" cy="566" rx="10" ry="7" fill="#5aaa30" opacity="0.8"/>
+</g>
+
+<!-- ═══ CARTOON MOUNTAINS ═══ -->
+<g fill="#8ab840" stroke="#5a8020" stroke-width="1.5" stroke-linejoin="round">
+  <!-- Rockies NA -->
+  <polygon points="280,210 300,185 320,210"/>
+  <polygon points="295,212 318,184 340,212"/>
+  <polygon points="310,210 332,183 352,210"/>
+  <!-- Snow caps -->
+  <polygon points="295,190 300,185 305,190" fill="white" stroke="none"/>
+  <polygon points="312,187 318,181 324,187" fill="white" stroke="none"/>
+  <polygon points="327,188 332,182 337,188" fill="white" stroke="none"/>
+  <!-- Andes SA -->
+  <polygon points="215,510 230,488 245,510"/>
+  <polygon points="228,512 244,486 260,512"/>
+  <!-- Snow -->
+  <polygon points="222,495 228,489 234,495" fill="white" stroke="none"/>
+  <polygon points="235,494 242,487 249,494" fill="white" stroke="none"/>
+  <!-- Himalayas Asia -->
+  <polygon points="1090,180 1110,155 1130,180"/>
+  <polygon points="1108,182 1130,154 1152,182"/>
+  <polygon points="1126,180 1148,153 1170,180"/>
+  <!-- Snow -->
+  <polygon points="1100,163 1108,155 1116,163" fill="white" stroke="none"/>
+  <polygon points="1118,161 1128,153 1138,161" fill="white" stroke="none"/>
+  <polygon points="1136,162 1146,153 1156,162" fill="white" stroke="none"/>
+  <!-- Alps Europe -->
+  <polygon points="910,170 922,155 934,170"/>
+  <polygon points="922,172 936,153 950,172"/>
+  <polygon points="912,158 920,153 928,158" fill="white" stroke="none"/>
+  <polygon points="928,158 936,152 944,158" fill="white" stroke="none"/>
+</g>
+
+<!-- ═══ CARTOON CLOUDS ═══ -->
+<g class="cloud1" filter="url(#cloudShadow)">
+  <ellipse cx="580" cy="70" rx="50" ry="28" fill="white" opacity="0.92"/>
+  <ellipse cx="560" cy="78" rx="35" ry="22" fill="white" opacity="0.95"/>
+  <ellipse cx="606" cy="76" rx="38" ry="20" fill="white" opacity="0.95"/>
+  <ellipse cx="580" cy="82" rx="48" ry="18" fill="white"/>
+</g>
+<g class="cloud2" filter="url(#cloudShadow)">
+  <ellipse cx="1450" cy="88" rx="55" ry="30" fill="white" opacity="0.9"/>
+  <ellipse cx="1428" cy="98" rx="38" ry="24" fill="white" opacity="0.92"/>
+  <ellipse cx="1476" cy="96" rx="42" ry="22" fill="white" opacity="0.92"/>
+  <ellipse cx="1450" cy="104" rx="52" ry="20" fill="white"/>
+</g>
+<g class="cloud3" filter="url(#cloudShadow)">
+  <ellipse cx="1150" cy="60" rx="44" ry="24" fill="white" opacity="0.88"/>
+  <ellipse cx="1132" cy="68" rx="30" ry="19" fill="white" opacity="0.9"/>
+  <ellipse cx="1170" cy="66" rx="34" ry="18" fill="white" opacity="0.9"/>
+</g>
+<g class="cloud1" filter="url(#cloudShadow)">
+  <ellipse cx="350" cy="830" rx="42" ry="22" fill="white" opacity="0.75"/>
+  <ellipse cx="330" cy="838" rx="28" ry="18" fill="white" opacity="0.78"/>
+  <ellipse cx="372" cy="836" rx="32" ry="17" fill="white" opacity="0.78"/>
+</g>
+
+<!-- ═══ CARTOON SHIPS ═══ -->
+<!-- Atlantic ship -->
+<g class="ship" transform="translate(550,560)">
+  <path d="M-22,8 Q0,-5 22,8 L18,18 L-18,18 Z" fill="#c8820a" stroke="#8a5a00" stroke-width="1.5"/>
+  <rect x="-2" y="-22" width="3" height="28" fill="#8a5a00"/>
+  <polygon points="-1,-22 18,-8 -1,-2" fill="white" opacity="0.9"/>
+  <polygon points="-2,-22 -18,-8 -2,-2" fill="#e8e0c0" opacity="0.9"/>
+  <path d="M-18,14 Q0,10 18,14" fill="none" stroke="#5a3800" stroke-width="1"/>
+</g>
+<!-- Pacific ship -->
+<g class="ship2" transform="translate(1750,500)">
+  <path d="M-20,7 Q0,-4 20,7 L16,16 L-16,16 Z" fill="#c8820a" stroke="#8a5a00" stroke-width="1.5"/>
+  <rect x="-2" y="-20" width="3" height="25" fill="#8a5a00"/>
+  <polygon points="-1,-20 16,-7 -1,-2" fill="white" opacity="0.9"/>
+  <polygon points="-2,-20 -16,-7 -2,-2" fill="#e8e0c0" opacity="0.9"/>
+</g>
+<!-- Indian ocean ship -->
+<g class="ship" transform="translate(1100,680)">
+  <path d="M-16,6 Q0,-3 16,6 L13,13 L-13,13 Z" fill="#b07010" stroke="#8a5a00" stroke-width="1.5"/>
+  <rect x="-1.5" y="-16" width="3" height="21" fill="#8a5a00"/>
+  <polygon points="-1,-16 14,-5 -1,-2" fill="white" opacity="0.9"/>
+</g>
+
+<!-- ═══ SEA MONSTER ═══ -->
+<g class="monster" transform="translate(720,740)">
+  <!-- Body coils -->
+  <ellipse cx="0" cy="20" rx="22" ry="14" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <ellipse cx="40" cy="14" rx="18" ry="11" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <ellipse cx="72" cy="22" rx="15" ry="10" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <!-- Neck -->
+  <ellipse cx="-14" cy="-2" rx="12" ry="20" fill="#3a9860" stroke="#1a6a30" stroke-width="2" transform="rotate(-20)"/>
+  <!-- Head -->
+  <ellipse cx="-30" cy="-28" rx="18" ry="14" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <!-- Eye -->
+  <circle cx="-36" cy="-30" r="5" fill="white"/>
+  <circle cx="-36" cy="-30" r="3" fill="#1a1a1a"/>
+  <circle cx="-34" cy="-32" r="1.2" fill="white"/>
+  <!-- Teeth -->
+  <path d="M -38,-22 L -36,-18 L -34,-22 L -32,-18 L -30,-22" fill="white" stroke="#ccc" stroke-width="0.5"/>
+  <!-- Spines -->
+  <polygon points="-14,-18 -10,-26 -6,-18" fill="#1a6a30"/>
+  <polygon points="-2,-4 2,-14 6,-4" fill="#1a6a30"/>
+  <polygon points="38,4 42,-6 46,4" fill="#1a6a30"/>
+  <!-- Splash -->
+  <path d="M-30,28 Q-15,18 0,28 Q15,38 30,28" fill="none" stroke="#5ab8e0" stroke-width="2" opacity="0.7"/>
+</g>
+
+<!-- Small sea monster Pacific -->
+<g class="ship2" transform="translate(1850,680) scale(0.7)">
+  <ellipse cx="0" cy="15" rx="18" ry="11" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <ellipse cx="32" cy="10" rx="14" ry="9" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <ellipse cx="-16" cy="-5" rx="10" ry="17" fill="#3a9860" stroke="#1a6a30" stroke-width="2" transform="rotate(-20,-16,-5)"/>
+  <ellipse cx="-28" cy="-22" rx="14" ry="11" fill="#3a9860" stroke="#1a6a30" stroke-width="2"/>
+  <circle cx="-33" cy="-24" r="4" fill="white"/>
+  <circle cx="-33" cy="-24" r="2.5" fill="#1a1a1a"/>
+</g>
+
+<!-- ═══ WHALE ═══ -->
+<g class="ship" transform="translate(430,680)">
+  <path d="M-35,0 Q-20,-18 0,-14 Q20,-10 32,-2 Q20,10 0,12 Q-20,14 -35,0 Z" fill="#2060a8" stroke="#104880" stroke-width="2"/>
+  <path d="M32,-2 L44,-14 L44,10 Z" fill="#2060a8" stroke="#104880" stroke-width="1.5"/>
+  <circle cx="-22" cy="-4" r="4" fill="white"/>
+  <circle cx="-22" cy="-4" r="2.5" fill="#1a1a1a"/>
+  <!-- Spout -->
+  <path d="M-8,-14 Q-6,-28 -10,-36 M-8,-14 Q-4,-30 2,-34" stroke="#a0d8f8" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="-6" cy="-36" rx="8" ry="4" fill="#c8ecfa" opacity="0.7"/>
+</g>
+
+<!-- ═══ COMPASS ROSE ═══ -->
+<g class="compass-group" transform="translate(1780,880)" filter="url(#compassShadow)">
+  <!-- Outer circle -->
+  <circle cx="0" cy="0" r="58" fill="#f5d98a" stroke="#8a5a10" stroke-width="3"/>
+  <circle cx="0" cy="0" r="52" fill="none" stroke="#c8962a" stroke-width="1.5"/>
+  <!-- Cardinal points -->
+  <polygon points="0,-52 -8,-20 8,-20" fill="#c82020"/><!-- N -->
+  <polygon points="0,52 -8,20 8,20" fill="#e8c060"/><!-- S -->
+  <polygon points="-52,0 -20,-8 -20,8" fill="#e8c060"/><!-- W -->
+  <polygon points="52,0 20,-8 20,8" fill="#e8c060"/><!-- E -->
+  <!-- Intercardinals -->
+  <polygon points="36,-36 16,-8 8,-16" fill="#d4a840" opacity="0.8"/>
+  <polygon points="-36,-36 -16,-8 -8,-16" fill="#d4a840" opacity="0.8"/>
+  <polygon points="36,36 16,8 8,16" fill="#d4a840" opacity="0.8"/>
+  <polygon points="-36,36 -16,8 -8,16" fill="#d4a840" opacity="0.8"/>
+  <!-- Inner circle -->
+  <circle cx="0" cy="0" r="14" fill="#e8b030" stroke="#8a5a10" stroke-width="2"/>
+  <circle cx="0" cy="0" r="7" fill="#c8962a"/>
+  <!-- N label -->
+  <text x="0" y="-58" text-anchor="middle" font-family="'Fredoka One', cursive" font-size="14" fill="#8a1010" dy="-4">N</text>
+  <text x="0" y="72" text-anchor="middle" font-family="'Fredoka One', cursive" font-size="12" fill="#6a5010">S</text>
+  <text x="-66" y="4" text-anchor="middle" font-family="'Fredoka One', cursive" font-size="12" fill="#6a5010">W</text>
+  <text x="66" y="4" text-anchor="middle" font-family="'Fredoka One', cursive" font-size="12" fill="#6a5010">E</text>
+</g>
+
+<!-- ═══ DECORATIVE FISH ═══ -->
+<g fill="#f07030" stroke="#c05010" stroke-width="1.5">
+  <!-- Fish Atlantic -->
+  <path d="M 620,620 Q 638,614 648,620 Q 638,626 620,620 Z"/>
+  <polygon points="620,620 610,614 610,626" fill="#f07030"/>
+  <circle cx="643" cy="619" r="2" fill="#1a1a1a"/>
+</g>
+<g fill="#30a8f0" stroke="#1070c0" stroke-width="1.5">
+  <!-- Fish Pacific -->
+  <path d="M 1820,580 Q 1840,574 1850,580 Q 1840,586 1820,580 Z"/>
+  <polygon points="1820,580 1808,574 1808,586" fill="#30a8f0"/>
+  <circle cx="1845" cy="579" r="2" fill="#1a1a1a"/>
+</g>
+
+<!-- ═══ SUN ═══ -->
+<g transform="translate(1900,75)">
+  <!-- Rays -->
+  <g stroke="#f8c840" stroke-width="3" stroke-linecap="round" opacity="0.8">
+    <line x1="0" y1="-52" x2="0" y2="-40"/>
+    <line x1="37" y1="-37" x2="28" y2="-28"/>
+    <line x1="52" y1="0" x2="40" y2="0"/>
+    <line x1="37" y1="37" x2="28" y2="28"/>
+    <line x1="0" y1="52" x2="0" y2="40"/>
+    <line x1="-37" y1="37" x2="-28" y2="28"/>
+    <line x1="-52" y1="0" x2="-40" y2="0"/>
+    <line x1="-37" y1="-37" x2="-28" y2="-28"/>
+  </g>
+  <circle cx="0" cy="0" r="32" fill="#fce050" stroke="#f8a020" stroke-width="3"/>
+  <!-- Cute face -->
+  <circle cx="-10" cy="-6" r="4" fill="#f07010"/>
+  <circle cx="10" cy="-6" r="4" fill="#f07010"/>
+  <circle cx="-10" cy="-6" r="2" fill="#1a1a1a"/>
+  <circle cx="10" cy="-6" r="2" fill="#1a1a1a"/>
+  <circle cx="-8" cy="-7" r="0.8" fill="white"/>
+  <circle cx="12" cy="-7" r="0.8" fill="white"/>
+  <path d="M -10,8 Q 0,18 10,8" fill="none" stroke="#f07010" stroke-width="2.5" stroke-linecap="round"/>
+</g>
+
+<!-- ═══ STARS (top area) ═══ -->
+<g fill="#fffacc" class="star1">
+  <polygon points="68,50 70,44 72,50 78,50 73,54 75,60 70,56 65,60 67,54 62,50" transform="scale(0.6) translate(50,40)"/>
+</g>
+<g fill="#fffacc" class="star2">
+  <polygon points="0,0 2,-6 4,0 10,0 5,4 7,10 2,6 -3,10 -1,4 -6,0" transform="translate(128,42) scale(0.5)"/>
+</g>
+<g fill="#fffacc" class="star3">
+  <polygon points="0,0 2,-6 4,0 10,0 5,4 7,10 2,6 -3,10 -1,4 -6,0" transform="translate(200,55) scale(0.55)"/>
+</g>
+
+<!-- ═══ CONTINENT LABELS ═══ -->
+<g font-family="'Fredoka One', cursive" text-anchor="middle">
+  <!-- North America -->
+  <text x="196" y="275" font-size="20" fill="#1a5a00" stroke="white" stroke-width="3" paint-order="stroke">North America</text>
+  <!-- South America -->
+  <text x="258" y="570" font-size="18" fill="#1a5a00" stroke="white" stroke-width="3" paint-order="stroke">South America</text>
+  <!-- Europe -->
+  <text x="918" y="208" font-size="15" fill="#1a5a00" stroke="white" stroke-width="3" paint-order="stroke">Europe</text>
+  <!-- Africa -->
+  <text x="912" y="398" font-size="20" fill="#6a3a00" stroke="white" stroke-width="3" paint-order="stroke">Africa</text>
+  <!-- Asia -->
+  <text x="1100" y="185" font-size="22" fill="#1a5a00" stroke="white" stroke-width="3" paint-order="stroke">Asia</text>
+  <!-- Australia -->
+  <text x="1515" y="592" font-size="17" fill="#6a3a00" stroke="white" stroke-width="3" paint-order="stroke">Australia</text>
+  <!-- Antarctica -->
+  <text x="1000" y="960" font-size="15" fill="#3080a8" stroke="white" stroke-width="2.5" paint-order="stroke">Antarctica</text>
+  <!-- Greenland -->
+  <text x="404" y="80" font-size="12" fill="#3080a8" stroke="white" stroke-width="2" paint-order="stroke">Greenland</text>
+</g>
+
+<!-- ═══ LATITUDE LABELS ═══ -->
+<g font-family="'Nunito', sans-serif" font-size="10" fill="#1460a0" opacity="0.65">
+  <text x="34" y="532" font-weight="700">Equator</text>
+  <text x="34" y="366">Tropic of Cancer</text>
+  <text x="34" y="699">Tropic of Capricorn</text>
+</g>
+
+<!-- ═══ MAP TITLE ═══ -->
+<g class="map-title">
+  <!-- Title scroll/banner -->
+  <rect x="680" y="36" width="640" height="64" rx="32" fill="#f5d98a" stroke="#8a5a10" stroke-width="3"/>
+  <rect x="684" y="40" width="632" height="56" rx="28" fill="none" stroke="#c8962a" stroke-width="1.5"/>
+  <!-- Decorative lines on banner -->
+  <line x1="680" y1="68" x2="708" y2="68" stroke="#c8962a" stroke-width="1.5"/>
+  <line x1="1292" y1="68" x2="1320" y2="68" stroke="#c8962a" stroke-width="1.5"/>
+  <text x="1000" y="80" text-anchor="middle"
+        font-family="'Fredoka One', cursive" font-size="30" fill="#7a3a00"
+        filter="url(#titleShadow)" letter-spacing="2">
+    ✦ WORLD MAP ✦
+  </text>
+</g>
+
+<!-- ═══ SCALE BAR ═══ -->
+<g transform="translate(80,920)">
+  <rect x="0" y="0" width="120" height="10" fill="#f5d98a" stroke="#8a5a10" stroke-width="1.5" rx="2"/>
+  <rect x="0" y="0" width="60" height="10" fill="#c8962a" rx="2"/>
+  <text x="0" y="-4" font-family="'Nunito', sans-serif" font-size="10" fill="#6a3a00" font-weight="700">0</text>
+  <text x="60" y="-4" font-family="'Nunito', sans-serif" font-size="10" fill="#6a3a00" font-weight="700" text-anchor="middle">5,000km</text>
+  <text x="120" y="-4" font-family="'Nunito', sans-serif" font-size="10" fill="#6a3a00" font-weight="700" text-anchor="end">10,000km</text>
+</g>
+
+<!-- ═══ LEGEND / bottom credit ═══ -->
+<text x="1000" y="984" text-anchor="middle" font-family="'Nunito', sans-serif" font-size="10" fill="#8a5a10" opacity="0.7">
+  Cartoon World Map · Not to Scale · For Illustrative Purposes
+</text>
+
+</svg>
+</div>
+</body>
+</html>

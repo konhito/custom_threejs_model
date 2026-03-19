@@ -68,6 +68,11 @@ const countryToLocale = {
   'AT': 'de', // Austria
   'CH': 'de', // Switzerland
   'LI': 'de', // Liechtenstein
+
+  // Italian speaking countries (3)
+  'IT': 'it', // Italy
+  'SM': 'it', // San Marino
+  'VA': 'it', // Vatican City
   
   // English speaking countries (default)
   'US': 'en', // United States

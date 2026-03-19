@@ -128,6 +128,8 @@ export default function TestLanguagePage() {
                       {lang === 'es' && '🇪🇸 Español'}
                       {lang === 'zh' && '🇨🇳 中文'}
                       {lang === 'fr' && '🇫🇷 Français'}
+                      {lang === 'de' && '🇩🇪 Deutsch'}
+                      {lang === 'it' && '🇮🇹 Italiano'}
                     </button>
                   ))}
                 </div>

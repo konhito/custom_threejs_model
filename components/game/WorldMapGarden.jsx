@@ -1,287 +1,220 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { countriesData, getCompleteFlowerPath } from "@/lib/gameData";
 
-// Country coordinates on the world map (percentage-based positioning)
-const countryCoordinates = {
-    PAKISTAN: { x: 68, y: 32 },
-    PERU: { x: 22, y: 58 },
-    TANZANIA: { x: 58, y: 55 },
-    NICARAGUA: { x: 18, y: 45 },
-    JAMAICA: { x: 23, y: 42 },
-    SPAIN: { x: 48, y: 28 },
-    SCOTLAND: { x: 48, y: 20 },
-    GERMANY: { x: 51, y: 25 },
+const COORDS = {
+  SCOTLAND:  { sx:  857, sy: 137 },
+  GERMANY:   { sx:  942, sy: 158 },
+  SPAIN:     { sx:  876, sy: 218 },
+  PAKISTAN:  { sx: 1055, sy: 240 },
+  TANZANIA:  { sx:  968, sy: 495 },
+  NICARAGUA: { sx:  194, sy: 413 },
+  JAMAICA:   { sx:  250, sy: 425 },
+  PERU:      { sx:  217, sy: 572 },
 };
 
+const FLAGS = {
+  PK: "🇵🇰", PE: "🇵🇪", TZ: "🇹🇿", NI: "🇳🇮",
+  JM: "🇯🇲", ES: "🇪🇸", DE: "🇩🇪",
+};
+
+const toPercent = (sx, sy) => ({ x: sx / 20, y: sy / 10 });
+
 export default function WorldMapGarden({ completedFlowers = [], currentFlower }) {
-    const [hoveredCountry, setHoveredCountry] = useState(null);
-    const [mounted, setMounted] = useState(false);
+  const [hovered, setHovered] = useState(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+  const allCompleted = [...new Set([...completedFlowers, currentFlower?.id])].filter(Boolean);
 
-    // Get all completed flowers including the current one
-    const allCompletedFlowers = [...new Set([...completedFlowers, currentFlower?.id])].filter(Boolean);
+  const journeyIds = allCompleted.filter(id => COORDS[id]);
+  const lines = journeyIds.slice(1).map((id, i) => ({
+    x1: COORDS[journeyIds[i]].sx, y1: COORDS[journeyIds[i]].sy,
+    x2: COORDS[id].sx,            y2: COORDS[id].sy,
+  }));
 
-    return (
-        <div className="relative w-full h-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center justify-center">
-            {/* World Map Background */}
-            <div className="relative w-full h-full max-w-6xl mx-auto">
-                {/* SVG World Map */}
-                <svg
-                    viewBox="0 0 1000 500"
-                    className="w-full h-full"
-                    style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))' }}
-                >
-                    {/* Ocean background */}
-                    <rect width="1000" height="500" fill="#e0f2fe" />
+  return (
+    <div className="relative w-full rounded-2xl select-none" style={{ aspectRatio: "2/1" }}>
 
-                    {/* Simplified world continents */}
-                    <g fill="#a7f3d0" stroke="#059669" strokeWidth="2">
-                        {/* North America */}
-                        <path d="M 50 80 Q 80 60 120 70 L 180 90 Q 200 110 190 150 L 170 180 Q 150 200 120 190 L 80 170 Q 60 140 50 120 Z" />
+      <iframe
+        src="/cartoon-world-map.html"
+        className="absolute inset-0 w-full h-full border-0 rounded-2xl"
+        title="World Map"
+        scrolling="no"
+      />
 
-                        {/* South America */}
-                        <path d="M 150 220 Q 170 210 190 230 L 200 280 Q 210 320 200 360 L 180 380 Q 160 390 150 370 L 140 320 Q 130 270 150 220 Z" />
+      <svg className="absolute inset-0 w-full h-full pointer-events-none"
+        viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid meet">
+        {lines.map((l, i) => (
+          <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+            stroke="rgba(251,191,36,0.7)" strokeWidth="3" strokeDasharray="10 7"
+            strokeLinecap="round"/>
+        ))}
+        {allCompleted.filter(id => COORDS[id]).map(id => {
+          const c = COORDS[id];
+          const isCurrent = currentFlower?.id === id;
+          return (
+            <circle key={id} cx={c.sx} cy={c.sy}
+              r={isCurrent ? 22 : 16} fill="none"
+              stroke={isCurrent ? "rgba(251,191,36,0.4)" : "rgba(134,239,172,0.3)"}
+              strokeWidth="3">
+              <animate attributeName="r"
+                values={isCurrent ? "12;24;12" : "8;18;8"}
+                dur={isCurrent ? "1.4s" : "2.2s"} repeatCount="indefinite"/>
+              <animate attributeName="opacity"
+                values="0.9;0;0.9"
+                dur={isCurrent ? "1.4s" : "2.2s"} repeatCount="indefinite"/>
+            </circle>
+          );
+        })}
+      </svg>
 
-                        {/* Europe */}
-                        <path d="M 450 100 Q 480 90 510 100 L 540 120 Q 550 140 540 160 L 520 180 Q 490 190 460 180 L 440 160 Q 430 130 450 100 Z" />
+      {mounted && countriesData.map((country) => {
+        const c = COORDS[country.id];
+        if (!c) return null;
+        const pct = toPercent(c.sx, c.sy);
+        const isCompleted = allCompleted.includes(country.id);
+        const isCurrent = currentFlower?.id === country.id;
+        const isHovered = hovered === country.id;
 
-                        {/* Africa */}
-                        <path d="M 480 200 Q 510 190 540 210 L 560 250 Q 570 300 560 350 L 540 380 Q 510 390 480 380 L 460 340 Q 450 280 480 200 Z" />
+        return (
+          <div key={`pin-${country.id}`}
+            className="absolute"
+            style={{
+              left: `${pct.x}%`, top: `${pct.y}%`,
+              transform: "translate(-50%, -100%)",
+              zIndex: isHovered ? 50 : isCurrent ? 40 : isCompleted ? 30 : 10,
+            }}
+            onMouseEnter={() => setHovered(country.id)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <div className="relative cursor-pointer transition-all duration-200"
+              style={{ transform: isHovered ? "scale(1.3) translateY(-4px)" : "scale(1)" }}>
 
-                        {/* Asia */}
-                        <path d="M 600 80 Q 650 70 700 90 L 750 120 Q 780 150 770 190 L 740 220 Q 700 240 660 230 L 620 200 Q 590 160 600 80 Z" />
+              {isCompleted && (
+                <div className="absolute rounded-full animate-ping"
+                  style={{
+                    inset: isCurrent ? "-10px" : "-6px",
+                    background: isCurrent ? "rgba(251,191,36,0.22)" : "rgba(134,239,172,0.18)",
+                    animationDuration: isCurrent ? "1.3s" : "2s",
+                  }}/>
+              )}
 
-                        {/* Australia */}
-                        <path d="M 750 320 Q 780 310 810 330 L 830 360 Q 840 380 820 400 L 790 410 Q 760 400 750 380 Z" />
-                    </g>
+              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-5 h-1.5 rounded-full"
+                style={{ background: "rgba(0,0,0,0.6)", filter: "blur(3px)" }}/>
 
-                    {/* Grid lines for a subtle map effect */}
-                    <g stroke="#94a3b8" strokeWidth="0.5" opacity="0.3">
-                        {Array.from({ length: 10 }).map((_, i) => (
-                            <line key={`h-${i}`} x1="0" y1={i * 50} x2="1000" y2={i * 50} />
-                        ))}
-                        {Array.from({ length: 20 }).map((_, i) => (
-                            <line key={`v-${i}`} x1={i * 50} y1="0" x2={i * 50} y2="500" />
-                        ))}
-                    </g>
-                </svg>
+              <div className="relative w-10 h-10 rounded-full flex items-center justify-center"
+                style={{
+                  background: isCompleted
+                    ? isCurrent ? "linear-gradient(135deg,#fde68a,#f59e0b)"
+                               : "linear-gradient(135deg,#86efac,#22c55e)"
+                    : "linear-gradient(135deg,#1f2937,#111827)",
+                  boxShadow: isCompleted
+                    ? isCurrent ? "0 0 20px rgba(251,191,36,0.9),0 4px 10px rgba(0,0,0,0.6)"
+                               : "0 0 14px rgba(134,239,172,0.7),0 4px 10px rgba(0,0,0,0.6)"
+                    : "inset 0 1px 2px rgba(255,255,255,0.05),0 4px 10px rgba(0,0,0,0.6)",
+                  border: isCompleted
+                    ? isCurrent ? "2px solid rgba(253,230,138,0.9)"
+                               : "2px solid rgba(134,239,172,0.8)"
+                    : "2px solid rgba(55,65,81,0.7)",
+                }}>
+                <span className="text-xl leading-none select-none">
+                  {isCompleted ? "🌸" : "🔒"}
+                </span>
+              </div>
 
-                {/* Flower Markers */}
-                {mounted && countriesData.map((country) => {
-                    const coords = countryCoordinates[country.id];
-                    if (!coords) return null;
-
-                    const isCompleted = allCompletedFlowers.includes(country.id);
-                    const isCurrent = currentFlower?.id === country.id;
-                    const isHovered = hoveredCountry === country.id;
-
-                    return (
-                        <div
-                            key={country.id}
-                            className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
-                            style={{
-                                left: `${coords.x}%`,
-                                top: `${coords.y}%`,
-                                zIndex: isHovered ? 50 : isCurrent ? 40 : isCompleted ? 30 : 10,
-                            }}
-                            onMouseEnter={() => setHoveredCountry(country.id)}
-                            onMouseLeave={() => setHoveredCountry(null)}
-                        >
-                            {/* Marker Pin */}
-                            <div className="relative">
-                                {/* Pulsing ring for current flower */}
-                                {isCurrent && (
-                                    <div className="absolute inset-0 -m-4">
-                                        <div className="w-full h-full rounded-full bg-yellow-400/30 animate-ping" />
-                                    </div>
-                                )}
-
-                                {/* Pin Container */}
-                                <div
-                                    className={`relative transition-all duration-300 ${isHovered ? 'scale-125' : 'scale-100'
-                                        }`}
-                                >
-                                    {/* Pin Shadow */}
-                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-2 bg-black/20 rounded-full blur-sm" />
-
-                                    {/* Pin */}
-                                    <div
-                                        className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${isCompleted
-                                                ? 'bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg shadow-green-500/50'
-                                                : 'bg-gradient-to-br from-gray-300 to-gray-400 shadow-md'
-                                            }`}
-                                        style={{
-                                            boxShadow: isCompleted
-                                                ? '0 0 20px rgba(34, 197, 94, 0.6), 0 4px 6px rgba(0, 0, 0, 0.1)'
-                                                : '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                        }}
-                                    >
-                                        {/* Flower Icon or Lock */}
-                                        <div className="text-xl">
-                                            {isCompleted ? '🌸' : '🔒'}
-                                        </div>
-
-                                        {/* Sparkle effect for completed */}
-                                        {isCompleted && (
-                                            <div className="absolute inset-0 rounded-full">
-                                                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
-                                                    <div
-                                                        key={i}
-                                                        className="absolute w-1 h-1 bg-yellow-300 rounded-full"
-                                                        style={{
-                                                            left: '50%',
-                                                            top: '50%',
-                                                            transform: `rotate(${angle}deg) translateY(-20px)`,
-                                                            animation: `sparkle-pulse ${1.5 + i * 0.1}s ease-in-out infinite`,
-                                                            animationDelay: `${i * 0.1}s`,
-                                                        }}
-                                                    />
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Pin Stem */}
-                                    <div
-                                        className={`absolute left-1/2 -translate-x-1/2 top-full w-1 h-4 ${isCompleted ? 'bg-green-600' : 'bg-gray-400'
-                                            }`}
-                                        style={{
-                                            clipPath: 'polygon(50% 0%, 100% 0%, 75% 100%, 25% 100%, 0% 0%)',
-                                        }}
-                                    />
-                                </div>
-
-                                {/* Hover Card */}
-                                {isHovered && (
-                                    <div
-                                        className="absolute left-1/2 -translate-x-1/2 bottom-full mb-6 w-64 bg-white rounded-xl shadow-2xl p-4 border-2 border-green-400 z-50"
-                                        style={{
-                                            animation: 'scaleIn 0.2s ease-out',
-                                        }}
-                                    >
-                                        {/* Arrow pointing down */}
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-2 w-4 h-4 bg-white border-r-2 border-b-2 border-green-400 transform rotate-45" />
-
-                                        {/* Content */}
-                                        <div className="space-y-2">
-                                            {/* Country Flag Emoji */}
-                                            <div className="text-4xl text-center">
-                                                {country.countryCode === 'PK' && '🇵🇰'}
-                                                {country.countryCode === 'PE' && '🇵🇪'}
-                                                {country.countryCode === 'TZ' && '🇹🇿'}
-                                                {country.countryCode === 'NI' && '🇳🇮'}
-                                                {country.countryCode === 'JM' && '🇯🇲'}
-                                                {country.countryCode === 'ES' && '🇪🇸'}
-                                                {country.countryCode === 'GB-SCT' && '🏴󠁧󠁢󠁳󠁣󠁴󠁿'}
-                                                {country.countryCode === 'DE' && '🇩🇪'}
-                                            </div>
-
-                                            {/* Country Name */}
-                                            <h3 className="text-lg font-bold text-center text-gray-800">
-                                                {country.country}
-                                            </h3>
-
-                                            {/* Flower Name */}
-                                            <div className="text-center">
-                                                <p className="text-sm font-semibold text-green-600">
-                                                    {country.flowerName}
-                                                </p>
-                                                <p className="text-xs italic text-gray-500">
-                                                    {country.flowerScientificName}
-                                                </p>
-                                            </div>
-
-                                            {/* Status */}
-                                            <div className="text-center pt-2 border-t border-gray-200">
-                                                {isCompleted ? (
-                                                    <div className="flex items-center justify-center gap-2 text-green-600">
-                                                        <span className="text-lg">✓</span>
-                                                        <span className="text-sm font-semibold">Restored!</span>
-                                                    </div>
-                                                ) : (
-                                                    <div className="flex items-center justify-center gap-2 text-gray-500">
-                                                        <span className="text-lg">🔒</span>
-                                                        <span className="text-sm">Not yet restored</span>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            {/* Flower Image Preview (if completed) */}
-                                            {isCompleted && (
-                                                <div className="relative w-full h-24 mt-2 rounded-lg overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
-                                                    <Image
-                                                        src={getCompleteFlowerPath(country.folder, 'png')}
-                                                        alt={country.flowerName}
-                                                        fill
-                                                        className="object-contain p-2"
-                                                        unoptimized
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
-
-                {/* Legend */}
-                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 border border-gray-200">
-                    <h4 className="text-xs font-bold text-gray-700 mb-2">Your Garden</h4>
-                    <div className="space-y-1 text-xs">
-                        <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full bg-gradient-to-br from-green-400 to-emerald-600" />
-                            <span className="text-gray-600">Restored ({allCompletedFlowers.length}/{countriesData.length})</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full bg-gradient-to-br from-gray-300 to-gray-400" />
-                            <span className="text-gray-600">Locked</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Title */}
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-green-600 drop-shadow-lg">
-                        🌍 Your Global Garden 🌍
-                    </h2>
-                    <p className="text-sm md:text-base text-gray-600 mt-1">
-                        Hover over countries to see your collection
-                    </p>
-                </div>
+              <div className="absolute left-1/2"
+                style={{
+                  top: "100%", marginLeft: -1.5,
+                  width: 3, height: 10,
+                  background: isCompleted ? (isCurrent ? "#f59e0b" : "#22c55e") : "#374151",
+                  clipPath: "polygon(30% 0%,70% 0%,100% 100%,0% 100%)",
+                }}/>
             </div>
 
-            {/* CSS for animations */}
-            <style jsx>{`
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-          }
-        }
+            {isHovered && (
+              <div className="absolute left-1/2 bottom-full w-52 rounded-2xl overflow-hidden pointer-events-none"
+                style={{
+                  marginBottom: 54,
+                  transform: "translateX(-50%)",
+                  background: "rgba(3,8,18,0.98)",
+                  border: `1px solid ${isCompleted ? "rgba(134,239,172,0.14)" : "rgba(55,65,81,0.4)"}`,
+                  boxShadow: "0 24px 60px rgba(0,0,0,0.95)",
+                  backdropFilter: "blur(20px)",
+                  animation: "wm-tip 0.12s ease-out",
+                  zIndex: 60,
+                }}>
+                <div className="h-px w-full"
+                  style={{ background: isCompleted
+                    ? "linear-gradient(90deg,transparent,#22c55e 50%,transparent)"
+                    : "linear-gradient(90deg,transparent,#374151 50%,transparent)" }}/>
+                <div className="p-4 space-y-2 text-center">
+                  <div className="text-3xl">{FLAGS[country.countryCode] || "🌍"}</div>
+                  <p className="font-bold text-white leading-tight"
+                    style={{ fontFamily: '"Cormorant Garamond",Georgia,serif', fontSize: "1.15rem" }}>
+                    {country.country}
+                  </p>
+                  <p className="text-sm font-semibold"
+                    style={{ color: isCompleted ? "#86efac" : "#6b7280" }}>
+                    {country.flowerName}
+                  </p>
+                  <p className="text-xs italic" style={{ color: "#4b5563" }}>
+                    {country.flowerScientificName}
+                  </p>
+                  {isCompleted && (
+                    <div className="relative w-full rounded-xl overflow-hidden"
+                      style={{ background: "rgba(16,32,20,0.7)", height: 72 }}>
+                      <img
+                        src={getCompleteFlowerPath(country.folder, "svg")}
+                        alt={country.flowerName}
+                        className="w-full h-full object-contain p-2"
+                        style={{ mixBlendMode: "screen" }}
+                        onError={e => { e.target.src = getCompleteFlowerPath(country.folder, "png"); e.target.onerror = null; }}
+                      />
+                    </div>
+                  )}
+                  <div className="pt-2 border-t border-white/5">
+                    {isCompleted
+                      ? <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#34d399" }}>Restored</span>
+                      : <span className="text-xs tracking-widest uppercase" style={{ color: "#4b5563" }}>Not yet restored</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
 
-        @keyframes sparkle-pulse {
-          0%, 100% {
-            opacity: 0;
-            transform: rotate(var(--angle)) translateY(-20px) scale(0);
-          }
-          50% {
-            opacity: 1;
-            transform: rotate(var(--angle)) translateY(-25px) scale(1);
-          }
+      <div className="absolute top-3 right-3 text-right pointer-events-none rounded-xl px-3 py-2"
+        style={{ zIndex: 20, background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)" }}>
+        <p className="text-[7px] font-bold tracking-[0.28em] uppercase mb-0.5"
+          style={{ color: "rgba(134,239,172,0.7)" }}>Garden Progress</p>
+        <p className="font-bold text-white leading-none"
+          style={{ fontFamily: '"Cormorant Garamond",Georgia,serif', fontSize: "1.9rem" }}>
+          {allCompleted.length}
+          <span className="text-gray-500 text-base ml-0.5">/{countriesData.length}</span>
+        </p>
+        <div className="flex items-center justify-end gap-3 mt-1.5">
+          {[
+            ["linear-gradient(135deg,#86efac,#22c55e)", "Restored"],
+            ["linear-gradient(135deg,#1f2937,#111827)", "Locked"],
+          ].map(([bg, label]) => (
+            <div key={label} className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: bg }}/>
+              <span className="text-[8px]" style={{ color: "#9ca3af" }}>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes wm-tip {
+          from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 }
