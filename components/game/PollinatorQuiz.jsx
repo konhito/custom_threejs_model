@@ -4,13 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { getFlowerDetail, getFlowerQuiz } from "@/lib/flowerDetailsData";
 import { getCompleteFlowerPath } from "@/lib/gameData";
 
-// Visual themes per question index
+// Visual themes per question index - White & Golden theme
 const QUESTION_THEMES = [
-  { bg: "135deg, #0f2027 0%, #203a43 50%, #1a1a2e 100%", accent: "#fbbf24", ring: "rgba(251,191,36,0.3)" },
-  { bg: "135deg, #1a0533 0%, #2d0a4e 50%, #0d1f3d 100%", accent: "#a78bfa", ring: "rgba(167,139,250,0.3)" },
-  { bg: "135deg, #002b1a 0%, #003d28 50%, #001a0f 100%", accent: "#34d399", ring: "rgba(52,211,153,0.3)" },
-  { bg: "135deg, #1f0011 0%, #3d0022 50%, #1a000f 100%", accent: "#f472b6", ring: "rgba(244,114,182,0.3)" },
-  { bg: "135deg, #0d1f3d 0%, #1a3a5c 50%, #0d2b47 100%", accent: "#60a5fa", ring: "rgba(96,165,250,0.3)" },
+  { bg: "#fdfcf8", accent: "#f59e0b", ring: "rgba(245,158,11,0.2)", border: "rgba(245,158,11,0.3)" },
+  { bg: "#fffbf5", accent: "#d97706", ring: "rgba(217,119,6,0.2)", border: "rgba(217,119,6,0.3)" },
+  { bg: "#fff9f0", accent: "#fbbf24", ring: "rgba(251,191,36,0.2)", border: "rgba(251,191,36,0.3)" },
+  { bg: "#fdfcf8", accent: "#f59e0b", ring: "rgba(245,158,11,0.2)", border: "rgba(245,158,11,0.3)" },
+  { bg: "#fffbf5", accent: "#d97706", ring: "rgba(217,119,6,0.2)", border: "rgba(217,119,6,0.3)" },
 ];
 
 // Particle emojis for confetti
@@ -132,91 +132,181 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
     return (
       <div
-        className="fixed inset-0 z-50 overflow-y-auto flex flex-col items-center justify-center px-4 py-8"
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6"
         style={{
-          background: "linear-gradient(135deg, #0a1628 0%, #0d2b1a 50%, #0a1628 100%)",
+          background: "#fdfcf8",
           opacity: exitAnim ? 0 : 1,
           transition: "opacity 0.7s ease",
         }}
       >
-        {/* Score circle */}
-        <div className="relative mb-8" style={{ animation: "pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards" }}>
-          <div
-            className="w-36 h-36 rounded-full flex flex-col items-center justify-center relative"
-            style={{
-              background: perfect ? "linear-gradient(135deg, #fbbf24, #f59e0b)" : great ? "linear-gradient(135deg, #34d399, #10b981)" : "linear-gradient(135deg, #60a5fa, #3b82f6)",
-              boxShadow: `0 0 60px ${perfect ? "rgba(251,191,36,0.5)" : great ? "rgba(52,211,153,0.5)" : "rgba(96,165,250,0.5)"}`,
+        <div className="w-full max-w-5xl">
+          {/* Compact Header Card */}
+          <div 
+            className="relative bg-white rounded-2xl p-4 md:p-6 mb-4 border-2"
+            style={{ 
+              borderColor: perfect ? "#d4af37" : great ? "#f59e0b" : "#d1d5db",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+              animation: "slide-down 0.6s cubic-bezier(0.34,1.56,0.64,1) both"
             }}
           >
-            <span className="text-4xl font-black text-white">{score}/{totalQ}</span>
-            <span className="text-white/80 text-sm font-bold">{pct}%</span>
-          </div>
-          {perfect && (
-            <div className="absolute -top-4 -right-4 text-3xl" style={{ animation: "bounce-spin 1s ease-in-out infinite" }}>🏆</div>
-          )}
-        </div>
+            {/* Golden accent line for perfect score */}
+            {perfect && (
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#d4af37] rounded-t-2xl" />
+            )}
+            
+            <div className="flex items-center gap-4 md:gap-6">
+              {/* Compact Score Circle */}
+              <div className="relative flex-shrink-0">
+                <svg className="w-20 h-20 md:w-24 md:h-24 transform -rotate-90">
+                  {/* Background circle */}
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r="42"
+                    fill="none"
+                    stroke="#f5f5f4"
+                    strokeWidth="5"
+                  />
+                  {/* Progress circle */}
+                  <circle
+                    cx="48"
+                    cy="48"
+                    r="42"
+                    fill="none"
+                    stroke={perfect ? "#d4af37" : great ? "#f59e0b" : "#9ca3af"}
+                    strokeWidth="5"
+                    strokeDasharray={`${(pct / 100) * 264} 264`}
+                    strokeLinecap="round"
+                    style={{
+                      transition: "stroke-dasharray 1.5s ease-out",
+                    }}
+                  />
+                </svg>
+                {/* Score text */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-xl md:text-2xl font-black" style={{ 
+                    color: perfect ? "#d4af37" : great ? "#f59e0b" : "#6b7280",
+                  }}>
+                    {pct}%
+                  </span>
+                  <span className="text-[10px] text-gray-400 font-semibold">{score}/{totalQ}</span>
+                </div>
+                {/* Trophy for perfect score */}
+                {perfect && (
+                  <div className="absolute -top-1 -right-1 w-8 h-8 bg-white rounded-full flex items-center justify-center border-2 border-[#d4af37] shadow-md">
+                    <span className="text-sm">🏆</span>
+                  </div>
+                )}
+              </div>
 
-        {/* Title */}
-        <h2
-          className="text-white font-black text-center mb-2"
-          style={{
-            fontSize: "clamp(1.8rem, 5vw, 3rem)",
-            textShadow: "0 0 30px rgba(255,255,255,0.3)",
-            animation: "fade-up 0.5s ease-out 0.3s both",
-          }}
-        >
-          {perfect ? "🌟 Perfect Champion!" : great ? "🌸 Flower Guardian!" : "🌱 Keep Learning!"}
-        </h2>
-        <p className="text-gray-400 text-sm text-center mb-8" style={{ animation: "fade-up 0.5s ease-out 0.4s both" }}>
-          {perfect
-            ? "You know everything about this amazing flower!"
-            : great
-              ? `You scored ${score} out of ${totalQ} — great knowledge!`
-              : `You got ${score} out of ${totalQ}. Explore the flower details to learn more!`}
-        </p>
-
-        {/* Answer review */}
-        <div className="w-full max-w-lg mb-8 space-y-3" style={{ animation: "fade-up 0.5s ease-out 0.5s both" }}>
-          {answers.map((a, i) => (
-            <div
-              key={i}
-              className="rounded-xl p-3 border flex items-start gap-3"
-              style={{
-                background: a.isCorrect ? "rgba(52,211,153,0.08)" : "rgba(239,68,68,0.08)",
-                borderColor: a.isCorrect ? "rgba(52,211,153,0.3)" : "rgba(239,68,68,0.3)",
-              }}
-            >
-              <span className="text-lg flex-shrink-0">{a.isCorrect ? "✅" : "❌"}</span>
-              <div className="min-w-0">
-                <p className="text-white/80 text-xs leading-snug line-clamp-2">{a.question}</p>
-                <p className="text-xs mt-1" style={{ color: a.isCorrect ? "#34d399" : "#f87171" }}>
-                  {questions[i]?.options[a.correct]}
+              {/* Title Section */}
+              <div className="flex-1 min-w-0">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-2 border-2" style={{
+                  borderColor: perfect ? "#d4af37" : great ? "#f59e0b" : "#d1d5db",
+                  background: perfect ? "#fef3c7" : great ? "#fef3c7" : "#f3f4f6",
+                }}>
+                  <span className="text-[10px] font-black uppercase tracking-widest" style={{
+                    color: perfect ? "#92400e" : great ? "#92400e" : "#6b7280",
+                  }}>
+                    {perfect ? "Perfect" : great ? "Well Done" : "Keep Practicing"}
+                  </span>
+                </div>
+                <h2
+                  className="font-black mb-1.5 leading-tight"
+                  style={{
+                    fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
+                    color: "#1f2937",
+                  }}
+                >
+                  {perfect ? "Outstanding! 🌟" : great ? "Excellent! 🌸" : "Keep Learning! 🌱"}
+                </h2>
+                <p className="text-gray-600 text-xs md:text-sm leading-tight">
+                  {perfect
+                    ? "Complete mastery of this flower's knowledge."
+                    : great
+                      ? `${score} of ${totalQ} correct. Impressive!`
+                      : `${score} correct. Review details to improve.`}
                 </p>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Compact Answer Grid */}
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-2.5 mb-4" 
+            style={{ animation: "fade-up 0.5s ease-out 0.2s both" }}
+          >
+            {answers.map((a, i) => (
+              <div
+                key={i}
+                className="relative bg-white rounded-xl p-3 transition-all duration-300 hover:shadow-md border-2"
+                style={{
+                  borderColor: a.isCorrect ? "#d4af37" : "#e5e7eb",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
+                }}
+              >
+                <div className="flex items-start gap-2.5">
+                  {/* Compact Icon */}
+                  <div 
+                    className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm border-2"
+                    style={{
+                      background: a.isCorrect ? "#fef3c7" : "#fef2f2",
+                      borderColor: a.isCorrect ? "#d4af37" : "#fca5a5",
+                      color: a.isCorrect ? "#92400e" : "#991b1b",
+                    }}
+                  >
+                    {a.isCorrect ? "✓" : "✗"}
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-gray-800 text-xs font-semibold leading-tight mb-1.5">
+                      {a.question}
+                    </p>
+                    <div 
+                      className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold border"
+                      style={{
+                        background: a.isCorrect ? "#fef3c7" : "#fef2f2",
+                        borderColor: a.isCorrect ? "#f59e0b" : "#fca5a5",
+                        color: a.isCorrect ? "#92400e" : "#991b1b",
+                      }}
+                    >
+                      <span>{questions[i]?.options[a.correct]}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Compact CTA Button */}
+          <button
+            onClick={handleFinish}
+            className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
+            style={{ 
+              background: "#d4af37",
+              borderColor: "#b8941f",
+              boxShadow: "0 2px 12px rgba(212,175,55,0.2)",
+              animation: "fade-up 0.5s ease-out 0.4s both"
+            }}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-xl">🌍</span>
+              <span className="text-white font-black text-sm md:text-base tracking-wide">See Your Victory Garden</span>
+              <span className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </div>
+          </button>
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={handleFinish}
-          className="group relative px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 text-white"
-          style={{
-            background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-            boxShadow: "0 0 40px rgba(16,185,129,0.4)",
-            animation: "fade-up 0.5s ease-out 0.8s both",
-          }}
-        >
-          <span className="flex items-center gap-3">
-            🌍 See Your Victory Garden
-            →
-          </span>
-        </button>
-
         <style jsx>{`
-          @keyframes pop-in { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-          @keyframes bounce-spin { 0%, 100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(10deg) scale(1.1); } }
-          @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+          @keyframes slide-down { 
+            from { transform: translateY(-30px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+          }
+          @keyframes fade-up { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+          }
         `}</style>
       </div>
     );
@@ -227,22 +317,22 @@ export default function PollinatorQuiz({ country, onComplete }) {
     return (
       <div
         className="fixed inset-0 z-50 flex flex-col items-center justify-center px-6"
-        style={{ background: "linear-gradient(135deg, #0f2027 0%, #1a1a2e 100%)" }}
+        style={{ background: "#fdfcf8" }}
       >
         <div className="text-center max-w-sm" style={{ animation: "pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both" }}>
           <div className="text-7xl mb-6" style={{ animation: "flower-float 3s ease-in-out infinite" }}>
             {detail?.emoji || "🌸"}
           </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/40 bg-emerald-400/10 mb-4">
-            <span className="text-emerald-400 text-xs font-bold tracking-widest uppercase">Knowledge Quiz</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border-2 border-amber-300 bg-amber-50 mb-4">
+            <span className="text-amber-800 text-xs font-bold tracking-widest uppercase">Knowledge Quiz</span>
           </div>
-          <h1 className="text-white font-black text-3xl mb-3" style={{ textShadow: "0 0 30px rgba(251,191,36,0.3)" }}>
+          <h1 className="font-black text-3xl mb-3" style={{ color: "#92400e" }}>
             {detail?.flowerName || country.flowerName} Quiz
           </h1>
-          <p className="text-gray-400 text-sm mb-2">
+          <p className="text-gray-600 text-sm mb-2">
             {totalQ} questions about your flower's secrets!
           </p>
-          <p className="text-white/40 text-xs mb-8">
+          <p className="text-gray-500 text-xs mb-8">
             Pollinators · Country · Conservation · Culture
           </p>
 
@@ -251,8 +341,8 @@ export default function PollinatorQuiz({ country, onComplete }) {
             {questions.map((_, i) => (
               <div
                 key={i}
-                className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 text-xs font-bold"
-                style={{ background: "rgba(255,255,255,0.05)" }}
+                className="w-8 h-8 rounded-full border-2 border-amber-200 flex items-center justify-center text-amber-700 text-xs font-bold"
+                style={{ background: "#fff" }}
               >
                 {i + 1}
               </div>
@@ -261,10 +351,10 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
           <button
             onClick={() => setPhase("question")}
-            className="group px-10 py-4 rounded-2xl font-bold text-white text-lg transition-all duration-300 hover:scale-105"
+            className="group px-10 py-4 rounded-3xl font-bold text-white text-lg transition-all duration-300 hover:scale-105 border-2 border-amber-600"
             style={{
-              background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
-              boxShadow: "0 0 40px rgba(251,191,36,0.4)",
+              background: "#f59e0b",
+              boxShadow: "0 8px 24px rgba(245,158,11,0.3)",
             }}
           >
             <span className="flex items-center gap-2"> Start Quiz →</span>
@@ -284,7 +374,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
     <div
       className="fixed inset-0 z-50 overflow-hidden"
       style={{
-        background: `linear-gradient(${currentTheme.bg})`,
+        background: currentTheme.bg,
         transition: "background 0.8s ease",
         opacity: exitAnim ? 0 : 1,
       }}
@@ -304,7 +394,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               width: `${ring * 30}vw`,
               height: `${ring * 30}vw`,
               borderColor: currentTheme.ring,
-              opacity: 0.15 / ring,
+              opacity: 0.3 / ring,
               animation: `ring-pulse ${3 + ring}s ease-in-out infinite`,
               animationDelay: `${ring * 0.5}s`,
             }}
@@ -331,20 +421,20 @@ export default function PollinatorQuiz({ country, onComplete }) {
                   key={i}
                   className="flex-1 h-1.5 rounded-full transition-all duration-500"
                   style={{
-                    background: i < currentQ ? currentTheme.accent : i === currentQ ? `${currentTheme.accent}80` : "rgba(255,255,255,0.15)",
+                    background: i < currentQ ? currentTheme.accent : i === currentQ ? `${currentTheme.accent}80` : "rgba(217,119,6,0.2)",
                   }}
                 />
               ))}
             </div>
-            <p className="text-white/40 text-xs">
+            <p className="text-gray-600 text-xs font-medium">
               Question {currentQ + 1} of {totalQ}
             </p>
           </div>
 
           {/* Score badge */}
           <div
-            className="flex-shrink-0 px-3 py-1.5 rounded-full border font-bold text-sm"
-            style={{ borderColor: currentTheme.ring, color: currentTheme.accent, background: "rgba(255,255,255,0.05)" }}
+            className="flex-shrink-0 px-3 py-1.5 rounded-full border-2 font-bold text-sm"
+            style={{ borderColor: currentTheme.border, color: currentTheme.accent, background: "#fff" }}
           >
             ⭐ {score}
           </div>
@@ -352,18 +442,18 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
         {/* Question card */}
         <div
-          className="flex-shrink-0 rounded-3xl p-5 md:p-6 mb-5 border"
+          className="flex-shrink-0 rounded-3xl p-5 md:p-6 mb-5 border-2"
           style={{
-            background: "rgba(255,255,255,0.05)",
-            borderColor: `${currentTheme.accent}30`,
-            boxShadow: `0 0 40px ${currentTheme.ring}, inset 0 1px 0 rgba(255,255,255,0.05)`,
+            background: "#fff",
+            borderColor: currentTheme.border,
+            boxShadow: `0 8px 24px ${currentTheme.ring}`,
             animation: "card-appear 0.5s cubic-bezier(0.34,1.2,0.64,1) both",
           }}
         >
           {/* Q number badge */}
           <div
-            className="inline-flex items-center gap-1.5 mb-3 px-2 py-1 rounded-full text-xs font-bold"
-            style={{ background: `${currentTheme.accent}20`, color: currentTheme.accent }}
+            className="inline-flex items-center gap-1.5 mb-3 px-2 py-1 rounded-full text-xs font-bold border"
+            style={{ background: "#fef3c7", color: currentTheme.accent, borderColor: currentTheme.border }}
           >
             <span>Q{currentQ + 1}</span>
             <span>·</span>
@@ -372,40 +462,41 @@ export default function PollinatorQuiz({ country, onComplete }) {
           </div>
 
           <h2
-            className="text-white font-bold leading-snug"
+            className="font-bold leading-snug text-gray-900"
             style={{ fontSize: "clamp(1rem, 3vw, 1.3rem)" }}
           >
             {q.q}
           </h2>
         </div>
 
-        {/* Options */}
+        {/* Options - 2x2 Grid Layout */}
         <div className="flex-1 flex flex-col justify-center gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {q.options.map((option, i) => {
             const isSelected = selectedOption === i;
             const isCorrect = i === q.answer;
             const isWrong = isSelected && !isCorrect;
 
-            let bgStyle = "rgba(255,255,255,0.05)";
-            let borderStyle = "rgba(255,255,255,0.12)";
-            let textStyle = "rgba(255,255,255,0.85)";
+            let bgStyle = "#fff";
+            let borderStyle = "rgba(217,119,6,0.2)";
+            let textStyle = "#374151";
             let iconEl = null;
 
             if (revealed) {
               if (isCorrect) {
-                bgStyle = "rgba(52,211,153,0.15)";
-                borderStyle = "rgba(52,211,153,0.5)";
-                textStyle = "#34d399";
+                bgStyle = "#d1fae5";
+                borderStyle = "#10b981";
+                textStyle = "#065f46";
                 iconEl = "✅";
               } else if (isWrong) {
-                bgStyle = "rgba(239,68,68,0.15)";
-                borderStyle = "rgba(239,68,68,0.5)";
-                textStyle = "#f87171";
+                bgStyle = "#fee2e2";
+                borderStyle = "#ef4444";
+                textStyle = "#991b1b";
                 iconEl = "❌";
               } else {
-                bgStyle = "rgba(255,255,255,0.02)";
-                borderStyle = "rgba(255,255,255,0.06)";
-                textStyle = "rgba(255,255,255,0.35)";
+                bgStyle = "#fafaf9";
+                borderStyle = "rgba(217,119,6,0.15)";
+                textStyle = "#9ca3af";
               }
             }
 
@@ -414,17 +505,17 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 key={i}
                 onClick={() => handleSelect(i)}
                 disabled={revealed}
-                className="w-full text-left rounded-2xl px-4 py-3.5 border transition-all duration-300 flex items-center gap-3 group"
+                className="w-full text-left rounded-2xl px-4 py-3.5 border-2 transition-all duration-300 flex items-center gap-3 group"
                 style={{
                   background: bgStyle,
                   borderColor: borderStyle,
                   color: textStyle,
                   transform: isSelected && selectedAnimation === "correct" && isCorrect ? "scale(1.02)" : "scale(1)",
                   boxShadow: isCorrect && revealed
-                    ? "0 0 20px rgba(52,211,153,0.3)"
+                    ? "0 8px 20px rgba(16,185,129,0.3)"
                     : isWrong && revealed
-                      ? "0 0 20px rgba(239,68,68,0.2)"
-                      : "none",
+                      ? "0 8px 20px rgba(239,68,68,0.2)"
+                      : "0 2px 8px rgba(0,0,0,0.05)",
                   animation: isSelected && revealed ? `${isCorrect ? "correct-bounce" : "wrong-shake"} 0.5s ease-out` : "none",
                   cursor: revealed ? "default" : "pointer",
                   transition: "all 0.3s ease",
@@ -434,7 +525,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 <span
                   className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-black"
                   style={{
-                    background: revealed && isCorrect ? "rgba(52,211,153,0.3)" : revealed && isWrong ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.1)",
+                    background: revealed && isCorrect ? "#10b981" : revealed && isWrong ? "#ef4444" : "#fef3c7",
+                    color: revealed && (isCorrect || isWrong) ? "#fff" : currentTheme.accent,
+                    border: `2px solid ${revealed && isCorrect ? "#10b981" : revealed && isWrong ? "#ef4444" : currentTheme.border}`,
                   }}
                 >
                   {iconEl || String.fromCharCode(65 + i)}
@@ -444,11 +537,12 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
                 {/* Hover arrow */}
                 {!revealed && (
-                  <span className="text-white/0 group-hover:text-white/40 transition-colors duration-200 text-sm flex-shrink-0">→</span>
+                  <span className="text-gray-300 group-hover:text-amber-600 transition-colors duration-200 text-sm flex-shrink-0">→</span>
                 )}
               </button>
             );
           })}
+          </div>
         </div>
 
         {/* Explanation panel (after answer) */}
@@ -464,7 +558,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
             <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: selectedOption === q.answer ? "#34d399" : "#f87171" }}>
               {selectedOption === q.answer ? "🌟 Correct!" : "💡 Did you know?"}
             </p>
-            <p className="text-white/75 text-sm leading-relaxed">{q.explanation}</p>
+            <p className="text-gray-800 text-sm leading-relaxed">{q.explanation}</p>
           </div>
         )}
 
@@ -480,7 +574,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               color: "#0a0a0a",
             }}
           >
-            {isLastQ ? " See My Score →" : `Next Question (${currentQ + 2}/${totalQ}) →`}
+            {isLastQ ? " See My Score →" : `Next Question →`}
           </button>
         )}
       </div>

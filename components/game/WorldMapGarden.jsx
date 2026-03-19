@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { countriesData, getCompleteFlowerPath } from "@/lib/gameData";
 
 const COORDS = {
@@ -22,11 +23,16 @@ const FLAGS = {
 const toPercent = (sx, sy) => ({ x: sx / 20, y: sy / 10 });
 
 export default function WorldMapGarden({ completedFlowers = [], currentFlower }) {
+  const router = useRouter();
   const [hovered, setHovered] = useState(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
   const allCompleted = [...new Set([...completedFlowers, currentFlower?.id])].filter(Boolean);
+
+  const handleFlowerClick = (countryId) => {
+    router.push(`/game?country=${countryId}`);
+  };
 
   const journeyIds = allCompleted.filter(id => COORDS[id]);
   const lines = journeyIds.slice(1).map((id, i) => ({
@@ -89,8 +95,14 @@ export default function WorldMapGarden({ completedFlowers = [], currentFlower })
             onMouseEnter={() => setHovered(country.id)}
             onMouseLeave={() => setHovered(null)}
           >
-            <div className="relative cursor-pointer transition-all duration-200"
-              style={{ transform: isHovered ? "scale(1.3) translateY(-4px)" : "scale(1)" }}>
+            <div 
+              className="relative transition-all duration-200"
+              style={{ 
+                transform: isHovered ? "scale(1.3) translateY(-4px)" : "scale(1)",
+                cursor: isCompleted ? "pointer" : "not-allowed"
+              }}
+              onClick={() => isCompleted && handleFlowerClick(country.id)}
+            >
 
               {isCompleted && (
                 <div className="absolute rounded-full animate-ping"

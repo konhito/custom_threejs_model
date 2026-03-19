@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import GameBoard from "@/components/game/GameBoard";
 import FlowerFormation from "@/components/game/FlowerFormation";
 import PageLoader from "@/components/PageLoader";
@@ -23,6 +24,7 @@ import PollinatorQuiz from "@/components/game/PollinatorQuiz";
 
 export default function GamePage() {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
 
   // Core game state
   const [gameState, setGameState] = useState("intro");
@@ -59,6 +61,18 @@ export default function GamePage() {
     addCompletedFlower,
     countriesData,
   });
+
+  // Check for country parameter in URL
+  useEffect(() => {
+    const countryParam = searchParams?.get('country');
+    if (countryParam && !isLoading) {
+      const country = countriesData.find(c => c.id === countryParam);
+      if (country) {
+        setSelectedCountry(country);
+        setGameState("flowerDetails");
+      }
+    }
+  }, [searchParams, isLoading, setSelectedCountry]);
 
   return (
     <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${(gameState === "playing" && !isLoadingAssets) || gameState === "completed" ? "text-black" : "bg-black text-white"}`}>

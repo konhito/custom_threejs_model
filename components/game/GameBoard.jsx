@@ -299,229 +299,35 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   return (
     <div className="w-full relative flex-1 flex flex-col overflow-visible">
       {/* Game Status Bar - UNO Style - Mobile Optimized - Scaled up */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0">
-        {/* Petal Counter Card */}
-        <div className="bg-white border-2 border-purple-200 rounded-xl px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 shadow-lg flex items-center justify-between w-full max-w-md overflow-hidden">
-          <div className="flex flex-col min-w-0 flex-shrink-0">
-            <div className="text-gray-600 text-[10px] sm:text-xs md:text-sm font-medium whitespace-nowrap">Petals Collected</div>
-            <div className="text-black text-base sm:text-lg md:text-xl font-bold whitespace-nowrap">
-              {petalsCollected} / {PETAL_COUNT}
-            </div>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0 z-[100]">
+        
+        {/* Petal Counter Card - Transparent Glass-morphism Style with Icons and Number */}
+        <div className="flex items-center justify-center gap-3 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:bg-white/15 transition-all duration-300">
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="text-[10px] sm:text-xs text-white/70 font-medium tracking-wide uppercase">Petals</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-bold text-white">{petalsCollected} / 6</span>
           </div>
-          <div className="flex gap-1.5 sm:gap-2 md:gap-2.5 flex-shrink-0 items-center">
-            {Array.from({ length: PETAL_COUNT }).map((_, i) => {
-              const collected = i < petalsCollected;
-
-              return (
-                <div
-                  key={i}
-                  className={`text-lg sm:text-xl md:text-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${collected ? 'scale-110' : 'scale-100 opacity-30 grayscale'}`}
-                >
-                  🌸
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Araihan - Abstract Light/Aura Representation - Outside the box, next to it - Mobile optimized */}
-        <div className="absolute right-2 sm:right-4 md:relative md:right-auto md:ml-4 top-1/2 md:top-auto transform md:transform-none -translate-y-1/2 md:translate-y-0 z-50 overflow-visible">
-          {/* Improved hover effect - subtle glow */}
-          <div className="absolute inset-0 rounded-full bg-yellow-500/0 group-hover:bg-yellow-500/10 transition-all duration-500 ease-out blur-lg -z-10 scale-125 pointer-events-none"
-            style={{
-              animation: 'none',
-            }}></div>
-
-          <div className="relative group">
-            {/* Abstract Light/Aura Representation - Energy, Light, Life */}
-            <div
-              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0 transition-all duration-500 cursor-pointer relative ${lastRevealedCard
-                ? "animate-bounce scale-110"
-                : "animate-pulse-slow scale-100 animate-float group-hover:scale-110 group-hover:brightness-110"
+          <div className="flex gap-1">
+            {[...Array(6)].map((_, index) => (
+              <span
+                key={index}
+                className={`text-base sm:text-lg md:text-xl transition-all duration-300 ${
+                  index < petalsCollected
+                    ? 'opacity-100 scale-110 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]'
+                    : 'opacity-30 grayscale'
                 }`}
-              onClick={() => {
-                // Click effect - trigger a bounce
-                if (typeof window !== "undefined") {
-                  import("@/lib/soundUtils").then((module) => {
-                    // Resume audio context if suspended (browser autoplay policy)
-                    if (module.default.audioContext && module.default.audioContext.state === 'suspended') {
-                      module.default.audioContext.resume();
-                    }
-                    module.default.play("flip");
-                  });
-                }
-              }}
-            >
-              {/* Outer glow ring */}
-              <div className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-200/50 via-amber-200/40 to-transparent animate-pulse" />
-
-              {/* Central luminous core */}
-              <div className="relative w-full h-full flex items-center justify-center">
-                {/* Light particles - floating (more when active) */}
-                {Array.from({ length: lastRevealedCard ? 12 : 8 }).map((_, i) => {
-                  const angle = (i / (lastRevealedCard ? 12 : 8)) * Math.PI * 2;
-                  const radius = lastRevealedCard ? 16 : 12;
-                  return (
-                    <div
-                      key={i}
-                      className="absolute rounded-full bg-yellow-300/70"
-                      style={{
-                        width: lastRevealedCard ? '5px' : '4px',
-                        height: lastRevealedCard ? '5px' : '4px',
-                        left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-                        top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-                        transform: 'translate(-50%, -50%)',
-                        animation: `float-particle ${2 + i * 0.3}s ease-in-out infinite`,
-                        animationDelay: `${i * 0.2}s`,
-                        boxShadow: lastRevealedCard
-                          ? '0 0 12px rgba(251, 191, 36, 1)'
-                          : '0 0 8px rgba(251, 191, 36, 0.8)',
-                      }}
-                    />
-                  );
-                })}
-
-                {/* Faceless luminous silhouette - abstract form */}
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
-                  {/* Main aura shape - organic, flowing */}
-                  <div
-                    className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-300/90 via-amber-200/70 to-yellow-100/50"
-                    style={{
-                      filter: 'blur(2px)',
-                      animation: lastRevealedCard ? 'aura-pulse-active 2s ease-in-out infinite' : 'aura-pulse 3s ease-in-out infinite',
-                    }}
-                  />
-
-                  {/* Inner light core */}
-                  <div
-                    className="absolute inset-2 rounded-full bg-gradient-radial from-white via-yellow-200 to-transparent"
-                    style={{
-                      filter: 'blur(1px)',
-                      animation: lastRevealedCard ? 'core-glow-active 1.5s ease-in-out infinite' : 'core-glow 2s ease-in-out infinite',
-                    }}
-                  />
-
-                  {/* Energy waves */}
-                  <div
-                    className="absolute inset-0 rounded-full border-2 border-yellow-300/50"
-                    style={{
-                      animation: lastRevealedCard ? 'energy-wave-active 2s ease-out infinite' : 'energy-wave 2.5s ease-out infinite',
-                    }}
-                  />
-
-                  {/* Additional energy wave when active */}
-                  {lastRevealedCard && (
-                    <div
-                      className="absolute inset-0 rounded-full border-2 border-amber-400/60"
-                      style={{
-                        animation: 'energy-wave-active 2s ease-out infinite 0.5s',
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
-
-              {/* CSS Animations */}
-              <style jsx>{`
-                @keyframes float-particle {
-                  0%, 100% {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 0.6;
-                  }
-                  50% {
-                    transform: translate(-50%, -50%) scale(1.3) translateY(-4px);
-                    opacity: 1;
-                  }
-                }
-                @keyframes aura-pulse {
-                  0%, 100% {
-                    transform: scale(1);
-                    opacity: 0.8;
-                  }
-                  50% {
-                    transform: scale(1.1);
-                    opacity: 1;
-                  }
-                }
-                @keyframes aura-pulse-active {
-                  0%, 100% {
-                    transform: scale(1);
-                    opacity: 1;
-                  }
-                  50% {
-                    transform: scale(1.15);
-                    opacity: 1;
-                  }
-                }
-                @keyframes core-glow {
-                  0%, 100% {
-                    opacity: 0.7;
-                  }
-                  50% {
-                    opacity: 1;
-                  }
-                }
-                @keyframes core-glow-active {
-                  0%, 100% {
-                    opacity: 0.9;
-                  }
-                  50% {
-                    opacity: 1;
-                  }
-                }
-                @keyframes energy-wave {
-                  0% {
-                    transform: scale(1);
-                    opacity: 0.6;
-                  }
-                  100% {
-                    transform: scale(1.5);
-                    opacity: 0;
-                  }
-                }
-                @keyframes energy-wave-active {
-                  0% {
-                    transform: scale(1);
-                    opacity: 0.8;
-                  }
-                  100% {
-                    transform: scale(1.6);
-                    opacity: 0;
-                  }
-                }
-              `}</style>
-            </div>
-
-            {/* Resting state - subtle glow when idle */}
-            {!lastRevealedCard && (
-              <div className="absolute -top-1 -right-1 text-yellow-300/60 text-[8px] animate-pulse font-bold">
-                ✨
-              </div>
-            )}
-
-            {/* Brief Message Bubble - Mobile optimized, positioned to avoid sidebar */}
-            {(lastRevealedCard || hasGuardian) && (
-              <div className="absolute top-1/2 -translate-y-1/2 left-full ml-2 sm:ml-3 md:ml-4 bg-purple-900/98 backdrop-blur-md rounded-lg sm:rounded-xl px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 animate-fade-in border-2 border-purple-400/60 shadow-2xl z-[100] max-w-[calc(100vw-140px)] sm:max-w-[calc(100vw-180px)] md:max-w-[400px]">
-                <p className="text-white text-[10px] sm:text-xs md:text-sm font-medium break-words whitespace-normal leading-tight sm:leading-normal" style={{
-                  wordWrap: 'break-word',
-                  overflowWrap: 'break-word',
-                  lineHeight: '1.4'
-                }}>
-                  {lastCardType === "petal" && "Petal collected!"}
-                  {lastCardType === "minion" && !hasGuardian && "Minion revealed!"}
-                  {lastCardType === "minion" && hasGuardian && "Guardian protection activated!"}
-                  {lastCardType === "guardian" && activeGuardian && "Guardian activated!"}
-                  {hasGuardian && activeGuardian && !lastRevealedCard && "Guardian protecting!"}
-                </p>
-                {/* Speech bubble tail - pointing left, centered vertically */}
-                <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-purple-900/98"></div>
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-xl bg-purple-400/20 blur-sm -z-10"></div>
-              </div>
-            )}
+                style={{
+                  filter: index < petalsCollected ? 'brightness(1.2)' : 'brightness(0.5)',
+                }}
+              >
+                🌸
+              </span>
+            ))}
           </div>
         </div>
       </div>
+
+
 
       {/* Help Button - Bottom Right */}
       <button
@@ -532,7 +338,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
         ?
       </button>
 
-      {/* Cards — individually positioned across the stone table */}
+      {/* Cards - individually positioned across the stone table */}
       <div
         className="fixed inset-0 z-20 pointer-events-none"
       >
@@ -540,18 +346,22 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
           const isFlipped = flippedCards.has(card.id);
           const totalCards = cards.length;
 
-          // 8 positions spread across the stone table surface
+          // 8 positions aligned with carved stone sections on the board
+          // Based on the background image: central circle with 8 surrounding leaf sections
           const positions = [
-            // Row 1 (upper part of table)
-            { left: '22%', top: '30%', rotate: -2 },
-            { left: '38%', top: '28%', rotate: 1.5 },
-            { left: '54%', top: '29%', rotate: -1 },
-            { left: '70%', top: '30%', rotate: 2 },
-            // Row 2 (lower part of table)
-            { left: '22%', top: '56%', rotate: 1.5 },
-            { left: '38%', top: '58%', rotate: -2 },
-            { left: '54%', top: '57%', rotate: 1 },
-            { left: '70%', top: '56%', rotate: -1.5 },
+            // Top row (3 sections)
+            { left: '30%', top: '38%', rotate: -3 },    // Left leaf
+            { left: '50%', top: '32%', rotate: 1 },     // Top center
+            { left: '70%', top: '38%', rotate: 2.5 },   // Right leaf
+            
+            // Middle row (2 sections on sides)
+            { left: '20%', top: '48%', rotate: -1.5 },  // Left side
+            { left: '80%', top: '48%', rotate: 1.5 },   // Right side
+            
+            // Bottom row (3 sections)
+            { left: '30%', top: '64%', rotate: 2 },     // Bottom left
+            { left: '50%', top: '68%', rotate: -2 },    // Bottom center
+            { left: '70%', top: '64%', rotate: -1 },    // Bottom right
           ];
 
           const pos = positions[index] || positions[0];

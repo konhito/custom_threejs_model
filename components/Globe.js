@@ -807,7 +807,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               )}
 
               {/* Country Stats */}
-              <div className="pt-6 border-t border-gray-100 grid grid-cols-2 gap-6">
+              <div className="pt-6 border-t border-gray-100 grid grid-cols-2 gap-6 mb-6">
                 <div>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
                     {t("globeModal.country") || "Country"}
@@ -841,6 +841,18 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
                   </p>
                 </div>
               </div>
+
+              {/* Action Button - Explore Details & Quiz */}
+              <Link 
+                href={`/game?country=${country.id}`}
+                className="block w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+              >
+                <div className="flex items-center justify-center gap-3">
+                  <Flower className="w-5 h-5" />
+                  <span>Explore 8 Parameters & Take Quiz</span>
+                  <span className="text-xl">→</span>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

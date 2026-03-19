@@ -25,7 +25,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         const educationalPhrases = {
           1: `Petal 1 collected! Each petal represents a part of ${countryName}'s natural heritage. Flowers are essential for biodiversity and ecosystem health.`,
           2: `Petal 2 collected! Did you know that flowers help maintain the balance of nature? They provide food and shelter for many creatures.`,
-          3: `Petal 3 collected! Flowers are not just beautiful—they play a crucial role in pollination, helping plants reproduce and thrive.`,
+          3: `Petal 3 collected! Flowers are not just beautiful. They play a crucial role in pollination, helping plants reproduce and thrive.`,
           4: `Petal 4 collected! National flowers like ${countryName}'s represent cultural identity and connection to the land. They tell stories of history and tradition.`,
           5: `Petal 5 collected! Conservation of flowers protects entire ecosystems. When we protect flowers, we protect the pollinators and wildlife that depend on them.`,
           6: `Petal 6 collected! You've collected all petals! Each petal you found teaches us about the importance of preserving our natural world for future generations.`
@@ -48,7 +48,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         return "Guardian activated";
       } else {
         // Full version for gameplay notification
-        return "You activated a Guardian. Hope is with you — continue!";
+        return "You activated a Guardian. Hope is with you. Continue!";
       }
     } else if (cardType === "guardian-protect") {
       if (showAction) {
@@ -82,7 +82,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         setIsTyping(false);
         clearInterval(typeInterval);
       }
-    }, isIntro ? 25 : (showAction ? 30 : 20)); // Original typing speed - fast but readable
+    }, isIntro ? 40 : (showAction ? 45 : 35)); // Slower typing speed for better readability
 
     return () => clearInterval(typeInterval);
   }, [finalMessage, showAction]);
@@ -332,141 +332,74 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
     );
   }
 
-  // Gameplay messages - subtle notification style - Mobile optimized
+  // Gameplay messages - elegant notification style - Mobile optimized
   if (!isVisible) return null;
   
+  // Badge style based on card type
+  const getBadgeStyle = () => {
+    if (cardType === "minion") {
+      return "bg-gradient-to-br from-red-50 to-orange-50 text-red-700 border-red-200/50";
+    } else if (cardType === "guardian" || cardType === "guardian-protect") {
+      return "bg-gradient-to-br from-emerald-50 to-green-50 text-emerald-700 border-emerald-200/50";
+    } else if (cardType === "petal") {
+      return "bg-gradient-to-br from-amber-50 to-yellow-50 text-amber-700 border-amber-200/50";
+    }
+    return "bg-gradient-to-br from-gray-50 to-slate-50 text-gray-700 border-gray-200/50";
+  };
+  
+  const getBadgeIcon = () => {
+    if (cardType === "minion") return "⚠️";
+    if (cardType === "guardian" || cardType === "guardian-protect") return "🛡️";
+    if (cardType === "petal") return "🌸";
+    return "ℹ️";
+  };
+  
   return (
-    <div className="fixed bottom-4 left-2 sm:left-4 right-2 sm:right-4 md:right-auto md:left-4 md:bottom-6 z-[9999] max-w-sm animate-fade-in">
-      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-purple-200/50 p-2.5 sm:p-3 md:p-4 flex items-start gap-2 sm:gap-3">
-        {/* Araihan - Abstract Light/Aura Representation - Mobile optimized */}
-        <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center flex-shrink-0 relative">
-          {/* Outer glow ring */}
-          <div className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-200/40 via-amber-200/30 to-transparent animate-pulse" />
-          
-          {/* Central luminous core */}
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* Light particles - floating */}
-            {Array.from({ length: 6 }).map((_, i) => {
-              const angle = (i / 6) * Math.PI * 2;
-              const radius = 10;
-              return (
-                <div
-                  key={i}
-                  className="absolute rounded-full bg-yellow-300/60"
-                  style={{
-                    width: '3px',
-                    height: '3px',
-                    left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-                    top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-                    transform: 'translate(-50%, -50%)',
-                    animation: `float-particle ${2 + i * 0.3}s ease-in-out infinite`,
-                    animationDelay: `${i * 0.2}s`,
-                    boxShadow: '0 0 6px rgba(251, 191, 36, 0.8)',
-                  }}
-                />
-              );
-            })}
-            
-            {/* Faceless luminous silhouette - abstract form */}
-            <div className="relative w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10">
-              {/* Main aura shape - organic, flowing */}
-              <div 
-                className="absolute inset-0 rounded-full bg-gradient-radial from-yellow-300/80 via-amber-200/60 to-yellow-100/40"
-                style={{
-                  filter: 'blur(2px)',
-                  animation: 'aura-pulse 3s ease-in-out infinite',
-                }}
-              />
-              
-              {/* Inner light core */}
-              <div 
-                className="absolute inset-1 rounded-full bg-gradient-radial from-white via-yellow-200 to-transparent"
-                style={{
-                  filter: 'blur(1px)',
-                  animation: 'core-glow 2s ease-in-out infinite',
-                }}
-              />
-              
-              {/* Energy waves */}
-              <div 
-                className="absolute inset-0 rounded-full border-2 border-yellow-300/40"
-                style={{
-                  animation: 'energy-wave 2.5s ease-out infinite',
-                }}
-              />
-            </div>
-          </div>
-        </div>
+    <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] max-w-md w-[calc(100%-2rem)] sm:max-w-lg animate-fade-in">
+      <div className={`relative ${getBadgeStyle()} backdrop-blur-md rounded-2xl shadow-2xl border-2 p-4 sm:p-5 transition-all duration-300 hover:shadow-3xl`}>
+        {/* Golden accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent rounded-t-2xl" />
         
-        {/* Message - Mobile optimized */}
-        <div className="flex-1 min-w-0 flex items-start justify-between gap-2">
-          <p className="text-gray-800 text-xs sm:text-sm md:text-base leading-relaxed break-words flex-1" style={{ 
-            wordWrap: 'break-word',
-            overflowWrap: 'break-word',
-            lineHeight: '1.5'
-          }}>
-            {displayedMessage}
-            {isTyping && (
-              <span className="inline-block w-1 h-3 bg-gray-800 ml-1 animate-pulse">|</span>
-            )}
-          </p>
+        <div className="flex items-start gap-3 sm:gap-4">
+          {/* Icon Badge */}
+          <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-lg border-2 border-white/50">
+            <span className="text-2xl sm:text-3xl">{getBadgeIcon()}</span>
+          </div>
           
-          {/* Manual dismiss button */}
+          {/* Message Content */}
+          <div className="flex-1 min-w-0 pt-1">
+            <p className="text-sm sm:text-base leading-relaxed break-words font-medium" style={{ 
+              wordWrap: 'break-word',
+              overflowWrap: 'break-word',
+              lineHeight: '1.6',
+              letterSpacing: '0.01em'
+            }}>
+              {displayedMessage}
+              {isTyping && (
+                <span className="inline-block w-0.5 h-4 bg-current ml-1 animate-pulse">|</span>
+              )}
+            </p>
+          </div>
+          
+          {/* Close Button */}
           {!isTyping && (
             <button
               onClick={() => {
                 setIsManuallyDismissed(true);
                 setIsVisible(false);
               }}
-              className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full hover:bg-gray-200/50 flex items-center justify-center transition-colors"
+              className="flex-shrink-0 w-8 h-8 rounded-full bg-white/50 hover:bg-white/80 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
               aria-label="Close message"
             >
-              <X className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500" />
+              <X className="w-4 h-4 text-gray-600" />
             </button>
           )}
         </div>
         
-        {/* CSS Animations */}
-        <style jsx>{`
-          @keyframes float-particle {
-            0%, 100% {
-              transform: translate(-50%, -50%) scale(1);
-              opacity: 0.6;
-            }
-            50% {
-              transform: translate(-50%, -50%) scale(1.3) translateY(-4px);
-              opacity: 1;
-            }
-          }
-          @keyframes aura-pulse {
-            0%, 100% {
-              transform: scale(1);
-              opacity: 0.8;
-            }
-            50% {
-              transform: scale(1.1);
-              opacity: 1;
-            }
-          }
-          @keyframes core-glow {
-            0%, 100% {
-              opacity: 0.7;
-            }
-            50% {
-              opacity: 1;
-            }
-          }
-          @keyframes energy-wave {
-            0% {
-              transform: scale(1);
-              opacity: 0.6;
-            }
-            100% {
-              transform: scale(1.5);
-              opacity: 0;
-            }
-          }
-        `}</style>
+        {/* Decorative shimmer effect */}
+        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-50" />
+        </div>
       </div>
     </div>
   );
