@@ -26,9 +26,14 @@ function ConfettiParticle({ style, emoji }) {
 
 export default function PollinatorQuiz({ country, onComplete }) {
   const detail = getFlowerDetail(country.id);
-  const questions = getFlowerQuiz(country.id);
+  const allQuestions = getFlowerQuiz(country.id);
   const theme = QUESTION_THEMES;
 
+  // Deck system: 3 decks of 5 questions each
+  const QUESTIONS_PER_DECK = 5;
+  const TOTAL_DECKS = 3;
+
+  const [currentDeck, setCurrentDeck] = useState(0); // 0, 1, or 2
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -40,6 +45,11 @@ export default function PollinatorQuiz({ country, onComplete }) {
   const [exitAnim, setExitAnim] = useState(false);
   const [selectedAnimation, setSelectedAnimation] = useState(null); // "correct" | "wrong"
   const confettiTimeout = useRef(null);
+
+  // Get questions for current deck (5 questions)
+  const startIdx = currentDeck * QUESTIONS_PER_DECK;
+  const endIdx = startIdx + QUESTIONS_PER_DECK;
+  const questions = allQuestions.slice(startIdx, endIdx);
 
   const q = questions[currentQ];
   const currentTheme = theme[currentQ % theme.length];
@@ -106,17 +116,40 @@ export default function PollinatorQuiz({ country, onComplete }) {
   };
 
   const handleFinish = () => {
-    setExitAnim(true);
-    playSound("flower-complete");
-    setTimeout(() => onComplete(score, totalQ), 700);
+    const isPerfect = score === totalQ;
+    if (isPerfect) {
+      setExitAnim(true);
+      playSound("flower-complete");
+      setTimeout(() => onComplete(score, totalQ, true), 700);
+    } else {
+      // Not perfect - stay on result screen (retry handled below)
+      // User must retry to unlock flower
+    }
   };
 
-  if (!questions || questions.length === 0) {
+  const handleRetry = () => {
+    // Move to next deck (cycle through 0 → 1 → 2 → 0)
+    const nextDeck = (currentDeck + 1) % TOTAL_DECKS;
+    setCurrentDeck(nextDeck);
+
+    // Reset quiz state for retry
+    setCurrentQ(0);
+    setSelectedOption(null);
+    setRevealed(false);
+    setScore(0);
+    setAnswers([]);
+    setPhase("intro");
+    setTransitionOut(false);
+    setExitAnim(false);
+    playSound("flip");
+  };
+
+  if (!questions || questions.length === 0 || !allQuestions || allQuestions.length === 0) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
         <div className="text-center text-white">
           <p className="text-xl mb-6">No quiz available for this flower yet!</p>
-          <button onClick={() => onComplete(0, 0)} className="px-8 py-3 bg-emerald-500 text-white rounded-xl font-bold">
+          <button onClick={() => onComplete(0, 0, false)} className="px-8 py-3 bg-emerald-500 text-white rounded-xl font-bold">
             Continue →
           </button>
         </div>
@@ -280,22 +313,47 @@ export default function PollinatorQuiz({ country, onComplete }) {
           </div>
 
           {/* Compact CTA Button */}
-          <button
-            onClick={handleFinish}
-            className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
-            style={{ 
-              background: "#d4af37",
-              borderColor: "#b8941f",
-              boxShadow: "0 2px 12px rgba(212,175,55,0.2)",
-              animation: "fade-up 0.5s ease-out 0.4s both"
-            }}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-xl">🌍</span>
-              <span className="text-white font-black text-sm md:text-base tracking-wide">See Your Victory Garden</span>
-              <span className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+          {perfect ? (
+            // Perfect score - Show victory button
+            <button
+              onClick={handleFinish}
+              className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
+              style={{
+                background: "#d4af37",
+                borderColor: "#b8941f",
+                boxShadow: "0 2px 12px rgba(212,175,55,0.2)",
+                animation: "fade-up 0.5s ease-out 0.4s both"
+              }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xl">🌍</span>
+                <span className="text-white font-black text-sm md:text-base tracking-wide">Unlock Flower in Garden</span>
+                <span className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+              </div>
+            </button>
+          ) : (
+            // Not perfect - Show retry button
+            <div className="space-y-3">
+              <button
+                onClick={handleRetry}
+                className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
+                style={{
+                  background: "#f59e0b",
+                  borderColor: "#d97706",
+                  boxShadow: "0 2px 12px rgba(245,158,11,0.2)",
+                  animation: "fade-up 0.5s ease-out 0.4s both"
+                }}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-xl">🔄</span>
+                  <span className="text-white font-black text-sm md:text-base tracking-wide">Retry Quiz</span>
+                </div>
+              </button>
+              <p className="text-center text-gray-600 text-xs md:text-sm leading-relaxed px-2">
+                🔒 Get all 5 questions correct to unlock this flower in your digital garden!
+              </p>
             </div>
-          </button>
+          )}
         </div>
 
         <style jsx>{`
@@ -357,7 +415,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               boxShadow: "0 8px 24px rgba(245,158,11,0.3)",
             }}
           >
-            <span className="flex items-center gap-2"> Start Quiz →</span>
+            <span className="flex items-center gap-2">Start Quiz →</span>
           </button>
         </div>
 
