@@ -127,8 +127,28 @@ export default function Footer() {
               <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.initiatives')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
+                  <Link href="/san-system" className="hover:text-white transition-colors duration-200">
+                    SAN System
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/nahiara-measure" className="hover:text-white transition-colors duration-200">
+                    Nahiara Measure
+                  </Link>
+                </li>
+                <li>
                   <Link href="/araihan-measure" className="hover:text-white transition-colors duration-200">
                     {t('nav.araihan')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/scorfidon" className="hover:text-white transition-colors duration-200">
+                    Scorfidon Protocol
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pfno" className="hover:text-white transition-colors duration-200">
+                    PFNO Protocol
                   </Link>
                 </li>
                 <li>
