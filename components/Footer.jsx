@@ -92,6 +92,11 @@ export default function Footer() {
                     {t('nav.pollinatorGallery')}
                   </Link>
                 </li>
+                <li>
+                  <Link href="/evento-dibuja-flor" className="hover:text-white transition-colors duration-200">
+                    Evento Abril 2026
+                  </Link>
+                </li>
               </ul>
             </div>
 

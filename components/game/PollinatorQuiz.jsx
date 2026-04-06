@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getFlowerDetail, getFlowerQuiz } from "@/lib/flowerDetailsData";
 import { getCompleteFlowerPath } from "@/lib/gameData";
 
@@ -15,23 +15,22 @@ const QUESTION_THEMES = [
 
 // Particle emojis for confetti
 const CONFETTI_EMOJIS = ["🌸", "✨", "🎉", "🌺", "⭐", "🌿", "🦋", "🌼"];
+const QUESTIONS_PER_DECK = 5;
+const TOTAL_DECKS = 3;
+const DECORATIVE_RINGS = [1, 2, 3];
 
-function ConfettiParticle({ style, emoji }) {
+const ConfettiParticle = memo(function ConfettiParticle({ style, emoji }) {
   return (
     <div className="absolute pointer-events-none select-none" style={{ ...style, animation: `confetti-fall 1.5s ease-out forwards` }}>
       {emoji}
     </div>
   );
-}
+});
 
 export default function PollinatorQuiz({ country, onComplete }) {
-  const detail = getFlowerDetail(country.id);
-  const allQuestions = getFlowerQuiz(country.id);
+  const detail = useMemo(() => getFlowerDetail(country.id), [country.id]);
+  const allQuestions = useMemo(() => getFlowerQuiz(country.id), [country.id]);
   const theme = QUESTION_THEMES;
-
-  // Deck system: 3 decks of 5 questions each
-  const QUESTIONS_PER_DECK = 5;
-  const TOTAL_DECKS = 3;
 
   const [currentDeck, setCurrentDeck] = useState(0); // 0, 1, or 2
   const [currentQ, setCurrentQ] = useState(0);
@@ -45,27 +44,45 @@ export default function PollinatorQuiz({ country, onComplete }) {
   const [exitAnim, setExitAnim] = useState(false);
   const [selectedAnimation, setSelectedAnimation] = useState(null); // "correct" | "wrong"
   const confettiTimeout = useRef(null);
+  const soundUtilsRef = useRef(null);
+  const soundImportRef = useRef(null);
 
   // Get questions for current deck (5 questions)
   const startIdx = currentDeck * QUESTIONS_PER_DECK;
   const endIdx = startIdx + QUESTIONS_PER_DECK;
-  const questions = allQuestions.slice(startIdx, endIdx);
+  const questions = useMemo(() => allQuestions.slice(startIdx, endIdx), [allQuestions, startIdx, endIdx]);
 
   const q = questions[currentQ];
   const currentTheme = theme[currentQ % theme.length];
   const totalQ = questions.length;
   const isLastQ = currentQ === totalQ - 1;
 
-  const playSound = (type) => {
-    if (typeof window !== "undefined") {
-      import("@/lib/soundUtils").then((m) => {
-        if (m.default.audioContext?.state === "suspended") m.default.audioContext.resume();
-        m.default.play(type);
+  const ensureSoundUtils = useCallback(async () => {
+    if (soundUtilsRef.current) return soundUtilsRef.current;
+    if (!soundImportRef.current) {
+      soundImportRef.current = import("@/lib/soundUtils").then((m) => {
+        soundUtilsRef.current = m.default;
+        return m.default;
       });
     }
-  };
+    return soundImportRef.current;
+  }, []);
 
-  const spawnConfetti = () => {
+  useEffect(() => {
+    ensureSoundUtils();
+    return () => {
+      clearTimeout(confettiTimeout.current);
+    };
+  }, [ensureSoundUtils]);
+
+  const playSound = useCallback((type) => {
+    ensureSoundUtils().then((soundUtils) => {
+      if (soundUtils.audioContext?.state === "suspended") soundUtils.audioContext.resume();
+      soundUtils.play(type);
+    });
+  }, [ensureSoundUtils]);
+
+  const spawnConfetti = useCallback(() => {
     const particles = Array.from({ length: 18 }).map((_, i) => ({
       id: i,
       emoji: CONFETTI_EMOJIS[i % CONFETTI_EMOJIS.length],
@@ -74,15 +91,16 @@ export default function PollinatorQuiz({ country, onComplete }) {
         top: `${10 + Math.random() * 30}%`,
         fontSize: `${14 + Math.random() * 12}px`,
         animationDelay: `${Math.random() * 0.4}s`,
+        "--confetti-rotation": `${Math.random() > 0.5 ? "" : "-"}360deg`,
         zIndex: 100,
       },
     }));
     setConfetti(particles);
     clearTimeout(confettiTimeout.current);
     confettiTimeout.current = setTimeout(() => setConfetti([]), 2000);
-  };
+  }, []);
 
-  const handleSelect = (optionIndex) => {
+  const handleSelect = useCallback((optionIndex) => {
     if (revealed) return;
     const isCorrect = optionIndex === q.answer;
     setSelectedOption(optionIndex);
@@ -98,9 +116,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
     }
 
     setAnswers((prev) => [...prev, { question: q.q, selected: optionIndex, correct: q.answer, isCorrect }]);
-  };
+  }, [playSound, q.answer, q.q, revealed, spawnConfetti]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setTransitionOut(true);
     setTimeout(() => {
       setSelectedOption(null);
@@ -113,9 +131,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
         setCurrentQ((c) => c + 1);
       }
     }, 400);
-  };
+  }, [isLastQ]);
 
-  const handleFinish = () => {
+  const handleFinish = useCallback(() => {
     const isPerfect = score === totalQ;
     if (isPerfect) {
       setExitAnim(true);
@@ -125,9 +143,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
       // Not perfect - stay on result screen (retry handled below)
       // User must retry to unlock flower
     }
-  };
+  }, [onComplete, playSound, score, totalQ]);
 
-  const handleRetry = () => {
+  const handleRetry = useCallback(() => {
     // Move to next deck (cycle through 0 → 1 → 2 → 0)
     const nextDeck = (currentDeck + 1) % TOTAL_DECKS;
     setCurrentDeck(nextDeck);
@@ -142,7 +160,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
     setTransitionOut(false);
     setExitAnim(false);
     playSound("flip");
-  };
+  }, [currentDeck, playSound]);
 
   if (!questions || questions.length === 0 || !allQuestions || allQuestions.length === 0) {
     return (
@@ -444,7 +462,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
       {/* Background decorative rings */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        {[1, 2, 3].map((ring) => (
+        {DECORATIVE_RINGS.map((ring) => (
           <div
             key={ring}
             className="absolute rounded-full border"
@@ -665,7 +683,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
         @keyframes confetti-fall {
           0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 1; }
           80% { opacity: 1; }
-          100% { transform: translateY(120px) rotate(${Math.random() > 0.5 ? "" : "-"}360deg) scale(1.2); opacity: 0; }
+          100% { transform: translateY(120px) rotate(var(--confetti-rotation, 360deg)) scale(1.2); opacity: 0; }
         }
       `}</style>
     </div>
