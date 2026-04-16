@@ -108,7 +108,7 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     // Optimize CSS
-    optimizeCss: true,
+    optimizeCss: false,
 
     // Optimize package imports
     optimizePackageImports: [

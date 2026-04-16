@@ -691,7 +691,7 @@ function Flower3DViewer({ flower, t, isActive = false }) {
         renderer.domElement.style.height = "100%";
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1;
+        renderer.toneMappingExposure = 1.5;
         renderer.shadowMap.enabled = true;
         container.appendChild(renderer.domElement);
         cleanupFns.push(() => {
@@ -699,20 +699,25 @@ function Flower3DViewer({ flower, t, isActive = false }) {
           renderer?.dispose();
         });
 
-        const neutralKey = new THREE.DirectionalLight(0xffffff, 1.2);
-        neutralKey.position.set(4, 6, 3);
+        const neutralKey = new THREE.DirectionalLight(0xffffff, 2.5);
+        neutralKey.position.set(5, 8, 5);
         neutralKey.castShadow = true;
+        neutralKey.shadow.bias = -0.0001;
+        neutralKey.shadow.mapSize.width = 1024;
+        neutralKey.shadow.mapSize.height = 1024;
         scene.add(neutralKey);
 
-        const warmFill = new THREE.DirectionalLight(0xfff1d6, 0.6);
-        warmFill.position.set(-3, 2, -2);
+        const warmFill = new THREE.DirectionalLight(0xfff1d6, 1.5);
+        warmFill.position.set(-5, 3, -5);
         scene.add(warmFill);
 
-        const coolRim = new THREE.DirectionalLight(0xd8ecff, 0.45);
-        coolRim.position.set(0, 4, -4);
+        const coolRim = new THREE.DirectionalLight(0xd8ecff, 1.5);
+        coolRim.position.set(0, 5, -8);
         scene.add(coolRim);
 
-        scene.add(new THREE.AmbientLight(0xfaf7f1, 0.5));
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
+        hemiLight.position.set(0, 20, 0);
+        scene.add(hemiLight);
 
         const groundGeo = new THREE.PlaneGeometry(20, 20);
         const groundMat = new THREE.ShadowMaterial({
