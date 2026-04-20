@@ -19,7 +19,24 @@ export const metadata = {
   },
 };
 
-export default function VozPage() {
+export default async function VozPage({ searchParams }) {
+  const params = await searchParams;
+  const token = params?.token;
+
+  // Thematic token based on the "Las cosas bonitas son infinitas" and "Rosas de San Pedro" context
+  if (token !== 'rosas-infinitas') {
+    return (
+      <div className="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+        <div className="text-center px-6">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Access Denied</h1>
+          <p className="text-lg text-gray-400">
+            Please provide a valid token in the URL to view this page.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     // <div className="voz-container">
     //   <style dangerouslySetInnerHTML={{ __html: `
