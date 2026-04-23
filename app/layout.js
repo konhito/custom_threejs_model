@@ -82,6 +82,12 @@ export default function RootLayout({ children }) {
     organization: true,
   });
 
+  // Only show the Sant Jordi banner on the homepage
+  let isHomePage = false;
+  if (typeof window !== 'undefined') {
+    isHomePage = window.location.pathname === '/';
+  }
+
   return (
     <html lang="en" className="light notranslate" translate="no" style={{ colorScheme: 'light' }}>
       <head>
@@ -175,13 +181,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div id="sant-jordi-banner" style={{ backgroundColor: '#e11d48', color: 'white', padding: '12px', textAlign: 'center', position: 'sticky', top: 0, zIndex: 99999, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
-          <a href="https://osm.org/go/xUbU0viAP?layers=H&m=" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', backgroundColor: 'white', color: '#e11d48', fontWeight: 'bold', padding: '4px 12px', borderRadius: '999px', fontSize: '0.85rem', textDecoration: 'none', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '8px' }}>
-            📍 Ver ubicación exacta en el mapa (Passeig de Fabra i Puig 370)
-          </a>
-          <p style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '1.1rem', fontFamily: 'system-ui, sans-serif' }}>🌹 Sant Jordi 2026 — Barcelona, April 23rd 🌹</p>
-          <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>We will be there in person, with the book and the card game!</p>
-        </div>
+        {typeof window !== 'undefined' && window.location.pathname === '/' && (
+          <div id="sant-jordi-banner" style={{ backgroundColor: '#e11d48', color: 'white', padding: '12px', textAlign: 'center', position: 'sticky', top: 0, zIndex: 99999, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+            <a href="https://osm.org/go/xUbU0viAP?layers=H&m=" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', backgroundColor: 'white', color: '#e11d48', fontWeight: 'bold', padding: '4px 12px', borderRadius: '999px', fontSize: '0.85rem', textDecoration: 'none', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '8px' }}>
+              📍 Ver ubicación exacta en el mapa (Passeig de Fabra i Puig 370)
+            </a>
+            <p style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '1.1rem', fontFamily: 'system-ui, sans-serif' }}>🌹 Sant Jordi 2026 — Barcelona, April 23rd 🌹</p>
+            <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>We will be there in person, with the book and the card game!</p>
+          </div>
+        )}
         {children}
         <Analytics />
       </body>
