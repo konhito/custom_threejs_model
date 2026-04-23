@@ -19,59 +19,34 @@ export const metadata = {
   },
 };
 
-export default async function VozPage({ searchParams }) {
-  const params = await searchParams;
-  const token = params?.token;
-
-  // Thematic token based on the "Las cosas bonitas son infinitas" and "Rosas de San Pedro" context
-  if (token !== 'rosas-infinitas') {
-    return (
-      <div className="bg-gray-900 text-white flex items-center justify-center min-h-screen">
-        <div className="text-center px-6">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Access Denied</h1>
-          <p className="text-lg text-gray-400">
-            Please provide a valid token in the URL to view this page.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
+export default async function VozPage() {
   return (
-    <div className="voz-container">
+    <div className="voz-container min-h-screen bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `
         /* Hide the Sant Jordi banner specifically for this page */
         #sant-jordi-banner {
           display: none !important;
         }
 
-        /* Force dark background for the entire page */
-        html.light, body {
-          background-color: #050505 !important;
-          color: #f5f5f5 !important;
-          color-scheme: dark !important;
-        }
-
         .voz-container {
-          min-height: 100vh;
           width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background-color: #050505;
           font-family: var(--font-geist-sans), system-ui, sans-serif;
           padding: 2rem;
         }
 
         .audio-card {
-          background: #111;
-          border: 1px solid #333;
+          background: rgba(255, 255, 255, 0.84);
+          border: 1px solid rgba(226, 232, 240, 0.9);
           border-radius: 16px;
           padding: 2.5rem;
           width: 100%;
           max-width: 480px;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+          box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+          backdrop-filter: blur(10px);
           text-align: center;
         }
 
@@ -80,7 +55,7 @@ export default async function VozPage({ searchParams }) {
           font-weight: 300;
           letter-spacing: 0.1em;
           margin-bottom: 2rem;
-          color: #ededed;
+          color: #0f172a;
           text-transform: uppercase;
         }
 
@@ -92,7 +67,6 @@ export default async function VozPage({ searchParams }) {
         /* Customizing the default audio player a bit */
         audio {
           width: 100%;
-          filter: invert(90%) hue-rotate(180deg);
           border-radius: 8px;
           outline: none;
         }
@@ -100,11 +74,31 @@ export default async function VozPage({ searchParams }) {
         .description {
           margin-top: 2rem;
           font-size: 0.85rem;
-          color: #666;
+          color: #475569;
           font-weight: 300;
           line-height: 1.5;
         }
       `}} />
+
+      {/* Aurora-inspired decorative background like other themed pages */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 20% 20%, rgba(147, 197, 253, 0.35) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 80% 30%, rgba(196, 181, 253, 0.3) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 50% 80%, rgba(249, 168, 212, 0.25) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 30% at 10% 60%, rgba(167, 243, 208, 0.22) 0%, transparent 50%)
+            `,
+          }}
+        />
+
+        <div className="absolute top-20 -right-20 w-80 h-80 rounded-full blur-3xl bg-gradient-to-br from-purple-400/20 via-violet-300/15 to-transparent" />
+        <div className="absolute top-1/3 -left-24 w-72 h-72 rounded-full blur-3xl bg-gradient-to-br from-blue-400/20 via-cyan-300/15 to-transparent" />
+        <div className="absolute bottom-24 right-12 w-64 h-64 rounded-full blur-3xl bg-gradient-to-br from-pink-400/20 via-rose-300/15 to-transparent" />
+        <div className="absolute bottom-32 left-1/4 w-72 h-72 rounded-full blur-3xl bg-gradient-to-br from-emerald-400/18 via-teal-300/12 to-transparent" />
+      </div>
 
       <div className="audio-card" style={{ maxWidth: '680px', padding: '3rem 2rem' }}>
         <h1 className="vox-title">Las Rosas de San Pedro</h1>
