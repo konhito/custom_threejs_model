@@ -37,6 +37,7 @@ export default async function VozPage({ searchParams }) {
     );
   }
 
+  return (
     <div className="voz-container">
       <style dangerouslySetInnerHTML={{ __html: `
         /* Hide the Sant Jordi banner specifically for this page */
