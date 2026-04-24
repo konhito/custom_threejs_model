@@ -182,12 +182,37 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {typeof window !== 'undefined' && window.location.pathname === '/' && (
-          <div id="sant-jordi-banner" style={{ backgroundColor: '#e11d48', color: 'white', padding: '12px', textAlign: 'center', position: 'sticky', top: 0, zIndex: 99999, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
-            <a href="https://osm.org/go/xUbU0viAP?layers=H&m=" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', backgroundColor: 'white', color: '#e11d48', fontWeight: 'bold', padding: '4px 12px', borderRadius: '999px', fontSize: '0.85rem', textDecoration: 'none', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '8px' }}>
-              📍 Ver ubicación exacta en el mapa (Passeig de Fabra i Puig 370)
-            </a>
-            <p style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '1.1rem', fontFamily: 'system-ui, sans-serif' }}>🌹 Sant Jordi 2026 — Barcelona, April 23rd 🌹</p>
-            <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>We will be there in person, with the book and the card game!</p>
+          <div
+            id="sant-jordi-banner"
+            style={{
+              backgroundColor: '#111827',
+              color: 'white',
+              padding: '14px 12px',
+              textAlign: 'center',
+              position: 'sticky',
+              top: 0,
+              zIndex: 99999,
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)',
+            }}
+          >
+            <p style={{ fontWeight: 'bold', margin: '0 0 6px 0', fontSize: '1.02rem', fontFamily: 'system-ui, sans-serif' }}>
+              A million thanks to everyone who visited our stand at Sant Jordi 2026!
+            </p>
+            <p style={{ margin: '0 0 6px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+              It has been an incredible experience sharing the Nahiara Universe with you in Barcelona.
+            </p>
+            <p style={{ margin: '0 0 8px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+              See you next year. 🌸
+            </p>
+            <p style={{ fontWeight: 'bold', margin: '0 0 6px 0', fontSize: '1.02rem', fontFamily: 'system-ui, sans-serif' }}>
+              ¡Un millón de gracias a todas las personas que visitaron nuestro stand en Sant Jordi 2026!
+            </p>
+            <p style={{ margin: '0 0 6px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+              Ha sido una experiencia increíble compartir el Universo Nahiara con ustedes en Barcelona.
+            </p>
+            <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+              Nos vemos el próximo año. 🌸
+            </p>
           </div>
         )}
         {children}
