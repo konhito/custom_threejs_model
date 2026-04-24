@@ -181,40 +181,29 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {typeof window !== 'undefined' && window.location.pathname === '/' && (
-          <div
-            id="sant-jordi-banner"
-            style={{
-              backgroundColor: '#111827',
-              color: 'white',
-              padding: '14px 12px',
-              textAlign: 'center',
-              position: 'sticky',
-              top: 0,
-              zIndex: 99999,
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)',
-            }}
-          >
-            <p style={{ fontWeight: 'bold', margin: '0 0 6px 0', fontSize: '1.02rem', fontFamily: 'system-ui, sans-serif' }}>
-              A million thanks to everyone who visited our stand at Sant Jordi 2026!
-            </p>
-            <p style={{ margin: '0 0 6px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
-              It has been an incredible experience sharing the Nahiara Universe with you in Barcelona.
-            </p>
-            <p style={{ margin: '0 0 8px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
-              See you next year. 🌸
-            </p>
-            <p style={{ fontWeight: 'bold', margin: '0 0 6px 0', fontSize: '1.02rem', fontFamily: 'system-ui, sans-serif' }}>
-              ¡Un millón de gracias a todas las personas que visitaron nuestro stand en Sant Jordi 2026!
-            </p>
-            <p style={{ margin: '0 0 6px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
-              Ha sido una experiencia increíble compartir el Universo Nahiara con ustedes en Barcelona.
-            </p>
-            <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
-              Nos vemos el próximo año. 🌸
-            </p>
-          </div>
-        )}
+        <div
+          id="sant-jordi-banner"
+          style={{
+            backgroundColor: '#111827',
+            color: 'white',
+            padding: '14px 12px',
+            textAlign: 'center',
+            position: 'sticky',
+            top: 0,
+            zIndex: 99999,
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <p style={{ fontWeight: 'bold', margin: '0 0 6px 0', fontSize: '1.02rem', fontFamily: 'system-ui, sans-serif' }}>
+            ¡Un millón de gracias a todas las personas que visitaron nuestro stand en Sant Jordi 2026!
+          </p>
+          <p style={{ margin: '0 0 6px 0', fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+            Ha sido una experiencia increíble compartir el Universo Nahiara con ustedes en Barcelona.
+          </p>
+          <p style={{ margin: 0, fontSize: '0.95rem', fontFamily: 'system-ui, sans-serif' }}>
+            ¡Nos vemos el próximo año! 🌸
+          </p>
+        </div>
         {children}
         <Analytics />
       </body>
