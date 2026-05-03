@@ -117,6 +117,7 @@ export default function ShopPage() {
 
       if (
         !isDigital &&
+        product.type !== "book" &&
         product.stock_quantity !== undefined &&
         product.stock_quantity <= 0
       ) {

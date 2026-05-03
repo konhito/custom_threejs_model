@@ -16,6 +16,7 @@ export default function BookCard({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const isBook = product.type === "book";
 
   return (
     <motion.div
@@ -148,9 +149,9 @@ export default function BookCard({
           {/* Stock indicator */}
           {!product.is_digital && (
             <div className="flex items-center gap-2">
-              <div className={`w-1.5 h-1.5 rounded-full ${product.stock_quantity > 0 ? 'bg-green-500' : 'bg-red-400'}`} />
-              <span className={`text-xs ${product.stock_quantity > 0 ? 'text-gray-500' : 'text-red-500'}`}>
-                {product.stock_quantity > 50
+              <div className={`w-1.5 h-1.5 rounded-full ${(product.stock_quantity > 0 || isBook) ? 'bg-green-500' : 'bg-red-400'}`} />
+              <span className={`text-xs ${(product.stock_quantity > 0 || isBook) ? 'text-gray-500' : 'text-red-500'}`}>
+                {(product.stock_quantity > 50 || isBook)
                   ? 'In Stock'
                   : product.stock_quantity > 0
                     ? `Only ${product.stock_quantity} left`
@@ -163,7 +164,7 @@ export default function BookCard({
           {/* Action Buttons */}
           <div className="space-y-2 pt-1">
             {/* Physical Book Button */}
-            {!product.is_digital && product.stock_quantity > 0 && (
+            {!product.is_digital && (product.stock_quantity > 0 || isBook) && (
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
