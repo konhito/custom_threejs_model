@@ -2,7 +2,7 @@
 import { motion } from "motion/react";
 import React from "react";
 import { AuroraBackground } from "./ui/aurora-background";
-import { ChevronDown, ExternalLink } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { TypewriterEffect } from "./ui/typewriter-effect";
 import { useTranslation } from "../lib/useTranslation";
 
@@ -146,20 +146,6 @@ export function HeroSection() {
               />
             </div>
 
-            <motion.a
-              href="https://www.aquamundi.org/reloj-dia-de-todos-los-polinizadores"
-              className="mt-7 inline-flex items-center gap-2 rounded-full border border-emerald-700/40 bg-white/75 px-5 py-3 text-sm font-semibold text-emerald-900 shadow-sm backdrop-blur-sm transition-colors duration-200 hover:border-emerald-800 hover:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 md:mt-8 md:text-base"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 1.65,
-                duration: 0.35,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-            >
-              Dia de Todos los Polinizadores
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            </motion.a>
           </div>
         </motion.div>
       </AuroraBackground>
