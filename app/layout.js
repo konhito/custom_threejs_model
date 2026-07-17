@@ -4,7 +4,8 @@ import "../lib/fix-localStorage";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig, generateStructuredData } from "../lib/seo";
-import { Analytics } from "@vercel/analytics/next";
+import CookieConsent from "../components/CookieConsent";
+import ConsentAnalytics from "../components/ConsentAnalytics";
 
 
 const geistSans = Geist({
@@ -154,24 +155,6 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        {/* Google Analytics - Replace with your GA4 measurement ID */}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'}', {
-                page_title: document.title,
-                page_location: window.location.href,
-              });
-            `,
-          }}
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -186,7 +169,8 @@ export default function RootLayout({ children }) {
           <span className="pollinator-report-banner__cta">Read the European Commission report in your language <span aria-hidden="true">→</span></span>
         </a>
         {children}
-        <Analytics />
+        <CookieConsent />
+        <ConsentAnalytics />
       </body>
     </html>
   );

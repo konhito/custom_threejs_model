@@ -10,7 +10,8 @@ export default function ContactAuthorPage() {
     email: '',
     subject: '',
     message: '',
-    type: 'question' // question, feedback, criticism, idea
+    type: 'question', // question, feedback, criticism, idea
+    privacyAccepted: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -40,7 +41,7 @@ export default function ContactAuthorPage() {
       setSubmitStatus('success');
       setTimeout(() => {
         setSubmitStatus(null);
-        setFormData({ name: '', email: '', subject: '', message: '', type: 'question' });
+        setFormData({ name: '', email: '', subject: '', message: '', type: 'question', privacyAccepted: false });
       }, 3000);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -192,10 +193,15 @@ export default function ContactAuthorPage() {
                   />
                 </div>
 
+                <label className="flex items-start gap-2 text-sm text-gray-700">
+                  <input type="checkbox" required checked={formData.privacyAccepted} onChange={(e) => setFormData({ ...formData, privacyAccepted: e.target.checked })} className="mt-1 h-4 w-4" />
+                  <span>I have read and accept the <a href="/privacy" className="underline">Privacy Policy</a>. *</span>
+                </label>
+
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting || !formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
+                  disabled={isSubmitting || !formData.name.trim() || !formData.email.trim() || !formData.message.trim() || !formData.privacyAccepted}
                   className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg flex items-center justify-center gap-3"
                   aria-label="Send your message to the author"
                 >

@@ -169,14 +169,15 @@ export default function Footer() {
               <h3 className="font-semibold text-white mb-2 sm:mb-3 md:mb-4 text-sm sm:text-base md:text-lg">{t('footer.legal')}</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors duration-200">
+                  <Link href="/privacy" className="hover:text-white transition-colors duration-200">
                     {t('footer.privacyPolicy')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors duration-200">
-                    {t('footer.termsOfService')}
-                  </a>
+                  <Link href="/legal-notice" className="hover:text-white transition-colors duration-200">Legal Notice</Link>
+                </li>
+                <li>
+                  <button type="button" onClick={() => window.dispatchEvent(new Event('cookie-settings'))} className="hover:text-white transition-colors duration-200">Cookie settings</button>
                 </li>
               </ul>
             </div>
@@ -193,7 +194,8 @@ export default function Footer() {
         <div className="mt-2 sm:mt-3">
           <div className="max-w-md mx-auto px-2">
             <p className="text-gray-500 text-xs text-center mb-2">{t('footer.getInTouch')}</p>
-            <form onSubmit={handleEmailSubmit} className="flex gap-2">
+            <form onSubmit={handleEmailSubmit} className="space-y-2">
+              <div className="flex gap-2">
               <input
                 type="email"
                 value={userEmail}
@@ -208,6 +210,11 @@ export default function Footer() {
               >
                 {t('footer.send')}
               </button>
+              </div>
+              <label className="flex items-start gap-2 text-xs text-gray-400">
+                <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5" />
+                <span>I have read and accept the <Link href="/privacy" className="underline">Privacy Policy</Link>.</span>
+              </label>
             </form>
           </div>
         </div>

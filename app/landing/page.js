@@ -242,7 +242,8 @@ function LandingContent() {
     name: '',
     email: '',
     message: '',
-    subject: ''
+    subject: '',
+    privacyAccepted: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -298,7 +299,7 @@ function LandingContent() {
       }, 2000);
       
       // Reset form
-      setContactForm({ name: '', email: '', message: '', subject: '' });
+      setContactForm({ name: '', email: '', message: '', subject: '', privacyAccepted: false });
     } catch (error) {
       console.error('Error submitting contact form:', error);
     } finally {
@@ -709,7 +710,12 @@ ${t('landing.visionText')}
                       placeholder={t('landing.tellUsAbout')}
                     />
                   </div>
-                  
+
+                  <label className="flex items-start gap-2 text-sm text-gray-700">
+                    <input type="checkbox" required checked={contactForm.privacyAccepted} onChange={(e) => setContactForm({ ...contactForm, privacyAccepted: e.target.checked })} className="mt-1 h-4 w-4" />
+                    <span>I have read and accept the <Link href="/privacy" className="underline">Privacy Policy</Link>. *</span>
+                  </label>
+
                   <button
                     type="submit"
                     disabled={isSubmitting}

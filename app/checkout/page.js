@@ -233,7 +233,7 @@ export default function CheckoutPage() {
           is_digital: item.is_digital,
         })),
         gdpr_consent: formData.gdpr_consent,
-        marketing_consent: true,
+        marketing_consent: formData.marketing_consent,
       };
 
       const response = await checkoutAPI.create(checkoutData);
@@ -566,7 +566,7 @@ export default function CheckoutPage() {
                       className="w-5 h-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 mt-0.5"
                     />
                     <span className="text-sm text-gray-700">
-                      I consent to the processing of my personal data in accordance with GDPR regulations. <span className="text-red-500">*</span>
+                      I have read and accept the <Link href="/privacy" className="underline">Privacy Policy</Link>. <span className="text-red-500">*</span>
                     </span>
                   </label>
                   <label className="flex items-start gap-3 mt-3 cursor-pointer">
