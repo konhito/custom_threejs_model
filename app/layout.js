@@ -159,15 +159,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <a
-          className="pollinator-report-banner"
-          href="https://op.europa.eu/en/publication-detail/-/publication/925f434c-63ab-11f1-9b18-01aa75ed71a1/language-en"
-          target="_blank"
-          rel="noreferrer"
+        <section
+          className="world-cup-banner"
         >
-          <span>Youth Citizens’ Assembly on Pollinators</span>
-          <span className="pollinator-report-banner__cta">Read the European Commission report in your language <span aria-hidden="true">→</span></span>
-        </a>
+          <strong>El clavel español brilla hoy más que nunca</strong>
+          <span>Desde la Asociación Internacional en Defensa de las Flores “Proveneya &amp; Nahiara”, felicitamos a la Selección Española y a todos los ciudadanos españoles: ¡somos campeones del Mundial 2026 de fútbol! Y muchísimas felicidades a todas las selecciones que han participado en el torneo.</span>
+        </section>
         {children}
         <CookieConsent />
         <ConsentAnalytics />
