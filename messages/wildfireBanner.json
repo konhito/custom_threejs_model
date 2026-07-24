@@ -1,0 +1,80 @@
+{
+  "en": {
+    "date": "Data as of July 24, 2026",
+    "text": "Behind every wildfire is a story the news never tells: the story of those who, silently and over millions of years, built with their flight the flowers, the fruit, and the green we now watch burn.",
+    "emphasis": "Pollinators are victims too — and they deserve to be counted.",
+    "details": "View supporting data",
+    "close": "Close supporting data",
+    "groups": [
+      {"title": "Spain", "items": ["~120,000 hectares burned in 2026 (EFFIS/Copernicus, July 22) vs. 35,270 ha on the same date in 2025 — 3.4x.", "343 fires in 2026 through July 22, vs. 129 in 2025.", "18 major fires (>500 ha) through July 12, vs. 7 in 2025.", "Spain leads the EU in both burned area and number of fires this year.", "Last 24h: three active, uncontained fires southwest of Madrid, over 10,000 people evacuated, national-interest emergency declared."]},
+      {"title": "Canada", "items": ["Over 950 active wildfires (July 17, 2026).", "3,137 fires and 1.4 million hectares burned this season.", "Smoke has reached Toronto, Boston, and New York City."]},
+      {"title": "Oceans and global heat", "items": ["Record global sea-surface temperature: 20.86°C on June 21, 2026.", "Over 37% of oceans affected by a marine heatwave; NOAA forecasts up to 40%.", "This ocean heat feeds back into heatwaves on land and worsens wildfires."]}
+    ],
+    "sources": "Sources: MITECO, EFFIS/Copernicus, Government of Canada, NOAA, Copernicus Marine Service."
+  },
+  "es": {
+    "date": "Datos a 24 de julio de 2026",
+    "text": "Detrás de cada incendio hay una historia que no sale en las noticias: la de quienes, durante millones de años y en silencio, construyeron con su vuelo las flores, los frutos y el verde que hoy vemos arder.",
+    "emphasis": "Los polinizadores también son víctimas — y también merecen ser contados.",
+    "details": "Ver datos de apoyo",
+    "close": "Cerrar datos de apoyo",
+    "groups": [
+      {"title": "España", "items": ["~120.000 hectáreas quemadas en 2026 (EFFIS/Copernicus, 22 de julio) frente a 35.270 ha en la misma fecha de 2025 — ×3,4.", "343 incendios en 2026 hasta el 22 de julio, frente a 129 en 2025.", "18 grandes incendios (>500 ha) hasta el 12 de julio, frente a 7 en 2025.", "España encabeza el ranking de la UE en superficie quemada y número de incendios.", "Últimas 24h: tres incendios activos sin controlar en el suroeste de Madrid, más de 10.000 evacuados, emergencia de interés nacional."]},
+      {"title": "Canadá", "items": ["Más de 950 incendios activos (17 de julio de 2026).", "3.137 incendios y 1,4 millones de hectáreas quemadas en la temporada.", "El humo ha llegado a Toronto, Boston y Nueva York."]},
+      {"title": "Océanos y calor global", "items": ["Récord histórico de temperatura marina global: 20,86 °C el 21 de junio de 2026.", "Más del 37% de los océanos afectados por una ola de calor marina; la NOAA prevé hasta el 40%.", "Este calor oceánico retroalimenta las olas de calor en tierra y agrava los incendios."]}
+    ],
+    "sources": "Fuentes: MITECO, EFFIS/Copernicus, Gobierno de Canadá, NOAA, Copernicus Marine Service."
+  },
+  "de": {
+    "date": "Datenstand: 24. Juli 2026",
+    "text": "Hinter jedem Waldbrand steht eine Geschichte, über die in den Nachrichten nicht berichtet wird: die Geschichte jener, die still und über Millionen von Jahren mit ihrem Flug die Blumen, Früchte und grünen Landschaften geschaffen haben, die wir heute brennen sehen.",
+    "emphasis": "Auch Bestäuber sind Opfer — und auch sie verdienen es, gezählt zu werden.",
+    "details": "Hintergrunddaten anzeigen",
+    "close": "Hintergrunddaten schließen",
+    "groups": [
+      {"title": "Spanien", "items": ["Im Jahr 2026 verbrannten rund 120.000 Hektar (EFFIS/Copernicus, 22. Juli), gegenüber 35.270 ha zum gleichen Zeitpunkt 2025 — das 3,4-Fache.", "343 Brände im Jahr 2026 bis zum 22. Juli, gegenüber 129 im Jahr 2025.", "18 Großbrände (>500 ha) bis zum 12. Juli, gegenüber 7 im Jahr 2025.", "Spanien führt dieses Jahr die EU sowohl bei der verbrannten Fläche als auch bei der Zahl der Brände an.", "Letzte 24 Stunden: drei aktive, unkontrollierte Brände südwestlich von Madrid, mehr als 10.000 Evakuierte und Ausrufung eines Notstands von nationalem Interesse."]},
+      {"title": "Kanada", "items": ["Mehr als 950 aktive Waldbrände (17. Juli 2026).", "3.137 Brände und 1,4 Millionen Hektar verbrannte Fläche in dieser Saison.", "Der Rauch hat Toronto, Boston und New York City erreicht."]},
+      {"title": "Ozeane und globale Hitze", "items": ["Globaler Rekord der Meeresoberflächentemperatur: 20,86 °C am 21. Juni 2026.", "Mehr als 37 % der Ozeane sind von einer marinen Hitzewelle betroffen; die NOAA prognostiziert bis zu 40 %.", "Diese Ozeanhitze verstärkt Hitzewellen an Land und verschärft Waldbrände."]}
+    ],
+    "sources": "Quellen: MITECO, EFFIS/Copernicus, Regierung von Kanada, NOAA, Copernicus Marine Service."
+  },
+  "fr": {
+    "date": "Données au 24 juillet 2026",
+    "text": "Derrière chaque incendie de forêt se cache une histoire dont les médias ne parlent jamais : celle de ceux qui, silencieusement et pendant des millions d’années, ont façonné par leur vol les fleurs, les fruits et les paysages verdoyants que nous regardons aujourd’hui brûler.",
+    "emphasis": "Les pollinisateurs sont eux aussi des victimes — et ils méritent eux aussi d’être comptés.",
+    "details": "Voir les données complémentaires",
+    "close": "Fermer les données complémentaires",
+    "groups": [
+      {"title": "Espagne", "items": ["Environ 120 000 hectares brûlés en 2026 (EFFIS/Copernicus, 22 juillet), contre 35 270 ha à la même date en 2025 — soit 3,4 fois plus.", "343 incendies en 2026 jusqu’au 22 juillet, contre 129 en 2025.", "18 grands incendies (>500 ha) jusqu’au 12 juillet, contre 7 en 2025.", "L’Espagne arrive en tête de l’UE cette année pour la superficie brûlée comme pour le nombre d’incendies.", "Dernières 24 h : trois incendies actifs et non maîtrisés au sud-ouest de Madrid, plus de 10 000 personnes évacuées et déclaration d’une urgence d’intérêt national."]},
+      {"title": "Canada", "items": ["Plus de 950 incendies de forêt actifs (17 juillet 2026).", "3 137 incendies et 1,4 million d’hectares brûlés cette saison.", "La fumée a atteint Toronto, Boston et New York."]},
+      {"title": "Océans et chaleur mondiale", "items": ["Record mondial de température de surface de la mer : 20,86 °C le 21 juin 2026.", "Plus de 37 % des océans sont touchés par une vague de chaleur marine ; la NOAA prévoit jusqu’à 40 %.", "Cette chaleur océanique renforce les vagues de chaleur terrestres et aggrave les incendies."]}
+    ],
+    "sources": "Sources : MITECO, EFFIS/Copernicus, gouvernement du Canada, NOAA, Copernicus Marine Service."
+  },
+  "it": {
+    "date": "Dati aggiornati al 24 luglio 2026",
+    "text": "Dietro ogni incendio boschivo c’è una storia che le notizie non raccontano mai: la storia di chi, in silenzio e per milioni di anni, ha costruito con il proprio volo i fiori, i frutti e il verde che oggi vediamo bruciare.",
+    "emphasis": "Anche gli impollinatori sono vittime — e meritano di essere contati.",
+    "details": "Visualizza i dati di supporto",
+    "close": "Chiudi i dati di supporto",
+    "groups": [
+      {"title": "Spagna", "items": ["Circa 120.000 ettari bruciati nel 2026 (EFFIS/Copernicus, 22 luglio), contro 35.270 ha alla stessa data del 2025 — 3,4 volte tanto.", "343 incendi nel 2026 fino al 22 luglio, contro 129 nel 2025.", "18 grandi incendi (>500 ha) fino al 12 luglio, contro 7 nel 2025.", "Quest’anno la Spagna è al primo posto nell’UE sia per superficie bruciata sia per numero di incendi.", "Ultime 24 ore: tre incendi attivi e fuori controllo a sud-ovest di Madrid, oltre 10.000 persone evacuate e dichiarazione di emergenza di interesse nazionale."]},
+      {"title": "Canada", "items": ["Oltre 950 incendi boschivi attivi (17 luglio 2026).", "3.137 incendi e 1,4 milioni di ettari bruciati in questa stagione.", "Il fumo ha raggiunto Toronto, Boston e New York."]},
+      {"title": "Oceani e calore globale", "items": ["Record globale della temperatura superficiale del mare: 20,86 °C il 21 giugno 2026.", "Oltre il 37% degli oceani è interessato da un’ondata di calore marina; la NOAA prevede fino al 40%.", "Questo calore oceanico alimenta le ondate di calore sulla terraferma e aggrava gli incendi."]}
+    ],
+    "sources": "Fonti: MITECO, EFFIS/Copernicus, Governo del Canada, NOAA, Copernicus Marine Service."
+  },
+  "zh": {
+    "date": "数据截至2026年7月24日",
+    "text": "每一场山火背后，都有一个新闻从未讲述的故事：数百万年来，它们默默地用飞翔塑造了花朵、果实和绿色大地，而如今这一切正在我们眼前燃烧。",
+    "emphasis": "传粉者也是受害者——它们同样值得被看见、被统计。",
+    "details": "查看支持数据",
+    "close": "关闭支持数据",
+    "groups": [
+      {"title": "西班牙", "items": ["2026年约有12万公顷土地被烧毁（EFFIS/Copernicus，7月22日），而2025年同期为35,270公顷——是去年的3.4倍。", "截至7月22日，2026年已发生343起火灾，2025年同期为129起。", "截至7月12日，已发生18起大型火灾（>500公顷），2025年同期为7起。", "今年西班牙的过火面积和火灾数量均居欧盟首位。", "过去24小时：马德里西南部有三场仍未受控的活跃火灾，超过1万人被疏散，并已宣布国家级紧急状态。"]},
+      {"title": "加拿大", "items": ["超过950场活跃山火（2026年7月17日）。", "本季已发生3,137起火灾，过火面积达140万公顷。", "烟霾已影响多伦多、波士顿和纽约市。"]},
+      {"title": "海洋与全球高温", "items": ["全球海表温度创历史纪录：2026年6月21日达到20.86°C。", "超过37%的海洋受到海洋热浪影响；NOAA预计这一比例最高可达40%。", "海洋高温会进一步加剧陆地热浪和山火。"]}
+    ],
+    "sources": "来源：MITECO、EFFIS/Copernicus、加拿大政府、NOAA、Copernicus Marine Service。"
+  }
+}
