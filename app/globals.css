@@ -501,6 +501,8 @@ body {
 }
 .wildfire-banner__data ul { margin: 0; padding-left: 1.1rem; }
 .wildfire-banner__data li { margin-bottom: 0.35rem; }
+.wildfire-banner__source-link { color: #f5cf75; text-decoration: underline; text-underline-offset: 0.2rem; }
+.wildfire-banner__source-link:focus-visible { outline: 2px solid #f5cf75; outline-offset: 2px; }
 .wildfire-banner__sources {
   color: rgba(243, 238, 226, 0.68);
   font-size: 0.7rem;
