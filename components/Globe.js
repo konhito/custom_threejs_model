@@ -2071,6 +2071,22 @@ export default function GlobeComponent({
     [],
   );
 
+  useEffect(() => {
+    const countryParam = new URLSearchParams(window.location.search)
+      .get("country")
+      ?.trim()
+      .toLowerCase();
+    if (!countryParam) return;
+
+    const country = countriesData.find(
+      (item) => item.country.toLowerCase() === countryParam,
+    );
+    if (country) {
+      setSelectedCountry(country);
+      setIsModalVisible(true);
+    }
+  }, [countriesData]);
+
   // Helper function to calculate 3D coordinates from lat/lng
   const calculate3DCoordinates = (lat, lng, radius = 4.5) => {
     const phi = (90 - lat) * (Math.PI / 180);
