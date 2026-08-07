@@ -4,6 +4,9 @@
     "heroTitleLine2": "Blühende Geschichten",
     "heroSubtitle": "Wo Nationen blühen und Geschichten zum Leben erwachen",
     "scrollToExplore": "Scrollen zum Erkunden",
+    "heroImageAlt": "Ein traumhafter Blumengarten, der über pastellfarbenen Wolken schwebt",
+    "scrollStory": "Jede Blume trägt einen Ort, eine Kultur und eine Geschichte in sich, die es zu bewahren gilt.",
+    "scrollCta": "Blumenglobus entdecken",
     "marqueeText": "Erkunde ✦ Nationen ✦ Durch ✦ Blühende ✦ Geschichten ✦ AquaMundi ✦",
     "shopName": "Shop",
     "shopDesc": "Unterstütze unsere Mission mit wunderschönen botanischen Sammlungen",
@@ -26,6 +29,8 @@
   },
   "nav": {
     "home": "Startseite",
+    "homeAriaLabel": "AquaMundi-Startseite",
+    "primaryAriaLabel": "Hauptnavigation",
     "about": "Was ist AquaMundi?",
     "flowers": "Nationalblumen",
     "pollinators": "Bestäuber",

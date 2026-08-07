@@ -2,11 +2,13 @@
 import "../lib/fix-localStorage";
 
 import { Geist, Geist_Mono } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import { siteConfig, generateStructuredData } from "../lib/seo";
 import CookieConsent from "../components/CookieConsent";
 import ConsentAnalytics from "../components/ConsentAnalytics";
 import WildfirePollinatorBanner from "../components/WildfirePollinatorBanner";
+import SmoothScroll from "../components/SmoothScroll";
 
 
 const geistSans = Geist({
@@ -160,6 +162,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <SmoothScroll />
         <WildfirePollinatorBanner />
         {children}
         <CookieConsent />

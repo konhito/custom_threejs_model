@@ -1,9 +1,12 @@
 {
   "home": {
-    "heroTitle": "Explore the World Through",
-    "heroTitleLine2": "Blooming Stories",
-    "heroSubtitle": "Where nations flourish and stories come to life",
-    "scrollToExplore": "Scroll to explore",
+    "heroTitle": "Esplora il mondo attraverso",
+    "heroTitleLine2": "Storie in fiore",
+    "heroSubtitle": "Dove le nazioni fioriscono e le storie prendono vita",
+    "scrollToExplore": "Scorri per esplorare",
+    "heroImageAlt": "Un santuario floreale da sogno sospeso sopra nuvole pastello",
+    "scrollStory": "Ogni fiore racchiude un luogo, una cultura e una storia che meritano di essere preservati.",
+    "scrollCta": "Esplora il globo floreale",
     "marqueeText": "Explore ✦ Nations ✦ Through ✦ Blooming ✦ Stories ✦ AquaMundi ✦",
     "shopName": "Shop",
     "shopDesc": "Support our mission with beautiful botanical collections",
@@ -26,13 +29,15 @@
   },
   "nav": {
     "home": "Home",
+    "homeAriaLabel": "Home di AquaMundi",
+    "primaryAriaLabel": "Navigazione principale",
     "about": "What is AquaMundi?",
-    "flowers": "National Flowers",
-    "pollinators": "Pollinators",
+    "flowers": "Fiori nazionali",
+    "pollinators": "Impollinatori",
     "gallery": "Gallery",
     "pollinatorGallery": "Pollinator Gallery",
     "guardians": "Guardians",
-    "education": "Education & Community",
+    "education": "Educazione e comunità",
     "impact": "Impact & Transparency",
     "archive": "The Living Archive",
     "araihan": "Araihan Measure",
@@ -130,7 +135,7 @@
   "about": {
     "pageTitle": "About AquaMundi",
     "heroTitle": "The Digital Garden Where Nature Meets Technology",
-    "heroSubtitle": "Where nations bloom and stories unfold, preserving Earth's floral heritage for generations to come.",
+    "heroSubtitle": "Dove le nazioni fioriscono e le storie si dispiegano, preservando il patrimonio floreale della Terra per le generazioni future.",
     "missionTitle": "Our Mission",
     "missionText": "We connect communities, institutions, and individuals through the beauty and knowledge of flowers and pollinators, inspiring environmental awareness and fostering international cooperation to protect our natural heritage.",
     "missionText2": "Our association serves as the digital garden of the planet, where every bloom becomes an ambassador of Earth's biological and cultural diversity.",
@@ -1361,6 +1366,6 @@
     "selectionCriteriaTitle": "Our Selection Criteria",
     "selectionCriteriaSubtitle": "Each flower is carefully chosen based on these fundamental principles",
     "selectionMethodology": "Our rigorous methodology ensures accuracy and cultural authenticity",
-    "exploreGlobe": "Explore the Globe"
+    "exploreGlobe": "Esplora il globo"
   }
 }

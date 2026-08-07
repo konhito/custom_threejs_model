@@ -4,6 +4,9 @@
     "heroTitleLine2": "Blooming Stories",
     "heroSubtitle": "Where nations flourish and stories come to life",
     "scrollToExplore": "Scroll to explore",
+    "heroImageAlt": "A dreamlike floral sanctuary floating above pastel clouds",
+    "scrollStory": "Every flower carries a place, a culture, and a story worth preserving.",
+    "scrollCta": "Explore the flower globe",
     "marqueeText": "Explore ✦ Nations ✦ Through ✦ Blooming ✦ Stories ✦ AquaMundi ✦",
     "shopName": "Shop",
     "shopDesc": "Support our mission with beautiful botanical collections",
@@ -26,6 +29,8 @@
   },
   "nav": {
     "home": "Home",
+    "homeAriaLabel": "AquaMundi home",
+    "primaryAriaLabel": "Primary navigation",
     "about": "What is AquaMundi?",
     "flowers": "National Flowers",
     "pollinators": "Pollinators",

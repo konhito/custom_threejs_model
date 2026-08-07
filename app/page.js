@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import Navigation from "../components/Navigation";
-import { HeroSection } from "../components/HeroSection";
+import AquaLandingExperience from "../components/AquaLandingExperience";
 import ImageGallery from "../components/ImageGallery";
 import CurvedLoop from "../components/CurvedLoop";
 import { BentoDemo } from "../components/BentoDemo";
@@ -262,9 +261,8 @@ export default function Home() {
         }}
       >
       <main role="main" aria-label="Interactive 3D Globe of Sacred Flowers" className="relative">
-        <Navigation />
         {/* Hero Section - Loads First */}
-        <HeroSection />
+        <AquaLandingExperience />
         
         {/* Music Toggle Button - Bottom Left */}
         <div className="fixed bottom-6 left-6 z-50">

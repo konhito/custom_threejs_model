@@ -4,6 +4,9 @@
     "heroTitleLine2": "Historias que Florecen",
     "heroSubtitle": "Donde las naciones florecen y las historias cobran vida",
     "scrollToExplore": "Desplázate para explorar",
+    "heroImageAlt": "Un santuario floral de ensueño flotando sobre nubes pastel",
+    "scrollStory": "Cada flor guarda un lugar, una cultura y una historia que merece ser preservada.",
+    "scrollCta": "Explora el globo floral",
     "marqueeText": "Explora ✦ Naciones ✦ A Través de ✦ Historias ✦ que Florecen ✦ AquaMundi ✦",
     "shopName": "Tienda",
     "shopDesc": "Apoya nuestra misión con hermosas colecciones botánicas",
@@ -26,6 +29,8 @@
   },
   "nav": {
     "home": "Inicio",
+    "homeAriaLabel": "Página de inicio de AquaMundi",
+    "primaryAriaLabel": "Navegación principal",
     "about": "¿Qué es AquaMundi?",
     "flowers": "Flores Nacionales",
     "pollinators": "Polinizadores",

@@ -4,6 +4,9 @@
     "heroTitleLine2": "探索世界",
     "heroSubtitle": "国家繁荣，故事鲜活",
     "scrollToExplore": "滚动探索",
+    "heroImageAlt": "梦幻花卉圣境漂浮在粉彩云海之上",
+    "scrollStory": "每一朵花都承载着一个地方、一种文化，以及一段值得守护的故事。",
+    "scrollCta": "探索花卉地球",
     "marqueeText": "探索 ✦ 国家 ✦ 通过 ✦ 绽放的 ✦ 故事 ✦ AquaMundi ✦",
     "shopName": "商店",
     "shopDesc": "通过精美的植物收藏支持我们的使命",
@@ -26,6 +29,8 @@
   },
   "nav": {
     "home": "首页",
+    "homeAriaLabel": "AquaMundi 首页",
+    "primaryAriaLabel": "主导航",
     "about": "什么是AquaMundi？",
     "flowers": "国花",
     "pollinators": "传粉者",
