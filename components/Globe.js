@@ -2769,20 +2769,19 @@ export default function GlobeComponent({
           // Update raycaster
           raycaster.setFromCamera(mouse, camera);
 
-          // Get all intersectable objects
-          const intersectableObjects = [];
-          scene.traverse((child) => {
-            if (child.userData && child.userData.data && child.isMesh) {
-              intersectableObjects.push(child);
-            }
-          });
-
           // Check for intersections
           const intersects = raycaster.intersectObjects(scene.children, true);
 
           if (intersects.length > 0) {
-            const firstIntersect = intersects[0];
-            const clickedObject = firstIntersect.object;
+            // The globe surface can be closer in the raycast result than a
+            // satellite's glow/particle. Find the nearest country satellite
+            // explicitly instead of treating the first scene hit as the target.
+            const satelliteIntersect = intersects.find(
+              (intersect) =>
+                intersect.object.userData?.data ||
+                intersect.object.parent?.userData?.data,
+            );
+            const clickedObject = satelliteIntersect?.object;
 
             // --- COORDINATE DEBUG TOOL ---
             // Find the point on the globe's surface (specifically looking for the globe mesh)
@@ -2828,8 +2827,8 @@ export default function GlobeComponent({
             // -----------------------------
 
             const countryData =
-              clickedObject.userData?.data ||
-              clickedObject.parent?.userData?.data;
+              clickedObject?.userData?.data ||
+              clickedObject?.parent?.userData?.data;
 
             if (countryData) {
               // Prevent fullscreen toggle when clicking on a flower
