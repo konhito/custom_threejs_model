@@ -21,6 +21,7 @@ export default function AdminOrdersPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [loadError, setLoadError] = useState(null);
   const ordersPerPage = 20;
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function AdminOrdersPage() {
   const loadOrders = async () => {
     try {
       setIsLoading(true);
+      setLoadError(null);
       const response = await adminAPI.getOrders({ status: statusFilter === 'all' ? '' : statusFilter });
       
       if (response.success) {
@@ -37,9 +39,32 @@ export default function AdminOrdersPage() {
       }
     } catch (error) {
       console.error('Failed to load orders:', error);
+      setLoadError('Orders could not be loaded. Check the API connection and try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const exportOrders = () => {
+    const csvCell = (value) => `"${String(value ?? '').replaceAll('"', '""')}"`;
+    const rows = [
+      ['Order number', 'Customer', 'Email', 'Amount', 'Currency', 'Status', 'Created'],
+      ...filteredOrders.map((order) => [
+        order.order_number,
+        order.customer_name,
+        order.customer_email,
+        order.total_amount,
+        order.currency?.toUpperCase(),
+        order.status,
+        new Date(order.created_at).toISOString(),
+      ]),
+    ];
+    const blob = new Blob([rows.map((row) => row.map(csvCell).join(',')).join('\n')], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `aquamundi-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
   };
 
   const handleStatusUpdate = async (orderId, newStatus) => {
@@ -92,7 +117,7 @@ export default function AdminOrdersPage() {
           <p className="text-gray-900 mt-1">Manage and track all customer orders</p>
         </div>
         
-        <button className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+        <button onClick={exportOrders} className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
           <Download className="w-4 h-4 mr-2" />
           Export Orders
         </button>
@@ -134,6 +159,12 @@ export default function AdminOrdersPage() {
 
       {/* Orders Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        {loadError && (
+          <div className="m-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+            {loadError}
+            <button onClick={loadOrders} className="ml-3 font-semibold underline underline-offset-2">Retry</button>
+          </div>
+        )}
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>

@@ -45,19 +45,19 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-4">
+    <div className="admin-login flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         {/* Logo & Title */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-600 rounded-full mb-4">
             <Lock className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Nahiara Admin</h1>
-          <p className="text-gray-900 mt-2">Sign in to access the admin dashboard</p>
+          <h1 className="text-3xl font-bold text-gray-900">AquaMundi Admin</h1>
+          <p className="text-gray-600 mt-2">Sign in to manage orders, customers, and the shop.</p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="admin-login-card bg-white rounded-xl p-8">
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
               <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" />
@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                  placeholder="admin@example.com"
+                  placeholder="you@example.com"
                 />
               </div>
             </div>

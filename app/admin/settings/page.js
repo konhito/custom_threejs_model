@@ -12,15 +12,10 @@ import {
 } from 'lucide-react';
 
 export default function AdminSettingsPage() {
-  const [isSaving, setIsSaving] = useState(false);
+  const [notice, setNotice] = useState('');
   
-  const handleSave = async () => {
-    setIsSaving(true);
-    // Implement save logic
-    setTimeout(() => {
-      setIsSaving(false);
-      alert('Settings saved successfully!');
-    }, 1000);
+  const handleSave = () => {
+    setNotice('These values are managed securely in the server environment. Updating them from the browser is not enabled yet.');
   };
 
   return (
@@ -34,13 +29,18 @@ export default function AdminSettingsPage() {
         
         <button
           onClick={handleSave}
-          disabled={isSaving}
-          className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-emerald-400"
+          className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
         >
           <Save className="w-4 h-4 mr-2" />
-          {isSaving ? 'Saving...' : 'Save Changes'}
+          How settings work
         </button>
       </div>
+
+      {notice && (
+        <div role="status" className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {notice}
+        </div>
+      )}
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* General Settings */}

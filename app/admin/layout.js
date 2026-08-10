@@ -14,7 +14,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import FaultyTerminal from '../../components/FaultyTerminal';
+import './admin.css';
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -49,6 +49,12 @@ export default function AdminLayout({ children }) {
     setIsLoading(false);
   }, [pathname, router]);
 
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+  }, [pathname]);
+
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_email');
@@ -81,38 +87,18 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-white relative">
-      {/* FaultyTerminal Background */}
-      <div style={{ width: '100%', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, opacity: 0.3 }}>
-        <FaultyTerminal
-          scale={1.5}
-          gridMul={[2, 1]}
-          digitSize={1.2}
-          timeScale={1}
-          pause={false}
-          scanlineIntensity={1}
-          glitchAmount={1}
-          flickerAmount={1}
-          noiseAmp={1}
-          chromaticAberration={0}
-          dither={0}
-          curvature={0}
-          tint="#ffffff"
-          mouseReact={true}
-          mouseStrength={0.5}
-          pageLoadAnimation={false}
-          brightness={1}
-        />
-      </div>
-      
+    <div className="admin-shell relative">
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 bg-opacity-95 backdrop-blur-sm transform transition-transform duration-300 ease-in-out ${
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#13261f] text-white shadow-xl transform transition-transform duration-200 ease-out ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-between h-16 px-6 bg-gray-800">
-            <h1 className="text-xl font-bold text-white">Nahiara Admin</h1>
+          <div className="flex items-center justify-between h-16 px-6 border-b border-white/10">
+            <div>
+              <p className="text-base font-semibold tracking-tight text-white">AquaMundi</p>
+              <p className="text-xs text-emerald-100/70">Administration</p>
+            </div>
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden text-gray-400 hover:text-white"
@@ -122,7 +108,7 @@ export default function AdminLayout({ children }) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <nav aria-label="Admin navigation" className="flex-1 px-3 py-5 space-y-1 overflow-y-auto">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
@@ -131,10 +117,11 @@ export default function AdminLayout({ children }) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center px-3 py-2.5 rounded-lg transition-colors duration-150 ${
                     isActive
-                      ? 'bg-emerald-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                      ? 'bg-emerald-500 text-white shadow-sm'
+                      : 'text-emerald-50/75 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   <Icon className="w-5 h-5 mr-3" />
@@ -145,42 +132,44 @@ export default function AdminLayout({ children }) {
           </nav>
 
           {/* User Info & Logout */}
-          <div className="p-4 border-t border-gray-800">
+          <div className="p-4 border-t border-white/10">
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold">
                 {userEmail.charAt(0).toUpperCase()}
               </div>
               <div className="ml-3 flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">{userEmail}</p>
-                <p className="text-xs text-gray-400">Administrator</p>
+                <p className="text-xs text-emerald-100/60">Administrator</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+              className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-white/10 rounded-lg hover:bg-red-600 transition-colors"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </button>
           </div>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
       <div className={`transition-all duration-300 relative z-10 ${
         sidebarOpen ? 'lg:ml-64' : 'ml-0'
       }`}>
         {/* Top Bar */}
-        <div className="sticky top-0 z-40 h-16 bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200 flex items-center px-6">
+        <header className="sticky top-0 z-40 h-16 bg-white/90 backdrop-blur border-b border-[#dce6df] flex items-center px-4 sm:px-6">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-gray-500 hover:text-gray-700"
+            aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={sidebarOpen}
+            className="rounded-md p-2 -ml-2 text-gray-600 hover:bg-[#edf5f0] hover:text-[#176c4d] transition-colors"
           >
             <Menu className="w-6 h-6" />
           </button>
           
           <div className="ml-auto flex items-center space-x-4">
-            <div className="text-sm text-gray-600">
+            <div className="hidden sm:block text-sm text-gray-600">
               {new Date().toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -189,10 +178,10 @@ export default function AdminLayout({ children }) {
               })}
             </div>
           </div>
-        </div>
+        </header>
 
         {/* Page Content */}
-        <main className="p-6 relative z-10">
+        <main className="p-4 sm:p-6 lg:p-8 relative z-10">
           {children}
         </main>
       </div>
