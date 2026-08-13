@@ -353,3 +353,38 @@ export const MusicToggleButton = ({
     </motion.div>
   );
 };
+
+export function ChapterMusicToggleButton({ src, autoPlay = false, volume = 0.12 }) {
+  const audioRef = useRef(null);
+  const fadeRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const clearFade = () => { if (fadeRef.current) clearInterval(fadeRef.current); };
+  const fadeTo = (target, done) => {
+    clearFade();
+    const audio = audioRef.current;
+    if (!audio) return;
+    fadeRef.current = setInterval(() => {
+      audio.volume = Math.max(0, Math.min(target, audio.volume + (target > audio.volume ? 0.015 : -0.015)));
+      if (audio.volume === target) { clearFade(); done?.(); }
+    }, 30);
+  };
+  const play = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0;
+    try { await audio.play(); fadeTo(volume); } catch { setIsPlaying(false); }
+  };
+  const toggle = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) play(); else fadeTo(0, () => audio.pause());
+  };
+
+  useEffect(() => { if (autoPlay) play(); return () => { clearFade(); audioRef.current?.pause(); }; }, [src]);
+
+  return <button type="button" onClick={toggle} className="group grid h-10 w-10 place-items-center rounded-full bg-white text-emerald-700 shadow-[0_3px_8px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" aria-label={isPlaying ? "Pause soundtrack" : "Play soundtrack"}>
+    <audio ref={audioRef} src={src} loop preload="auto" onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} />
+    <span className="flex h-4 items-center gap-0.5" aria-hidden="true">{[6, 13, 9, 15].map((height) => <span key={height} className={`w-px rounded-full bg-current ${isPlaying ? "animate-pulse" : ""}`} style={{ height }} />)}</span>
+  </button>;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Send } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { detectUserCountry } from "../lib/languageDetection";
 
 const SPANISH_COUNTRIES = new Set(["AR", "BO", "CL", "CO", "CR", "CU", "DO", "EC", "ES", "GT", "HN", "MX", "NI", "PA", "PE", "PR", "PY", "SV", "UY", "VE"]);
@@ -34,7 +34,7 @@ function languageFor(country) {
   return "en";
 }
 
-export default function AraihanChat({ compact = false }) {
+export default function AraihanChat({ compact = false, onClose }) {
   const [messages, setMessages] = useState([{ role: "assistant", content: copy.en.welcome }]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -95,23 +95,25 @@ export default function AraihanChat({ compact = false }) {
   }
 
   const text = copy[detectedLanguage];
+  const starters = compact ? text.starters.slice(0, 2) : text.starters;
+  const followUps = compact ? text.followUps.slice(0, 2) : text.followUps;
 
   return (
-    <section className={`flex w-full flex-col overflow-hidden bg-[#153527] text-white ${compact ? "min-h-[31rem] max-h-[min(42rem,calc(100vh-8rem))]" : "min-h-[36rem] rounded-2xl shadow-[0_8px_24px_rgba(10,36,23,0.28)]"}`} aria-label="Talk with Araihan">
-      <header className="flex items-center justify-between border-b border-white/20 px-5 py-4">
+    <section className={`flex w-full flex-col overflow-hidden bg-[#153527] text-white ${compact ? "h-[26rem] max-h-[calc(100vh-6.5rem)]" : "min-h-[36rem] rounded-2xl shadow-[0_8px_24px_rgba(10,36,23,0.28)]"}`} aria-label="Talk with Araihan">
+      <header className={`flex items-center justify-between border-b border-white/20 ${compact ? "px-4 py-3" : "px-5 py-4"}`}>
         <div>
-          <p className="text-lg font-semibold">Araihan</p>
-          <p className="text-sm text-emerald-100">Faithful squire of Nahiara</p>
+          <p className={`${compact ? "text-base" : "text-lg"} font-semibold`}>Araihan</p>
+          <p className="text-xs text-emerald-100">Faithful squire of Nahiara</p>
         </div>
-        <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-50">Guided conversation</span>
+        {compact ? <button type="button" onClick={onClose} className="rounded-full p-1.5 text-emerald-50 transition hover:bg-white/10" aria-label="Close Araihan"><X size={17}/></button> : <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-50">Guided conversation</span>}
       </header>
 
-      <div ref={feedRef} className="flex-1 space-y-3 overflow-y-auto bg-[#f6f8f4] p-5 text-sm text-[#1e3428]" aria-live="polite">
+      <div ref={feedRef} className={`flex-1 space-y-3 overflow-y-auto bg-[#f6f8f4] text-sm text-[#1e3428] ${compact ? "p-4" : "p-5"}`} aria-live="polite">
         {messages.length === 1 && (
           <div className="pt-1">
             <p className="mb-2 text-xs font-semibold text-[#496352]">{text.start}</p>
             <div className="flex flex-wrap gap-2">
-            {text.starters.map((prompt) => (
+            {starters.map((prompt) => (
               <button key={prompt} type="button" onClick={() => usePrompt(prompt)} disabled={isSending || isDetecting} className="rounded-full border border-[#a7bba9] bg-white px-3 py-1.5 text-left text-xs font-medium text-[#24543e] transition hover:bg-[#e7f0e8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f] disabled:cursor-not-allowed disabled:opacity-50">
                 {prompt}
               </button>
@@ -128,7 +130,7 @@ export default function AraihanChat({ compact = false }) {
               <div className="mt-2">
                 <p className="mb-1.5 text-xs font-semibold text-[#496352]">{text.explore}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {text.followUps.map((prompt) => (
+                  {followUps.map((prompt) => (
                     <button key={`${index}-${prompt}`} type="button" onClick={() => usePrompt(prompt)} disabled={isSending} className="rounded-full border border-[#a7bba9] bg-white px-2.5 py-1 text-left text-xs font-medium text-[#24543e] transition hover:bg-[#e7f0e8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f] disabled:cursor-not-allowed disabled:opacity-50">
                       {prompt}
                     </button>
@@ -142,7 +144,7 @@ export default function AraihanChat({ compact = false }) {
         {error && <p role="alert" className="rounded-xl bg-[#fff1ed] px-3 py-2 text-[#8a2c17]">{error}</p>}
       </div>
 
-      <form onSubmit={sendMessage} className="flex gap-2 border-t border-[#d6e0d8] bg-white p-4">
+      <form onSubmit={sendMessage} className={`flex gap-2 border-t border-[#d6e0d8] bg-white ${compact ? "p-3" : "p-4"}`}>
         <label className="sr-only" htmlFor="araihan-message">Your message</label>
         <input ref={inputRef} id="araihan-message" value={input} onChange={(event) => setInput(event.target.value)} maxLength={1200} disabled={isDetecting} placeholder={text.placeholder} className="min-w-0 flex-1 rounded-lg border border-[#9bb6a3] px-3 py-2 text-sm text-[#193325] placeholder:text-[#506a59] focus:border-[#2f6b4f] focus:outline-none focus:ring-2 focus:ring-[#2f6b4f]/25 disabled:opacity-60" />
         <button type="submit" disabled={isDetecting || isSending || !input.trim()} className="rounded-lg bg-[#2f6b4f] p-2.5 text-white transition hover:bg-[#24543e] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f]" aria-label="Send message">
