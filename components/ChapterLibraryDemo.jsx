@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { BookOpen, CreditCard, LockKeyhole, LogIn, LogOut, Volume2, VolumeX, X } from "lucide-react";
+import { BookOpen, CreditCard, LockKeyhole, LogIn, LogOut, X } from "lucide-react";
 import { MusicToggleButton } from "./MusicToggleButton";
 import styles from "./ChapterLibraryDemo.module.css";
-import { chapterAudioUrl, chaptersAPI, customerAuthAPI, customerGoogleAuthUrl } from "../lib/api";
+import { chaptersAPI, customerAuthAPI, customerGoogleAuthUrl } from "../lib/api";
 import { chapterList, chapterNumber, isPurchased } from "../lib/chapterLibraryDemo.mjs";
 
 const countries = ["South Africa", "Nigeria", "Egypt", "Ethiopia", "Morocco", "Tanzania", "Pakistan", "India", "Indonesia", "Malaysia", "Thailand", "China", "USA", "Canada", "Mexico", "Guatemala", "Costa Rica", "Colombia", "Venezuela", "Argentina", "Peru", "Panama", "France", "Germany", "England", "Spain", "Scotland", "Ireland"];
@@ -34,19 +34,26 @@ function HoneyCell({ cell, owned, onOpen }) {
   </button>;
 }
 
-function Reader({ active, pdfUrl, muted, setMuted, onClose }) {
+function Reader({ active, pdfUrl, onClose }) {
   const audioRef = useRef(null);
-  const audioUrl = active?.audio_url ? chapterAudioUrl(chapterNumber(active)) : "";
+  const [soundUrl, setSoundUrl] = useState("");
+  const audioUrl = soundUrl;
+  const hasSoundtrack = Boolean(active?.audio_url);
+  const number = chapterNumber(active);
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audioUrl || !audio) return;
-    audio.volume = 0;
-    const fade = window.setInterval(() => { audio.volume = Math.min(.35, audio.volume + .035); if (audio.volume >= .35) window.clearInterval(fade); }, 80);
-    return () => { window.clearInterval(fade); audio.pause(); audio.currentTime = 0; };
-  }, [audioUrl]);
-  useEffect(() => { if (audioRef.current) audioRef.current.muted = muted; }, [muted]);
+    let cancelled = false;
+    let objectUrl = "";
+    setSoundUrl("");
+    if (!hasSoundtrack) return undefined;
+    chaptersAPI.getAudio(number).then((blob) => {
+      if (cancelled) return;
+      objectUrl = URL.createObjectURL(blob);
+      setSoundUrl(objectUrl);
+    }).catch(() => setSoundUrl(""));
+    return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl); };
+  }, [hasSoundtrack, number]);
   return <div className="fixed inset-0 z-[100] grid place-items-center bg-slate-950/90 p-3 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-    {audioUrl && <div className="absolute right-16 top-5 z-10"><MusicToggleButton src={audioUrl} autoPlay volume={0.12} fadeDuration={800}/></div>}
+    {soundUrl && <div className="absolute right-16 top-5 z-10"><MusicToggleButton src={soundUrl} autoPlay volume={0.12} fadeDuration={800}/></div>}
     <section className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
       <header className="flex items-center justify-between border-b border-stone-200 px-5 py-4"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-amber-700">Tomo I · Digital edition</p><h2 className="mt-1 text-lg font-semibold text-stone-900">{active.title || `Chapter ${chapterNumber(active)}`}</h2></div><div className="flex items-center gap-2">{audioUrl && <><button onClick={() => setMuted(!muted)} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label={muted ? "Unmute soundtrack" : "Mute soundtrack"}>{muted ? <VolumeX size={18} /> : <Volume2 size={18} />}</button><audio ref={audioRef} src={audioUrl} loop preload="auto" /></>}<button onClick={onClose} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label="Close reader"><X size={20}/></button></div></header>
       {pdfUrl ? <iframe src={pdfUrl} title={active.title} className="h-[76vh] w-full" /> : <div className="grid min-h-[50vh] place-items-center p-8 text-center text-stone-500"><BookOpen className="mb-3"/><p>This chapter is being prepared for the digital library.</p></div>}
