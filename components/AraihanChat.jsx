@@ -126,7 +126,7 @@ export default function AraihanChat({ compact = false, onClose }) {
         {compact ? <button type="button" onClick={onClose} className="rounded-full p-1.5 text-emerald-50 transition hover:bg-white/10" aria-label="Close Araihan"><X size={17}/></button> : <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-50">Guided conversation</span>}
       </header>
 
-      <div ref={feedRef} className={`flex-1 space-y-3 overflow-y-auto bg-[#f6f8f4] text-sm text-[#1e3428] ${compact ? "p-4" : "p-5"}`} aria-live="polite">
+      <div ref={feedRef} data-lenis-prevent className={`flex-1 touch-pan-y overscroll-contain space-y-3 overflow-y-auto bg-[#f6f8f4] text-sm text-[#1e3428] ${compact ? "p-4" : "p-5"}`} aria-live="polite">
         {messages.length === 1 && (
           <div className="pt-1">
             <p className="mb-2 text-xs font-semibold text-[#496352]">{text.start}</p>
