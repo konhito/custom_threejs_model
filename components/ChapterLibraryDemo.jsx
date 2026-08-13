@@ -52,7 +52,7 @@ function Reader({ active, pdfUrl, onClose }) {
     return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl); };
   }, [hasSoundtrack, number]);
   return <div className="fixed inset-0 z-[100] grid place-items-center bg-slate-950/90 p-3 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-    {soundUrl && <div className="absolute right-16 top-5 z-10"><MusicToggleButton native src={soundUrl} autoPlay volume={0.12}/></div>}
+    {soundUrl && <div className="absolute right-16 top-5 z-10"><MusicToggleButton src={soundUrl} autoPlay volume={0.12}/></div>}
     <section className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
       <header className="flex items-center justify-between border-b border-stone-200 px-5 py-4"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-amber-700">Tomo I · Digital edition</p><h2 className="mt-1 text-lg font-semibold text-stone-900">{active.title || `Chapter ${chapterNumber(active)}`}</h2></div><button onClick={onClose} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label="Close reader"><X size={20}/></button></header>
       {pdfUrl ? <iframe src={pdfUrl} title={active.title} className="h-[76vh] w-full" /> : <div className="grid min-h-[50vh] place-items-center p-8 text-center text-stone-500"><BookOpen className="mb-3"/><p>This chapter is being prepared for the digital library.</p></div>}
