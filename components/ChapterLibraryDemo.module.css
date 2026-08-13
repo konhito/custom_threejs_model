@@ -4,6 +4,47 @@
     linear-gradient(180deg, #fffdfa 0%, #ffffff 42rem);
 }
 
+.library > div {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  grid-template-areas:
+    "header header"
+    "hive google"
+    "hive login";
+}
+
+.library > div > header { grid-area: header; }
+.library > div > a { grid-area: google; align-self: end; margin: 0; }
+.library > div > section[id="library-login"] { grid-area: login; margin: 0; }
+.library > div > .hive { grid-area: hive; margin: 0; }
+
+.library header h1 { font-size: 0 !important; }
+.library header h1::after {
+  color: #1c1917;
+  content: "Nahiara Chapter Library";
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+}
+
+.library > div > section[id="library-login"] {
+  display: block !important;
+  border-color: #e7e2d8;
+  box-shadow: none;
+}
+
+.library > div > section[id="library-login"] > aside { display: none; }
+.library > div > section[id="library-login"] > div { padding: 1.5rem; }
+.library > div > section[id="library-login"] h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
 .hive {
   background: #fbfaf7 !important;
   border-color: #e7e2d8 !important;
@@ -74,4 +115,14 @@
 @media (prefers-reduced-motion: reduce) {
   .cell, .ready, .hive::before, .hive::after { animation: none; }
   .cell:hover { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .library > div {
+    display: block;
+  }
+
+  .library > div > a,
+  .library > div > section[id="library-login"],
+  .library > div > .hive { margin-top: 1.5rem; }
 }
