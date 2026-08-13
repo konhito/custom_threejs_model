@@ -24,7 +24,7 @@ const cells = [
 function HoneyCell({ cell, owned, onOpen }) {
   const available = cell.type === "open" || cell.type === "free" || owned;
   const color = cell.type === "open" ? "border-stone-300 bg-stone-100 text-stone-600" : cell.type === "interlude" ? "border-violet-300 bg-violet-100 text-violet-950" : cell.type === "closing" ? "border-emerald-300 bg-emerald-100 text-emerald-950" : available ? "border-amber-400 bg-amber-300 text-stone-950" : "border-stone-300 bg-stone-100 text-stone-400";
-  return <button onClick={() => onOpen(cell)} style={{ "--cell-delay": cell.id }} className={`${styles.cell} group relative aspect-[1/.88] w-full min-w-0 [clip-path:polygon(50%_0,100%_25%,100%_75%,50%_100%,0_75%,0_25%)] border-2 p-1 transition hover:scale-[1.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 ${color}`} aria-label={`${cell.label}${available ? "" : ", locked"}`}>
+  return <button onClick={() => onOpen(cell)} style={{ "--cell-delay": cell.id }} className={`${styles.cell} ${available ? styles.ready : ""} group relative aspect-[1/.88] w-full min-w-0 [clip-path:polygon(50%_0,100%_25%,100%_75%,50%_100%,0_75%,0_25%)] border-2 p-1 transition hover:scale-[1.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 ${color}`} aria-label={`${cell.label}${available ? "" : ", locked"}`}>
     <span className="flex h-full w-full flex-col items-center justify-center [clip-path:inherit] px-2 text-center">
       {!available && <LockKeyhole size={14} className="mb-1" />}
       <span className="text-[10px] font-bold uppercase leading-tight sm:text-xs">{cell.label}</span>
