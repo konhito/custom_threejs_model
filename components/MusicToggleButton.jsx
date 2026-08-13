@@ -13,7 +13,7 @@ const AUDIO_CONFIG = {
   fadeSteps: 20, // number of steps for smooth fade
 };
 
-export const MusicToggleButton = ({
+const HowlerMusicToggleButton = ({
   autoPlay = false,
   onLoadComplete,
   src = "/Matias - Aquamundi (Loopeable Version).mp3",
@@ -354,7 +354,7 @@ export const MusicToggleButton = ({
   );
 };
 
-export function ChapterMusicToggleButton({ src, autoPlay = false, volume = 0.12 }) {
+function NativeMusicToggleButton({ src, autoPlay = false, volume = 0.12 }) {
   const audioRef = useRef(null);
   const fadeRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -388,3 +388,5 @@ export function ChapterMusicToggleButton({ src, autoPlay = false, volume = 0.12 
     <span className="flex h-4 items-center gap-0.5" aria-hidden="true">{[6, 13, 9, 15].map((height) => <span key={height} className={`w-px rounded-full bg-current ${isPlaying ? "animate-pulse" : ""}`} style={{ height }} />)}</span>
   </button>;
 }
+
+export const MusicToggleButton = (props) => props.native ? <NativeMusicToggleButton {...props} /> : <HowlerMusicToggleButton {...props} />;
