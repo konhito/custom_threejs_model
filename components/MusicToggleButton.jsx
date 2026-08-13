@@ -120,7 +120,7 @@ export const MusicToggleButton = ({
 
   // Auto-play when loader completes with fade-in
   useEffect(() => {
-    if (autoPlay && !hasAutoPlayed && onLoadComplete) {
+    if (autoPlay && !hasAutoPlayed) {
       // Small delay to ensure smooth transition
       const timer = setTimeout(() => {
         try {
