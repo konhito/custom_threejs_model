@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { BookOpen, CreditCard, Headphones, LockKeyhole, LogOut } from "lucide-react";
-import { chaptersAPI, customerAuthAPI } from "../lib/api";
+import { BookOpen, CreditCard, Headphones, LockKeyhole, LogOut, Volume2, VolumeX, X } from "lucide-react";
+import { chapterAudioUrl, chaptersAPI, customerAuthAPI } from "../lib/api";
 import { chapterList, chapterNumber, isPurchased } from "../lib/chapterLibraryDemo.mjs";
 
 function ChapterPayment({ chapter, onPaid, onCancel }) {
@@ -49,6 +49,8 @@ export default function ChapterLibraryDemo() {
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
   const [checkout, setCheckout] = useState(null);
+  const [muted, setMuted] = useState(false);
+  const audioRef = useRef(null);
 
   async function load() {
     setBusy(true);
@@ -67,6 +69,22 @@ export default function ChapterLibraryDemo() {
 
   useEffect(() => { load(); }, []);
   useEffect(() => () => { if (pdfUrl) URL.revokeObjectURL(pdfUrl); }, [pdfUrl]);
+  const audioUrl = active?.audio_url ? chapterAudioUrl(chapterNumber(active)) : "";
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !audioUrl) return;
+    audio.volume = 0;
+    audio.muted = muted;
+    audio.play().catch(() => {});
+    const up = window.setInterval(() => { audio.volume = Math.min(0.12, audio.volume + 0.01); if (audio.volume >= 0.12) window.clearInterval(up); }, 70);
+    return () => {
+      window.clearInterval(up);
+      const down = window.setInterval(() => { audio.volume = Math.max(0, audio.volume - 0.02); if (!audio.volume) { window.clearInterval(down); audio.pause(); } }, 40);
+    };
+  }, [audioUrl]);
+
+  useEffect(() => { if (audioRef.current) audioRef.current.muted = muted; }, [muted]);
 
   async function authenticate(event) {
     event.preventDefault();
@@ -81,15 +99,16 @@ export default function ChapterLibraryDemo() {
   }
 
   async function openChapter(chapter) {
-    if (!user || !isPurchased(chapter)) return;
+    const number = chapterNumber(chapter);
+    if (number > 3 && (!user || !isPurchased(chapter))) return;
     setBusy(true);
     setError("");
     try {
-      const result = await chaptersAPI.getByNumber(chapterNumber(chapter));
+      const result = number <= 3 ? await chaptersAPI.getFreeByNumber(number) : await chaptersAPI.getByNumber(number);
       const detail = result.chapter || result.data || result;
       setActive(detail);
       setPdfUrl("");
-      if (detail.has_pdf) setPdfUrl(URL.createObjectURL(await chaptersAPI.getFile(chapterNumber(chapter))));
+      if (detail.has_pdf) setPdfUrl(URL.createObjectURL(await (number <= 3 ? chaptersAPI.getFreeFile(number) : chaptersAPI.getFile(number))));
     }
     catch (requestError) { setError(requestError.message); }
     finally { setBusy(false); }
@@ -129,13 +148,12 @@ export default function ChapterLibraryDemo() {
   const unlocked = chapters.filter(isPurchased).length;
   const title = (chapter) => chapter.title || `Chapter ${String(chapterNumber(chapter)).padStart(2, "0")}`;
   const content = active?.content_text || active?.content || active?.text || active?.body;
-  const audioUrl = active?.audioUrl || active?.audio_url;
 
   return <main className="min-h-screen bg-[#f6f8f4] px-5 py-12 text-[#1e3428] sm:px-8">
     <div className="mx-auto max-w-6xl">
       <Link href="/shop" className="text-sm font-semibold text-[#2f6b4f] hover:underline">← Back to the collection</Link>
       <header className="mt-10 flex flex-wrap items-end justify-between gap-6 border-b border-[#c9d8cc] pb-10">
-        <div><p className="text-sm font-semibold text-[#2f6b4f]">Nahiara and the Guardians of the Flowers · Tome I</p><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your chapter library</h1></div>
+        <div><p className="text-sm font-semibold text-[#2f6b4f]">Nahiara and the Guardians of the Flowers · Tome I</p><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your chapter library</h1><p className="mt-2 text-sm text-[#496352]">Digital ISBN: 978-84-09-79252-8</p></div>
         {user && <div className="text-right"><p className="text-sm text-[#496352]">{user.name || user.email} · {unlocked} purchased</p><button onClick={logout} className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-[#2f6b4f]"><LogOut size={15}/> Sign out</button></div>}
       </header>
 
@@ -149,7 +167,9 @@ export default function ChapterLibraryDemo() {
           <button disabled={busy} className="rounded-lg bg-[#2f6b4f] px-4 py-2.5 font-semibold text-white">{mode === "login" ? "Sign in" : "Register"}</button>
         </form>
         <button onClick={() => setMode(mode === "login" ? "register" : "login")} className="mt-4 text-sm font-semibold text-[#2f6b4f]">{mode === "login" ? "Create an account" : "Already have an account? Sign in"}</button>
+        <div className="mt-7 border-t border-[#d7e1d8] pt-5"><p className="text-sm font-semibold">Read the first three chapters free</p><div className="mt-3 flex flex-wrap gap-2">{chapters.filter((chapter) => chapterNumber(chapter) <= 3).map((chapter) => <button key={chapter.id} onClick={() => openChapter(chapter)} className="rounded-full border border-[#2f6b4f] px-3 py-1.5 text-xs font-semibold text-[#2f6b4f]">{title(chapter)}</button>)}</div></div>
       </section>}
+      {!user && active && <article className="mx-auto mt-8 max-w-5xl border border-[#c9d8cc] bg-white p-6 sm:p-8"><div className="flex items-center justify-between gap-3 text-[#2f6b4f]"><div className="flex items-center gap-3"><BookOpen size={20}/><h2 className="font-semibold">{title(active)}</h2></div><button onClick={() => { setActive(null); setPdfUrl(""); }} aria-label="Close reader" className="rounded-full p-1 hover:bg-[#edf3ed]"><X size={18}/></button></div>{pdfUrl ? <iframe src={pdfUrl} title={title(active)} className="mt-6 h-[70vh] w-full border border-[#d7e1d8]"/> : <p className="mt-8 text-[#496352]">Loading chapter…</p>}{audioUrl && <div className="mt-5 flex items-center gap-2"><Headphones size={17}/><span className="text-sm font-semibold">Chapter soundtrack</span><button onClick={() => setMuted((value) => !value)} aria-label={muted ? "Unmute soundtrack" : "Mute soundtrack"} className="rounded-full p-2 hover:bg-[#edf3ed]">{muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}</button><audio ref={audioRef} src={audioUrl} loop preload="auto" crossOrigin="use-credentials"/></div>}</article>}
 
       {user && <section className="mt-10 grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
         <aside><h2 className="text-xl font-semibold">Chapters</h2><div className="mt-4 divide-y divide-[#d7e1d8] border-y border-[#d7e1d8]">{chapters.map((chapter) => {
