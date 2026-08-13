@@ -34,7 +34,7 @@ function languageFor(country) {
   return "en";
 }
 
-export default function AraihanChat() {
+export default function AraihanChat({ compact = false }) {
   const [messages, setMessages] = useState([{ role: "assistant", content: copy.en.welcome }]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -97,7 +97,7 @@ export default function AraihanChat() {
   const text = copy[detectedLanguage];
 
   return (
-    <section className="flex min-h-[36rem] w-full flex-col overflow-hidden rounded-2xl bg-[#153527] text-white shadow-[0_8px_24px_rgba(10,36,23,0.28)]" aria-label="Talk with Araihan">
+    <section className={`flex w-full flex-col overflow-hidden bg-[#153527] text-white ${compact ? "min-h-[31rem] max-h-[min(42rem,calc(100vh-8rem))]" : "min-h-[36rem] rounded-2xl shadow-[0_8px_24px_rgba(10,36,23,0.28)]"}`} aria-label="Talk with Araihan">
       <header className="flex items-center justify-between border-b border-white/20 px-5 py-4">
         <div>
           <p className="text-lg font-semibold">Araihan</p>

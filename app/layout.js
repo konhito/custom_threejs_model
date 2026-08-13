@@ -9,6 +9,7 @@ import CookieConsent from "../components/CookieConsent";
 import ConsentAnalytics from "../components/ConsentAnalytics";
 import WildfirePollinatorBanner from "../components/WildfirePollinatorBanner";
 import SmoothScroll from "../components/SmoothScroll";
+import AraihanPresence from "../components/AraihanPresence";
 
 
 const geistSans = Geist({
@@ -165,6 +166,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll />
         <WildfirePollinatorBanner />
         {children}
+        <AraihanPresence />
         <CookieConsent />
         <ConsentAnalytics />
       </body>
