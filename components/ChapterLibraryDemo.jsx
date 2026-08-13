@@ -17,7 +17,7 @@ const cells = [
   { label: "Interlude I", type: "interlude" },
   ...Array.from({ length: 5 }, (_, index) => ({ label: `Chapter ${index + 7}`, chapter: index + 7, type: "chapter" })),
   { label: "Interlude II", type: "interlude" },
-  ...Array.from({ length: 24 }, (_, index) => ({ label: `Chapter ${index + 12}`, chapter: index + 12, type: "chapter" })),
+  ...Array.from({ length: 25 }, (_, index) => ({ label: `Chapter ${index + 12}`, chapter: index + 12, type: "chapter" })),
   { label: "Appendices", type: "closing", sub: "SAN · PFNO · Glossary" }, { label: "Epilogue", type: "closing" },
 ].map((cell, index) => ({ ...cell, id: index + 1, sub: cell.sub || (cell.chapter && cell.chapter <= 28 ? countries[cell.chapter - 1] : "") }));
 
