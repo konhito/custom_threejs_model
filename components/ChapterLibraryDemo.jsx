@@ -34,7 +34,7 @@ function HoneyCell({ cell, owned, onOpen }) {
   </button>;
 }
 
-function Reader({ active, pdfUrl, onClose }) {
+function Reader({ active, pdfUrl, muted, setMuted, onClose }) {
   const audioRef = useRef(null);
   const [soundUrl, setSoundUrl] = useState("");
   const audioUrl = soundUrl;
