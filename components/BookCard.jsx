@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ShoppingCart, Download, BookOpen, Heart, Eye, Award } from "lucide-react";
+import { ShoppingCart, Download, BookOpen, Heart, Eye } from "lucide-react";
 
 export default function BookCard({
   product,
@@ -49,16 +49,6 @@ export default function BookCard({
             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
           </motion.button>
         </div>
-
-        {/* Badge */}
-        {product.stock_quantity > 50 && (
-          <div className="absolute top-3 left-3 z-30">
-            <div className="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full border border-amber-200 flex items-center gap-1">
-              <Award className="w-3 h-3" />
-              <span>Bestseller</span>
-            </div>
-          </div>
-        )}
 
         {/* Book Cover Section */}
         <div className="relative h-80 bg-gradient-to-b from-stone-100 to-stone-50 overflow-hidden flex items-center justify-center p-8">

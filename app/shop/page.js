@@ -9,7 +9,6 @@ import {
   Globe,
   CheckCircle,
   ArrowRight,
-  Award,
   Eye,
   Package,
   Zap,
@@ -318,22 +317,6 @@ export default function ShopPage() {
                   <div
                     className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500"
                   >
-                    {/* Product Badges */}
-                    <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-                      {product.stock_quantity > 50 && (
-                        <span className="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full border border-amber-200 flex items-center gap-1">
-                          <Award className="w-3 h-3" />
-                          Bestseller
-                        </span>
-                      )}
-                      {product.stock_quantity < 10 &&
-                        product.stock_quantity > 0 && (
-                          <span className="px-2.5 py-1 bg-rose-50 text-rose-600 text-xs font-semibold rounded-full border border-rose-200">
-                            Limited Stock
-                          </span>
-                        )}
-                    </div>
-
                     {/* Product Image */}
                     <div className="relative h-72 bg-gradient-to-b from-stone-100 to-stone-50 overflow-hidden">
                       {/* Subtle grid texture */}
@@ -382,21 +365,6 @@ export default function ShopPage() {
                       <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
                         {product.description}
                       </p>
-
-                      {/* Stock indicator */}
-                      {!product.is_digital && (
-                        <div className="flex items-center gap-2">
-                          <div className={`w-1.5 h-1.5 rounded-full ${product.stock_quantity > 0 ? 'bg-green-500' : 'bg-red-400'}`} />
-                          <span className={`text-xs ${product.stock_quantity > 0 ? 'text-gray-500' : 'text-red-500'}`}>
-                            {product.stock_quantity > 50
-                              ? 'In Stock'
-                              : product.stock_quantity > 0
-                                ? `Only ${product.stock_quantity} left`
-                                : 'Out of Stock'
-                            }
-                          </span>
-                        </div>
-                      )}
 
                       {/* Action Buttons */}
                       <div className="space-y-2 pt-1">
