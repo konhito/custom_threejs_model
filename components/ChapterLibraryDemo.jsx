@@ -4,182 +4,88 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { BookOpen, CreditCard, Headphones, LockKeyhole, LogOut, Volume2, VolumeX, X } from "lucide-react";
+import { BookOpen, CreditCard, LockKeyhole, LogIn, LogOut, Volume2, VolumeX, X } from "lucide-react";
 import { chapterAudioUrl, chaptersAPI, customerAuthAPI } from "../lib/api";
 import { chapterList, chapterNumber, isPurchased } from "../lib/chapterLibraryDemo.mjs";
 
-function ChapterPayment({ chapter, onPaid, onCancel }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [error, setError] = useState("");
-  const [busy, setBusy] = useState(false);
+const countries = ["South Africa", "Nigeria", "Egypt", "Ethiopia", "Morocco", "Tanzania", "Pakistan", "India", "Indonesia", "Malaysia", "Thailand", "China", "USA", "Canada", "Mexico", "Guatemala", "Costa Rica", "Colombia", "Venezuela", "Argentina", "Peru", "Panama", "France", "Germany", "England", "Spain", "Scotland", "Ireland"];
+const titles = ["Credits", "Index", ...Array.from({ length: 36 }, (_, index) => `Chapter ${index + 1}`), "Appendices", "Epilogue"];
+const special = { 8: "Interlude I", 15: "Interlude II" };
+const cells = titles.map((label, index) => {
+  const id = index + 1;
+  const chapter = id >= 3 && id <= 40 ? id - 2 : null;
+  const type = id < 3 ? "open" : id > 40 ? "closing" : special[index] ? "interlude" : chapter <= 3 ? "free" : "chapter";
+  return { id, label: special[index] || label, chapter, type, sub: chapter && chapter <= 28 ? countries[chapter - 1] : id === 41 ? "SAN · PFNO · Glossary" : "" };
+});
 
+function HoneyCell({ cell, owned, onOpen }) {
+  const available = cell.type === "open" || cell.type === "free" || owned;
+  const color = cell.type === "open" ? "border-slate-600 bg-slate-900 text-slate-300" : cell.type === "interlude" ? "border-violet-500/70 bg-violet-950 text-violet-100" : cell.type === "closing" ? "border-emerald-500/70 bg-emerald-950 text-emerald-100" : available ? "border-amber-500 bg-amber-400 text-stone-950" : "border-slate-700 bg-slate-950 text-slate-500";
+  return <button onClick={() => onOpen(cell)} className={`group relative aspect-[1/.88] w-full min-w-0 [clip-path:polygon(50%_0,100%_25%,100%_75%,50%_100%,0_75%,0_25%)] border-2 p-1 transition hover:scale-[1.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 ${color}`} aria-label={`${cell.label}${available ? "" : ", locked"}`}>
+    <span className="flex h-full w-full flex-col items-center justify-center [clip-path:inherit] px-2 text-center">
+      {!available && <LockKeyhole size={14} className="mb-1" />}
+      <span className="text-[10px] font-bold uppercase leading-tight sm:text-xs">{cell.label}</span>
+      {cell.sub && <span className="mt-0.5 text-[8px] opacity-70 sm:text-[10px]">{cell.sub}</span>}
+      {cell.type === "free" && <span className="mt-1 rounded-full bg-stone-950/15 px-1.5 py-0.5 text-[8px] font-black">FREE</span>}
+    </span>
+  </button>;
+}
+
+function Reader({ active, pdfUrl, muted, setMuted, onClose }) {
+  const audioRef = useRef(null);
+  const audioUrl = active?.audio_url ? chapterAudioUrl(chapterNumber(active)) : "";
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audioUrl || !audio) return;
+    audio.volume = 0; audio.play().catch(() => {});
+    const fade = window.setInterval(() => { audio.volume = Math.min(.35, audio.volume + .035); if (audio.volume >= .35) window.clearInterval(fade); }, 80);
+    return () => { window.clearInterval(fade); audio.pause(); audio.currentTime = 0; };
+  }, [audioUrl]);
+  useEffect(() => { if (audioRef.current) audioRef.current.muted = muted; }, [muted]);
+  return <div className="fixed inset-0 z-[100] grid place-items-center bg-slate-950/90 p-3 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+    <section className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+      <header className="flex items-center justify-between border-b border-stone-200 px-5 py-4"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-amber-700">Tomo I · Digital edition</p><h2 className="mt-1 text-lg font-semibold text-stone-900">{active.title || `Chapter ${chapterNumber(active)}`}</h2></div><div className="flex items-center gap-2">{audioUrl && <><button onClick={() => setMuted(!muted)} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label={muted ? "Unmute soundtrack" : "Mute soundtrack"}>{muted ? <VolumeX size={18} /> : <Volume2 size={18} />}</button><audio ref={audioRef} src={audioUrl} loop preload="auto" /></>}<button onClick={onClose} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label="Close reader"><X size={20}/></button></div></header>
+      {pdfUrl ? <iframe src={pdfUrl} title={active.title} className="h-[76vh] w-full" /> : <div className="grid min-h-[50vh] place-items-center p-8 text-center text-stone-500"><BookOpen className="mb-3"/><p>This chapter is being prepared for the digital library.</p></div>}
+    </section>
+  </div>;
+}
+
+function ChapterPayment({ chapter, onPaid, onCancel }) {
+  const stripe = useStripe(); const elements = useElements(); const [busy, setBusy] = useState(false); const [error, setError] = useState("");
   async function submit(event) {
-    event.preventDefault();
-    if (!stripe || !elements) return;
-    setBusy(true);
-    setError("");
+    event.preventDefault(); if (!stripe || !elements) return; setBusy(true); setError("");
     const { error: submitError } = await elements.submit();
     if (submitError) { setError(submitError.message); setBusy(false); return; }
-    const { error: paymentError, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: `${window.location.origin}/library` },
-      redirect: "if_required",
-    });
+    const { error: paymentError, paymentIntent } = await stripe.confirmPayment({ elements, confirmParams: { return_url: `${window.location.origin}/library` }, redirect: "if_required" });
     if (paymentError) { setError(paymentError.message); setBusy(false); return; }
-    if (paymentIntent?.status === "succeeded") onPaid();
-    else { setError("Payment is still processing. Your chapter will appear after Stripe confirms it."); setBusy(false); }
+    if (paymentIntent?.status === "succeeded") onPaid(); else { setError("Payment is processing. Your chapter will appear after confirmation."); setBusy(false); }
   }
-
-  return <form onSubmit={submit} className="mt-8 border-t border-[#d7e1d8] pt-6">
-    <h3 className="mb-4 flex items-center gap-2 font-semibold"><CreditCard size={18}/> Purchase {chapter.title}</h3>
-    <PaymentElement />
-    {error && <p role="alert" className="mt-3 text-sm text-red-700">{error}</p>}
-    <div className="mt-5 flex gap-3"><button disabled={!stripe || busy} className="rounded-lg bg-[#2f6b4f] px-4 py-2 font-semibold text-white disabled:opacity-50">{busy ? "Processing…" : "Pay securely"}</button><button type="button" onClick={onCancel} className="px-4 py-2 text-sm font-semibold text-[#496352]">Cancel</button></div>
-  </form>;
+  return <form onSubmit={submit} className="p-6 sm:p-8"><p className="mb-5 flex items-center gap-2 text-sm font-semibold text-stone-700"><CreditCard size={17}/> Secure payment for {chapter.title}</p><PaymentElement />{error && <p role="alert" className="mt-3 text-sm text-red-700">{error}</p>}<div className="mt-5 flex gap-3"><button disabled={!stripe || busy} className="rounded-xl bg-stone-900 px-4 py-3 text-sm font-bold text-white disabled:opacity-50">{busy ? "Processing…" : "Pay securely"}</button><button type="button" onClick={onCancel} className="px-3 text-sm font-semibold text-stone-600">Cancel</button></div></form>;
 }
 
 export default function ChapterLibraryDemo() {
-  const [user, setUser] = useState(null);
-  const [chapters, setChapters] = useState([]);
-  const [assets, setAssets] = useState([]);
-  const [active, setActive] = useState(null);
-  const [pdfUrl, setPdfUrl] = useState("");
-  const [mode, setMode] = useState("login");
-  const [busy, setBusy] = useState(true);
-  const [error, setError] = useState("");
-  const [checkout, setCheckout] = useState(null);
-  const [muted, setMuted] = useState(false);
-  const audioRef = useRef(null);
-
-  async function load() {
-    setBusy(true);
-    setError("");
-    try {
-      const me = await customerAuthAPI.me();
-      setUser(me.customer || me.user || me.data?.user || me.data || me);
-      const [library, bookAssets] = await Promise.all([chaptersAPI.getLibrary(), chaptersAPI.getAssets()]);
-      setChapters(chapterList(library));
-      setAssets(chapterList(bookAssets));
-    } catch {
-      setUser(null);
-      try { setChapters(chapterList(await chaptersAPI.getAll())); } catch (requestError) { setError(requestError.message); }
-    } finally { setBusy(false); }
-  }
-
-  useEffect(() => { load(); }, []);
+  const [user, setUser] = useState(null); const [chapters, setChapters] = useState([]); const [active, setActive] = useState(null); const [pdfUrl, setPdfUrl] = useState("");
+  const [mode, setMode] = useState("login"); const [busy, setBusy] = useState(true); const [error, setError] = useState(""); const [muted, setMuted] = useState(false); const [checkout, setCheckout] = useState(null);
+  async function load() { setBusy(true); try { const me = await customerAuthAPI.me(); setUser(me.customer || me.user || me.data?.user || me.data || me); setChapters(chapterList(await chaptersAPI.getLibrary())); } catch { setUser(null); setChapters(chapterList(await chaptersAPI.getAll())); } finally { setBusy(false); } }
+  useEffect(() => { load().catch((requestError) => setError(requestError.message)); }, []);
   useEffect(() => () => { if (pdfUrl) URL.revokeObjectURL(pdfUrl); }, [pdfUrl]);
-  const audioUrl = active?.audio_url ? chapterAudioUrl(chapterNumber(active)) : "";
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio || !audioUrl) return;
-    audio.volume = 0;
-    audio.muted = muted;
-    audio.play().catch(() => {});
-    const up = window.setInterval(() => { audio.volume = Math.min(0.12, audio.volume + 0.01); if (audio.volume >= 0.12) window.clearInterval(up); }, 70);
-    return () => {
-      window.clearInterval(up);
-      const down = window.setInterval(() => { audio.volume = Math.max(0, audio.volume - 0.02); if (!audio.volume) { window.clearInterval(down); audio.pause(); } }, 40);
-    };
-  }, [audioUrl]);
-
-  useEffect(() => { if (audioRef.current) audioRef.current.muted = muted; }, [muted]);
-
-  async function authenticate(event) {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    setBusy(true);
-    setError("");
-    try {
-      if (mode === "register") await customerAuthAPI.register({ name: form.get("name"), email: form.get("email"), password: form.get("password") });
-      else await customerAuthAPI.login(form.get("email"), form.get("password"));
-      await load();
-    } catch (requestError) { setError(requestError.message); setBusy(false); }
+  const chapterFor = (number) => chapters.find((chapter) => chapterNumber(chapter) === number);
+  async function open(cell) {
+    if (!cell.chapter) return;
+    const chapter = chapterFor(cell.chapter); const allowed = cell.chapter <= 3 || (user && isPurchased(chapter || {}));
+    if (!allowed) { if (!user) { setError("Sign in first to purchase and keep your chapters unlocked."); return; } if (chapter?.available_to_purchase || chapters.filter((item) => chapterNumber(item) > 3 && !isPurchased(item))[0] === chapter) { purchase(chapter); return; } setError("Read the previous chapter before unlocking this petal."); return; }
+    setBusy(true); setError("");
+    try { const result = cell.chapter <= 3 ? await chaptersAPI.getFreeByNumber(cell.chapter) : await chaptersAPI.getByNumber(cell.chapter); const detail = result.chapter || result.data || result; setActive(detail); if (detail.has_pdf) setPdfUrl(URL.createObjectURL(await (cell.chapter <= 3 ? chaptersAPI.getFreeFile(cell.chapter) : chaptersAPI.getFile(cell.chapter)))); } catch (requestError) { setError(requestError.message); } finally { setBusy(false); }
   }
-
-  async function openChapter(chapter) {
-    const number = chapterNumber(chapter);
-    if (number > 3 && (!user || !isPurchased(chapter))) return;
-    setBusy(true);
-    setError("");
-    try {
-      const result = number <= 3 ? await chaptersAPI.getFreeByNumber(number) : await chaptersAPI.getByNumber(number);
-      const detail = result.chapter || result.data || result;
-      setActive(detail);
-      setPdfUrl("");
-      if (detail.has_pdf) setPdfUrl(URL.createObjectURL(await (number <= 3 ? chaptersAPI.getFreeFile(number) : chaptersAPI.getFile(number))));
-    }
-    catch (requestError) { setError(requestError.message); }
-    finally { setBusy(false); }
-  }
-
-  async function openAsset(asset) {
-    setBusy(true);
-    setError("");
-    try {
-      setActive(asset);
-      setPdfUrl(URL.createObjectURL(await chaptersAPI.getAssetFile(asset.slug)));
-    } catch (requestError) { setError(requestError.message); }
-    finally { setBusy(false); }
-  }
-
-  async function logout() {
-    try { await customerAuthAPI.logout(); } finally { setActive(null); setPdfUrl(""); setCheckout(null); setAssets([]); await load(); }
-  }
-
-  async function purchase(chapter) {
-    setBusy(true);
-    setError("");
-    try {
-      const response = await chaptersAPI.createCheckout(chapter.id, "eur");
-      const payment = response.data;
-      setCheckout({ chapter, clientSecret: payment.client_secret, stripe: loadStripe(payment.publishable_key) });
-    } catch (requestError) { setError(requestError.message); }
-    finally { setBusy(false); }
-  }
-
-  async function paymentComplete() {
-    setCheckout(null);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    await load();
-  }
-
-  const unlocked = chapters.filter(isPurchased).length;
-  const title = (chapter) => chapter.title || `Chapter ${String(chapterNumber(chapter)).padStart(2, "0")}`;
-  const content = active?.content_text || active?.content || active?.text || active?.body;
-
-  return <main className="min-h-screen bg-[#f6f8f4] px-5 py-12 text-[#1e3428] sm:px-8">
-    <div className="mx-auto max-w-6xl">
-      <Link href="/shop" className="text-sm font-semibold text-[#2f6b4f] hover:underline">← Back to the collection</Link>
-      <header className="mt-10 flex flex-wrap items-end justify-between gap-6 border-b border-[#c9d8cc] pb-10">
-        <div><p className="text-sm font-semibold text-[#2f6b4f]">Nahiara and the Guardians of the Flowers · Tome I</p><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your chapter library</h1><p className="mt-2 text-sm text-[#496352]">Digital ISBN: 978-84-09-79252-8</p></div>
-        {user && <div className="text-right"><p className="text-sm text-[#496352]">{user.name || user.email} · {unlocked} purchased</p><button onClick={logout} className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-[#2f6b4f]"><LogOut size={15}/> Sign out</button></div>}
-      </header>
-
-      {error && <p role="alert" className="mt-6 rounded-lg bg-red-50 p-3 text-sm text-red-800">{error}</p>}
-      {!user && !busy && <section className="mx-auto mt-10 max-w-md border border-[#c9d8cc] bg-white p-6">
-        <h2 className="text-2xl font-semibold">{mode === "login" ? "Sign in to your library" : "Create your account"}</h2>
-        <form onSubmit={authenticate} className="mt-6 grid gap-4">
-          {mode === "register" && <label className="grid gap-1 text-sm font-medium">Name<input name="name" required className="rounded-lg border border-[#b9cabd] px-3 py-2" /></label>}
-          <label className="grid gap-1 text-sm font-medium">Email<input name="email" type="email" autoComplete="email" required className="rounded-lg border border-[#b9cabd] px-3 py-2" /></label>
-          <label className="grid gap-1 text-sm font-medium">Password<input name="password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} required className="rounded-lg border border-[#b9cabd] px-3 py-2" /></label>
-          <button disabled={busy} className="rounded-lg bg-[#2f6b4f] px-4 py-2.5 font-semibold text-white">{mode === "login" ? "Sign in" : "Register"}</button>
-        </form>
-        <button onClick={() => setMode(mode === "login" ? "register" : "login")} className="mt-4 text-sm font-semibold text-[#2f6b4f]">{mode === "login" ? "Create an account" : "Already have an account? Sign in"}</button>
-        <div className="mt-7 border-t border-[#d7e1d8] pt-5"><p className="text-sm font-semibold">Read the first three chapters free</p><div className="mt-3 flex flex-wrap gap-2">{chapters.filter((chapter) => chapterNumber(chapter) <= 3).map((chapter) => <button key={chapter.id} onClick={() => openChapter(chapter)} className="rounded-full border border-[#2f6b4f] px-3 py-1.5 text-xs font-semibold text-[#2f6b4f]">{title(chapter)}</button>)}</div></div>
-      </section>}
-      {!user && active && <article className="mx-auto mt-8 max-w-5xl border border-[#c9d8cc] bg-white p-6 sm:p-8"><div className="flex items-center justify-between gap-3 text-[#2f6b4f]"><div className="flex items-center gap-3"><BookOpen size={20}/><h2 className="font-semibold">{title(active)}</h2></div><button onClick={() => { setActive(null); setPdfUrl(""); }} aria-label="Close reader" className="rounded-full p-1 hover:bg-[#edf3ed]"><X size={18}/></button></div>{pdfUrl ? <iframe src={pdfUrl} title={title(active)} className="mt-6 h-[70vh] w-full border border-[#d7e1d8]"/> : <p className="mt-8 text-[#496352]">Loading chapter…</p>}{audioUrl && <div className="mt-5 flex items-center gap-2"><Headphones size={17}/><span className="text-sm font-semibold">Chapter soundtrack</span><button onClick={() => setMuted((value) => !value)} aria-label={muted ? "Unmute soundtrack" : "Mute soundtrack"} className="rounded-full p-2 hover:bg-[#edf3ed]">{muted ? <VolumeX size={17}/> : <Volume2 size={17}/>}</button><audio ref={audioRef} src={audioUrl} loop preload="auto" crossOrigin="use-credentials"/></div>}</article>}
-
-      {user && <section className="mt-10 grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
-        <aside><h2 className="text-xl font-semibold">Chapters</h2><div className="mt-4 divide-y divide-[#d7e1d8] border-y border-[#d7e1d8]">{chapters.map((chapter) => {
-          const purchased = isPurchased(chapter); const available = chapter.available_to_purchase; return <div key={chapterNumber(chapter)} className="flex items-center gap-3 px-3 py-3"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e5ebe5] text-xs font-semibold">{purchased ? chapterNumber(chapter) : <LockKeyhole size={14}/>}</span><button disabled={!purchased || busy} onClick={() => openChapter(chapter)} className={`flex-1 text-left text-sm font-medium ${purchased ? "hover:underline" : "text-[#6d7c70]"}`}>{title(chapter)}</button>{purchased ? <span className="text-xs">Purchased</span> : available ? <button disabled={busy} onClick={() => purchase(chapter)} className="rounded-full bg-[#2f6b4f] px-3 py-1.5 text-xs font-semibold text-white">Buy €{chapter.price_eur}</button> : <span className="text-xs text-[#6d7c70]">Locked</span>}</div>;
-        })}</div>{assets.length > 0 && <><h2 className="mt-8 text-xl font-semibold">Book extras</h2><div className="mt-4 divide-y divide-[#d7e1d8] border-y border-[#d7e1d8]">{assets.map((asset) => <button key={asset.slug} disabled={busy} onClick={() => openAsset(asset)} className="flex w-full items-center gap-3 px-3 py-3 text-left text-sm font-medium hover:bg-white"><BookOpen size={16}/>{asset.title}</button>)}</div></>}</aside>
-        <article className="border border-[#c9d8cc] bg-white p-6 sm:p-8">
-          {checkout ? <><p className="text-sm text-[#496352]">Secure payment. Access is granted only after Stripe confirms payment.</p><Elements stripe={checkout.stripe} options={{ clientSecret: checkout.clientSecret }}><ChapterPayment chapter={checkout.chapter} onPaid={paymentComplete} onCancel={() => setCheckout(null)}/></Elements></> : active ? <><div className="flex items-center gap-3 text-[#2f6b4f]"><BookOpen size={20}/><h2 className="font-semibold">{title(active)}</h2></div>{pdfUrl ? <iframe src={pdfUrl} title={title(active)} className="mt-6 h-[70vh] w-full border border-[#d7e1d8]"/> : content ? <div className="mt-8 whitespace-pre-wrap text-lg leading-8 text-[#304a38]">{content}</div> : <p className="mt-8 text-[#496352]">No reading file has been published for this chapter yet.</p>}{audioUrl && <div className="mt-8"><p className="mb-2 flex items-center gap-2 text-sm font-semibold"><Headphones size={17}/> Chapter soundtrack</p><audio controls preload="metadata" className="w-full" src={audioUrl}/></div>}</> : <p className="text-[#496352]">Choose a purchased chapter or buy the next available chapter.</p>}
-        </article>
-      </section>}
-      {busy && <p role="status" className="mt-6 text-sm text-[#496352]">Loading…</p>}
-    </div>
-  </main>;
+  async function authenticate(event) { event.preventDefault(); const form = new FormData(event.currentTarget); setBusy(true); setError(""); try { if (mode === "register") await customerAuthAPI.register({ name: form.get("name"), email: form.get("email"), password: form.get("password") }); else await customerAuthAPI.login(form.get("email"), form.get("password")); await load(); } catch (requestError) { setError(requestError.message); setBusy(false); } }
+  async function logout() { await customerAuthAPI.logout(); setUser(null); await load(); }
+  async function purchase(chapter) { setBusy(true); setError(""); try { const response = await chaptersAPI.createCheckout(chapter.id, "eur"); const payment = response.data || response; setCheckout({ chapter, clientSecret: payment.client_secret, stripe: loadStripe(payment.publishable_key) }); } catch (requestError) { setError(requestError.message); } finally { setBusy(false); } }
+  async function paymentComplete() { setCheckout(null); await new Promise((resolve) => window.setTimeout(resolve, 1000)); await load(); }
+  const unlocked = (number) => number <= 3 || Boolean(user && isPurchased(chapterFor(number) || {}));
+  return <main className="min-h-screen bg-[radial-gradient(circle_at_top,#fff8df,transparent_40%),linear-gradient(145deg,#07110e,#0d1a15)] px-4 py-10 text-white sm:px-8">
+    <div className="mx-auto max-w-6xl"><header className="flex flex-wrap items-start justify-between gap-5"><div><Link href="/shop" className="text-sm font-semibold text-amber-300 hover:text-amber-200">← Return to shop</Link><p className="mt-8 text-xs font-bold uppercase tracking-[.3em] text-amber-300">AquaMundi · Universo Nahiara</p><h1 className="mt-3 text-4xl font-semibold sm:text-6xl">The reading hive</h1><p className="mt-3 max-w-2xl text-sm text-stone-300">Tomo I · 36 chapters, interludes and closing materials. Digital ISBN: 978-84-09-79252-8</p></div>{user ? <div className="rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-right text-sm backdrop-blur"><p>{user.name || user.email}</p><button onClick={logout} className="mt-2 inline-flex items-center gap-2 font-semibold text-amber-300"><LogOut size={15}/> Sign out</button></div> : <Link href="#library-login" className="rounded-full bg-amber-400 px-5 py-3 text-sm font-bold text-stone-950 hover:bg-amber-300">Sign in</Link>}</header>
+      {error && <p role="alert" className="mt-6 rounded-xl border border-red-300/40 bg-red-950/50 px-4 py-3 text-sm text-red-100">{error}</p>}
+      {!user && !busy && <section id="library-login" className="mt-10 grid overflow-hidden rounded-3xl border border-amber-200/20 bg-white text-stone-900 shadow-2xl md:grid-cols-[1fr_1.15fr]"><aside className="bg-[linear-gradient(145deg,#f4a51c,#ffd970)] p-7 text-stone-950 sm:p-10"><p className="text-xs font-black uppercase tracking-[.2em]">Your private garden</p><h2 className="mt-4 text-3xl font-semibold">Pick up your story where it blooms.</h2><p className="mt-4 text-sm leading-6">Sign in to see your unlocked petals and read from any device. Chapters 1 to 3 are always free.</p></aside><div className="p-7 sm:p-10"><h2 className="text-2xl font-semibold">{mode === "login" ? "Welcome back" : "Create your reader account"}</h2><p className="mt-2 text-sm text-stone-500">{mode === "login" ? "Your library opens after a secure sign in." : "One account keeps your chapters together."}</p><form onSubmit={authenticate} className="mt-6 grid gap-4">{mode === "register" && <label className="grid gap-1 text-sm font-semibold">Name<input name="name" required className="rounded-xl border border-stone-300 px-3 py-3 font-normal outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-100"/></label>}<label className="grid gap-1 text-sm font-semibold">Email<input name="email" type="email" autoComplete="email" required className="rounded-xl border border-stone-300 px-3 py-3 font-normal outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-100"/></label><label className="grid gap-1 text-sm font-semibold">Password<input name="password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} required className="rounded-xl border border-stone-300 px-3 py-3 font-normal outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-100"/></label><button disabled={busy} className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 font-bold text-white hover:bg-stone-800 disabled:opacity-50"><LogIn size={17}/>{mode === "login" ? "Open my library" : "Create account"}</button></form><button onClick={() => setMode(mode === "login" ? "register" : "login")} className="mt-5 text-sm font-semibold text-amber-700 hover:underline">{mode === "login" ? "New here? Create an account" : "Already a reader? Sign in"}</button></div></section>}
+      <section className="mt-10 rounded-3xl border border-white/10 bg-slate-950/60 p-3 shadow-2xl sm:p-7"><div className="mb-6 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-2xl font-semibold">42 cells · one journey</h2><p className="mt-1 text-sm text-slate-400">Gold petals are ready to read. Your next chapter opens in sequence.</p></div><span className="rounded-full border border-amber-300/30 px-3 py-1 text-xs font-bold text-amber-200">{chapters.filter(isPurchased).length} unlocked</span></div><div className="mx-auto grid max-w-5xl grid-cols-4 gap-1.5 sm:grid-cols-7 sm:gap-2">{cells.map((cell) => <HoneyCell key={cell.id} cell={cell} owned={cell.chapter ? unlocked(cell.chapter) : true} onOpen={open}/>)}</div><div className="mt-6 flex flex-wrap gap-4 text-xs text-slate-400"><span>Gold: free or yours</span><span>Violet: interlude</span><span>Green: closing materials</span><span>Dark: locked</span></div></section>
+    </div>{active && <Reader active={active} pdfUrl={pdfUrl} muted={muted} setMuted={setMuted} onClose={() => { setActive(null); setPdfUrl(""); }}/>} {checkout && <div className="fixed inset-0 z-[110] grid place-items-center bg-slate-950/90 p-4 backdrop-blur-sm"><section className="max-h-[92vh] w-full max-w-lg overflow-auto rounded-2xl bg-white shadow-2xl"><header className="flex items-center justify-between border-b border-stone-200 px-6 py-4"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-amber-700">Unlock the next petal</p><h2 className="mt-1 text-lg font-semibold text-stone-900">{checkout.chapter.title}</h2></div><button onClick={() => setCheckout(null)} className="rounded-full p-2 text-stone-600 hover:bg-stone-100" aria-label="Close checkout"><X size={19}/></button></header><Elements stripe={checkout.stripe} options={{ clientSecret: checkout.clientSecret }}><ChapterPayment chapter={checkout.chapter} onPaid={paymentComplete} onCancel={() => setCheckout(null)}/></Elements></section></div>}</main>;
 }

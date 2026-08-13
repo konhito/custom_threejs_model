@@ -14,6 +14,7 @@ import {
   Package,
   Zap,
   Shield,
+  BookOpen,
 } from "lucide-react";
 import { productsAPI, cartStorage, formatCurrency } from "../../lib/api";
 import {
@@ -238,6 +239,8 @@ export default function ShopPage() {
           <p className="text-lg sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-12">
             Enchanting tales and games celebrating the magic of nature and the wisdom of flowers.
           </p>
+
+          <Link href="/library" className="mb-10 inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-sm font-bold text-stone-950 shadow-sm transition hover:bg-amber-400"><BookOpen className="h-4 w-4"/>Open the digital chapter library <ArrowRight className="h-4 w-4"/></Link>
 
           {/* Feature pills */}
           <div className="flex flex-wrap justify-center gap-3 text-sm">

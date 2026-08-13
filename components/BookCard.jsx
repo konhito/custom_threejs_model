@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { ShoppingCart, Download, BookOpen, Heart, Eye, Award } from "lucide-react";
 
 export default function BookCard({
@@ -163,6 +164,8 @@ export default function BookCard({
                 <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
               </motion.button>
             )}
+
+            {isBook && <Link href="/library" className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100"><span className="flex items-center gap-2"><BookOpen className="w-4 h-4"/>Digital Tome I</span><span className="text-right text-xs leading-4">Read first 3 chapters free<br/>Continue chapter by chapter →</span></Link>}
 
             {/* Digital Book Button */}
             {hasDigital && (
