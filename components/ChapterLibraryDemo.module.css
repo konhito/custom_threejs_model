@@ -19,6 +19,14 @@
 .library > div > section[id="library-login"] { grid-area: login; margin: 0; }
 .library > div > .hive { grid-area: hive; margin: 0; }
 
+.signedIn > div {
+  display: block;
+}
+
+.signedIn > div > .hive {
+  margin-top: 2.5rem;
+}
+
 .library header h1 { font-size: 0 !important; }
 .library header h1::after {
   color: #1c1917;
@@ -89,6 +97,16 @@
 }
 
 .cell:active { transform: scale(.96); }
+
+@media (min-width: 1280px) {
+  .signedIn .cell {
+    min-height: 9.25rem;
+  }
+
+  .signedIn .cell :global(.text-\[10px\]) {
+    font-size: .8rem;
+  }
+}
 
 @keyframes bloom-in {
   from { opacity: 0; transform: translateY(12px) scale(.9); }
