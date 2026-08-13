@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 function getCycleDates(now = new Date()) {
@@ -47,79 +47,8 @@ function getCountdownState(now = new Date()) {
   };
 }
 
-function Monarch() {
-  return (
-    <svg width="56" height="46" viewBox="0 0 56 46" aria-hidden="true">
-      <g className="wing">
-        <path d="M28 23 C14 4, 2 8, 6 22 C2 36, 16 42, 28 23 Z" fill="#e8702a" />
-        <path d="M28 23 C42 4, 54 8, 50 22 C54 36, 40 42, 28 23 Z" fill="#f08a3c" />
-        <path d="M28 23 C16 8, 6 11, 8 21 Z" fill="#2a1626" opacity="0.55" />
-        <path d="M28 23 C40 8, 50 11, 48 21 Z" fill="#2a1626" opacity="0.55" />
-      </g>
-      <ellipse cx="28" cy="24" rx="2" ry="9" fill="#1a1028" />
-    </svg>
-  );
-}
-
-function Bee() {
-  return (
-    <svg width="40" height="30" viewBox="0 0 40 30" aria-hidden="true">
-      <g className="wing">
-        <ellipse cx="17" cy="9" rx="9" ry="5" fill="#fff7e8" opacity="0.75" />
-      </g>
-      <g className="wing" style={{ animationDelay: ".07s" }}>
-        <ellipse cx="24" cy="9" rx="9" ry="5" fill="#fff7e8" opacity="0.75" />
-      </g>
-      <ellipse cx="22" cy="18" rx="11" ry="8" fill="#f5c45e" />
-      <path d="M16 12 a11 8 0 0 1 12 0 l-1.6 3 a8 6 0 0 0-8.8 0 Z" fill="#2a1626" />
-      <path d="M14.5 18 a11 8 0 0 0 15 0 l-1.4 3.4 a8 6 0 0 1-12.2 0 Z" fill="#2a1626" />
-      <circle cx="32" cy="15" r="2.4" fill="#2a1626" />
-    </svg>
-  );
-}
-
-function Swallowtail() {
-  return (
-    <svg width="50" height="42" viewBox="0 0 50 42" aria-hidden="true">
-      <g className="wing slow">
-        <path d="M25 21 C12 5, 3 9, 6 20 C3 33, 15 38, 25 21 Z" fill="#f7d98f" />
-        <path d="M25 21 C38 5, 47 9, 44 20 C47 33, 35 38, 25 21 Z" fill="#fbe6ad" />
-        <path d="M9 26 l-4 9 6 -4 Z" fill="#e8a64c" />
-        <path d="M41 26 l4 9 -6 -4 Z" fill="#e8a64c" />
-      </g>
-      <ellipse cx="25" cy="22" rx="1.8" ry="8" fill="#3a2418" />
-    </svg>
-  );
-}
-
-function Hummingbird() {
-  return (
-    <svg width="58" height="34" viewBox="0 0 58 34" aria-hidden="true">
-      <path d="M40 16 C46 12, 54 13, 57 17 C53 18, 46 19, 41 18 Z" fill="#2f8f6b" />
-      <ellipse cx="34" cy="17" rx="12" ry="7" fill="#3ba074" />
-      <path d="M30 17 C22 17, 12 22, 4 30 C14 24, 24 22, 31 21 Z" fill="#256e52" />
-      <circle cx="44" cy="14" r="1.6" fill="#1a1028" />
-      <path d="M44 15 l11 -2 -10 4 Z" fill="#1a1028" />
-      <path d="M40 17 c-3 -1 -6 0 -8 1" stroke="#c0507a" strokeWidth="3" fill="none" opacity="0.8" />
-      <g className="wing">
-        <path d="M33 15 C30 2, 16 0, 22 14 Z" fill="#5fc79a" opacity="0.7" />
-      </g>
-    </svg>
-  );
-}
-
-function Moth() {
-  return (
-    <svg width="44" height="34" viewBox="0 0 44 34" aria-hidden="true">
-      <g className="wing slow">
-        <path d="M22 17 C10 7, 2 12, 5 19 C2 28, 14 30, 22 17 Z" fill="#b98a5e" />
-        <path d="M22 17 C34 7, 42 12, 39 19 C42 28, 30 30, 22 17 Z" fill="#cda074" />
-        <path d="M22 17 C13 11, 6 14, 7 18 Z" fill="#7a5638" opacity="0.6" />
-        <path d="M22 17 C31 11, 38 14, 37 18 Z" fill="#7a5638" opacity="0.6" />
-      </g>
-      <ellipse cx="22" cy="18" rx="2.2" ry="7.5" fill="#4a3220" />
-    </svg>
-  );
+function RealPollinator({ type }) {
+  return <span className={`real-pollinator real-pollinator--${type}`} aria-hidden="true" />;
 }
 
 const CLOCK_UNITS = [
@@ -131,8 +60,6 @@ const CLOCK_UNITS = [
 
 export default function RelojClient() {
   const [countdown, setCountdown] = useState(() => getCountdownState());
-  const frameRef = useRef(null);
-  const burstRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -140,104 +67,6 @@ export default function RelojClient() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const flyers = Array.from(frame.querySelectorAll("[data-flyer]"));
-    if (!flyers.length) return;
-
-    const hitTimeouts = new Map();
-    const hitCooldown = new Map();
-
-    const setCursorPosition = (clientX, clientY) => {
-      const rect = frame.getBoundingClientRect();
-      const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-      const y = Math.max(0, Math.min(clientY - rect.top, rect.height));
-      frame.style.setProperty("--cursor-x", `${x}px`);
-      frame.style.setProperty("--cursor-y", `${y}px`);
-    };
-
-    const clearAlerts = () => {
-      flyers.forEach((flyer) => flyer.classList.remove("is-alert"));
-    };
-
-    const applyThreat = (clientX, clientY, forceBurst = false) => {
-      const now = performance.now();
-
-      flyers.forEach((flyer) => {
-        const box = flyer.getBoundingClientRect();
-        const centerX = box.left + box.width / 2;
-        const centerY = box.top + box.height / 2;
-        const distance = Math.hypot(clientX - centerX, clientY - centerY);
-
-        flyer.classList.toggle("is-alert", distance < 130);
-
-        const withinHitRange = forceBurst ? distance < 180 : distance < 72;
-        if (!withinHitRange) return;
-
-        const lastHit = hitCooldown.get(flyer) || 0;
-        if (now - lastHit < 550) return;
-        hitCooldown.set(flyer, now);
-
-        flyer.classList.add("is-hit");
-        const previousTimeout = hitTimeouts.get(flyer);
-        if (previousTimeout) window.clearTimeout(previousTimeout);
-
-        const timeoutId = window.setTimeout(() => {
-          flyer.classList.remove("is-hit");
-        }, 520);
-        hitTimeouts.set(flyer, timeoutId);
-      });
-    };
-
-    const triggerBurstPulse = () => {
-      const burst = burstRef.current;
-      if (!burst) return;
-      burst.classList.remove("bursting");
-      void burst.offsetWidth;
-      burst.classList.add("bursting");
-    };
-
-    const handlePointerEnter = (event) => {
-      frame.classList.add("cursor-on");
-      setCursorPosition(event.clientX, event.clientY);
-    };
-
-    const handlePointerMove = (event) => {
-      setCursorPosition(event.clientX, event.clientY);
-      applyThreat(event.clientX, event.clientY, false);
-    };
-
-    const handlePointerLeave = () => {
-      frame.classList.remove("cursor-on");
-      clearAlerts();
-    };
-
-    const handlePointerDown = (event) => {
-      setCursorPosition(event.clientX, event.clientY);
-      triggerBurstPulse();
-      applyThreat(event.clientX, event.clientY, true);
-    };
-
-    frame.addEventListener("pointerenter", handlePointerEnter);
-    frame.addEventListener("pointermove", handlePointerMove);
-    frame.addEventListener("pointerleave", handlePointerLeave);
-    frame.addEventListener("pointerdown", handlePointerDown);
-
-    return () => {
-      frame.removeEventListener("pointerenter", handlePointerEnter);
-      frame.removeEventListener("pointermove", handlePointerMove);
-      frame.removeEventListener("pointerleave", handlePointerLeave);
-      frame.removeEventListener("pointerdown", handlePointerDown);
-      for (const timeoutId of hitTimeouts.values()) {
-        window.clearTimeout(timeoutId);
-      }
-    };
   }, []);
 
   const toward = useMemo(() => {
@@ -250,30 +79,24 @@ export default function RelojClient() {
 
   return (
     <main className={`page ${countdown.arrived ? "arrived" : ""}`}>
-      <section className="hero-frame" ref={frameRef}>
+      <section className="hero-frame">
         <div className="sun" />
         <div className="haze" />
         <div className="grain" />
-        <div className="cursor-layer" aria-hidden="true">
-          <div className="cursor-ring" />
-          <div className="cursor-core" />
-          <div className="cursor-burst" ref={burstRef} />
+        <div className="flyer f1">
+          <div className="bobwrap"><RealPollinator type="butterfly" /></div>
         </div>
-
-        <div className="flyer f1" data-flyer>
-          <div className="bobwrap"><Monarch /></div>
+        <div className="flyer f2">
+          <div className="bobwrap"><RealPollinator type="bee" /></div>
         </div>
-        <div className="flyer f2" data-flyer>
-          <div className="bobwrap"><Bee /></div>
+        <div className="flyer f3">
+          <div className="bobwrap"><RealPollinator type="hoverfly" /></div>
         </div>
-        <div className="flyer f3" data-flyer>
-          <div className="bobwrap"><Swallowtail /></div>
+        <div className="flyer f4">
+          <div className="bobwrap"><RealPollinator type="hummingbird" /></div>
         </div>
-        <div className="flyer f4" data-flyer>
-          <div className="bobwrap"><Hummingbird /></div>
-        </div>
-        <div className="flyer f5" data-flyer>
-          <div className="bobwrap"><Moth /></div>
+        <div className="flyer f5">
+          <div className="bobwrap"><RealPollinator type="moth" /></div>
         </div>
 
         <div className="stage">
@@ -337,9 +160,6 @@ export default function RelojClient() {
           --gold: #f5c45e;
           --cream: #fdf3e3;
           --deep: #1a1028;
-          --cursor-x: 50%;
-          --cursor-y: 50%;
-
           position: relative;
           width: min(1980px, 100%);
           min-height: clamp(560px, 92vh, 1140px);
@@ -352,7 +172,6 @@ export default function RelojClient() {
           background:
             radial-gradient(120% 90% at 50% 96%, var(--sun) 0%, rgba(255, 210, 121, 0) 42%),
             linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 46%, var(--sky-low) 82%, #f0a06a 100%);
-          cursor: none;
         }
 
         .sun {
@@ -385,56 +204,6 @@ export default function RelojClient() {
           pointer-events: none;
           mix-blend-mode: overlay;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        .cursor-layer {
-          position: absolute;
-          inset: 0;
-          z-index: 8;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.18s ease;
-        }
-
-        .cursor-on .cursor-layer {
-          opacity: 1;
-        }
-
-        .cursor-ring,
-        .cursor-core,
-        .cursor-burst {
-          position: absolute;
-          left: var(--cursor-x);
-          top: var(--cursor-y);
-          transform: translate(-50%, -50%);
-          border-radius: 999px;
-        }
-
-        .cursor-ring {
-          width: 76px;
-          height: 76px;
-          border: 1px solid rgba(253, 243, 227, 0.52);
-          background: radial-gradient(circle, rgba(245, 196, 94, 0.2), rgba(245, 196, 94, 0));
-          box-shadow: 0 0 24px rgba(245, 196, 94, 0.2);
-          transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
-        }
-
-        .cursor-core {
-          width: 12px;
-          height: 12px;
-          background: #fff5dd;
-          box-shadow: 0 0 18px rgba(255, 245, 221, 0.7);
-        }
-
-        .cursor-burst {
-          width: 20px;
-          height: 20px;
-          border: 2px solid rgba(245, 196, 94, 0.75);
-          opacity: 0;
-        }
-
-        .cursor-burst.bursting {
-          animation: burst 0.35s ease-out forwards;
         }
 
         .stage {
@@ -601,21 +370,24 @@ export default function RelojClient() {
           overflow: visible;
         }
 
-        .flyer.is-alert {
-          filter: drop-shadow(0 0 14px rgba(255, 236, 173, 0.48)) saturate(1.1);
+        .real-pollinator {
+          display: block;
+          width: 148px;
+          height: 148px;
+          position: relative;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          filter: drop-shadow(0 8px 10px rgba(26, 16, 40, 0.28));
+          transform-origin: center;
+          animation: body-hover 1.6s ease-in-out infinite alternate;
         }
 
-        .flyer.is-alert .bobwrap {
-          animation-duration: 1.4s;
-        }
-
-        .flyer.is-hit {
-          filter: drop-shadow(0 0 20px rgba(255, 215, 121, 0.74)) brightness(1.12);
-        }
-
-        .flyer.is-hit .bobwrap {
-          animation: bob 2.6s ease-in-out infinite, skitter 0.26s ease-in-out 2;
-        }
+        .real-pollinator--bee { background-image: url("/pollinators/realistic-bee-wingbeat.gif"); }
+        .real-pollinator--hummingbird { background-image: url("/pollinators/realistic-hummingbird-wingbeat.gif"); width: 182px; }
+        .real-pollinator--butterfly { background-image: url("/pollinators/realistic-butterfly-wingbeat.gif"); }
+        .real-pollinator--moth { background-image: url("/pollinators/realistic-moth-wingbeat.gif"); }
+        .real-pollinator--hoverfly { background-image: url("/pollinators/realistic-hoverfly-wingbeat.gif"); }
 
         .wing {
           transform-origin: center;
@@ -658,6 +430,12 @@ export default function RelojClient() {
             transform: scaleY(1) rotate(4deg);
           }
         }
+
+        @keyframes body-hover {
+          from { transform: scale(0.97) rotate(-1.5deg); }
+          to { transform: scale(1.03) rotate(1.5deg); }
+        }
+
 
         @keyframes path1 {
           0% {
@@ -740,32 +518,6 @@ export default function RelojClient() {
           }
         }
 
-        @keyframes skitter {
-          0% {
-            transform: translateX(0);
-          }
-          25% {
-            transform: translateX(-16px) rotate(-5deg);
-          }
-          50% {
-            transform: translateX(12px) rotate(5deg);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes burst {
-          0% {
-            opacity: 0.95;
-            transform: translate(-50%, -50%) scale(0.25);
-          }
-          100% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(3.4);
-          }
-        }
-
         @keyframes breathe {
           50% {
             transform: translateX(-50%) scale(1.06);
@@ -785,12 +537,9 @@ export default function RelojClient() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .cursor-layer {
-            display: none;
-          }
-
           .flyer,
           .wing,
+          .real-pollinator,
           .sun,
           .bobwrap {
             animation: none !important;
@@ -799,6 +548,7 @@ export default function RelojClient() {
           .flyer {
             display: none;
           }
+
         }
       `}</style>
     </main>

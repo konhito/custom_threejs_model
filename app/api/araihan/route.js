@@ -3,8 +3,8 @@ import { buildAraihanSystemPrompt } from "../../../lib/araihanPrompt";
 
 export const runtime = "nodejs";
 
-const MODEL = "deepseek/deepseek-v4-flash";
-const MAX_MESSAGES = 10;
+const MODEL = process.env.OPENROUTER_MODEL || "deepseek/deepseek-v4-flash";
+const MAX_MESSAGES = 100;
 const MAX_MESSAGE_LENGTH = 1_200;
 const MAX_REQUESTS_PER_HOUR = 12;
 const requestCounts = new Map();
@@ -23,7 +23,7 @@ function cleanMessages(messages) {
   if (!Array.isArray(messages)) return [];
   return messages
     .filter((message) => message && ["user", "assistant"].includes(message.role) && typeof message.content === "string")
-    .slice(-MAX_MESSAGES)
+    .slice(0, MAX_MESSAGES)
     .map(({ role, content }) => ({ role, content: content.trim().slice(0, MAX_MESSAGE_LENGTH) }))
     .filter((message) => message.content);
 }
@@ -38,11 +38,18 @@ export async function POST(request) {
   }
 
   try {
-    const { messages, locale } = await request.json();
+    const { messages, locale, detectedCountry, detectedLanguage } = await request.json();
     const conversation = cleanMessages(messages);
     if (!conversation.length || conversation.at(-1).role !== "user") {
       return NextResponse.json({ error: "Please send Araihan a question." }, { status: 400 });
     }
+
+    const country = typeof detectedCountry === "string" && /^[A-Za-z]{2}$/.test(detectedCountry.trim())
+      ? detectedCountry.trim().toUpperCase()
+      : request.headers.get("x-vercel-ip-country") || request.headers.get("cf-ipcountry") || "unknown";
+    const language = typeof detectedLanguage === "string" && /^[A-Za-z-]{2,12}$/.test(detectedLanguage.trim())
+      ? detectedLanguage.trim()
+      : locale;
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -50,11 +57,14 @@ export async function POST(request) {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
         "HTTP-Referer": process.env.SITE_URL || "https://aquamundi.org",
-        "X-Title": "AquaMundi Araihan",
+        "X-OpenRouter-Title": "AquaMundi Araihan",
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: "system", content: buildAraihanSystemPrompt(locale) }, ...conversation],
+        messages: [
+          { role: "system", content: buildAraihanSystemPrompt(locale, country, language) },
+          ...conversation,
+        ],
         max_tokens: 350,
         temperature: 0.65,
       }),

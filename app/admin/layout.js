@@ -9,7 +9,8 @@ import {
   Users, 
   Package, 
   BarChart3, 
-  Settings, 
+  Settings,
+  Music,
   LogOut,
   Menu,
   X
@@ -82,6 +83,7 @@ export default function AdminLayout({ children }) {
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
     { name: 'Customers', href: '/admin/customers', icon: Users },
     { name: 'Products', href: '/admin/products', icon: Package },
+    { name: 'Music', href: '/admin/music', icon: Music },
     { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
