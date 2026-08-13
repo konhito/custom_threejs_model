@@ -28,6 +28,12 @@ function cleanMessages(messages) {
     .filter((message) => message.content);
 }
 
+function cleanPageContext(value) {
+  const path = typeof value?.path === "string" && /^\/[a-z0-9/_-]{0,160}$/i.test(value.path) ? value.path : "/";
+  const heading = typeof value?.heading === "string" ? value.heading.replace(/\s+/g, " ").trim().slice(0, 140) : "";
+  return { path, heading };
+}
+
 export async function POST(request) {
   if (!process.env.OPENROUTER_API_KEY) {
     return NextResponse.json({ error: "Araihan is resting for a moment. Please try again later." }, { status: 503 });
@@ -38,7 +44,7 @@ export async function POST(request) {
   }
 
   try {
-    const { messages, locale, detectedCountry, detectedLanguage } = await request.json();
+    const { messages, locale, detectedCountry, detectedLanguage, pageContext } = await request.json();
     const conversation = cleanMessages(messages);
     if (!conversation.length || conversation.at(-1).role !== "user") {
       return NextResponse.json({ error: "Please send Araihan a question." }, { status: 400 });
@@ -62,7 +68,7 @@ export async function POST(request) {
       body: JSON.stringify({
         model: MODEL,
         messages: [
-          { role: "system", content: buildAraihanSystemPrompt(locale, country, language) },
+          { role: "system", content: buildAraihanSystemPrompt(locale, country, language, cleanPageContext(pageContext)) },
           ...conversation,
         ],
         max_tokens: 350,

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Send, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { detectUserCountry } from "../lib/languageDetection";
 
 const SPANISH_COUNTRIES = new Set(["AR", "BO", "CL", "CO", "CR", "CU", "DO", "EC", "ES", "GT", "HN", "MX", "NI", "PA", "PE", "PR", "PY", "SV", "UY", "VE"]);
@@ -34,7 +35,14 @@ function languageFor(country) {
   return "en";
 }
 
+function visiblePageContext(pathname) {
+  const headings = [...document.querySelectorAll("[data-araihan-context], h1, h2")];
+  const heading = headings.sort((a, b) => Math.abs(a.getBoundingClientRect().top) - Math.abs(b.getBoundingClientRect().top))[0]?.textContent?.replace(/\s+/g, " ").trim().slice(0, 140);
+  return { path: pathname || "/", heading: heading || "" };
+}
+
 export default function AraihanChat({ compact = false, onClose }) {
+  const pathname = usePathname();
   const [messages, setMessages] = useState([{ role: "assistant", content: copy.en.welcome }]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -44,6 +52,7 @@ export default function AraihanChat({ compact = false, onClose }) {
   const [isDetecting, setIsDetecting] = useState(true);
   const inputRef = useRef(null);
   const feedRef = useRef(null);
+  const pageContextRef = useRef({ path: pathname || "/", heading: "" });
 
   useEffect(() => {
     let active = true;
@@ -58,6 +67,15 @@ export default function AraihanChat({ compact = false, onClose }) {
     });
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => { pageContextRef.current = visiblePageContext(pathname); };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; update(); }); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); if (frame) cancelAnimationFrame(frame); };
+  }, [pathname]);
 
   useEffect(() => {
     feedRef.current?.scrollTo({ top: feedRef.current.scrollHeight, behavior: "smooth" });
@@ -78,7 +96,7 @@ export default function AraihanChat({ compact = false, onClose }) {
       const response = await fetch("/api/araihan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages.slice(1), locale: detectedLanguage, detectedCountry, detectedLanguage }),
+        body: JSON.stringify({ messages: nextMessages.slice(1), locale: detectedLanguage, detectedCountry, detectedLanguage, pageContext: pageContextRef.current }),
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Araihan could not answer just now.");
@@ -146,7 +164,7 @@ export default function AraihanChat({ compact = false, onClose }) {
 
       <form onSubmit={sendMessage} className={`flex gap-2 border-t border-[#d6e0d8] bg-white ${compact ? "p-3" : "p-4"}`}>
         <label className="sr-only" htmlFor="araihan-message">Your message</label>
-        <input ref={inputRef} id="araihan-message" value={input} onChange={(event) => setInput(event.target.value)} maxLength={1200} disabled={isDetecting} placeholder={text.placeholder} className="min-w-0 flex-1 rounded-lg border border-[#9bb6a3] px-3 py-2 text-sm text-[#193325] placeholder:text-[#506a59] focus:border-[#2f6b4f] focus:outline-none focus:ring-2 focus:ring-[#2f6b4f]/25 disabled:opacity-60" />
+        <input ref={inputRef} id="araihan-message" value={input} onFocus={() => { pageContextRef.current = visiblePageContext(pathname); }} onChange={(event) => setInput(event.target.value)} maxLength={1200} disabled={isDetecting} placeholder={text.placeholder} className="min-w-0 flex-1 rounded-lg border border-[#9bb6a3] px-3 py-2 text-sm text-[#193325] placeholder:text-[#506a59] focus:border-[#2f6b4f] focus:outline-none focus:ring-2 focus:ring-[#2f6b4f]/25 disabled:opacity-60" />
         <button type="submit" disabled={isDetecting || isSending || !input.trim()} className="rounded-lg bg-[#2f6b4f] p-2.5 text-white transition hover:bg-[#24543e] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f]" aria-label="Send message">
           <Send size={18} />
         </button>
