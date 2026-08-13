@@ -284,8 +284,7 @@ export default function ShopPage() {
                 product.digital_price_eur ||
                 product.digital_price_usd ||
                 0;
-              const hasDigital =
-                product.is_digital || (digitalPrice && digitalPrice > 0);
+              const hasDigital = Boolean(product.is_digital || digitalPrice > 0);
 
               if (!price || price === 0) {
                 console.warn("Product missing price:", product.name);
