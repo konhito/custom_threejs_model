@@ -20,6 +20,7 @@ export const MusicToggleButton = ({
   volume = AUDIO_CONFIG.targetVolume, // Allow custom volume, default to 40%
   fadeDuration = AUDIO_CONFIG.fadeDuration, // Allow custom fade duration
 }) => {
+  const isBlobSource = src.startsWith("blob:");
   const bars = 5;
 
   const getRandomHeights = () => {
@@ -52,7 +53,7 @@ export const MusicToggleButton = ({
     },
     soundEnabled: true,
     volume: 0, // Start at 0 for fade-in effect
-    html5: true, // Use HTML5 audio for better compatibility
+    html5: !isBlobSource, // Blob URLs are already authenticated audio bytes.
     preload: true, // Preload the audio
   });
 
