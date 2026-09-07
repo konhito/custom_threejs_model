@@ -1,30 +1,344 @@
 {
-  "en": {
-    "date": "Updated Friday, August 14, 2026", "details": "View the daily update", "close": "Close daily update",
-    "groups": [
-      {"title":"Europe","items":["Spain - 207,000-217,609 ha burned in 2026 (EFFIS); six times the same period in 2025. A new Andalusia front has affected over 25,000 ha of perimeter, with 650 evacuated and 300 firefighters deployed.","Croatia - A fire near Omis, one of the country's worst, burned 900-1,000 ha; 1 person died, 36-40 were injured and over 2,000 people were evacuated.","Germany - A 300 ha Hürtgenwald fire near Belgium is still spreading; 1,800 people were evacuated and unexploded WWII ordnance complicates the response.","Greece - Attica is at the maximum level-5 alert. The Boeotia fire burned 10,000 ha and prompted over 1,000 evacuations; another front in Rethymno, Crete remains critical.","France - A new Landes fire burned 1,100 ha, with 500 evacuated and 500 firefighters deployed. National burned area is 98,000-116,000 ha, a record in 20 years of satellite measurement.","United Kingdom and Albania - A Stourbridge fire damaged homes; Albania is also affected by the current fire wave.","Portugal - The Viseu fire burned about 13,000 ha; at peak, 39 fires were active nationwide.","Italy - Estimates range from 40,000 to more than 100,000 ha; Sicily and Calabria are the worst-hit areas.","European Union - 457,459 ha burned through July 29 (EFFIS), 32% above the historical average. More than 300,000 people were evacuated or confined in France and Spain during July."]},
-      {"title":"Africa","items":["Algeria - At the July 18 peak, 154 fires were declared in 24 hours; 6 people died and about 150 homes were affected in Annaba."]},
-      {"title":"Asia","items":["Turkey - About 95,000 ha burned, seven times the 2008-2020 historical average for this time of year.","Russia (Siberia) - About 600,000 ha burned in 2026; 84,356 ha were active at peak in Krasnoyarsk, Yamalo-Nenets and Irkutsk."]},
-      {"title":"North America","items":["Canada - 3,848 fires and 2.92 million ha burned since January; Thunder Bay 36 in Ontario has burned 314,000 ha and remains uncontained.","United States - Fire alert raised to maximum level."]},
-      {"title":"South America","items":["Ecuador - Seven fires were active and four controlled on August 11. The Cotacachi-Cayapas reserve fire has burned at least 300 ha of paramo; over 4,000 ha burned nationally in early August.","Brazil - 1.76 million ha burned in 2026, with 4,682 fire events; risk is expected to increase from August to October."]},
-      {"title":"Oceania","items":["Australia - The southern-summer season has passed; January burned more than 400,000 ha in Victoria. There is no significant activity now."]},
-      {"title":"Global context","items":["Oceans - Record-high average sea-surface temperature: 20.86 C on June 21.","Oceans - 37% of oceans are under a marine heatwave.",{"text":"According to Greenpeace, 95% of wildfires have a human origin - intentional, negligent or accidental - rather than being purely natural.","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}
-    ], "sources":"Sources: MITECO, EFFIS/Copernicus, French Interior Ministry, Portuguese and Italian Civil Protection, Algerian Civil Protection, Turkish Meteorological Service, Russian Federal Forest Agency, CIFFC, GWIS/Brazil Ministry of Environment, Ecuador SNGR/ECU 911, AFAC/NEMA, Reuters, France 24, CNN, Greenpeace Spain, NOAA, Copernicus Marine Service."
-  },
-  "es": {
-    "date": "Actualizado viernes 14 de agosto de 2026", "details": "Ver la actualizacion diaria", "close": "Cerrar actualizacion diaria",
-    "groups": [
-      {"title":"Europa","items":["España - 207.000-217.609 ha quemadas en 2026 (EFFIS), seis veces más que en el mismo periodo de 2025. Un nuevo foco en Andalucía afecta más de 25.000 ha de perímetro; 650 evacuados y 300 bomberos desplegados.","Croacia - El incendio cerca de Omis, uno de los peores del país, quemó 900-1.000 ha; 1 muerto, 36-40 heridos y más de 2.000 evacuados.","Alemania - Incendio de 300 ha en Hürtgenwald, junto a Bélgica, todavía propagándose; 1.800 evacuados y munición sin detonar de la II Guerra Mundial complica la extinción.","Grecia - Ática está en alerta máxima de nivel 5. El incendio de Beocia quemó 10.000 ha y provocó más de 1.000 evacuaciones; otro foco en Rétino, Creta, sigue crítico.","Francia - Nuevo incendio en las Landas: 1.100 ha, 500 evacuados y 500 bomberos. La superficie nacional quemada es de 98.000-116.000 ha, récord en 20 años de satélite.","Reino Unido y Albania - Un incendio en Stourbridge dañó viviendas; Albania también está afectada por la actual ola de fuego.","Portugal - El incendio de Viseu quemó unas 13.000 ha; en su pico hubo 39 incendios activos.","Italia - Las estimaciones varían entre 40.000 y más de 100.000 ha; Sicilia y Calabria son los focos más graves.","Unión Europea - 457.459 ha quemadas hasta el 29 de julio (EFFIS), 32% por encima de la media histórica. Más de 300.000 personas fueron evacuadas o confinadas en Francia y España durante julio."]},
-      {"title":"África","items":["Argelia - En el pico del 18 de julio se declararon 154 incendios en 24 horas; murieron 6 personas y unas 150 viviendas fueron afectadas en Annaba."]},
-      {"title":"Asia","items":["Turquía - Unas 95.000 ha quemadas, siete veces la media histórica de 2008-2020 para estas fechas.","Rusia (Siberia) - Unas 600.000 ha quemadas en 2026; 84.356 ha activas en el pico en Krasnoyarsk, Yamalo-Nenets e Irkutsk."]},
-      {"title":"Norteamérica","items":["Canadá - 3.848 incendios y 2,92 millones de ha quemadas desde enero; Thunder Bay 36, en Ontario, ha quemado 314.000 ha y sigue sin control.","Estados Unidos - Alerta de incendios elevada al nivel máximo."]},
-      {"title":"Sudamérica","items":["Ecuador - El 11 de agosto había 7 incendios activos y 4 controlados. El incendio de Cotacachi-Cayapas ha quemado al menos 300 ha de páramo; a principios de agosto se quemaron más de 4.000 ha en el país.","Brasil - 1,76 millones de ha quemadas en 2026, con 4.682 eventos; el riesgo aumentará entre agosto y octubre."]},
-      {"title":"Oceanía","items":["Australia - La temporada de verano austral ya pasó; enero quemó más de 400.000 ha en Victoria. Ahora no hay actividad relevante."]},
-      {"title":"Contexto global","items":["Océanos - Temperatura media de la superficie oceánica récord: 20,86 C el 21 de junio.","Océanos - El 37% de los océanos está bajo una ola de calor marina.",{"text":"Según Greenpeace, el 95% de los incendios forestales tiene origen humano - intencionado, por negligencia o accidental - y no es un fenómeno puramente natural.","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}
-    ], "sources":"Fuentes: MITECO, EFFIS/Copernicus, Ministerio del Interior francés, Protección Civil portuguesa e italiana, Protección Civil argelina, Servicio Meteorológico de Turquía, Agencia Forestal Federal de Rusia, CIFFC, GWIS/Ministerio de Medio Ambiente de Brasil, SNGR/ECU 911 de Ecuador, AFAC/NEMA, Reuters, France 24, CNN, Greenpeace España, NOAA y Copernicus Marine Service."
-  },
-  "fr": {"date":"Mis a jour le vendredi 14 aout 2026","details":"Voir la mise a jour quotidienne","close":"Fermer la mise a jour quotidienne","groups":[{"title":"Europe","items":["Espagne - 207 000-217 609 ha brules en 2026; un nouveau front en Andalousie affecte plus de 25 000 ha de perimetre, avec 650 evacuations.","Croatie - Pres d'Omis: 900-1 000 ha brules, 1 mort, 36-40 blesses et plus de 2 000 evacuations.","Allemagne et Grece - Feux graves a Hürtgenwald et en Beotie; 1 800 et plus de 1 000 evacuations respectivement.","France - Nouveau feu dans les Landes: 1 100 ha; total national de 98 000-116 000 ha, record sur 20 ans.","UE - 457 459 ha brules au 29 juillet, 32% au-dessus de la moyenne historique."]},{"title":"Afrique","items":["Algerie - 154 feux en 24 h au pic; 6 morts et environ 150 habitations touchees a Annaba."]},{"title":"Asie","items":["Turquie - Environ 95 000 ha brules.","Russie (Siberie) - Environ 600 000 ha brules en 2026."]},{"title":"Amerique du Nord","items":["Canada - 3 848 feux et 2,92 millions d'ha brules; Thunder Bay 36 reste hors de controle.","Etats-Unis - Alerte incendie au niveau maximal."]},{"title":"Amerique du Sud","items":["Equateur - 7 feux actifs le 11 aout; au moins 300 ha brules dans la reserve Cotacachi-Cayapas.","Bresil - 1,76 million d'ha brules en 2026."]},{"title":"Oceanie","items":["Australie - Pas d'activite importante pendant l'hiver austral."]},{"title":"Contexte mondial","items":["Oceans - Temperature moyenne record: 20,86 C le 21 juin.","Oceans - 37% sous une vague de chaleur marine.",{"text":"Selon Greenpeace, 95% des feux de foret sont d'origine humaine.","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}],"sources":"Sources: MITECO, EFFIS/Copernicus, protections civiles, CIFFC, GWIS, SNGR/ECU 911, Reuters, France 24, CNN, Greenpeace, NOAA et Copernicus Marine Service."},
-  "de": {"date":"Aktualisiert am Freitag, 14. August 2026","details":"Taegliches Update anzeigen","close":"Taegliches Update schliessen","groups":[{"title":"Europa","items":["Spanien - 207.000-217.609 ha verbrannt; ein neuer Brand in Andalusien betrifft mehr als 25.000 ha Perimeter, 650 Menschen wurden evakuiert.","Kroatien - Bei Omis: 900-1.000 ha verbrannt, 1 Toter, 36-40 Verletzte und mehr als 2.000 Evakuierte.","Deutschland und Griechenland - Schwere Braende in Hürtgenwald und Boeotien; 1.800 bzw. mehr als 1.000 Evakuierungen.","Frankreich - Neuer Brand in den Landes: 1.100 ha; landesweit 98.000-116.000 ha, Rekord der letzten 20 Jahre.","EU - Bis 29. Juli 457.459 ha verbrannt, 32% ueber dem historischen Durchschnitt."]},{"title":"Afrika","items":["Algerien - Auf dem Hoehepunkt 154 Braende in 24 Stunden; 6 Tote und rund 150 betroffene Haeuser in Annaba."]},{"title":"Asien","items":["Tuerkei - Rund 95.000 ha verbrannt.","Russland (Sibirien) - Rund 600.000 ha im Jahr 2026 verbrannt."]},{"title":"Nordamerika","items":["Kanada - 3.848 Braende und 2,92 Millionen ha verbrannt; Thunder Bay 36 bleibt ausser Kontrolle.","USA - Waldbrandwarnung auf hoechster Stufe."]},{"title":"Suedamerika","items":["Ecuador - Am 11. August 7 aktive Braende; mindestens 300 ha im Reservat Cotacachi-Cayapas verbrannt.","Brasilien - 1,76 Millionen ha im Jahr 2026 verbrannt."]},{"title":"Ozeanien","items":["Australien - Im suedlichen Winter derzeit keine nennenswerte Aktivitaet."]},{"title":"Globaler Kontext","items":["Ozeane - Rekordtemperatur an der Meeresoberflaeche: 20,86 C am 21. Juni.","Ozeane - 37% sind von einer marinen Hitzewelle betroffen.",{"text":"Laut Greenpeace haben 95% der Waldbraende einen menschlichen Ursprung.","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}],"sources":"Quellen: MITECO, EFFIS/Copernicus, Zivilschutzbehoerden, CIFFC, GWIS, SNGR/ECU 911, Reuters, France 24, CNN, Greenpeace, NOAA und Copernicus Marine Service."},
-  "it": {"date":"Aggiornato venerdi 14 agosto 2026","details":"Vedi aggiornamento quotidiano","close":"Chiudi aggiornamento quotidiano","groups":[{"title":"Europa","items":["Spagna - 207.000-217.609 ha bruciati; un nuovo fronte in Andalusia interessa oltre 25.000 ha di perimetro e ha causato 650 evacuazioni.","Croazia - Vicino a Omis: 900-1.000 ha bruciati, 1 morto, 36-40 feriti e oltre 2.000 evacuati.","Germania e Grecia - Gravi incendi a Hürtgenwald e in Beozia; 1.800 e oltre 1.000 evacuazioni rispettivamente.","Francia - Nuovo incendio nelle Landes: 1.100 ha; totale nazionale 98.000-116.000 ha, record in 20 anni.","UE - 457.459 ha bruciati fino al 29 luglio, 32% sopra la media storica."]},{"title":"Africa","items":["Algeria - Al picco, 154 incendi in 24 ore; 6 morti e circa 150 case colpite ad Annaba."]},{"title":"Asia","items":["Turchia - Circa 95.000 ha bruciati.","Russia (Siberia) - Circa 600.000 ha bruciati nel 2026."]},{"title":"Nord America","items":["Canada - 3.848 incendi e 2,92 milioni di ha bruciati; Thunder Bay 36 resta fuori controllo.","Stati Uniti - Allerta incendi al livello massimo."]},{"title":"Sud America","items":["Ecuador - Il 11 agosto, 7 incendi attivi; almeno 300 ha bruciati nella riserva Cotacachi-Cayapas.","Brasile - 1,76 milioni di ha bruciati nel 2026."]},{"title":"Oceania","items":["Australia - Nessuna attivita rilevante durante l'inverno australe."]},{"title":"Contesto globale","items":["Oceani - Temperatura media record: 20,86 C il 21 giugno.","Oceani - Il 37% e sotto un'ondata di calore marina.",{"text":"Secondo Greenpeace, il 95% degli incendi boschivi ha origine umana.","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}],"sources":"Fonti: MITECO, EFFIS/Copernicus, protezioni civili, CIFFC, GWIS, SNGR/ECU 911, Reuters, France 24, CNN, Greenpeace, NOAA e Copernicus Marine Service."},
-  "zh": {"date":"更新于2026年8月14日，星期五","details":"查看每日更新","close":"关闭每日更新","groups":[{"title":"欧洲","items":["西班牙 - 2026年过火面积207,000-217,609公顷；安达卢西亚新火场影响超过25,000公顷火场周界，650人撤离。","克罗地亚 - Omis附近火灾烧毁900-1,000公顷，1人死亡、36-40人受伤，逾2,000人撤离。","德国和希腊 - Hürtgenwald及维奥蒂亚发生严重火灾，分别有1,800人及逾1,000人撤离。","法国 - 朗德省新火灾烧毁1,100公顷；全国累计98,000-116,000公顷，为20年纪录。","欧盟 - 截至7月29日过火457,459公顷，比历史平均高32%。"]},{"title":"非洲","items":["阿尔及利亚 - 高峰期24小时内报告154起火灾；安纳巴6人死亡、约150所房屋受影响。"]},{"title":"亚洲","items":["土耳其 - 约95,000公顷被烧毁。","俄罗斯（西伯利亚） - 2026年约600,000公顷被烧毁。"]},{"title":"北美洲","items":["加拿大 - 3,848起火灾、292万公顷被烧毁；Thunder Bay 36仍未受控。","美国 - 火灾警报升至最高级别。"]},{"title":"南美洲","items":["厄瓜多尔 - 8月11日有7起活跃火灾；Cotacachi-Cayapas保护区至少300公顷被烧毁。","巴西 - 2026年176万公顷被烧毁。"]},{"title":"大洋洲","items":["澳大利亚 - 南半球冬季目前无重大火灾活动。"]},{"title":"全球背景","items":["海洋 - 6月21日平均海表温度创纪录，达20.86 C。","海洋 - 37%的海洋正经历海洋热浪。",{"text":"绿色和平组织称，95%的森林火灾与人为因素有关。","href":"https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"}]}],"sources":"来源：MITECO、EFFIS/Copernicus、民防机构、CIFFC、GWIS、SNGR/ECU 911、Reuters、France 24、CNN、Greenpeace、NOAA及Copernicus Marine Service。"}
+    "en":  {
+               "date":  "Updated Saturday, September 5, 2026",
+               "details":  "View the daily update",
+               "close":  "Close daily update",
+               "groups":  [
+                              {
+                                  "title":  "Europe",
+                                  "items":  [
+                                                "Spain - 295,720 ha burned through September 2 (EFFIS/Copernicus), 45.6% of all EU burned area; third worst season in 30 years. Italy has 543 fires, Spain 433 and France 357.",
+                                                "Croatia - Omis: 900-1,000 ha burned, 1 dead, 36-40 injured and over 2,000 evacuated.",
+                                                "Germany and Greece - Serious fires in Hurtgenwald and Boeotia; 1,800 and over 1,000 evacuations respectively.",
+                                                "France - 98,000-116,000 ha burned, a 20-year satellite-record range. Portugal: Viseu burned about 13,000 ha.",
+                                                "Italy - 40,000 to over 100,000 ha depending on source; Sicily and Calabria are worst hit.",
+                                                "European Union - 647,375 ha burned through September 2; 2026 is the fourth worst year on record."
+                                            ]
+                              },
+                              {
+                                  "title":  "Africa",
+                                  "items":  [
+                                                "Algeria - 154 fires in 24 hours at peak; 6 deaths and about 150 homes affected in Annaba."
+                                            ]
+                              },
+                              {
+                                  "title":  "Asia",
+                                  "items":  [
+                                                "Turkey - About 95,000 ha burned, seven times the historical average.",
+                                                "Russia (Siberia) - About 600,000 ha burned in 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "North America",
+                                  "items":  [
+                                                "Canada - 3,848 fires and 2.92 million ha burned; Thunder Bay 36 has burned 314,000 ha and remains uncontained.",
+                                                "United States - Fire alert raised to maximum level."
+                                            ]
+                              },
+                              {
+                                  "title":  "South America",
+                                  "items":  [
+                                                "Ecuador - At least 300 ha burned in Cotacachi-Cayapas; over 4,000 ha burned nationally in early August.",
+                                                "Brazil - 1.76 million ha and 4,682 fire events in 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "Oceania",
+                                  "items":  [
+                                                "Australia - Over 400,000 ha burned in Victoria in January; the southern-summer season has passed."
+                                            ]
+                              },
+                              {
+                                  "title":  "Global context",
+                                  "items":  [
+                                                "112.3 million ha burned worldwide by August 1 (GWIS); Africa accounted for 55%.",
+                                                "Oceans - Record average sea-surface temperature: 20.86 C on June 21; 37% under a marine heatwave.",
+                                                {
+                                                    "text":  "According to Greenpeace, 95% of wildfires have a human origin - intentional, negligent or accidental - rather than being purely natural.",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "Sources: MITECO, EFFIS/Copernicus, Global Wildfire Information System, national civil-protection agencies, CIFFC, Ecuador SNGR, Brazil Ministry of Environment, AFAC/NEMA, Greenpeace Spain, NOAA and Copernicus Marine Service."
+           },
+    "es":  {
+               "date":  "Actualizado sÃ¡bado 5 de septiembre de 2026",
+               "details":  "Ver la actualizacion diaria",
+               "close":  "Cerrar actualizacion diaria",
+               "groups":  [
+                              {
+                                  "title":  "Europa",
+                                  "items":  [
+                                                "EspaÃ±a - 295.720 ha quemadas hasta el 2 de septiembre (EFFIS/Copernicus), el 45,6% de la superficie quemada en la UE; tercera peor temporada en 30 aÃ±os. Italia lleva 543 incendios, EspaÃ±a 433 y Francia 357.",
+                                                "Croacia - OmiÅ¡: 900-1.000 ha quemadas, 1 muerto, 36-40 heridos y mÃ¡s de 2.000 evacuados.",
+                                                "Alemania y Grecia - Incendios graves en HÃ¼rtgenwald y Beocia; 1.800 y mÃ¡s de 1.000 evacuaciones respectivamente.",
+                                                "Francia - 98.000-116.000 ha quemadas, rÃ©cord de 20 aÃ±os de satÃ©lite. Portugal: Viseu quemÃ³ unas 13.000 ha.",
+                                                "Italia - Entre 40.000 y mÃ¡s de 100.000 ha segÃºn la fuente; Sicilia y Calabria son los focos mÃ¡s graves.",
+                                                "UniÃ³n Europea - 647.375 ha quemadas hasta el 2 de septiembre; 2026 es el cuarto peor aÃ±o registrado."
+                                            ]
+                              },
+                              {
+                                  "title":  "Ãfrica",
+                                  "items":  [
+                                                "Argelia - 154 incendios en 24 horas en el pico; 6 muertos y unas 150 viviendas afectadas en Annaba."
+                                            ]
+                              },
+                              {
+                                  "title":  "Asia",
+                                  "items":  [
+                                                "TurquÃ­a - Unas 95.000 ha quemadas, siete veces la media histÃ³rica.",
+                                                "Rusia (Siberia) - Unas 600.000 ha quemadas en 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "NorteamÃ©rica",
+                                  "items":  [
+                                                "CanadÃ¡ - 3.848 incendios y 2,92 millones de ha quemadas; Thunder Bay 36 ha quemado 314.000 ha y sigue sin control.",
+                                                "Estados Unidos - Alerta de incendios elevada al nivel mÃ¡ximo."
+                                            ]
+                              },
+                              {
+                                  "title":  "SudamÃ©rica",
+                                  "items":  [
+                                                "Ecuador - Al menos 300 ha quemadas en Cotacachi-Cayapas; mÃ¡s de 4.000 ha quemadas en el paÃ­s a principios de agosto.",
+                                                "Brasil - 1,76 millones de ha y 4.682 eventos de fuego en 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "OceanÃ­a",
+                                  "items":  [
+                                                "Australia - MÃ¡s de 400.000 ha quemadas en Victoria en enero; la temporada de verano austral ya pasÃ³."
+                                            ]
+                              },
+                              {
+                                  "title":  "Contexto global",
+                                  "items":  [
+                                                "112,3 millones de ha quemadas en el mundo hasta el 1 de agosto (GWIS); Ãfrica concentrÃ³ el 55%.",
+                                                "OcÃ©anos - Temperatura media rÃ©cord: 20,86 C el 21 de junio; 37% bajo una ola de calor marina.",
+                                                {
+                                                    "text":  "SegÃºn Greenpeace, el 95% de los incendios forestales tiene origen humano - intencionado, por negligencia o accidental - y no es un fenÃ³meno puramente natural.",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "Fuentes: MITECO, EFFIS/Copernicus, Global Wildfire Information System, organismos de protecciÃ³n civil, CIFFC, SNGR de Ecuador, Ministerio de Medio Ambiente de Brasil, AFAC/NEMA, Greenpeace EspaÃ±a, NOAA y Copernicus Marine Service."
+           },
+    "fr":  {
+               "date":  "Mis Ã  jour le samedi 5 septembre 2026",
+               "details":  "Voir la mise Ã  jour quotidienne",
+               "close":  "Fermer la mise Ã  jour quotidienne",
+               "groups":  [
+                              {
+                                  "title":  "Europe",
+                                  "items":  [
+                                                "Espagne: 295 720 ha brûlés au 2 septembre (45,6% de la surface brûlée de l UE); 2026 est la troisième pire saison en 30 ans. UE: 647 375 ha brûlés, quatrième pire année enregistrée."
+                                            ]
+                              },
+                              {
+                                  "title":  "Afrique",
+                                  "items":  [
+                                                "Algérie: 154 feux en 24 h au pic; 6 morts à Annaba."
+                                            ]
+                              },
+                              {
+                                  "title":  "Asie",
+                                  "items":  [
+                                                "Turquie: 95 000 ha brûlés; Russie (Sibérie): environ 600 000 ha en 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "Amérique du Nord",
+                                  "items":  [
+                                                "Canada: 3 848 feux et 2,92 millions d ha brûlés; alerte maximale aux États-Unis."
+                                            ]
+                              },
+                              {
+                                  "title":  "Amérique du Sud",
+                                  "items":  [
+                                                "Équateur: au moins 300 ha brûlés à Cotacachi-Cayapas. Brésil: 1,76 million d ha et 4 682 événements."
+                                            ]
+                              },
+                              {
+                                  "title":  "Océanie",
+                                  "items":  [
+                                                "Australie: plus de 400 000 ha brûlés dans le Victoria en janvier."
+                                            ]
+                              },
+                              {
+                                  "title":  "Contexte mondial",
+                                  "items":  [
+                                                "112,3 millions d ha brûlés dans le monde au 1er août (GWIS); Afrique: 55%. Océans: 20,86 C record et 37% sous vague de chaleur marine.",
+                                                {
+                                                    "text":  "Selon Greenpeace, 95% des feux de forÃªt sont d\u0027origine humaine.",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "Sources: MITECO, EFFIS/Copernicus, GWIS, protection civile, CIFFC, SNGR, Greenpeace, NOAA et Copernicus Marine Service."
+           },
+    "de":  {
+               "date":  "Aktualisiert am Samstag, 5. September 2026",
+               "details":  "Taegliches Update anzeigen",
+               "close":  "Taegliches Update schliessen",
+               "groups":  [
+                              {
+                                  "title":  "Europa",
+                                  "items":  [
+                                                "Spanien: 295.720 ha bis 2. September verbrannt (45,6% der EU-Fläche); drittschlimmste Saison seit 30 Jahren. EU: 647.375 ha, viertschlimmstes Jahr."
+                                            ]
+                              },
+                              {
+                                  "title":  "Afrika",
+                                  "items":  [
+                                                "Algerien: 154 Brände in 24 Stunden am Höhepunkt; 6 Tote in Annaba."
+                                            ]
+                              },
+                              {
+                                  "title":  "Asien",
+                                  "items":  [
+                                                "Türkei: 95.000 ha verbrannt; Russland (Sibirien): rund 600.000 ha im Jahr 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "Nordamerika",
+                                  "items":  [
+                                                "Kanada: 3.848 Brände und 2,92 Millionen ha; USA: höchste Warnstufe."
+                                            ]
+                              },
+                              {
+                                  "title":  "Südamerika",
+                                  "items":  [
+                                                "Ecuador: mindestens 300 ha in Cotacachi-Cayapas verbrannt. Brasilien: 1,76 Millionen ha und 4.682 Ereignisse."
+                                            ]
+                              },
+                              {
+                                  "title":  "Ozeanien",
+                                  "items":  [
+                                                "Australien: im Januar mehr als 400.000 ha in Victoria verbrannt."
+                                            ]
+                              },
+                              {
+                                  "title":  "Globaler Kontext",
+                                  "items":  [
+                                                "Weltweit 112,3 Millionen ha bis 1. August verbrannt (GWIS); Afrika: 55%. Ozeane: 20,86 C Rekord und 37% marine Hitzewelle.",
+                                                {
+                                                    "text":  "Laut Greenpeace haben 95% der WaldbrÃ¤nde einen menschlichen Ursprung.",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "Quellen: MITECO, EFFIS/Copernicus, GWIS, Zivilschutz, CIFFC, SNGR, Greenpeace, NOAA und Copernicus Marine Service."
+           },
+    "it":  {
+               "date":  "Aggiornato sabato 5 settembre 2026",
+               "details":  "Vedi aggiornamento quotidiano",
+               "close":  "Chiudi aggiornamento quotidiano",
+               "groups":  [
+                              {
+                                  "title":  "Europa",
+                                  "items":  [
+                                                "Spagna: 295.720 ha bruciati al 2 settembre (45,6% dell area UE); terza peggiore stagione in 30 anni. UE: 647.375 ha, quarto peggior anno."
+                                            ]
+                              },
+                              {
+                                  "title":  "Africa",
+                                  "items":  [
+                                                "Algeria: 154 incendi in 24 ore al picco; 6 morti ad Annaba."
+                                            ]
+                              },
+                              {
+                                  "title":  "Asia",
+                                  "items":  [
+                                                "Turchia: 95.000 ha bruciati; Russia (Siberia): circa 600.000 ha nel 2026."
+                                            ]
+                              },
+                              {
+                                  "title":  "Nord America",
+                                  "items":  [
+                                                "Canada: 3.848 incendi e 2,92 milioni di ha; Stati Uniti: allerta massima."
+                                            ]
+                              },
+                              {
+                                  "title":  "Sud America",
+                                  "items":  [
+                                                "Ecuador: almeno 300 ha bruciati a Cotacachi-Cayapas. Brasile: 1,76 milioni di ha e 4.682 eventi."
+                                            ]
+                              },
+                              {
+                                  "title":  "Oceania",
+                                  "items":  [
+                                                "Australia: oltre 400.000 ha bruciati nel Victoria a gennaio."
+                                            ]
+                              },
+                              {
+                                  "title":  "Contesto globale",
+                                  "items":  [
+                                                "112,3 milioni di ha bruciati nel mondo al 1 agosto (GWIS); Africa: 55%. Oceani: record di 20,86 C e 37% sotto ondata di calore marina.",
+                                                {
+                                                    "text":  "Secondo Greenpeace, il 95% degli incendi boschivi ha origine umana.",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "Fonti: MITECO, EFFIS/Copernicus, GWIS, protezione civile, CIFFC, SNGR, Greenpeace, NOAA e Copernicus Marine Service."
+           },
+    "zh":  {
+               "date":  "æ›´æ–°äºŽ2026å¹´9æœˆ5æ—¥ï¼Œæ˜ŸæœŸå…­",
+               "details":  "æŸ¥çœ‹æ¯æ—¥æ›´æ–°",
+               "close":  "å…³é—­æ¯æ—¥æ›´æ–°",
+               "groups":  [
+                              {
+                                  "title":  "欧洲",
+                                  "items":  [
+                                                "西班牙截至9月2日过火295,720公顷，占欧盟45.6%；为30年来第三差季节。欧盟共647,375公顷，为第四差年份。"
+                                            ]
+                              },
+                              {
+                                  "title":  "非洲",
+                                  "items":  [
+                                                "阿尔及利亚高峰期24小时154起火灾；安纳巴6人死亡。"
+                                            ]
+                              },
+                              {
+                                  "title":  "亚洲",
+                                  "items":  [
+                                                "土耳其过火95,000公顷；俄罗斯西伯利亚2026年约600,000公顷。"
+                                            ]
+                              },
+                              {
+                                  "title":  "北美洲",
+                                  "items":  [
+                                                "加拿大3,848起火灾、过火292万公顷；美国警报升至最高级别。"
+                                            ]
+                              },
+                              {
+                                  "title":  "南美洲",
+                                  "items":  [
+                                                "厄瓜多尔Cotacachi-Cayapas至少过火300公顷。巴西2026年过火176万公顷、4,682起事件。"
+                                            ]
+                              },
+                              {
+                                  "title":  "大洋洲",
+                                  "items":  [
+                                                "澳大利亚维多利亚州1月过火逾400,000公顷。"
+                                            ]
+                              },
+                              {
+                                  "title":  "全球背景",
+                                  "items":  [
+                                                "截至8月1日全球过火1.123亿公顷（GWIS），非洲占55%。海洋温度创20.86 C纪录，37%处于海洋热浪中。",
+                                                {
+                                                    "text":  "ç»¿è‰²å’Œå¹³ç»„ç»‡ç§°ï¼Œ95%çš„æ£®æž—ç«ç¾ä¸Žäººä¸ºå› ç´ æœ‰å…³ã€‚",
+                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
+                                                }
+                                            ]
+                              }
+                          ],
+               "sources":  "æ¥æºï¼šMITECOã€EFFIS/Copernicusã€GWISã€æ°‘é˜²æœºæž„ã€CIFFCã€SNGRã€ç»¿è‰²å’Œå¹³ç»„ç»‡ã€NOAAå’ŒCopernicus Marine Serviceã€‚"
+           }
 }
