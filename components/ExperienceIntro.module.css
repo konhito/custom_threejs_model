@@ -6,7 +6,10 @@
 .wordmark { color: #f8f8f6; font-family: "Agustina Signature", cursive; font-size: clamp(1.8rem, 2.5vw, 2.8rem); line-height: 1; pointer-events: auto; text-decoration: none; }
 .wordmark:focus-visible { outline: 3px solid #ffdd74; outline-offset: 4px; }
 .copy { position: fixed; z-index: 5; left: 50%; width: min(58rem, calc(100vw - 3rem)); transform: translateX(-50%); text-align: center; text-wrap: balance; }
-.introCopy { top: calc(var(--site-banner-height) + 39vh); color: #9fb1c7; font: 400 clamp(1.15rem, 2.1vw, 2rem)/1.28 Georgia, serif; will-change: opacity, transform; }
+.introCopy { top: calc(var(--site-banner-height) + 26vh); color: #f4f7f3; will-change: opacity, transform; }
+.heroEyebrow { margin: 0; color: #c4d3d9; font: italic 400 clamp(1rem, 1.7vw, 1.4rem)/1.25 Georgia, serif; }
+.heroHeading { width: min(92vw, 14ch); margin: .7rem auto 0; color: #f4f7f3; font: 500 clamp(2.8rem, 7.5vw, 6rem)/.94 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; text-shadow: 0 2px 18px rgba(3, 18, 30, .55); }
+.heroHeading span { display: block; }
 .sceneTitle { position: fixed; top: calc(var(--site-banner-height) + 14vh); left: 50%; z-index: 1; display: grid; gap: .6rem; width: min(90vw, 62rem); transform: translateX(-50%); color: #f1f6f6; text-align: center; pointer-events: none; mix-blend-mode: screen; will-change: opacity, transform, filter, clip-path; }
 .sceneTitleMain { font: 500 clamp(3rem, 9vw, 8rem)/.88 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; }
 .sceneTitleSub { color: #a9c2c4; font: 700 .62rem/1 var(--font-geist-mono), monospace; letter-spacing: .22em; text-transform: uppercase; }
@@ -22,5 +25,5 @@
 @keyframes revealDiscovery { from { opacity: 0; transform: translate(-50%, 1rem); } to { opacity: 1; transform: translate(-50%, 0); } }
 @keyframes fadeIntro { from { opacity: 1; transform: translateX(-50%); } to { opacity: 0; transform: translate(-50%, -1rem); } }
 @keyframes dissolveTitle { 0% { opacity: 1; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, 0) scale(1); } 55% { opacity: .9; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, -1vh) scale(1.015); } 100% { opacity: 0; filter: blur(12px); clip-path: inset(0 48% 0 48%); transform: translate(-50%, -9vh) scale(1.08); } }
-@media (max-width: 700px) { .chrome { padding: 1.25rem; } .wordmark { font-size: 2rem; } .introCopy { top: calc(var(--site-banner-height) + 34vh); } .map { padding: .55rem .7rem; } }
+@media (max-width: 700px) { .chrome { padding: 1.25rem; } .wordmark { font-size: 2rem; } .introCopy { top: calc(var(--site-banner-height) + 20vh); } .heroHeading { width: min(90vw, 12ch); font-size: clamp(2.25rem, 11vw, 4rem); } .map { padding: .55rem .7rem; } }
 @media (prefers-reduced-motion: reduce) { .canvas { position: absolute; height: 100svh; } .snow { display: none; } .introCopy, .discoveryCopy, .sceneTitle { position: absolute; animation: none; } .discoveryCopy { opacity: 1; top: 58%; } }

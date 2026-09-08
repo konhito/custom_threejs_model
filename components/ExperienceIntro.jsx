@@ -79,7 +79,11 @@ export default function ExperienceIntro() {
           </a>
         </header>
         <div className={`${styles.copy} ${styles.introCopy}`} style={{ opacity: (1 - introFade) * sceneOpacity, transform: `translate(-50%, ${introFade * -2}vh)` }}>
-          Reporting for this project is presented by AquaMundi in partnership with the people, pollinators, and habitats that keep living corridors connected.
+          <p className={styles.heroEyebrow}>{t("home.heroSubtitle")}</p>
+          <h1 className={styles.heroHeading}>
+            <span>{t("home.heroTitle")}</span>
+            <span>{t("home.heroTitleLine2")}</span>
+          </h1>
         </div>
         <div className={styles.spacer} aria-hidden="true" />
       </main>
