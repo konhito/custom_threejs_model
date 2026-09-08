@@ -44,7 +44,7 @@ export default function ExperienceIntro() {
       <div className={styles.spacer} aria-hidden="true" />
       <section className={styles.globeChapter} aria-label="AquaMundi living archive">
         <div className={styles.globeStage}>
-          <Globe cinematic cinematicProgress={globeProgress} showOvalBorder={false} showBackground={false} />
+          <Globe cinematic eager cinematicProgress={globeProgress} showOvalBorder={false} showBackground={false} />
         </div>
       </section>
     </main>

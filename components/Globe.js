@@ -866,6 +866,7 @@ export default function GlobeComponent({
   showBackground = true,
   cinematic = false,
   cinematicProgress = 0,
+  eager = false,
 }) {
   const containerRef = useRef();
   const fullscreenContainerRef = useRef();
@@ -3109,6 +3110,8 @@ export default function GlobeComponent({
       observer.observe(containerRef.current);
     }
 
+    if (eager) loadGlobe();
+
     // Also start loading if already visible (e.g., on small screens)
     const checkVisibility = () => {
       if (containerRef.current) {
@@ -3129,7 +3132,7 @@ export default function GlobeComponent({
       observer.disconnect();
       clearTimeout(timeoutId);
     };
-  }, [countriesData, cinematic, isCinematicComplete]);
+  }, [countriesData, cinematic, eager, isCinematicComplete]);
 
   useEffect(() => {
     if (!cinematic || !isCinematicComplete) return;
