@@ -864,6 +864,8 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
 export default function GlobeComponent({
   showOvalBorder = true,
   showBackground = true,
+  cinematic = false,
+  cinematicProgress = 0,
 }) {
   const containerRef = useRef();
   const fullscreenContainerRef = useRef();
@@ -871,10 +873,18 @@ export default function GlobeComponent({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isGlobeLoaded, setIsGlobeLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [cinematicCountry, setCinematicCountry] = useState(null);
+  const [isCinematicComplete, setIsCinematicComplete] = useState(false);
+  const archivePresentation = cinematic && isCinematicComplete;
   const controlsRef = useRef();
   const sceneRef = useRef(null);
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
+  const cinematicProgressRef = useRef(cinematicProgress);
+
+  useEffect(() => {
+    cinematicProgressRef.current = cinematicProgress;
+  }, [cinematicProgress]);
 
   // Countries data array
   const countriesData = useMemo(
@@ -2179,6 +2189,7 @@ export default function GlobeComponent({
         // Adjust camera position based on screen size
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         // Set initial camera position far for zoom-in effect
         const targetDistance = isMobile ? 7 : isTablet ? 6.5 : 8;
@@ -2205,7 +2216,7 @@ export default function GlobeComponent({
           }
         };
 
-        animateZoom();
+        if (!cinematic) animateZoom();
 
         // Create renderer
         const renderer = new THREE.WebGLRenderer({
@@ -2656,6 +2667,7 @@ export default function GlobeComponent({
               `Ball distance from origin: ${Math.sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z)}`,
             );
           });
+
         }
 
         // Cache for last distance to avoid unnecessary recalculations
@@ -2724,11 +2736,11 @@ export default function GlobeComponent({
         // Move controls declaration BEFORE the click handler
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.autoRotate = true;
+        controls.autoRotate = !cinematic;
         controls.autoRotateSpeed = 0.5;
         controls.enableZoom = false; // Disabled by default in normal view
         controls.enablePan = false;
-        controls.enableRotate = true; // Enable rotation on all devices
+        controls.enableRotate = !cinematic;
 
         // Device-specific zoom limits
         if (isMobile) {
@@ -2761,6 +2773,7 @@ export default function GlobeComponent({
         const mouse = new THREE.Vector2();
 
         const handleClick = (event) => {
+          if (cinematic && !isCinematicComplete) return;
           // Get mouse position relative to the canvas/renderer element
           const rect = renderer.domElement.getBoundingClientRect();
           mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -2890,8 +2903,75 @@ export default function GlobeComponent({
         renderer.domElement.addEventListener("mousemove", handleMouseMove);
 
         // Animation loop with pulsing glow effect and dynamic colors
+        let activeCinematicId = "";
+        let cinematicComplete = false;
+        const updateCinematicCamera = () => {
+          const cinematicStops = ballGroups.slice(0, 3);
+          if (!cinematic || cinematicStops.length < 3) return;
+          const progress = reduceMotion ? 1 : cinematicProgressRef.current;
+          const overviewEnd = 0.22;
+          const satelliteEnd = 0.78;
+          const overviewDirection = new THREE.Vector3(
+            Math.sin(0.78),
+            0.12,
+            Math.cos(0.78),
+          ).normalize();
+          const closeDistance = isMobile ? 6.4 : 8.4;
+          const farDistance = isMobile ? 11 : 15;
+          const archiveDistance = isMobile ? 16 : 22;
+
+          if (progress < overviewEnd) {
+            const angle = (progress / overviewEnd) * 0.78;
+            camera.position.set(
+              Math.sin(angle) * farDistance,
+              0.12 * farDistance,
+              Math.cos(angle) * farDistance,
+            );
+            camera.lookAt(0, 0, 0);
+            controls.autoRotate = false;
+            controls.enableRotate = false;
+            if (activeCinematicId) {
+              activeCinematicId = "";
+              setCinematicCountry(null);
+            }
+            return;
+          }
+
+          const journey = Math.min((progress - overviewEnd) / (satelliteEnd - overviewEnd), 1) * (cinematicStops.length - 1);
+          const fromIndex = Math.min(cinematicStops.length - 2, Math.floor(journey));
+          const transition = journey - fromIndex;
+          const direction = cinematicStops[fromIndex].position.clone().normalize().lerp(
+            cinematicStops[Math.min(fromIndex + 1, cinematicStops.length - 1)].position.clone().normalize(),
+            transition * transition * (3 - 2 * transition),
+          ).normalize();
+          const satelliteHandoff = Math.max(0, Math.min(1, (progress - overviewEnd) / 0.1));
+          direction.lerp(overviewDirection, 1 - satelliteHandoff).normalize();
+          const finalPullBack = Math.max(0, Math.min(1, (progress - satelliteEnd) / (1 - satelliteEnd)));
+          direction.lerp(new THREE.Vector3(0, 0, 1), finalPullBack).normalize();
+          const handoffDistance = farDistance + (closeDistance - farDistance) * satelliteHandoff;
+          camera.position.copy(direction.multiplyScalar(handoffDistance + (archiveDistance - handoffDistance) * finalPullBack));
+          camera.lookAt(0, 0, 0);
+
+          const activeIndex = Math.min(cinematicStops.length - 1, Math.round(journey));
+          const activeCountry = cinematicStops[activeIndex].userData.data;
+          if (activeCinematicId !== activeCountry.id && progress > 0.32 && progress < 0.9) {
+            activeCinematicId = activeCountry.id;
+            setCinematicCountry(activeCountry);
+          }
+
+          const completed = progress >= 0.995;
+          controls.autoRotate = completed && !reduceMotion;
+          controls.enableRotate = completed;
+          if (completed !== cinematicComplete) {
+            cinematicComplete = completed;
+            setIsCinematicComplete(completed);
+            setCinematicCountry(completed ? null : activeCountry);
+          }
+        };
+
         const animate = () => {
           requestAnimationFrame(animate);
+          updateCinematicCamera();
           controls.update();
 
           // Scale satellites based on zoom level
@@ -3049,7 +3129,16 @@ export default function GlobeComponent({
       observer.disconnect();
       clearTimeout(timeoutId);
     };
-  }, [countriesData]);
+  }, [countriesData, cinematic, isCinematicComplete]);
+
+  useEffect(() => {
+    if (!cinematic || !isCinematicComplete) return;
+    const resizeTimer = window.setTimeout(
+      () => window.dispatchEvent(new Event("resize")),
+      100,
+    );
+    return () => window.clearTimeout(resizeTimer);
+  }, [cinematic, isCinematicComplete]);
 
   const closeModal = () => {
     setIsModalVisible(false);
@@ -3171,7 +3260,7 @@ export default function GlobeComponent({
               aria-label="Interactive 3D Globe of Sacred Flowers - Fullscreen Mode"
             >
               {/* Background Image */}
-              {showBackground && (
+              {(showBackground || archivePresentation) && (
                 <Image
                   src="/bg_image.png"
                   alt="Galactic Garden Background"
@@ -3215,10 +3304,14 @@ export default function GlobeComponent({
       {/* Normal View */}
       {!isFullscreen && (
         <div
-          className="w-full h-full flex items-center justify-center relative group"
+          className={`${
+            archivePresentation
+              ? "h-[78vh] max-h-[820px] w-[92%] max-w-[1320px] shrink-0 overflow-hidden rounded-[20px] bg-[#e6e6e2]"
+              : "w-full h-full"
+          } flex items-center justify-center relative group transition-[width,height,border-radius,box-shadow] duration-[2200ms] ease-out`}
           style={{
-            minHeight: "100%",
-            minWidth: "100%",
+            minHeight: archivePresentation ? undefined : "100%",
+            minWidth: archivePresentation ? undefined : "100%",
             // On mobile, ensure the container doesn't block scrolling
             ...(typeof window !== "undefined" && window.innerWidth < 768
               ? {
@@ -3230,16 +3323,16 @@ export default function GlobeComponent({
           aria-label="Interactive 3D Globe of Sacred Flowers"
         >
           {/* Fullscreen Button Overlay - Always visible on mobile, hover on desktop */}
-          <button
+          {(!cinematic || archivePresentation) && <button
             onClick={toggleFullscreen}
             className="absolute top-4 left-4 sm:top-6 sm:left-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
             aria-label="Enter fullscreen"
           >
             <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </button>
+          </button>}
 
           {/* Background Image - Only show if showBackground is true (full page mode) */}
-          {showBackground && (
+          {(showBackground || archivePresentation) && (
             <Image
               src="/bg_image.png"
               alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
@@ -3313,6 +3406,16 @@ export default function GlobeComponent({
               <GlobeLoader />
             </div>
           )}
+
+          {cinematic && cinematicCountry && !isCinematicComplete && (
+            <aside className="pointer-events-none absolute bottom-5 right-5 z-[60] w-[min(19rem,calc(100%_-_2.5rem))] rounded-2xl border border-white/15 bg-[#061824]/75 p-5 text-left text-[#e7eff1] shadow-2xl backdrop-blur-xl sm:bottom-8 sm:right-8">
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#9ec9d8]">Living satellite</p>
+              <h2 className="font-serif text-2xl leading-none">{cinematicCountry.flowerName}</h2>
+              <p className="mt-2 text-sm text-[#b9ccd2]">{cinematicCountry.country}</p>
+              <p className="mt-4 text-sm leading-relaxed text-[#d2dfe2]">{cinematicCountry.flowerDescription}</p>
+            </aside>
+          )}
+
 
           {/* UI Overlay */}
 

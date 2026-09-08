@@ -1,0 +1,24 @@
+.experience { position: relative; overflow: clip; background: #061824; color: #dce8ed; }
+.canvas { position: fixed; inset: 0; z-index: 4; pointer-events: none; transition: opacity .7s ease; }
+.canvas canvas { display: block; width: 100%; height: 100%; }
+.chrome { position: fixed; top: var(--site-banner-height); left: 0; right: 0; z-index: 5; display: flex; justify-content: space-between; align-items: flex-start; padding: 1.25rem 2rem; pointer-events: none; transition: opacity .4s ease; }
+.mark { display: grid; width: 2.5rem; height: 2.9rem; place-items: center; border: 4px solid #ffd800; color: #ffd800; font: 700 1.1rem/1 var(--font-geist-mono), monospace; }
+.map { border-radius: 999px; background: #e9edf0; color: #15284c; padding: .65rem 1rem; font: 700 .68rem/1 var(--font-geist-mono), monospace; letter-spacing: .18em; }
+.copy { position: fixed; z-index: 5; left: 50%; width: min(58rem, calc(100vw - 3rem)); transform: translateX(-50%); text-align: center; text-wrap: balance; }
+.introCopy { top: calc(var(--site-banner-height) + 39vh); color: #9fb1c7; font: 400 clamp(1.15rem, 2.1vw, 2rem)/1.28 Georgia, serif; will-change: opacity, transform; }
+.sceneTitle { position: fixed; top: calc(var(--site-banner-height) + 14vh); left: 50%; z-index: 1; display: grid; gap: .6rem; width: min(90vw, 62rem); transform: translateX(-50%); color: #f1f6f6; text-align: center; pointer-events: none; mix-blend-mode: screen; will-change: opacity, transform, filter, clip-path; }
+.sceneTitleMain { font: 500 clamp(3rem, 9vw, 8rem)/.88 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; }
+.sceneTitleSub { color: #a9c2c4; font: 700 .62rem/1 var(--font-geist-mono), monospace; letter-spacing: .22em; text-transform: uppercase; }
+.discoveryCopy { top: 47%; color: #a8bcc7; font: 400 clamp(1rem, 1.7vw, 1.4rem)/1.3 Georgia, serif; opacity: 0; will-change: opacity, transform; }
+.cloudCopy { top: 56%; z-index: 3; color: #f4f7f3; font: 400 clamp(1.1rem, 1.9vw, 1.6rem)/1.35 Georgia, serif; max-width: 44rem; text-shadow: 0 2px 18px rgba(3, 18, 30, .8); will-change: opacity, transform; }
+.cloudCopy small { display: block; margin-top: 1.25rem; color: #d8e8e5; font: 700 .62rem/1.3 var(--font-geist-mono), monospace; letter-spacing: .12em; text-shadow: 0 1px 10px rgba(3, 18, 30, .9); text-transform: uppercase; }
+.scrollCopy { bottom: 4.8rem; color: #a5b7c6; font: 700 .68rem/1 var(--font-geist-mono), monospace; letter-spacing: .2em; text-transform: uppercase; }
+.phaseLabel { position: fixed; left: 1.25rem; top: 50%; z-index: 2; color: #a5b7c6; font: 700 .58rem/1 var(--font-geist-mono), monospace; letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; }
+.spacer { height: calc(220svh + var(--site-banner-height)); }
+.globeChapter { position: relative; z-index: 3; min-height: 200svh; background: radial-gradient(circle at 50% 46%, #153f57 0%, #092536 42%, #061824 76%); }
+.globeStage { position: sticky; top: 0; display: flex; height: 100svh; align-items: center; justify-content: center; overflow: hidden; }
+@keyframes revealDiscovery { from { opacity: 0; transform: translate(-50%, 1rem); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes fadeIntro { from { opacity: 1; transform: translateX(-50%); } to { opacity: 0; transform: translate(-50%, -1rem); } }
+@keyframes dissolveTitle { 0% { opacity: 1; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, 0) scale(1); } 55% { opacity: .9; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, -1vh) scale(1.015); } 100% { opacity: 0; filter: blur(12px); clip-path: inset(0 48% 0 48%); transform: translate(-50%, -9vh) scale(1.08); } }
+@media (max-width: 700px) { .chrome { padding-inline: 1rem; } .introCopy { top: calc(var(--site-banner-height) + 34vh); } .map { padding: .55rem .7rem; } }
+@media (prefers-reduced-motion: reduce) { .canvas { position: absolute; height: 100svh; } .introCopy, .discoveryCopy, .sceneTitle { position: absolute; animation: none; } .discoveryCopy { opacity: 1; top: 58%; } }
