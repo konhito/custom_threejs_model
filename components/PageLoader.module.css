@@ -94,6 +94,7 @@
   animation: smoothTextReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+
 @keyframes changeColor {
   0% {
     background: linear-gradient(180deg, #ffb6c1, #ff69b4);

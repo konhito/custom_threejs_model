@@ -303,6 +303,53 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+.landing-section-heading {
+  margin: 0 auto clamp(1.5rem, 4vw, 3rem);
+  max-width: 46rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.landing-section-heading p {
+  color: #40516d;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin: 0 0 0.65rem;
+}
+
+.landing-section-heading h2 {
+  color: #071b35;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.75rem, 5.2vw, 5.75rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.landing-section-heading span {
+  color: #40516a;
+  display: block;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.55;
+  margin: 1rem auto 0;
+  max-width: 38rem;
+  text-wrap: pretty;
+}
+
+.home-experience { background: #f8f8f6; }
+.home-archive-section { background: #f8f8f6; }
+.home-archive-loop { background: #f8f8f6; padding: 0.25rem 0 3.5rem; }
+.home-archive-loop text { fill: #071b35; opacity: 0.82; }
+.home-library-section { background: #f8f8f6; }
+.home-paths-section { background: #f8f8f6; }
+.home-library-section > .landing-section-heading,
+.home-paths-section > .landing-section-heading { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+
 /* Marquee animations */
 @keyframes marquee {
   from {
@@ -533,6 +580,7 @@ body {
   right: clamp(0.5rem, 4vw, 3rem);
   width: clamp(7rem, 16vw, 11rem);
 }
+
 .wildfire-tongue { transform-box: fill-box; transform-origin: 50% 100%; }
 .wildfire-tongue--1 { animation: wildfire-flicker-a 1.6s ease-in-out infinite; }
 .wildfire-tongue--2 { animation: wildfire-flicker-b 1.9s ease-in-out infinite; }

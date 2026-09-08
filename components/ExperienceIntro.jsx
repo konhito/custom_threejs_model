@@ -1,7 +1,16 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Snowfall from "react-snowfall";
+import Navigation from "./Navigation";
+import ImageGallery from "./ImageGallery";
+import { BentoDemo } from "./BentoDemo";
+import CurvedLoop from "./CurvedLoop";
+import FieldOutro from "./FieldOutro";
+import PageLoader from "./PageLoader";
+import { MusicToggleButton } from "./MusicToggleButton";
+import { useTranslation } from "../lib/useTranslation";
 import styles from "./ExperienceIntro.module.css";
 
 const IntroCanvas = dynamic(() => import("./ExperienceIntroGLB"), { ssr: false });
@@ -9,44 +18,95 @@ const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
 export default function ExperienceIntro() {
   const [progress, setProgress] = useState(0);
-  const [globeProgress, setGlobeProgress] = useState(0);
+  const [introReady, setIntroReady] = useState(false);
+  const [globeReady, setGlobeReady] = useState(false);
+  const [globeVisible, setGlobeVisible] = useState(false);
+  const [loaderFallback, setLoaderFallback] = useState(false);
+  const globeSectionRef = useRef(null);
+  const { t } = useTranslation();
   useEffect(() => {
-    const readNativeProgress = () => {
+    const readNativeProgress = (scrollY = window.scrollY) => {
       const introDistance = Math.max(1, window.innerHeight * 2.2);
-      const scrollY = window.scrollY;
-      setGlobeProgress(Math.min(1, Math.max(0, (scrollY - introDistance) / (window.innerHeight * 1.55))));
-      const nextProgress = Math.min(1, Math.max(0, scrollY / introDistance));
+      // Keep reporting after the intro ends so the held cloud can crossfade
+      // into the globe section instead of cutting away at the section boundary.
+      const nextProgress = Math.max(0, scrollY / introDistance);
       window.dispatchEvent(new CustomEvent("aquamundi:intro-scroll", { detail: { progress: nextProgress } }));
       return nextProgress;
     };
-    const onScroll = () => setProgress(readNativeProgress());
-    window.addEventListener("aquamundi:lenis-scroll", onScroll);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const onLenisScroll = (event) => setProgress(readNativeProgress(event.detail?.scroll));
+    const onNativeScroll = () => setProgress(readNativeProgress());
+    window.addEventListener("aquamundi:lenis-scroll", onLenisScroll);
+    window.addEventListener("scroll", onNativeScroll, { passive: true });
     setProgress(readNativeProgress());
     return () => {
-      window.removeEventListener("aquamundi:lenis-scroll", onScroll);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("aquamundi:lenis-scroll", onLenisScroll);
+      window.removeEventListener("scroll", onNativeScroll);
     };
   }, []);
+  const markIntroReady = useCallback(() => setIntroReady(true), []);
+  const markGlobeReady = useCallback(() => setGlobeReady(true), []);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLoaderFallback(true), 12000);
+    return () => window.clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    const section = globeSectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setGlobeVisible(entry.isIntersecting));
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
   const introFade = Math.min(1, Math.max(0, (progress - 0.04) / 0.16));
-  // Hold the final cloud above the globe, then dissolve it during the handoff.
-  const sceneFade = Math.min(1, Math.max(0, (globeProgress - 0.04) / 0.2));
+  const snowFade = Math.min(1, Math.max(0, (progress - 0.92) / 0.18));
+  // The cloud has its own scroll interval before the globe section begins.
+  const sceneFade = Math.min(1, Math.max(0, (progress - 1.02) / 0.28));
+  const sceneOpacity = globeVisible ? 0 : 1 - sceneFade;
   return (
-    <main className={styles.experience}>
-      <div className={styles.canvas} style={{ opacity: 1 - sceneFade }}><IntroCanvas /></div>
-      <header className={styles.chrome} style={{ opacity: 1 - sceneFade }}>
-        <span className={styles.mark} aria-label="AquaMundi">A</span>
-        <span className={styles.map}>MAP <span aria-hidden="true">⌘</span></span>
-      </header>
-      <div className={`${styles.copy} ${styles.introCopy}`} style={{ opacity: (1 - introFade) * (1 - sceneFade), transform: `translate(-50%, ${introFade * -2}vh)` }}>
-        Reporting for this project is presented by AquaMundi in partnership with the people, pollinators, and habitats that keep living corridors connected.
+    <>
+      <PageLoader isLoading={!loaderFallback && (!introReady || !globeReady)} />
+      <div className={styles.snow} aria-hidden="true" style={{ opacity: (1 - snowFade) * sceneOpacity }}>
+        <Snowfall snowflakeCount={150} color="#dceaf4" radius={[0.25, 1.35]} speed={[0.12, 0.55]} wind={[-0.15, 0.2]} />
       </div>
-      <div className={styles.spacer} aria-hidden="true" />
-      <section className={styles.globeChapter} aria-label="AquaMundi living archive">
-        <div className={styles.globeStage}>
-          <Globe cinematic eager cinematicProgress={globeProgress} showOvalBorder={false} showBackground={false} />
+      <Navigation />
+      <div className="fixed bottom-6 left-6 z-50">
+        <MusicToggleButton autoPlay />
+      </div>
+      <main className={styles.experience}>
+        <div className={styles.canvas} style={{ opacity: sceneOpacity }}><IntroCanvas onReady={markIntroReady} /></div>
+        <header className={styles.chrome} style={{ opacity: sceneOpacity }}>
+          <a href="/" className={styles.wordmark} aria-label="AquaMundi home">
+            AquaMundi
+          </a>
+        </header>
+        <div className={`${styles.copy} ${styles.introCopy}`} style={{ opacity: (1 - introFade) * sceneOpacity, transform: `translate(-50%, ${introFade * -2}vh)` }}>
+          Reporting for this project is presented by AquaMundi in partnership with the people, pollinators, and habitats that keep living corridors connected.
         </div>
-      </section>
-    </main>
+        <div className={styles.spacer} aria-hidden="true" />
+      </main>
+
+      <div className={styles.cloudBridge} aria-hidden="true" />
+
+      <div className="relative min-h-screen bg-white">
+        <main role="main" aria-label="AquaMundi, a living archive of biodiversity" className="home-experience relative">
+          <section ref={globeSectionRef} id="globe-section" className="home-archive-section relative w-full py-20 md:py-28">
+            <div className="min-h-[70vh] flex items-center justify-center">
+              <div className="relative w-[92%] max-w-[1320px] h-[78vh] max-h-[820px] overflow-hidden rounded-[20px] bg-[#e6e6e2]">
+                <Globe showOvalBorder={false} showBackground eager animateEntry={false} onReady={markGlobeReady} />
+              </div>
+            </div>
+          </section>
+          <section className="home-archive-loop relative w-full">
+            <CurvedLoop marqueeText={t("home.marqueeText")} speed={2} curveAmount={220} direction="left" interactive className="font-serif" />
+          </section>
+          <section className="home-library-section relative w-full py-20 md:py-28">
+            <ImageGallery />
+          </section>
+          <section className="relative w-full pb-20 md:pb-28">
+            <BentoDemo />
+          </section>
+        </main>
+        <FieldOutro />
+      </div>
+    </>
   );
 }

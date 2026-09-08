@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 
-function SceneAsset() {
+function SceneAsset({ onReady }) {
   const { gl, set, size, scene } = useThree();
   const [asset, setAsset] = useState(null);
 
@@ -65,8 +65,12 @@ function SceneAsset() {
         gltf.__titleSprite = sprite;
         gltf.__titleTexture = texture;
       }
+      onReady?.();
       setAsset(gltf);
-    }, undefined, (error) => console.error("AquaMundi Andes scene failed to load", error));
+    }, undefined, (error) => {
+      console.error("AquaMundi Andes scene failed to load", error);
+      onReady?.();
+    });
     return () => {
       disposed = true;
       if (scene.background?.isTexture) scene.background.dispose();
@@ -93,7 +97,9 @@ function SceneAsset() {
     if (!asset) return;
     // Stop at the first cloud: the globe chapter begins immediately after it.
     const rawProgress = window.__aquamundiIntroProgress || 0;
-    const progress = Math.min(rawProgress * 0.42, 0.42);
+    // Let the opening paragraph dissolve against a still scene before the
+    // camera begins the mountain sequence.
+    const progress = THREE.MathUtils.clamp((rawProgress - 0.24) * 0.56, 0, 0.42);
     const mixer = asset.__mixer || (asset.__mixer = new THREE.AnimationMixer(asset.scene));
     if (!asset.__actions) {
       asset.__actions = asset.animations.map((clip) => mixer.clipAction(clip));
@@ -114,7 +120,7 @@ function SceneAsset() {
   return asset ? <primitive object={asset.scene} /> : null;
 }
 
-export default function ExperienceIntroGLB() {
+export default function ExperienceIntroGLB({ onReady }) {
   useEffect(() => {
     const onScroll = (event) => {
       window.__aquamundiIntroProgress = event.detail?.progress || 0;
@@ -132,7 +138,7 @@ export default function ExperienceIntroGLB() {
       <color attach="background" args={["#061824"]} />
       <ambientLight intensity={1.8} />
       <directionalLight position={[2, 4, 6]} intensity={2.4} />
-      <SceneAsset />
+      <SceneAsset onReady={onReady} />
     </Canvas>
   );
 }

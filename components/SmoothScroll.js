@@ -17,6 +17,16 @@ export default function SmoothScroll() {
     });
     lenisRef.current = lenis;
 
+    const publishScrollState = () => {
+      window.dispatchEvent(
+        new CustomEvent("aquamundi:lenis-scroll", {
+          detail: { progress: lenis.progress, scroll: lenis.scroll, velocity: lenis.velocity },
+        }),
+      );
+    };
+    lenis.on("scroll", publishScrollState);
+    publishScrollState();
+
     const resetHomeScroll = () => {
       if (window.location.pathname !== "/") return;
       lenis.scrollTo(0, { immediate: true, force: true });
@@ -27,6 +37,7 @@ export default function SmoothScroll() {
 
     return () => {
       window.removeEventListener("pageshow", resetHomeScroll);
+      lenis.off("scroll", publishScrollState);
       lenisRef.current = null;
       lenis.destroy();
     };

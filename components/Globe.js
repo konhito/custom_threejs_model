@@ -867,6 +867,8 @@ export default function GlobeComponent({
   cinematic = false,
   cinematicProgress = 0,
   eager = false,
+  animateEntry = true,
+  onReady,
 }) {
   const containerRef = useRef();
   const fullscreenContainerRef = useRef();
@@ -2196,7 +2198,7 @@ export default function GlobeComponent({
         const targetDistance = isMobile ? 7 : isTablet ? 6.5 : 8;
         const startDistance = isMobile ? 14 : isTablet ? 13 : 16;
 
-        camera.position.set(0, 0, startDistance);
+        camera.position.set(0, 0, animateEntry ? startDistance : targetDistance);
         console.log("✅ Camera positioned at:", camera.position);
 
         // Animate camera zoom in on load
@@ -2217,7 +2219,7 @@ export default function GlobeComponent({
           }
         };
 
-        if (!cinematic) animateZoom();
+        if (!cinematic && animateEntry) animateZoom();
 
         // Create renderer
         const renderer = new THREE.WebGLRenderer({
@@ -2394,6 +2396,7 @@ export default function GlobeComponent({
               } else {
                 globe.scale.setScalar(targetScale);
                 setIsGlobeLoaded(true);
+                onReady?.();
                 console.log("✅ Globe animation complete");
               }
             };
@@ -2439,6 +2442,7 @@ export default function GlobeComponent({
             } else {
               sphere.scale.setScalar(targetScale);
               setIsGlobeLoaded(true);
+              onReady?.();
               console.log("✅ Fallback globe animation complete");
             }
           };

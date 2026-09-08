@@ -1,11 +1,7 @@
 "use client";
 
 import { Flower2, Globe2, ShoppingBag, Sparkles, BookOpen, Gamepad2 } from "lucide-react";
-import { motion } from "motion/react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
-import Shuffle from "./Shuffle";
 import { useTranslation } from "../lib/useTranslation";
 
 // Background components (same as before, no text to translate)
@@ -182,44 +178,8 @@ export function BentoDemo() {
   ];
 
   return (
-    <div className="w-full px-4 py-16 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/30 to-white">
+    <div className="w-full px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <Shuffle
-            text="AquaMundi"
-            tag="h2"
-            shuffleDirection="right"
-            duration={1}
-            animationMode="evenodd"
-            shuffleTimes={1}
-            ease="power3.out"
-            stagger={0.03}
-            threshold={0.1}
-            triggerOnce={true}
-            triggerOnHover={true}
-            respectReducedMotion={true}
-            loop={true}
-            loopDelay={0}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 notranslate"
-            translate="no"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
-          />
-          <motion.p 
-            className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
-            style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 0.2,
-              duration: 0.6,
-              ease: [0.4, 0, 0.2, 1],
-            }}
-          >
-            {t('home.heroSubtitle')}
-          </motion.p>
-        </div>
-
         <BentoGrid>
           {features.map((feature, idx) => (
             <BentoCard key={idx} {...feature} />

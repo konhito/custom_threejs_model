@@ -81,8 +81,8 @@ const FloatingDockMobile = ({
                 <a
                   href={item.href}
                   key={item.title}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-xl border border-gray-200/60 shadow-lg hover:shadow-xl transition-all"
-                >
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-xl border border-gray-200/60 shadow-lg hover:shadow-xl transition-all"
+                  >
                   <div className="h-5 w-5 text-gray-700">{item.icon}</div>
                 </a>
               </motion.div>

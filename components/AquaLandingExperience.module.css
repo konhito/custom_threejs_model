@@ -1,7 +1,7 @@
 .hero {
   --aqua-ink: #071b35;
   align-items: center;
-  background: #e8ebff;
+  background: #071b35;
   color: var(--aqua-ink);
   display: flex;
   isolation: isolate;
@@ -21,17 +21,19 @@
 .backdrop {
   display: block;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
   pointer-events: none;
   width: 100%;
 }
 
 .shade {
-  background: radial-gradient(circle at 50% 44%, transparent 0 24%, rgba(255, 255, 255, 0.42) 70%, rgba(255, 255, 255, 0.78));
+  background: linear-gradient(90deg, rgba(4, 17, 33, 0.93) 0%, rgba(4, 17, 33, 0.79) 35%, rgba(4, 17, 33, 0.28) 68%, rgba(4, 17, 33, 0.12));
   pointer-events: none;
 }
 
 .wordmark {
-  color: var(--aqua-ink);
+  color: #f8f8f6;
   font-family: "Agustina Signature", cursive;
   font-size: clamp(1.8rem, 2.5vw, 2.8rem);
   line-height: 1;
@@ -48,24 +50,26 @@
 }
 
 .copy {
-  max-width: 50rem;
+  margin-right: min(34vw, 28rem);
+  max-width: 42rem;
   position: relative;
-  text-align: center;
+  text-align: left;
   z-index: 1;
 }
 
 .copy p {
-  color: #40516d;
+  color: #d5e5bf;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.2rem, 1.8vw, 1.55rem);
   font-style: italic;
   font-weight: 500;
   line-height: 1.2;
-  margin: 0 auto 1.15rem;
+  margin: 0 0 1.15rem;
   max-width: 34rem;
 }
 
 .copy h1 {
+  color: #f8f8f6;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(3.4rem, 7.2vw, 5.75rem);
   font-weight: 600;
@@ -73,6 +77,17 @@
   line-height: 0.92;
   margin: 0;
   text-wrap: balance;
+}
+
+.context {
+  color: #d4dde7 !important;
+  font-family: inherit !important;
+  font-size: clamp(0.98rem, 1.35vw, 1.12rem) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  margin-top: 1.4rem !important;
+  max-width: 36rem !important;
 }
 
 .copy h1 span {
@@ -125,6 +140,7 @@
   }
 
   .copy {
+    margin-right: 0;
     max-width: 27rem;
     width: 100%;
   }
@@ -143,9 +159,12 @@
   }
 
   .cta {
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 1.75rem;
     min-height: 48px;
     padding-inline: 1.2rem;
   }
+
+  .shade { background: linear-gradient(0deg, rgba(4, 17, 33, 0.82), rgba(4, 17, 33, 0.2) 75%); }
+  .backdrop { object-position: 62% center; }
 }

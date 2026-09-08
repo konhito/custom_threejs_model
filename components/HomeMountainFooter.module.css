@@ -1,0 +1,112 @@
+.footer {
+  background: #f8f8f6;
+  color: #071b35;
+  min-height: min(46rem, 72vw);
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 7rem) clamp(1.5rem, 6vw, 6rem) 2rem;
+  position: relative;
+}
+
+.mountainFrame {
+  clip-path: polygon(0 0, 0 0, 0 12%, 0 22%, 0 33%, 0 43%, 0 55%, 0 67%, 0 77%, 0 88%, 0 100%, 0 100%);
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+}
+
+.mountainFrame::after {
+  background: #071b35;
+  clip-path: polygon(0 0, 78% 0, 100% 10%, 76% 21%, 100% 35%, 72% 51%, 96% 67%, 75% 82%, 100% 100%, 0 100%);
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: translateX(-16vw);
+  width: 16vw;
+  z-index: 2;
+}
+
+.mountainFrame.revealed { animation: mountain-burn-reveal 2.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.mountainFrame.revealed::after { animation: ink-front 2.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+.burnFragments {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.burnFragments i {
+  background: #071b35;
+  border-radius: 50% 40% 60% 45%;
+  height: var(--size);
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: var(--y);
+  width: var(--size);
+}
+
+.burnFragments.revealed i { animation: ink-fragment 1.1s ease-out var(--delay) both; }
+
+.mountain {
+  object-fit: cover;
+  object-position: center bottom;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+.content, .copyright { position: relative; z-index: 3; }
+
+.content { display: grid; gap: 3rem; grid-template-columns: minmax(13rem, 1.35fr) 2fr; }
+
+.brandLink { align-items: center; color: inherit; display: inline-flex; gap: 0.7rem; text-decoration: none; }
+.logo { flex: 0 0 auto; height: clamp(2.35rem, 3vw, 3rem); object-fit: contain; width: clamp(2.35rem, 3vw, 3rem); }
+.wordmark { font-family: "Agustina Signature", cursive; font-size: clamp(2.35rem, 3.4vw, 3.75rem); line-height: 0.9; transform: translateY(0.06em); }
+.brand p { font-size: 0.75rem; letter-spacing: 0.08em; margin: 1rem 0 0; text-transform: uppercase; }
+
+.links { display: grid; gap: 2rem; grid-template-columns: repeat(3, 1fr); }
+.links section { display: flex; flex-direction: column; gap: 0.65rem; }
+.links h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.55rem; font-weight: 600; margin: 0 0 0.35rem; }
+.links a { color: #40516d; font-size: 0.9rem; text-decoration: none; width: fit-content; }
+.links a:hover, .links a:focus-visible { color: #071b35; text-decoration: underline; text-underline-offset: 0.24em; }
+.copyright { bottom: 1.75rem; color: #40516d; font-size: 0.75rem; left: clamp(1.5rem, 6vw, 6rem); position: absolute; }
+
+@keyframes mountain-burn-reveal {
+  0% { clip-path: polygon(0 0, 0 0, 0 12%, 0 22%, 0 33%, 0 43%, 0 55%, 0 67%, 0 77%, 0 88%, 0 100%, 0 100%); }
+  30% { clip-path: polygon(0 0, 31% 0, 27% 12%, 34% 22%, 29% 33%, 36% 43%, 31% 55%, 38% 67%, 33% 77%, 40% 88%, 36% 100%, 0 100%); }
+  55% { clip-path: polygon(0 0, 57% 0, 53% 12%, 60% 22%, 55% 33%, 62% 43%, 57% 55%, 64% 67%, 59% 77%, 66% 88%, 62% 100%, 0 100%); }
+  80% { clip-path: polygon(0 0, 82% 0, 78% 12%, 85% 22%, 80% 33%, 87% 43%, 82% 55%, 89% 67%, 84% 77%, 91% 88%, 87% 100%, 0 100%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 12%, 100% 22%, 100% 33%, 100% 43%, 100% 55%, 100% 67%, 100% 77%, 100% 88%, 100% 100%, 0 100%); }
+}
+
+@keyframes ink-fragment {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+  18% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate3d(var(--drift), -2.5rem, 0) rotate(130deg); }
+}
+
+@keyframes ink-front {
+  0% { opacity: 0; transform: translateX(-16vw); }
+  8% { opacity: 0.6; }
+  30% { opacity: 0.6; transform: translateX(17vw); }
+  55% { opacity: 0.6; transform: translateX(44vw); }
+  80% { opacity: 0.6; transform: translateX(70vw); }
+  100% { opacity: 0; transform: translateX(108vw); }
+}
+
+@media (max-width: 700px) {
+  .footer { min-height: 48rem; padding-top: 3rem; }
+  .content { gap: 2.5rem; grid-template-columns: 1fr; }
+  .links { gap: 1.5rem; grid-template-columns: repeat(2, 1fr); }
+  .links section:last-child { grid-column: span 2; }
+  .copyright { bottom: 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mountainFrame { clip-path: none; }
+  .mountainFrame.revealed, .mountainFrame.revealed::after, .burnFragments.revealed i { animation: none; }
+}

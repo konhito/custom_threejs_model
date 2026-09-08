@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Shuffle from "./Shuffle";
 import TiltedCard from "./TiltedCard";
 import { BookDetailsSidePanel } from "./BookDetailsSidePanel";
 
@@ -115,27 +114,7 @@ const ImageGallery = () => {
 
   return (
     <>
-      <div className="flex flex-col h-full w-full items-center justify-center overflow-hidden bg-white py-8 sm:py-12 md:py-16">
-        {/* Books Title with Shuffle effect */}
-        <Shuffle
-          text="Books"
-          tag="h2"
-          shuffleDirection="right"
-          duration={1}
-          animationMode="evenodd"
-          shuffleTimes={1}
-          ease="power3.out"
-          stagger={0.03}
-          threshold={0.1}
-          triggerOnce={true}
-          triggerOnHover={true}
-          respectReducedMotion={true}
-          loop={true}
-          loopDelay={0}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8 md:mb-12 text-center notranslate px-4"
-          translate="no"
-          style={{ fontFamily: '"Press Start 2P", monospace' }}
-        />
+      <div className="flex flex-col h-full w-full items-center justify-center overflow-hidden bg-transparent">
         <HoverExpand_001
           className=""
           images={images}
