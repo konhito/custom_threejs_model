@@ -75,14 +75,14 @@ export default function GamePage() {
   }, [searchParams, isLoading, setSelectedCountry]);
 
   return (
-    <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${(gameState === "playing" && !isLoadingAssets) || gameState === "completed" ? "text-black" : "bg-black text-white"}`}>
+    <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${gameState === "playing" ? "bg-[#174538] text-white" : gameState === "completed" ? "text-black" : "bg-black text-white"}`}>
       <PageLoader isLoading={isLoading} />
 
-      <GameBackground showStartButton={showStartButton} isLoading={isLoading} isLoadingAssets={isLoadingAssets} />
+      <GameBackground isLoading={isLoading} />
 
-      {showStartButton && <GameIntroScreen onStart={handleStartButtonClick} />}
+      {showStartButton && gameState === "intro" && <GameIntroScreen onStart={handleStartButtonClick} />}
 
-      <MuteButton isMuted={isMuted} onToggle={toggleMute} gameState={gameState} isLoadingAssets={isLoadingAssets} />
+      {gameState !== "playing" && <MuteButton isMuted={isMuted} onToggle={toggleMute} gameState={gameState} isLoadingAssets={isLoadingAssets} />}
 
       {showIntro && !isLoading && !showStartButton && gameState === "playing" && (
         <AraihanGuide
@@ -94,7 +94,7 @@ export default function GamePage() {
         />
       )}
 
-      <div className="relative z-10 container mx-auto px-2 py-2 md:py-4 h-screen flex flex-col">
+      <div className={`relative z-10 container mx-auto px-2 py-2 md:py-4 ${gameState === "playing" ? "min-h-screen" : "h-screen"} flex flex-col`}>
         {gameState === "playing" && lastCardType && (
           <AraihanGuide
             message=""
@@ -112,6 +112,8 @@ export default function GamePage() {
               country={selectedCountry}
               petalsCollected={petalsCollected}
               hasGuardian={hasGuardian}
+              isMuted={isMuted}
+              onToggleMute={toggleMute}
               onPetalCollected={handlePetalCollected}
               onMinionRevealed={handleMinionRevealed}
               onGuardianActivated={handleGuardianActivated}
@@ -143,7 +145,7 @@ export default function GamePage() {
           />
         )}
 
-        {gameState === "globeAnimation" && <GlobeAnimation />}
+        {gameState === "globeAnimation" && <GlobeAnimation country={selectedCountry} />}
 
         {gameState === "completed" && selectedCountry && (
           <VictoryScreen

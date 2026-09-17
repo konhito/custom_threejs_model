@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import Card from "./Card";
 import { minionTypes, guardianTypes, getPetalPath } from "@/lib/gameData";
 import { useTranslation } from "@/lib/useTranslation";
+import styles from "./GameBoard.module.css";
+import MuteButton from "./MuteButton";
 
 // Grid layout: exactly 8 cards (6 petals, 1 minion, 1 guardian)
 const CARD_COUNT = 8; // Total cards in deck
@@ -63,7 +65,7 @@ const CARD_PATTERNS = [
 let usedPatterns = new Set();
 let availablePatterns = [...Array(15).keys()]; // [0, 1, 2, ..., 14]
 
-export default function GameBoard({ country, petalsCollected, hasGuardian, onPetalCollected, onMinionRevealed, onGuardianActivated, onCardTypeChange, onPetalsCollectedUpdate }) {
+export default function GameBoard({ country, petalsCollected, hasGuardian, isMuted, onToggleMute, onPetalCollected, onMinionRevealed, onGuardianActivated, onCardTypeChange, onPetalsCollectedUpdate }) {
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState(new Set());
   const [isProcessing, setIsProcessing] = useState(false);
@@ -72,7 +74,6 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [collectedPetals, setCollectedPetals] = useState([]); // Track which petal cards were collected
   const [lastRevealedCard, setLastRevealedCard] = useState(null); // Track last revealed card for display
-  const [bumpedCardId, setBumpedCardId] = useState(null); // unused but kept for future use
   const { t } = useTranslation();
 
   // Initialize deck
@@ -203,10 +204,6 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
     setIsProcessing(true);
     setFlippedCards((prev) => new Set([...prev, cardId]));
 
-    // Trigger stone bump animation for this card
-    setBumpedCardId(cardId);
-    setTimeout(() => setBumpedCardId(null), 400);
-
     // Play card flip sound
     playSound("flip");
 
@@ -297,104 +294,43 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, onPet
   };
 
   return (
-    <div className="w-full relative flex-1 flex flex-col overflow-visible">
-      {/* Game Status Bar - UNO Style - Mobile Optimized - Scaled up */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-3 md:mb-4 px-3 sm:px-5 relative overflow-visible mt-16 md:mt-0 z-[100]">
-        
-        {/* Petal Counter Card - Transparent Glass-morphism Style with Icons and Number */}
-        <div className="flex items-center justify-center gap-3 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:bg-white/15 transition-all duration-300">
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="text-[10px] sm:text-xs text-white/70 font-medium tracking-wide uppercase">Petals</span>
-            <span className="text-lg sm:text-xl md:text-2xl font-bold text-white">{petalsCollected} / 6</span>
+    <div className={styles.layout}>
+      <div className={styles.toolbar}>
+        <button onClick={() => setShowHowToPlay(true)} className={styles.help} aria-label="How to Play">
+          ?
+        </button>
+        <MuteButton isMuted={isMuted} onToggle={onToggleMute} gameState="playing" />
+      </div>
+      <section className={styles.surface} aria-label={`${country.flowerName} card game`}>
+        <div className={styles.heading}>
+          <div>
+            <p className={styles.eyebrow}>{country.country} / Guardians of Flowers</p>
+            <h1 className={styles.title}>Restore the {country.flowerName}</h1>
           </div>
-          <div className="flex gap-1">
-            {[...Array(6)].map((_, index) => (
-              <span
-                key={index}
-                className={`text-base sm:text-lg md:text-xl transition-all duration-300 ${
-                  index < petalsCollected
-                    ? 'opacity-100 scale-110 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]'
-                    : 'opacity-30 grayscale'
-                }`}
-                style={{
-                  filter: index < petalsCollected ? 'brightness(1.2)' : 'brightness(0.5)',
-                }}
-              >
-                🌸
-              </span>
-            ))}
+          <div className={styles.progress} aria-label={`${petalsCollected} of 6 petals collected`}>
+            <span className={styles.progressLabel}>Petals collected</span>
+            <strong>{petalsCollected}<span> / 6</span></strong>
+            <div className={styles.progressDots} aria-hidden="true">
+              {Array.from({ length: 6 }, (_, index) => (
+                <i key={index} className={index < petalsCollected ? styles.collected : ""} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-
-
-      {/* Help Button - Bottom Right */}
-      <button
-        onClick={() => setShowHowToPlay(true)}
-        className="fixed bottom-4 right-16 md:bottom-6 md:right-20 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white/80 backdrop-blur-md hover:bg-white text-amber-800 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-200 z-[9997] text-base sm:text-lg md:text-xl font-bold touch-manipulation border border-amber-200/50"
-        aria-label="How to Play"
-      >
-        ?
-      </button>
-
-      {/* Cards - individually positioned across the stone table */}
-      <div
-        className="fixed inset-0 z-20 pointer-events-none"
-      >
-        {cards.map((card, index) => {
-          const isFlipped = flippedCards.has(card.id);
-          const totalCards = cards.length;
-
-          // 8 positions aligned with carved stone sections on the board
-          // Based on the background image: central circle with 8 surrounding leaf sections
-          const positions = [
-            // Top row (3 sections)
-            { left: '30%', top: '38%', rotate: -3 },    // Left leaf
-            { left: '50%', top: '32%', rotate: 1 },     // Top center
-            { left: '70%', top: '38%', rotate: 2.5 },   // Right leaf
-            
-            // Middle row (2 sections on sides)
-            { left: '20%', top: '48%', rotate: -1.5 },  // Left side
-            { left: '80%', top: '48%', rotate: 1.5 },   // Right side
-            
-            // Bottom row (3 sections)
-            { left: '30%', top: '64%', rotate: 2 },     // Bottom left
-            { left: '50%', top: '68%', rotate: -2 },    // Bottom center
-            { left: '70%', top: '64%', rotate: -1 },    // Bottom right
-          ];
-
-          const pos = positions[index] || positions[0];
-
-          return (
-            <div
+        <div className={styles.cards}>
+          {cards.map((card) => (
+            <Card
               key={card.id}
-              className="absolute pointer-events-auto animate-scale-in"
-              style={{
-                left: pos.left,
-                top: pos.top,
-                transform: `translate(-50%, -50%) rotate(${pos.rotate}deg)`,
-                animationDelay: `${index * 0.08}s`,
-                filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.55))",
-              }}
-            >
-              <Card
-                card={card}
-                isFlipped={isFlipped}
-                onFlip={handleCardFlip}
-                disabled={isProcessing}
-                index={index}
-                totalCards={totalCards}
-              />
-            </div>
-          );
-        })}
-      </div>
-      {/* Spacer so the page still has correct scroll height */}
-      <div className="flex-1" />
-
-
-
+              card={card}
+              isFlipped={flippedCards.has(card.id)}
+              onFlip={handleCardFlip}
+              disabled={isProcessing}
+            />
+          ))}
+        </div>
+        <p className={styles.hint}>Choose a card to reveal what grows beneath.</p>
+      </section>
 
       {/* How to Play Modal */}
       {showHowToPlay && (

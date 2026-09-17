@@ -42,18 +42,13 @@ export function useGameHandlers({ selectedCountry, setSelectedCountry, hasGuardi
   }, [setGameState]);
 
   const handleQuizComplete = useCallback((score, total, isPerfect) => {
-    // Only unlock flower in digital garden if user got ALL questions correct
-    if (isPerfect && selectedCountry) {
-      // Perfect score - unlock the flower
+    if (selectedCountry) {
       if (typeof window !== "undefined") {
         import("@/lib/soundUtils").then((m) => m.default.play("victory")).catch(() => {});
       }
       addCompletedFlower(selectedCountry.id);
       setGameState("globeAnimation");
       setTimeout(() => setGameState("completed"), 4000);
-    } else {
-      // Not perfect - stay in quiz state for retry (handled by PollinatorQuiz component)
-      // Note: The quiz component will handle showing retry UI
     }
   }, [selectedCountry, addCompletedFlower, setGameState]);
 

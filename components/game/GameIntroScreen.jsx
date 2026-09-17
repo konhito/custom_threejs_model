@@ -1,28 +1,27 @@
 "use client";
+import Image from "next/image";
 import StartButton from "@/components/game/StartButton";
+import { getCardBackPath } from "@/lib/gameData";
 
 export default function GameIntroScreen({ onStart }) {
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center z-30 gap-10 md:gap-12">
-      <div className="flex flex-col items-center gap-3 relative w-full max-w-4xl px-4">
-        <div className="relative inline-block">
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-[0_0_10px_rgba(177,158,239,0.5)]"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+    <div className="fixed inset-0 z-30 flex flex-col items-center justify-center gap-5 px-5 text-center text-[#fff5d3]">
+      <div className="relative mb-2 h-[190px] w-[280px]" aria-hidden="true">
+        {[-15, 0, 15].map((angle, index) => (
+          <div
+            key={angle}
+            className="absolute left-1/2 top-3 h-[170px] w-[124px] overflow-hidden rounded-[9px] shadow-[0_8px_12px_rgba(4,35,25,0.35)]"
+            style={{ transform: `translateX(calc(-50% + ${(index - 1) * 68}px)) rotate(${angle}deg)`, zIndex: index === 1 ? 2 : 1 }}
           >
-            <span>Card </span>
-            <span className="relative inline-block">
-              game
-              <p
-                className="text-[8px] md:text-[10px] lg:text-xs text-purple-200 absolute top-full mt-1 left-0 whitespace-nowrap"
-                style={{ fontFamily: '"Press Start 2P", monospace' }}
-              >
-                by Proveneya &amp; Nahiara
-              </p>
-            </span>
-          </h2>
-        </div>
+            <Image src={getCardBackPath()} alt="" fill sizes="124px" className="object-contain" priority />
+          </div>
+        ))}
       </div>
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#f9dda0]">Proveneya &amp; Nahiara</p>
+      <h1 className="max-w-xl text-[clamp(2.5rem,8vw,4.5rem)] leading-[1.05] text-[#fff4c7]" style={{ fontFamily: '"Fredoka One", "Trebuchet MS", sans-serif' }}>
+        Guardians of Flowers
+      </h1>
+      <p className="max-w-sm text-base leading-relaxed text-[#e6f2d9]">Turn the cards. Find six petals. Help a flower bloom.</p>
       <StartButton onClick={onStart} />
     </div>
   );

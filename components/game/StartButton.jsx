@@ -1,7 +1,5 @@
 "use client";
 
-import React from 'react';
-
 const StartButton = ({ onClick }) => {
   const handleClick = () => {
     // Play button click sound
@@ -16,24 +14,10 @@ const StartButton = ({ onClick }) => {
   return (
     <button
       onClick={handleClick}
-      className="group relative px-6 py-2 border-2 border-white text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-black hover:scale-105 active:scale-95 box-border"
+      className="mt-2 rounded-[14px] bg-[#f3cb79] px-9 py-3.5 text-[#1b4438] shadow-[0_5px_0_#b88347] transition-transform duration-200 hover:-translate-y-1 active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#fff4c7] motion-reduce:transition-none"
       aria-label="Play Game"
     >
-      <span
-        className="text-lg md:text-xl block"
-        style={{
-          fontFamily: '"Press Start 2P", monospace',
-          textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
-        }}
-      >
-        PLAY
-      </span>
-
-      {/* Decorative corners for extra retro feel - inner squares */}
-      <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white transition-all duration-300 group-hover:bg-black" />
-      <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white transition-all duration-300 group-hover:bg-black" />
-      <div className="absolute bottom-0.5 left-0.5 w-1 h-1 bg-white transition-all duration-300 group-hover:bg-black" />
-      <div className="absolute bottom-0.5 right-0.5 w-1 h-1 bg-white transition-all duration-300 group-hover:bg-black" />
+      <span className="text-lg" style={{ fontFamily: '"Fredoka One", "Trebuchet MS", sans-serif' }}>Let&apos;s play</span>
     </button>
   );
 };

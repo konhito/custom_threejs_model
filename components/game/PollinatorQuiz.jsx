@@ -4,20 +4,12 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getFlowerDetail, getFlowerQuiz } from "@/lib/flowerDetailsData";
 import { getCompleteFlowerPath } from "@/lib/gameData";
 
-// Visual themes per question index - White & Golden theme
-const QUESTION_THEMES = [
-  { bg: "#fdfcf8", accent: "#f59e0b", ring: "rgba(245,158,11,0.2)", border: "rgba(245,158,11,0.3)" },
-  { bg: "#fffbf5", accent: "#d97706", ring: "rgba(217,119,6,0.2)", border: "rgba(217,119,6,0.3)" },
-  { bg: "#fff9f0", accent: "#fbbf24", ring: "rgba(251,191,36,0.2)", border: "rgba(251,191,36,0.3)" },
-  { bg: "#fdfcf8", accent: "#f59e0b", ring: "rgba(245,158,11,0.2)", border: "rgba(245,158,11,0.3)" },
-  { bg: "#fffbf5", accent: "#d97706", ring: "rgba(217,119,6,0.2)", border: "rgba(217,119,6,0.3)" },
-];
+const QUESTION_THEMES = Array.from({ length: 5 }, () => ({ bg: "#fff8e8", accent: "#194638", ring: "rgba(25,70,56,0.12)", border: "#bfd9bd" }));
 
 // Particle emojis for confetti
 const CONFETTI_EMOJIS = ["🌸", "✨", "🎉", "🌺", "⭐", "🌿", "🦋", "🌼"];
 const QUESTIONS_PER_DECK = 5;
 const TOTAL_DECKS = 3;
-const DECORATIVE_RINGS = [1, 2, 3];
 
 const ConfettiParticle = memo(function ConfettiParticle({ style, emoji }) {
   return (
@@ -135,14 +127,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
   const handleFinish = useCallback(() => {
     const isPerfect = score === totalQ;
-    if (isPerfect) {
-      setExitAnim(true);
-      playSound("flower-complete");
-      setTimeout(() => onComplete(score, totalQ, true), 700);
-    } else {
-      // Not perfect - stay on result screen (retry handled below)
-      // User must retry to unlock flower
-    }
+    setExitAnim(true);
+    playSound("flower-complete");
+    setTimeout(() => onComplete(score, totalQ, isPerfect), 700);
   }, [onComplete, playSound, score, totalQ]);
 
   const handleRetry = useCallback(() => {
@@ -183,9 +170,10 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
     return (
       <div
+        data-lenis-prevent
         className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6"
         style={{
-          background: "#fdfcf8",
+          background: "#fff8e8",
           opacity: exitAnim ? 0 : 1,
           transition: "opacity 0.7s ease",
         }}
@@ -195,14 +183,14 @@ export default function PollinatorQuiz({ country, onComplete }) {
           <div 
             className="relative bg-white rounded-2xl p-4 md:p-6 mb-4 border-2"
             style={{ 
-              borderColor: perfect ? "#d4af37" : great ? "#f59e0b" : "#d1d5db",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
+              borderColor: "#bfd9bd",
+              boxShadow: "0 5px 0 #d7e5c5",
               animation: "slide-down 0.6s cubic-bezier(0.34,1.56,0.64,1) both"
             }}
           >
             {/* Golden accent line for perfect score */}
             {perfect && (
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#d4af37] rounded-t-2xl" />
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#194638] rounded-t-2xl" />
             )}
             
             <div className="flex items-center gap-4 md:gap-6">
@@ -224,7 +212,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                     cy="48"
                     r="42"
                     fill="none"
-                    stroke={perfect ? "#d4af37" : great ? "#f59e0b" : "#9ca3af"}
+                    stroke="#194638"
                     strokeWidth="5"
                     strokeDasharray={`${(pct / 100) * 264} 264`}
                     strokeLinecap="round"
@@ -236,7 +224,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 {/* Score text */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-xl md:text-2xl font-black" style={{ 
-                    color: perfect ? "#d4af37" : great ? "#f59e0b" : "#6b7280",
+                    color: "#194638",
                   }}>
                     {pct}%
                   </span>
@@ -253,20 +241,20 @@ export default function PollinatorQuiz({ country, onComplete }) {
               {/* Title Section */}
               <div className="flex-1 min-w-0">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-2 border-2" style={{
-                  borderColor: perfect ? "#d4af37" : great ? "#f59e0b" : "#d1d5db",
-                  background: perfect ? "#fef3c7" : great ? "#fef3c7" : "#f3f4f6",
+                  borderColor: "#bfd9bd",
+                  background: "#dcecc8",
                 }}>
                   <span className="text-[10px] font-black uppercase tracking-widest" style={{
-                    color: perfect ? "#92400e" : great ? "#92400e" : "#6b7280",
+                    color: "#194638",
                   }}>
                     {perfect ? "Perfect" : great ? "Well Done" : "Keep Practicing"}
                   </span>
                 </div>
                 <h2
-                  className="font-black mb-1.5 leading-tight"
+                  className="font-['Fredoka_One'] mb-1.5 leading-tight"
                   style={{
                     fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-                    color: "#1f2937",
+                    color: "#194638",
                   }}
                 >
                   {perfect ? "Outstanding! 🌟" : great ? "Excellent! 🌸" : "Keep Learning! 🌱"}
@@ -292,7 +280,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 key={i}
                 className="relative bg-white rounded-xl p-3 transition-all duration-300 hover:shadow-md border-2"
                 style={{
-                  borderColor: a.isCorrect ? "#d4af37" : "#e5e7eb",
+                  borderColor: a.isCorrect ? "#a9cbac" : "#e5e7eb",
                   boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
                 }}
               >
@@ -331,15 +319,14 @@ export default function PollinatorQuiz({ country, onComplete }) {
           </div>
 
           {/* Compact CTA Button */}
-          {perfect ? (
-            // Perfect score - Show victory button
+          <div className="space-y-3">
             <button
               onClick={handleFinish}
               className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
               style={{
-                background: "#d4af37",
-                borderColor: "#b8941f",
-                boxShadow: "0 2px 12px rgba(212,175,55,0.2)",
+                  background: "#194638",
+                borderColor: "#194638",
+                boxShadow: "0 5px 0 #0c3027",
                 animation: "fade-up 0.5s ease-out 0.4s both"
               }}
             >
@@ -349,29 +336,22 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 <span className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
               </div>
             </button>
-          ) : (
-            // Not perfect - Show retry button
-            <div className="space-y-3">
+            {!perfect && (
               <button
                 onClick={handleRetry}
-                className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 hover:shadow-lg border-2"
+                className="group relative w-full overflow-hidden rounded-xl px-6 py-3.5 transition-all duration-300 border-2"
                 style={{
-                  background: "#f59e0b",
-                  borderColor: "#d97706",
-                  boxShadow: "0 2px 12px rgba(245,158,11,0.2)",
+                  background: "#fff8e8",
+                  borderColor: "#194638",
                   animation: "fade-up 0.5s ease-out 0.4s both"
                 }}
               >
                 <div className="flex items-center justify-center gap-2">
-                  <span className="text-xl">🔄</span>
-                  <span className="text-white font-black text-sm md:text-base tracking-wide">Retry Quiz</span>
+                  <span className="text-[#194638] font-bold text-sm md:text-base tracking-wide">Try again for a higher score</span>
                 </div>
               </button>
-              <p className="text-center text-gray-600 text-xs md:text-sm leading-relaxed px-2">
-                🔒 Get all 5 questions correct to unlock this flower in your digital garden!
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <style jsx>{`
@@ -392,17 +372,18 @@ export default function PollinatorQuiz({ country, onComplete }) {
   if (phase === "intro") {
     return (
       <div
+        data-lenis-prevent
         className="fixed inset-0 z-50 flex flex-col items-center justify-center px-6"
-        style={{ background: "#fdfcf8" }}
+        style={{ background: "#fff8e8" }}
       >
-        <div className="text-center max-w-sm" style={{ animation: "pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both" }}>
-          <div className="text-7xl mb-6" style={{ animation: "flower-float 3s ease-in-out infinite" }}>
-            {detail?.emoji || "🌸"}
+        <div className="text-center max-w-md" style={{ animation: "pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both" }}>
+          <div className="mx-auto mb-6 flex h-40 w-40 items-center justify-center rounded-full bg-[#dcecc8] shadow-[0_8px_0_#c4d8af]">
+            <img src={getCompleteFlowerPath(country.folder, "svg")} alt="" className="h-32 w-32 object-contain" />
           </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border-2 border-amber-300 bg-amber-50 mb-4">
-            <span className="text-amber-800 text-xs font-bold tracking-widest uppercase">Knowledge Quiz</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#dcecc8] mb-4">
+            <span className="text-[#194638] text-xs font-bold tracking-widest uppercase">Knowledge Quiz</span>
           </div>
-          <h1 className="font-black text-3xl mb-3" style={{ color: "#92400e" }}>
+          <h1 className="font-['Fredoka_One'] text-4xl mb-3" style={{ color: "#194638" }}>
             {detail?.flowerName || country.flowerName} Quiz
           </h1>
           <p className="text-gray-600 text-sm mb-2">
@@ -417,7 +398,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
             {questions.map((_, i) => (
               <div
                 key={i}
-                className="w-8 h-8 rounded-full border-2 border-amber-200 flex items-center justify-center text-amber-700 text-xs font-bold"
+                className="w-8 h-8 rounded-full border-2 border-[#bfd9bd] flex items-center justify-center text-[#194638] text-xs font-bold"
                 style={{ background: "#fff" }}
               >
                 {i + 1}
@@ -427,10 +408,10 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
           <button
             onClick={() => setPhase("question")}
-            className="group px-10 py-4 rounded-3xl font-bold text-white text-lg transition-all duration-300 hover:scale-105 border-2 border-amber-600"
+            className="group px-10 py-4 rounded-full font-bold text-white text-lg transition-all duration-300 hover:scale-105"
             style={{
-              background: "#f59e0b",
-              boxShadow: "0 8px 24px rgba(245,158,11,0.3)",
+              background: "#194638",
+              boxShadow: "0 5px 0 #0c3027",
             }}
           >
             <span className="flex items-center gap-2">Start Quiz →</span>
@@ -448,7 +429,8 @@ export default function PollinatorQuiz({ country, onComplete }) {
   // ─── QUESTION SCREEN ──────────────────────────────────────────────────────────
   return (
     <div
-      className="fixed inset-0 z-50 overflow-hidden"
+      data-lenis-prevent
+      className="fixed inset-0 z-50 overflow-y-auto"
       style={{
         background: currentTheme.bg,
         transition: "background 0.8s ease",
@@ -460,27 +442,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
         <ConfettiParticle key={p.id} emoji={p.emoji} style={p.style} />
       ))}
 
-      {/* Background decorative rings */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-        {DECORATIVE_RINGS.map((ring) => (
-          <div
-            key={ring}
-            className="absolute rounded-full border"
-            style={{
-              width: `${ring * 30}vw`,
-              height: `${ring * 30}vw`,
-              borderColor: currentTheme.ring,
-              opacity: 0.3 / ring,
-              animation: `ring-pulse ${3 + ring}s ease-in-out infinite`,
-              animationDelay: `${ring * 0.5}s`,
-            }}
-          />
-        ))}
-      </div>
-
       {/* Main content */}
       <div
-        className="relative z-10 flex flex-col h-full max-w-xl mx-auto px-4 py-6"
+        className="relative z-10 flex min-h-full flex-col justify-center max-w-3xl mx-auto px-4 py-8 md:py-12"
         style={{
           opacity: transitionOut ? 0 : 1,
           transform: transitionOut ? "translateX(40px)" : "translateX(0)",
@@ -539,14 +503,14 @@ export default function PollinatorQuiz({ country, onComplete }) {
 
           <h2
             className="font-bold leading-snug text-gray-900"
-            style={{ fontSize: "clamp(1rem, 3vw, 1.3rem)" }}
+            style={{ fontSize: "clamp(1.35rem, 3vw, 1.9rem)" }}
           >
             {q.q}
           </h2>
         </div>
 
         {/* Options - 2x2 Grid Layout */}
-        <div className="flex-1 flex flex-col justify-center gap-3">
+        <div className="flex flex-col gap-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {q.options.map((option, i) => {
             const isSelected = selectedOption === i;
@@ -581,7 +545,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 key={i}
                 onClick={() => handleSelect(i)}
                 disabled={revealed}
-                className="w-full text-left rounded-2xl px-4 py-3.5 border-2 transition-all duration-300 flex items-center gap-3 group"
+                className="w-full min-h-16 text-left rounded-2xl px-4 py-3.5 border-2 transition-all duration-300 flex items-center gap-3 group"
                 style={{
                   background: bgStyle,
                   borderColor: borderStyle,

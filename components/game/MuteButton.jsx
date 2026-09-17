@@ -2,12 +2,12 @@
 import { Volume2, VolumeX } from "lucide-react";
 
 export default function MuteButton({ isMuted, onToggle, gameState, isLoadingAssets }) {
-  const isLight = gameState === "completed" || (gameState === "playing" && !isLoadingAssets);
+  const isLight = gameState === "completed";
   return (
     <button
       onClick={onToggle}
-      className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-all duration-200 backdrop-blur-md z-[9996] touch-manipulation border ${
-        isLight ? "bg-white/80 hover:bg-white border-amber-200/50 shadow-md" : "bg-white/10 hover:bg-white/20 border-white/20"
+      className={`${gameState === "playing" ? "relative" : "fixed bottom-4 right-4 md:bottom-6 md:right-6"} w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-all duration-200 backdrop-blur-md z-[9996] touch-manipulation border ${
+        isLight ? "bg-white/80 hover:bg-white border-amber-200/50 shadow-md" : "bg-[#1e4238] hover:bg-[#315f4e] border-white/30"
       }`}
       aria-label={isMuted ? "Unmute" : "Mute"}
     >

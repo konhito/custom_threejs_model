@@ -132,16 +132,16 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
   if (isIntro) {
     return (
       <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-1rem)] max-w-3xl animate-fade-in">
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-amber-200/70 shadow-[0_10px_30px_rgba(0,0,0,0.12)] p-3.5 sm:p-4 md:p-5">
+        <div className="bg-[#fff8e8] rounded-2xl border-2 border-[#bfd9bd] shadow-[0_5px_0_#d7e5c5] p-3.5 sm:p-4 md:p-5">
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 bg-amber-50 border border-amber-200 text-amber-700 font-bold text-sm shadow-sm">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#dcecc8] text-[#194638] font-bold text-sm">
               A
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-amber-700 font-bold mb-1">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-[#194638] font-bold mb-1">
                     Araihan
                   </p>
                   <p className="text-gray-800 text-sm sm:text-base leading-relaxed break-words" style={{ wordWrap: "break-word", overflowWrap: "break-word" }}>
@@ -172,15 +172,15 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
     // Intro message - full dialog
     return (
       <div className="fixed inset-4 md:inset-8 z-[9999] flex items-center justify-center">
-        <div className="bg-gradient-to-br from-purple-900/95 to-blue-900/95 backdrop-blur-md rounded-xl md:rounded-2xl p-6 md:p-8 shadow-2xl border-2 border-purple-400/30 w-full h-full max-w-4xl max-h-[90vh] flex flex-col overflow-y-auto">
+        <div className="bg-[#194638] rounded-3xl p-6 md:p-8 shadow-2xl border-2 border-[#a9cbac] w-full max-w-2xl max-h-[90vh] flex flex-col overflow-y-auto">
           {/* Araihan Avatar/Icon */}
           <div className="flex items-start gap-4 md:gap-6 mb-4 md:mb-6 flex-shrink-0">
-            <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-3xl md:text-4xl lg:text-5xl flex-shrink-0">
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#f4cf75] flex items-center justify-center text-3xl md:text-4xl flex-shrink-0">
               👑
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-white font-bold text-xl md:text-2xl lg:text-3xl mb-2">Araihan</h3>
-              <p className="text-purple-200 text-sm md:text-base lg:text-lg">Loyal Squire of Nahiara</p>
+              <p className="text-[#d6eeb9] text-sm md:text-base lg:text-lg">Loyal Squire of Nahiara</p>
             </div>
           </div>
 
@@ -203,7 +203,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
           {showAction && onAction && actionText && (
             <button
               onClick={onAction}
-              className="group relative w-full px-8 py-4 md:py-5 bg-green-600 hover:bg-green-700 text-white font-bold text-lg md:text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 flex-shrink-0 overflow-hidden"
+              className="group relative w-full px-8 py-4 md:py-5 bg-[#f4cf75] text-[#194638] font-bold text-lg md:text-xl rounded-full transition-all duration-300 hover:-translate-y-1 flex-shrink-0 overflow-hidden"
             >
               {/* Shine effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">

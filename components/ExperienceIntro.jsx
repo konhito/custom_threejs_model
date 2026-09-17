@@ -19,14 +19,14 @@ const Globe = dynamic(() => import("./Globe"), { ssr: false });
 export default function ExperienceIntro() {
   const [progress, setProgress] = useState(0);
   const [introReady, setIntroReady] = useState(false);
-  const [globeReady, setGlobeReady] = useState(false);
+  const [shouldLoadGlobe, setShouldLoadGlobe] = useState(false);
   const [globeVisible, setGlobeVisible] = useState(false);
   const [loaderFallback, setLoaderFallback] = useState(false);
   const globeSectionRef = useRef(null);
   const { t } = useTranslation();
   useEffect(() => {
     const readNativeProgress = (scrollY = window.scrollY) => {
-      const introDistance = Math.max(1, window.innerHeight * 2.2);
+      const introDistance = Math.max(1, window.innerHeight);
       // Keep reporting after the intro ends so the held cloud can crossfade
       // into the globe section instead of cutting away at the section boundary.
       const nextProgress = Math.max(0, scrollY / introDistance);
@@ -44,7 +44,6 @@ export default function ExperienceIntro() {
     };
   }, []);
   const markIntroReady = useCallback(() => setIntroReady(true), []);
-  const markGlobeReady = useCallback(() => setGlobeReady(true), []);
   useEffect(() => {
     const timer = window.setTimeout(() => setLoaderFallback(true), 12000);
     return () => window.clearTimeout(timer);
@@ -52,18 +51,33 @@ export default function ExperienceIntro() {
   useEffect(() => {
     const section = globeSectionRef.current;
     if (!section) return;
-    const observer = new IntersectionObserver(([entry]) => setGlobeVisible(entry.isIntersecting));
+    const observer = new IntersectionObserver(([entry]) => {
+      setGlobeVisible(entry.isIntersecting || entry.boundingClientRect.top < 0);
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    const section = globeSectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setShouldLoadGlobe(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "100% 0px" });
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
   const introFade = Math.min(1, Math.max(0, (progress - 0.04) / 0.16));
   const snowFade = Math.min(1, Math.max(0, (progress - 0.92) / 0.18));
+  const chromeOpacity = Math.min(1, Math.max(0, 1 - (progress - 0.78) / 0.18));
   // The cloud has its own scroll interval before the globe section begins.
   const sceneFade = Math.min(1, Math.max(0, (progress - 1.02) / 0.28));
   const sceneOpacity = globeVisible ? 0 : 1 - sceneFade;
   return (
     <>
-      <PageLoader isLoading={!loaderFallback && (!introReady || !globeReady)} />
+      <PageLoader isLoading={!loaderFallback && !introReady} />
       <div className={styles.snow} aria-hidden="true" style={{ opacity: (1 - snowFade) * sceneOpacity }}>
         <Snowfall snowflakeCount={150} color="#dceaf4" radius={[0.25, 1.35]} speed={[0.12, 0.55]} wind={[-0.15, 0.2]} />
       </div>
@@ -73,7 +87,7 @@ export default function ExperienceIntro() {
       </div>
       <main className={styles.experience}>
         <div className={styles.canvas} style={{ opacity: sceneOpacity }}><IntroCanvas onReady={markIntroReady} /></div>
-        <header className={styles.chrome} style={{ opacity: sceneOpacity }}>
+        <header className={styles.chrome} style={{ opacity: chromeOpacity }}>
           <a href="/" className={styles.wordmark} aria-label="AquaMundi home">
             AquaMundi
           </a>
@@ -88,14 +102,20 @@ export default function ExperienceIntro() {
         <div className={styles.spacer} aria-hidden="true" />
       </main>
 
-      <div className={styles.cloudBridge} aria-hidden="true" />
+      <section className={styles.cloudBridge} aria-label="From cloud to living field">
+        <div className={styles.fieldCloud} aria-hidden="true" />
+        <div className={styles.fieldCopy}>
+          <p>What gathers in the clouds returns as life below.</p>
+          <h2>From cloud to living field.</h2>
+        </div>
+      </section>
 
-      <div className="relative min-h-screen bg-white">
+      <div className={`${styles.archive} relative min-h-screen`}>
         <main role="main" aria-label="AquaMundi, a living archive of biodiversity" className="home-experience relative">
-          <section ref={globeSectionRef} id="globe-section" className="home-archive-section relative w-full py-20 md:py-28">
+          <section ref={globeSectionRef} id="globe-section" className={`${styles.archiveArrival} relative w-full`}>
             <div className="min-h-[70vh] flex items-center justify-center">
               <div className="relative w-[92%] max-w-[1320px] h-[78vh] max-h-[820px] overflow-hidden rounded-[20px] bg-[#e6e6e2]">
-                <Globe showOvalBorder={false} showBackground eager animateEntry={false} onReady={markGlobeReady} />
+                {shouldLoadGlobe && <Globe showOvalBorder={false} showBackground eager animateEntry={false} />}
               </div>
             </div>
           </section>

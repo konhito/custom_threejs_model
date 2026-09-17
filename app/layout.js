@@ -130,7 +130,7 @@ export default function RootLayout({ children }) {
               (function() {
                 document.documentElement.classList.remove('dark');
                 document.documentElement.classList.add('light');
-                document.documentElement.style.colorScheme = 'light only';
+                document.documentElement.style.colorScheme = 'light';
                 // Watch for any attempts to add dark class
                 const observer = new MutationObserver(function(mutations) {
                   mutations.forEach(function(mutation) {

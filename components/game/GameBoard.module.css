@@ -1,0 +1,223 @@
+.layout {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100%;
+  padding: 28px 10px;
+  color: #f5f1df;
+}
+
+.surface {
+  width: min(100%, 810px);
+  padding: clamp(18px, 3vw, 38px);
+  border: 2px solid rgba(245, 211, 131, 0.65);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 8% 5%, rgba(246, 205, 118, 0.2), transparent 32%),
+    radial-gradient(circle at 94% 96%, rgba(241, 145, 140, 0.18), transparent 30%),
+    linear-gradient(145deg, #306c52, #1d493c 78%);
+  box-shadow: 0 12px 25px rgba(3, 33, 26, 0.28), inset 0 0 0 5px rgba(11, 52, 40, 0.2);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  width: min(100%, 810px);
+  margin-bottom: 12px;
+}
+
+.heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: clamp(15px, 3vw, 28px);
+  border-bottom: 1px dashed rgba(249, 225, 160, 0.5);
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: #fae2aa;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #fff4c7;
+  font-family: "Fredoka One", "Trebuchet MS", sans-serif;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.progress {
+  flex: none;
+  text-align: right;
+}
+
+.progressLabel {
+  display: block;
+  color: #c6d8bf;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.progress strong {
+  display: block;
+  margin: 2px 0 5px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.progress strong span {
+  color: #bcd2b7;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.progressDots {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.progressDots i {
+  width: 10px;
+  height: 13px;
+  border: 1px solid #f2d89a;
+  border-radius: 80% 0 80% 0;
+  background: rgba(255, 246, 205, 0.14);
+  transform: rotate(45deg);
+}
+
+.progressDots i.collected {
+  border-color: #ffd3a0;
+  background: #ffb692;
+}
+
+.cards {
+  --card-width: clamp(82px, min(31vw, 11.5dvh), 116px);
+  display: grid;
+  grid-template-columns: repeat(2, var(--card-width));
+  justify-content: center;
+  gap: clamp(8px, 1.6dvh, 15px) clamp(12px, 3vw, 22px);
+  padding: clamp(18px, 3.5vw, 34px) 0;
+}
+
+.card {
+  display: block;
+  width: var(--card-width);
+  aspect-ratio: 0.73;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  cursor: pointer;
+  perspective: 1000px;
+  box-shadow: 0 7px 12px rgba(2, 20, 17, 0.3);
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.card:nth-child(4n + 1) { transform: rotate(-2deg); }
+.card:nth-child(4n + 2) { transform: rotate(1.5deg); }
+.card:nth-child(4n + 3) { transform: rotate(-1deg); }
+.card:nth-child(4n + 4) { transform: rotate(2deg); }
+
+.card:hover:not(:disabled) {
+  transform: translateY(-7px) rotate(0deg) scale(1.03);
+  box-shadow: 0 11px 14px rgba(2, 20, 17, 0.32);
+}
+
+.card:focus-visible {
+  outline: 3px solid #f3d786;
+  outline-offset: 4px;
+}
+
+.card.revealed {
+  cursor: default;
+}
+
+.cardInner,
+.cardFace {
+  display: block;
+  border-radius: inherit;
+}
+
+.cardFace {
+  overflow: hidden;
+  background: #fff8df;
+}
+
+.cardImage {
+  object-fit: contain;
+}
+
+.hint {
+  margin: 0;
+  color: #f8e1b0;
+  font-size: 13px;
+  text-align: center;
+}
+
+.help {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(236, 237, 212, 0.4);
+  border-radius: 12px;
+  background: #1e4238;
+  color: #fff9e7;
+  font-size: 19px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.help:hover {
+  background: #315f4e;
+}
+
+.help:focus-visible {
+  outline: 3px solid #f3d786;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .cards {
+    --card-width: clamp(118px, min(13vw, 22dvh), 158px);
+    grid-template-columns: repeat(4, var(--card-width));
+  }
+}
+
+@media (max-width: 520px) {
+  .heading {
+    align-items: flex-start;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .progressLabel {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardInner {
+    transition: none;
+  }
+}

@@ -107,10 +107,11 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (phase !== "revealed") return;
+      if (!cardRefs.current.includes(document.activeElement)) return;
       
       const visibleCards = params.length;
       
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      if (e.key === "ArrowRight") {
         e.preventDefault();
         setFocusedCardIndex(prev => {
           const next = prev < visibleCards - 1 ? prev + 1 : 0;
@@ -120,7 +121,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
           }
           return next;
         });
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         setFocusedCardIndex(prev => {
           const next = prev > 0 ? prev - 1 : visibleCards - 1;
@@ -292,15 +293,16 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 overflow-y-auto"
+      data-lenis-prevent
+      className="fixed inset-0 z-50 overflow-y-auto touch-pan-y text-[#194638]"
       style={{
-        background: "linear-gradient(135deg, #fdfcf8 0%, #fff9f0 30%, #fffbf5 70%, #fdfcf8 100%)",
+        background: "#fff8e8",
         opacity: exitAnim ? 0 : 1,
         transition: "opacity 0.6s ease",
       }}
     >
       {/* Animated starfield background - golden sparkles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="hidden absolute inset-0 overflow-hidden pointer-events-none">
         {SPARKLES.map((_, i) => (
           <div
             key={i}
@@ -324,7 +326,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
       {/* Main Content */}
       <div
         ref={scrollRef}
-        className="relative z-10 max-w-6xl mx-auto px-4 py-6 md:py-8 pb-24"
+        className="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-8 pb-24"
         style={{
           opacity: phase === "bloom" ? 0 : 1,
           transform: phase === "bloom" ? "translateY(20px)" : "translateY(0)",
@@ -332,9 +334,9 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         }}
       >
         {/* Header: Title + Actions */}
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-4 md:mb-5">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-amber-300 bg-amber-50">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-[#a9cbac] bg-[#dcecc8]">
               <Sprout className="w-4 h-4 text-amber-700" />
               <span className="text-amber-800 text-sm font-bold tracking-widest uppercase">Flower Revealed</span>
             </div>
@@ -384,15 +386,10 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
           </div>
           
           <h1
-            className="font-black leading-none mb-3"
+            className="font-['Fredoka_One'] leading-none mb-3"
             style={{
-              fontSize: "clamp(2.5rem, 8vw, 5rem)",
-              background: "linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              textShadow: "none",
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
+              fontSize: "clamp(2.5rem, 8vw, 4.5rem)",
+              color: "#194638",
             }}
           >
             {detail.flowerName}
@@ -404,12 +401,12 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         </div>
 
         {/* Flower image - CENTERED */}
-        <div className="flex justify-center mb-8 md:mb-12">
+        <div className="flex justify-center mb-4 md:mb-5">
           <div
             className="relative flex-shrink-0"
             style={{
-              width: "min(80vw, 500px)",
-              height: "min(80vw, 500px)",
+              width: "min(58vw, 280px)",
+              height: "min(58vw, 280px)",
             }}
           >
             {/* Glow */}
@@ -436,7 +433,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         </div>
 
         {/* Common Names */}
-        <div className="mb-8 flex flex-wrap gap-2 justify-center">
+        <div className="mb-6 flex flex-wrap gap-2 justify-center">
           {detail.commonNames.split(", ").map((name, i) => (
             <span key={i} className="text-sm px-4 py-2 rounded-full bg-white border-2 border-amber-200 text-amber-900 font-medium shadow-sm">
               {name}
@@ -445,9 +442,9 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         </div>
 
         {/* Section title + Progress Counter */}
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-5 md:mb-6">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <h2 className="text-amber-800 text-sm md:text-base font-bold tracking-[0.3em] uppercase">Botanical Intelligence</h2>
+            <h2 className="text-[#194638] text-lg md:text-xl font-['Fredoka_One']">Explore the flower</h2>
             
             {/* Progress Counter */}
             <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-amber-300 bg-amber-50">
@@ -490,12 +487,12 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
           </div>
           
           <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
-            Tap each card to reveal the secrets of this flower. {params.length} parameters, {params.length} stories.
+            Pick a card to discover a new flower fact.
           </p>
         </div>
 
         {/* Flip Cards Grid - MUCH BIGGER CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 max-w-5xl mx-auto">
           {params.map((param, i) => {
             const isVisible = revealedCards.includes(i);
             const isFlipped = flippedIndex === i;
@@ -518,6 +515,8 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 onClick={(e) => handleCardFlip(i, e)}
                 onMouseEnter={() => setHoveredCard(i)}
                 onMouseLeave={() => setHoveredCard(null)}
+                role="button"
+                aria-label={`${param.label}: ${isFlipped ? "close" : "reveal"} flower fact`}
                 tabIndex={0}
               >
                 {/* Gesture Hint - Only on first card, first visit */}
@@ -536,7 +535,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 <div
                   className="relative w-full"
                   style={{
-                    height: "min(60vw, 280px)",
+                    height: "clamp(240px, 34vw, 300px)",
                     transformStyle: "preserve-3d",
                     transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
                     transition: "transform 0.6s cubic-bezier(0.34,1.56,0.64,1)",
@@ -544,31 +543,30 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 >
                   {/* Front - icon + label */}
                   <div
-                    className="absolute inset-0 rounded-3xl flex flex-col items-center justify-center gap-4 md:gap-5 border-2 transition-all duration-300"
+                    className="absolute inset-0 rounded-3xl flex flex-col items-center justify-center gap-2 border-2 transition-all duration-300"
                     style={{
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
                       background: isFlipped
                         ? "linear-gradient(135deg, #fff 0%, #fffbf5 100%)"
                         : "linear-gradient(135deg, #ffffff 0%, #fffef9 100%)",
-                      borderColor: "rgba(245,158,11,0.3)",
-                      boxShadow: "0 4px 20px rgba(245,158,11,0.15), inset 0 1px 0 rgba(255,255,255,0.8)",
+                      borderColor: "#c8ddba",
+                      boxShadow: "0 5px 0 #d7e5c5",
                       transform: hoveredCard === i && !isFlipped 
                         ? "translateY(-8px) rotateX(5deg)" 
                         : "translateY(0) rotateX(0deg)",
                     }}
                   >
                     <div
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center"
+                      className="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center"
                       style={{ 
-                        background: "linear-gradient(135deg, #fef3c7, #fde68a)",
-                        border: "2px solid #f59e0b",
-                        boxShadow: "0 4px 12px rgba(245,158,11,0.2)"
+                        background: "#dcecc8",
+                        border: "2px solid #c8ddba",
                       }}
                     >
-                      {IconComponent && <IconComponent className="w-10 h-10 md:w-12 md:h-12 text-amber-700" strokeWidth={1.5} />}
+                      {IconComponent && <IconComponent className="w-7 h-7 md:w-8 md:h-8 text-[#194638]" strokeWidth={2} />}
                     </div>
-                    <span className="text-amber-900 text-base md:text-lg font-bold text-center px-4 leading-tight">
+                    <span className="text-[#194638] text-sm md:text-base font-bold text-center px-2 leading-tight">
                       {param.label}
                     </span>
                     <span className="text-amber-600 text-xs md:text-sm mt-1">Tap to reveal</span>
@@ -587,19 +585,19 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                       backfaceVisibility: "hidden",
                       WebkitBackfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
-                      background: "linear-gradient(135deg, #fffbf5 0%, #fff9f0 100%)",
-                      borderColor: "#f59e0b",
-                      boxShadow: "0 8px 32px rgba(245,158,11,0.2), inset 0 1px 0 rgba(255,255,255,0.8)",
+                      background: "#f2f7e9",
+                      borderColor: "#a9cbac",
+                      boxShadow: "0 5px 0 #d7e5c5",
                     }}
                   >
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-3 flex-shrink-0">
-                      {IconComponent && <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-amber-700" strokeWidth={2} />}
-                      <span className="text-amber-800 text-sm md:text-base font-bold uppercase tracking-wider">{param.label}</span>
+                      {IconComponent && <IconComponent className="w-6 h-6 md:w-7 md:h-7 text-[#194638]" strokeWidth={2} />}
+                      <span className="text-[#194638] text-sm md:text-base font-bold uppercase tracking-wider">{param.label}</span>
                     </div>
                     {/* Scrollable text with progress indicator */}
                     <div 
-                      className="overflow-y-auto flex-1 relative" 
+                      className="overflow-y-auto touch-pan-y flex-1 relative"
                       style={{ scrollbarWidth: "thin" }}
                       onScroll={(e) => {
                         const { scrollTop, scrollHeight, clientHeight } = e.target;
@@ -722,7 +720,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
             onClick={handleContinue}
             className="group relative px-8 md:px-12 py-4 md:py-5 font-bold text-lg md:text-xl rounded-3xl overflow-hidden transition-all duration-300 hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+              background: "#194638",
               boxShadow: "0 8px 32px rgba(245,158,11,0.4)",
               color: "white",
             }}
