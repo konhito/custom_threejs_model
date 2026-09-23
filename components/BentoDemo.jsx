@@ -5,16 +5,6 @@ import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { useTranslation } from "../lib/useTranslation";
 
 // Background components (same as before, no text to translate)
-const PhotoBackground = ({ src, position = "center" }) => (
-  <div
-    className="absolute inset-0 bg-cover transition-transform duration-700 ease-out group-hover:scale-105"
-    style={{
-      backgroundImage: `linear-gradient(105deg, rgba(248, 250, 244, .94) 0%, rgba(248, 250, 244, .72) 50%, rgba(248, 250, 244, .12) 100%), url(${src})`,
-      backgroundPosition: position,
-    }}
-  />
-);
-
 const ShopBackground = () => (
   <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-teal-50/30 to-white overflow-hidden">
     <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +128,7 @@ export function BentoDemo() {
       href: "/shop",
       cta: t('home.shopCta'),
       className: "col-span-3 lg:col-span-1",
-      background: <PhotoBackground src="/landing/aquamundi-sanctuary.webp" position="70% center" />,
+      background: <ShopBackground />,
     },
     {
       Icon: Gamepad2,
@@ -147,7 +137,7 @@ export function BentoDemo() {
       href: "/game",
       cta: t('home.cardGameCta'),
       className: "col-span-3 lg:col-span-2",
-      background: <PhotoBackground src="/landing/lotus-sanctuary.webp" position="center" />,
+      background: <CardGameBackground />,
     },
     {
       Icon: Flower2,
@@ -156,7 +146,7 @@ export function BentoDemo() {
       href: "/flowers",
       cta: t('home.exploreCta'),
       className: "col-span-3 lg:col-span-2",
-      background: <PhotoBackground src="/landing/lotus-wetland.webp" position="center" />,
+      background: <FlowersBackground />,
     },
     {
       Icon: Globe2,
@@ -165,7 +155,7 @@ export function BentoDemo() {
       href: "/globe",
       cta: t('home.archiveCta'),
       className: "col-span-3 lg:col-span-1",
-      background: <PhotoBackground src="/landing/aquamundi-cloud-sanctuary.webp" position="center" />,
+      background: <GlobeBackground />,
     },
     {
       Icon: Sparkles,
@@ -174,7 +164,7 @@ export function BentoDemo() {
       href: "/pollinators",
       cta: t('common.learnMore'),
       className: "col-span-3 lg:col-span-2",
-      background: <PhotoBackground src="/landing/carnation-pollinator.webp" position="center" />,
+      background: <PollinatorsBackground />,
     },
     {
       Icon: BookOpen,
@@ -183,7 +173,7 @@ export function BentoDemo() {
       href: "/living-archive",
       cta: t('common.readMore'),
       className: "col-span-3 lg:col-span-1",
-      background: <PhotoBackground src="/landing/pollinator-meadow.webp" position="center" />,
+      background: <ArchiveBackground />,
     },
   ];
 

@@ -18,20 +18,12 @@
 .cloudCopy small { display: block; margin-top: 1.25rem; color: #d8e8e5; font: 700 .62rem/1.3 var(--font-geist-mono), monospace; letter-spacing: .12em; text-shadow: 0 1px 10px rgba(3, 18, 30, .9); text-transform: uppercase; }
 .scrollCopy { bottom: 4.8rem; color: #a5b7c6; font: 700 .68rem/1 var(--font-geist-mono), monospace; letter-spacing: .2em; text-transform: uppercase; }
 .phaseLabel { position: fixed; left: 1.25rem; top: 50%; z-index: 2; color: #a5b7c6; font: 700 .58rem/1 var(--font-geist-mono), monospace; letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; }
-.spacer { height: calc(100svh + var(--site-banner-height)); }
-.cloudBridge { position: relative; z-index: 6; display: grid; min-height: 100svh; place-items: center; overflow: hidden; isolation: isolate; background: linear-gradient(180deg, #061824 0%, rgba(6, 24, 36, .36) 28%, rgba(20, 42, 33, .4) 100%), url("/landing/pollinator-meadow.webp") center / cover; color: #fff4e5; }
-.cloudBridge::after { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(4, 16, 24, .66), transparent 62%, rgba(45, 20, 20, .2)); content: ""; }
-.fieldCloud { position: absolute; top: -4rem; left: -10%; width: 120%; height: 42%; background: url("/landing/cloud-bank-blue-alpha.webp") center top / cover no-repeat; opacity: .72; transform: translateY(-8%); animation: fieldCloudDrift 18s ease-in-out infinite alternate; }
-.fieldCopy { position: relative; z-index: 1; width: min(90vw, 42rem); padding: 1.5rem; text-align: center; text-shadow: 0 2px 20px rgba(4, 16, 24, .8); }
-.fieldCopy p { margin: 0 0 .7rem; font: italic 400 clamp(1.05rem, 1.8vw, 1.45rem)/1.35 Georgia, serif; }
-.fieldCopy h2 { margin: 0; font: 500 clamp(3rem, 8vw, 6.5rem)/.9 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; }
-@keyframes fieldCloudDrift { to { transform: translate(4%, 5%); } }
-.archive { background: #f8f8f6; }
-.archiveArrival { padding: clamp(4rem, 10vw, 8rem) 0 clamp(5rem, 11vw, 9rem); background: linear-gradient(180deg, #182f26 0, #425f4d 14%, #e7ebe4 48%, #f8f8f6 100%); }
+.spacer { height: calc(220svh + var(--site-banner-height)); }
+.cloudBridge { height: 80svh; background: #061824; }
 .globeChapter { position: relative; z-index: 3; min-height: 200svh; background: radial-gradient(circle at 50% 46%, #153f57 0%, #092536 42%, #061824 76%); }
 .globeStage { position: sticky; top: 0; display: flex; height: 100svh; align-items: center; justify-content: center; overflow: hidden; }
 @keyframes revealDiscovery { from { opacity: 0; transform: translate(-50%, 1rem); } to { opacity: 1; transform: translate(-50%, 0); } }
 @keyframes fadeIntro { from { opacity: 1; transform: translateX(-50%); } to { opacity: 0; transform: translate(-50%, -1rem); } }
 @keyframes dissolveTitle { 0% { opacity: 1; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, 0) scale(1); } 55% { opacity: .9; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, -1vh) scale(1.015); } 100% { opacity: 0; filter: blur(12px); clip-path: inset(0 48% 0 48%); transform: translate(-50%, -9vh) scale(1.08); } }
 @media (max-width: 700px) { .chrome { padding: 1.25rem; } .wordmark { font-size: 2rem; } .introCopy { top: calc(var(--site-banner-height) + 20vh); } .heroHeading { width: min(90vw, 12ch); font-size: clamp(2.25rem, 11vw, 4rem); } .map { padding: .55rem .7rem; } }
-@media (prefers-reduced-motion: reduce) { .canvas { position: absolute; height: 100svh; } .snow { display: none; } .introCopy, .discoveryCopy, .sceneTitle { position: absolute; animation: none; } .discoveryCopy { opacity: 1; top: 58%; } .fieldCloud { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .canvas { position: absolute; height: 100svh; } .snow { display: none; } .introCopy, .discoveryCopy, .sceneTitle { position: absolute; animation: none; } .discoveryCopy { opacity: 1; top: 58%; } }
