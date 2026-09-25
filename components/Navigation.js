@@ -121,6 +121,7 @@ export default function Navigation() {
   const cartHref = "/cart";
   const homeHref = "/";
   const isCartPage = normalizePath(pathname) === "/cart";
+  const isShopJourney = ["/shop", "/cart", "/checkout", "/library"].includes(normalizePath(pathname));
   const isHomePage = normalizePath(pathname) === "/";
   const isLandingPage = normalizePath(pathname) === "/landing";
 
@@ -144,8 +145,7 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Desktop Navigation - Floating Dock */}
-      <FloatingDock
+      {!isShopJourney && <><FloatingDock
         items={[
           ...navigationItems.map((item) => {
             const IconComponent = item.icon;
@@ -166,8 +166,7 @@ export default function Navigation() {
         mobileClassName="hidden" // Hide the floating dock on mobile
       />
 
-      {/* Mobile Navigation - Sidebar */}
-      <MobileSidebar />
+      <MobileSidebar /></>}
     </>
   );
 }

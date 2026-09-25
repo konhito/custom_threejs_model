@@ -32,6 +32,7 @@
     "next": "15.3.8",
     "next-intl": "^4.7.0",
     "ogl": "^1.0.11",
+    "pdfjs-dist": "^6.3.289",
     "postprocessing": "^6.38.0",
     "qr-scanner": "^1.4.2",
     "react": "^19.0.0",

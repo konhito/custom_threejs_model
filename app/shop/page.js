@@ -246,7 +246,7 @@ export default function ShopPage() {
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 text-gray-600 rounded-full border border-stone-200">
               <Zap className="w-4 h-4 text-gray-400" />
-              <span>Digital Downloads</span>
+              <span>Read 3 Chapters Free</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 text-gray-600 rounded-full border border-stone-200">
               <Shield className="w-4 h-4 text-gray-400" />
@@ -298,8 +298,6 @@ export default function ShopPage() {
                     key={product.id}
                     product={product}
                     price={price}
-                    digitalPrice={digitalPrice}
-                    hasDigital={hasDigital}
                     currency={currency}
                     formatCurrency={formatCurrency}
                     onAddToCart={handleAddToCart}
@@ -430,9 +428,7 @@ export default function ShopPage() {
             </div>
             <div>
               <p className="font-medium text-sm">Added to cart</p>
-              <p className="text-xs text-gray-400">
-                Continue shopping or checkout
-              </p>
+              <Link href="/cart" className="text-xs font-semibold text-amber-300 hover:text-amber-200">Checkout →</Link>
             </div>
           </div>
         </div>

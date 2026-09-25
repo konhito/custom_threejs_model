@@ -13,7 +13,7 @@ export default function WildfirePollinatorBanner() {
     ? "Incendios forestales 2026 — actualización diaria. Los polinizadores también son víctimas — y merecen ser contados. Son la gran incógnita de estos incendios, ausentes de la cobertura informativa."
     : "Wildfires 2026 — daily update. Pollinators are victims too — and they deserve to be counted. They are the great unknown of these fires, absent from the reporting.";
 
-  if (pathname === "/game") return null;
+  if (["/game", "/shop", "/cart", "/checkout", "/library"].includes(pathname)) return null;
 
   return (
     <section className="wildfire-banner" aria-label={message}>

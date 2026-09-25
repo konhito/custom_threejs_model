@@ -4,13 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ShoppingCart, Download, BookOpen, Heart, Eye } from "lucide-react";
+import { ShoppingCart, BookOpen, Heart, Eye } from "lucide-react";
 
 export default function BookCard({
   product,
   price,
-  digitalPrice,
-  hasDigital,
   currency,
   formatCurrency,
   onAddToCart
@@ -109,14 +107,13 @@ export default function BookCard({
             className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             initial={false}
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              href="/library"
               className="px-4 py-2 bg-white rounded-full text-gray-900 font-medium text-sm flex items-center gap-2 shadow-lg"
             >
               <Eye className="w-4 h-4" />
-              Quick View
-            </motion.button>
+              Preview free chapters
+            </Link>
           </motion.div>
         </div>
 
@@ -149,29 +146,13 @@ export default function BookCard({
               >
                 <div className="flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4" />
-                  <span className="text-sm">Physical Book</span>
+                  <span className="text-sm">Buy Printed Book</span>
                 </div>
                 <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
               </motion.button>
             )}
 
-            {isBook && <Link href="/library" className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100"><span className="flex items-center gap-2"><BookOpen className="w-4 h-4"/>Digital Tome I</span><span className="text-right text-xs leading-4">Read first 3 chapters free<br/>Continue chapter by chapter →</span></Link>}
-
-            {/* Digital Book Button */}
-            {hasDigital && (
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                onClick={() => onAddToCart(product, true)}
-                className="w-full px-4 py-3 bg-white text-gray-900 font-medium rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all flex items-center justify-between"
-              >
-                <div className="flex items-center gap-2">
-                  <Download className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm">Digital eBook</span>
-                </div>
-                <span className="text-sm font-bold">{formatCurrency(digitalPrice, currency)}</span>
-              </motion.button>
-            )}
+            {isBook && <Link href="/library" className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100"><span className="flex items-center gap-2"><BookOpen className="w-4 h-4"/>Read digitally</span><span className="text-right text-xs leading-4">First 3 chapters free<br/>Unlock one chapter at a time →</span></Link>}
           </div>
         </div>
       </div>
