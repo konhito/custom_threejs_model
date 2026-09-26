@@ -1,80 +1,65 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Download, Minus, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import * as pdfjs from "pdfjs-dist";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-export default function ChapterPdfReader({ file, title }) {
-  const canvasRef = useRef(null);
-  const documentRef = useRef(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageCount, setPageCount] = useState(0);
-  const [scale, setScale] = useState(1);
+function linesFrom(items) {
+  const lines = [];
+  for (const item of items) {
+    const value = item.str?.trim();
+    if (!value) continue;
+    const y = Math.round(item.transform[5]);
+    const line = lines.findLast((entry) => Math.abs(entry.y - y) < 3);
+    if (line) line.text += `${item.hasEOL ? "\n" : " "}${value}`;
+    else lines.push({ y, text: value });
+  }
+  const readable = lines.map((line) => ({ ...line, text: line.text.replace(/\s+\n/g, "\n").trim() })).filter((line) => line.text && !/^\d+$/.test(line.text));
+  return readable.map((line, index) => {
+    const next = readable[index + 1];
+    if (!next) return line.text;
+    return `${line.text}${Math.abs(line.y - next.y) > 38 ? "\n\n" : " "}`;
+  }).join("");
+}
+
+export default function ChapterPdfReader({ file, title, summary, content, chapterNumber }) {
+  const [text, setText] = useState(content || "");
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (content) { setText(content); return; }
     let cancelled = false;
-    const task = pdfjs.getDocument(file);
+    const task = pdfjs.getDocument({ url: file });
+    task.promise.then(async (document) => {
+      const sections = [];
+      for (let index = 1; index <= document.numPages; index += 1) {
+        const page = await document.getPage(index);
+        const section = linesFrom((await page.getTextContent()).items);
+        if (section) sections.push(section);
+      }
+      if (!cancelled) setText(sections.join("\n\n"));
+    }).catch(() => !cancelled && setError("This chapter could not be prepared for reading. Please try again."));
+    return () => { cancelled = true; task.destroy(); };
+  }, [content, file]);
 
-    task.promise.then((document) => {
-      if (cancelled) return;
-      documentRef.current = document;
-      setPageCount(document.numPages);
-      setPageNumber(1);
-    }).catch(() => {
-      if (!cancelled) setError("This chapter could not be opened. Please try again.");
-    });
+  if (error) return <p role="alert" className="mx-auto grid min-h-[50vh] max-w-2xl place-items-center p-8 text-center text-sm text-red-700">{error}</p>;
+  if (!text) return <div className="grid min-h-[58vh] place-items-center p-8 text-sm text-stone-500">Preparing your chapter…</div>;
 
-    return () => {
-      cancelled = true;
-      documentRef.current?.destroy();
-      documentRef.current = null;
-    };
-  }, [file]);
-
-  useEffect(() => {
-    const render = async () => {
-      const document = documentRef.current;
-      const canvas = canvasRef.current;
-      if (!document || !canvas) return;
-      const page = await document.getPage(pageNumber);
-      const viewport = page.getViewport({ scale });
-      const pixelRatio = window.devicePixelRatio || 1;
-      canvas.width = Math.floor(viewport.width * pixelRatio);
-      canvas.height = Math.floor(viewport.height * pixelRatio);
-      canvas.style.width = `${viewport.width}px`;
-      canvas.style.height = `${viewport.height}px`;
-      const context = canvas.getContext("2d");
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      await page.render({ canvasContext: context, viewport }).promise;
-    };
-
-    render().catch(() => setError("This page could not be rendered. Please try again."));
-  }, [pageNumber, pageCount, scale]);
-
-  const changePage = (delta) => setPageNumber((current) => Math.min(pageCount, Math.max(1, current + delta)));
-  const changeScale = (delta) => setScale((current) => Math.min(1.5, Math.max(0.75, Number((current + delta).toFixed(2)))));
-
-  if (error) return <p role="alert" className="grid min-h-[50vh] place-items-center p-8 text-center text-sm text-red-700">{error}</p>;
-
-  return <div className="flex min-h-[65vh] flex-col bg-stone-950">
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-stone-900 px-4 py-3 text-sm text-white">
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={() => changePage(-1)} disabled={pageNumber <= 1} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-35" aria-label="Previous page"><ChevronLeft size={18}/></button>
-        <span className="min-w-20 text-center tabular-nums">{pageNumber} / {pageCount || "–"}</span>
-        <button type="button" onClick={() => changePage(1)} disabled={!pageCount || pageNumber >= pageCount} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-35" aria-label="Next page"><ChevronRight size={18}/></button>
+  const extractedText = text.replace(/^.*?Capítulo\s+\d+\s*/s, "");
+  const readingText = extractedText.startsWith(title) ? extractedText.slice(title.length).trim() : extractedText;
+  const artwork = chapterNumber === 1 ? { opening: "/chapters/chapter-01-opening.png", ending: "/chapters/chapter-01-ending.png" } : null;
+  return <article className="px-5 py-14 sm:px-10 sm:py-20">
+    <div className="mx-auto max-w-[42rem]">
+      {artwork && <img src={artwork.opening} alt="Protea real, flower of South Africa" className="mx-auto mb-14 max-h-[72svh] max-w-full w-auto" />}
+      <p className="text-sm font-semibold text-amber-800">Tomo I · Nahiara</p>
+      <h1 className="mt-4 font-serif text-4xl leading-[1.05] text-stone-950 sm:text-6xl">{title}</h1>
+      {summary && <p className="mt-5 text-lg leading-relaxed text-stone-700">{summary}</p>}
+      <div className="my-10 h-px bg-stone-300" />
+      <div className="space-y-6 font-serif text-[1.125rem] leading-8 text-stone-900 sm:text-xl sm:leading-9">
+        {readingText.split(/\n{2,}/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
       </div>
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={() => changeScale(-0.25)} disabled={scale <= 0.75} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-35" aria-label="Zoom out"><Minus size={17}/></button>
-        <span className="w-12 text-center tabular-nums">{Math.round(scale * 100)}%</span>
-        <button type="button" onClick={() => changeScale(0.25)} disabled={scale >= 1.5} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-35" aria-label="Zoom in"><Plus size={17}/></button>
-        <a href={file} download={title || "chapter"} className="grid h-10 w-10 place-items-center rounded-lg hover:bg-white/10" aria-label="Download chapter"><Download size={17}/></a>
-      </div>
+      {artwork && <img src={artwork.ending} alt="Renacer, map of South Africa" className="mx-auto mt-16 max-h-[72svh] max-w-full w-auto" />}
     </div>
-    <div className="flex flex-1 items-start justify-center overflow-auto p-5 sm:p-8">
-      <canvas ref={canvasRef} className="h-auto max-w-full bg-white shadow-[0_8px_18px_rgba(0,0,0,0.45)]" />
-    </div>
-  </div>;
+  </article>;
 }
