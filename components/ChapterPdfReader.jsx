@@ -23,22 +23,34 @@ function linesFrom(items) {
   }).join("");
 }
 
-export default function ChapterPdfReader({ file, title, summary, content, chapterNumber }) {
+export default function ChapterPdfReader({ file, title, summary, content }) {
   const [text, setText] = useState(content || "");
+  const [artwork, setArtwork] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (content) { setText(content); return; }
     let cancelled = false;
     const task = pdfjs.getDocument({ url: file });
-    task.promise.then(async (document) => {
-      const sections = [];
-      for (let index = 1; index <= document.numPages; index += 1) {
-        const page = await document.getPage(index);
-        const section = linesFrom((await page.getTextContent()).items);
-        if (section) sections.push(section);
+    task.promise.then(async (pdfDocument) => {
+      const renderArtwork = async (pageNumber) => {
+        const page = await pdfDocument.getPage(pageNumber);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement("canvas");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+        return canvas.toDataURL("image/png");
+      };
+      const [opening, ending] = await Promise.all([renderArtwork(1), renderArtwork(pdfDocument.numPages)]);
+      const sections = content ? [content] : [];
+      if (!content) {
+        for (let index = 1; index <= pdfDocument.numPages; index += 1) {
+          const page = await pdfDocument.getPage(index);
+          const section = linesFrom((await page.getTextContent()).items);
+          if (section) sections.push(section);
+        }
       }
-      if (!cancelled) setText(sections.join("\n\n"));
+      if (!cancelled) { setArtwork({ opening, ending }); setText(sections.join("\n\n")); }
     }).catch(() => !cancelled && setError("This chapter could not be prepared for reading. Please try again."));
     return () => { cancelled = true; task.destroy(); };
   }, [content, file]);
@@ -48,10 +60,9 @@ export default function ChapterPdfReader({ file, title, summary, content, chapte
 
   const extractedText = text.replace(/^.*?Capítulo\s+\d+\s*/s, "");
   const readingText = extractedText.startsWith(title) ? extractedText.slice(title.length).trim() : extractedText;
-  const artwork = chapterNumber === 1 ? { opening: "/chapters/chapter-01-opening.png", ending: "/chapters/chapter-01-ending.png" } : null;
   return <article className="px-5 py-14 sm:px-10 sm:py-20">
     <div className="mx-auto max-w-[42rem]">
-      {artwork && <img src={artwork.opening} alt="Protea real, flower of South Africa" className="mx-auto mb-14 max-h-[72svh] max-w-full w-auto" />}
+      {artwork && <img src={artwork.opening} alt={`Opening artwork for ${title}`} className="mx-auto mb-14 max-h-[72svh] max-w-full w-auto" />}
       <p className="text-sm font-semibold text-amber-800">Tomo I · Nahiara</p>
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] text-stone-950 sm:text-6xl">{title}</h1>
       {summary && <p className="mt-5 text-lg leading-relaxed text-stone-700">{summary}</p>}
@@ -59,7 +70,7 @@ export default function ChapterPdfReader({ file, title, summary, content, chapte
       <div className="space-y-6 font-serif text-[1.125rem] leading-8 text-stone-900 sm:text-xl sm:leading-9">
         {readingText.split(/\n{2,}/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
       </div>
-      {artwork && <img src={artwork.ending} alt="Renacer, map of South Africa" className="mx-auto mt-16 max-h-[72svh] max-w-full w-auto" />}
+      {artwork && <img src={artwork.ending} alt={`Closing artwork for ${title}`} className="mx-auto mt-16 max-h-[72svh] max-w-full w-auto" />}
     </div>
   </article>;
 }

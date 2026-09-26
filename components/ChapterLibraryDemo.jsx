@@ -55,7 +55,7 @@ function Reader({ active, pdfUrl, onClose }) {
   return <main className="min-h-screen bg-[#f7f5ef] text-stone-900">
     <section>
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-300 bg-[#f7f5ef]/95 px-5 py-4 backdrop-blur sm:px-10"><button onClick={onClose} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-stone-700 hover:text-stone-950"><ArrowLeft size={18}/> Back to library</button><div className="flex items-center gap-2">{soundUrl && <MusicToggleButton src={soundUrl} autoPlay volume={0.12}/>} {pdfUrl && <a href={pdfUrl} download={`${active.title || "chapter"}.pdf`} className="inline-flex min-h-11 items-center gap-2 px-2 text-sm font-semibold text-stone-700 hover:text-stone-950" aria-label="Download chapter PDF"><Download size={17}/><span className="hidden sm:inline">Download PDF</span></a>}<span className="hidden text-xs font-bold uppercase tracking-[.18em] text-amber-700 sm:block">Tomo I · Digital edition</span></div></header>
-      {pdfUrl ? <ChapterPdfReader file={pdfUrl} title={active.title} summary={active.summary} content={active.content_text} chapterNumber={chapterNumber(active)} /> : <div className="grid min-h-[50vh] place-items-center p-8 text-center text-stone-500"><BookOpen className="mb-3"/><p>This chapter is being prepared for the digital library.</p></div>}
+      {pdfUrl ? <ChapterPdfReader file={pdfUrl} title={active.title} summary={active.summary} content={active.content_text} /> : <div className="grid min-h-[50vh] place-items-center p-8 text-center text-stone-500"><BookOpen className="mb-3"/><p>This chapter is being prepared for the digital library.</p></div>}
     </section>
   </main>;
 }
