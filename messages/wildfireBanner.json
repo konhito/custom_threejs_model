@@ -1,344 +1,950 @@
 {
-    "en":  {
-               "date":  "Updated Saturday, September 5, 2026",
-               "details":  "View the daily update",
-               "close":  "Close daily update",
-               "groups":  [
-                              {
-                                  "title":  "Europe",
-                                  "items":  [
-                                                "Spain - 295,720 ha burned through September 2 (EFFIS/Copernicus), 45.6% of all EU burned area; third worst season in 30 years. Italy has 543 fires, Spain 433 and France 357.",
-                                                "Croatia - Omis: 900-1,000 ha burned, 1 dead, 36-40 injured and over 2,000 evacuated.",
-                                                "Germany and Greece - Serious fires in Hurtgenwald and Boeotia; 1,800 and over 1,000 evacuations respectively.",
-                                                "France - 98,000-116,000 ha burned, a 20-year satellite-record range. Portugal: Viseu burned about 13,000 ha.",
-                                                "Italy - 40,000 to over 100,000 ha depending on source; Sicily and Calabria are worst hit.",
-                                                "European Union - 647,375 ha burned through September 2; 2026 is the fourth worst year on record."
-                                            ]
-                              },
-                              {
-                                  "title":  "Africa",
-                                  "items":  [
-                                                "Algeria - 154 fires in 24 hours at peak; 6 deaths and about 150 homes affected in Annaba."
-                                            ]
-                              },
-                              {
-                                  "title":  "Asia",
-                                  "items":  [
-                                                "Turkey - About 95,000 ha burned, seven times the historical average.",
-                                                "Russia (Siberia) - About 600,000 ha burned in 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "North America",
-                                  "items":  [
-                                                "Canada - 3,848 fires and 2.92 million ha burned; Thunder Bay 36 has burned 314,000 ha and remains uncontained.",
-                                                "United States - Fire alert raised to maximum level."
-                                            ]
-                              },
-                              {
-                                  "title":  "South America",
-                                  "items":  [
-                                                "Ecuador - At least 300 ha burned in Cotacachi-Cayapas; over 4,000 ha burned nationally in early August.",
-                                                "Brazil - 1.76 million ha and 4,682 fire events in 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "Oceania",
-                                  "items":  [
-                                                "Australia - Over 400,000 ha burned in Victoria in January; the southern-summer season has passed."
-                                            ]
-                              },
-                              {
-                                  "title":  "Global context",
-                                  "items":  [
-                                                "112.3 million ha burned worldwide by August 1 (GWIS); Africa accounted for 55%.",
-                                                "Oceans - Record average sea-surface temperature: 20.86 C on June 21; 37% under a marine heatwave.",
-                                                {
-                                                    "text":  "According to Greenpeace, 95% of wildfires have a human origin - intentional, negligent or accidental - rather than being purely natural.",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "Sources: MITECO, EFFIS/Copernicus, Global Wildfire Information System, national civil-protection agencies, CIFFC, Ecuador SNGR, Brazil Ministry of Environment, AFAC/NEMA, Greenpeace Spain, NOAA and Copernicus Marine Service."
-           },
-    "es":  {
-               "date":  "Actualizado sÃ¡bado 5 de septiembre de 2026",
-               "details":  "Ver la actualizacion diaria",
-               "close":  "Cerrar actualizacion diaria",
-               "groups":  [
-                              {
-                                  "title":  "Europa",
-                                  "items":  [
-                                                "EspaÃ±a - 295.720 ha quemadas hasta el 2 de septiembre (EFFIS/Copernicus), el 45,6% de la superficie quemada en la UE; tercera peor temporada en 30 aÃ±os. Italia lleva 543 incendios, EspaÃ±a 433 y Francia 357.",
-                                                "Croacia - OmiÅ¡: 900-1.000 ha quemadas, 1 muerto, 36-40 heridos y mÃ¡s de 2.000 evacuados.",
-                                                "Alemania y Grecia - Incendios graves en HÃ¼rtgenwald y Beocia; 1.800 y mÃ¡s de 1.000 evacuaciones respectivamente.",
-                                                "Francia - 98.000-116.000 ha quemadas, rÃ©cord de 20 aÃ±os de satÃ©lite. Portugal: Viseu quemÃ³ unas 13.000 ha.",
-                                                "Italia - Entre 40.000 y mÃ¡s de 100.000 ha segÃºn la fuente; Sicilia y Calabria son los focos mÃ¡s graves.",
-                                                "UniÃ³n Europea - 647.375 ha quemadas hasta el 2 de septiembre; 2026 es el cuarto peor aÃ±o registrado."
-                                            ]
-                              },
-                              {
-                                  "title":  "Ãfrica",
-                                  "items":  [
-                                                "Argelia - 154 incendios en 24 horas en el pico; 6 muertos y unas 150 viviendas afectadas en Annaba."
-                                            ]
-                              },
-                              {
-                                  "title":  "Asia",
-                                  "items":  [
-                                                "TurquÃ­a - Unas 95.000 ha quemadas, siete veces la media histÃ³rica.",
-                                                "Rusia (Siberia) - Unas 600.000 ha quemadas en 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "NorteamÃ©rica",
-                                  "items":  [
-                                                "CanadÃ¡ - 3.848 incendios y 2,92 millones de ha quemadas; Thunder Bay 36 ha quemado 314.000 ha y sigue sin control.",
-                                                "Estados Unidos - Alerta de incendios elevada al nivel mÃ¡ximo."
-                                            ]
-                              },
-                              {
-                                  "title":  "SudamÃ©rica",
-                                  "items":  [
-                                                "Ecuador - Al menos 300 ha quemadas en Cotacachi-Cayapas; mÃ¡s de 4.000 ha quemadas en el paÃ­s a principios de agosto.",
-                                                "Brasil - 1,76 millones de ha y 4.682 eventos de fuego en 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "OceanÃ­a",
-                                  "items":  [
-                                                "Australia - MÃ¡s de 400.000 ha quemadas en Victoria en enero; la temporada de verano austral ya pasÃ³."
-                                            ]
-                              },
-                              {
-                                  "title":  "Contexto global",
-                                  "items":  [
-                                                "112,3 millones de ha quemadas en el mundo hasta el 1 de agosto (GWIS); Ãfrica concentrÃ³ el 55%.",
-                                                "OcÃ©anos - Temperatura media rÃ©cord: 20,86 C el 21 de junio; 37% bajo una ola de calor marina.",
-                                                {
-                                                    "text":  "SegÃºn Greenpeace, el 95% de los incendios forestales tiene origen humano - intencionado, por negligencia o accidental - y no es un fenÃ³meno puramente natural.",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "Fuentes: MITECO, EFFIS/Copernicus, Global Wildfire Information System, organismos de protecciÃ³n civil, CIFFC, SNGR de Ecuador, Ministerio de Medio Ambiente de Brasil, AFAC/NEMA, Greenpeace EspaÃ±a, NOAA y Copernicus Marine Service."
-           },
-    "fr":  {
-               "date":  "Mis Ã  jour le samedi 5 septembre 2026",
-               "details":  "Voir la mise Ã  jour quotidienne",
-               "close":  "Fermer la mise Ã  jour quotidienne",
-               "groups":  [
-                              {
-                                  "title":  "Europe",
-                                  "items":  [
-                                                "Espagne: 295 720 ha brûlés au 2 septembre (45,6% de la surface brûlée de l UE); 2026 est la troisième pire saison en 30 ans. UE: 647 375 ha brûlés, quatrième pire année enregistrée."
-                                            ]
-                              },
-                              {
-                                  "title":  "Afrique",
-                                  "items":  [
-                                                "Algérie: 154 feux en 24 h au pic; 6 morts à Annaba."
-                                            ]
-                              },
-                              {
-                                  "title":  "Asie",
-                                  "items":  [
-                                                "Turquie: 95 000 ha brûlés; Russie (Sibérie): environ 600 000 ha en 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "Amérique du Nord",
-                                  "items":  [
-                                                "Canada: 3 848 feux et 2,92 millions d ha brûlés; alerte maximale aux États-Unis."
-                                            ]
-                              },
-                              {
-                                  "title":  "Amérique du Sud",
-                                  "items":  [
-                                                "Équateur: au moins 300 ha brûlés à Cotacachi-Cayapas. Brésil: 1,76 million d ha et 4 682 événements."
-                                            ]
-                              },
-                              {
-                                  "title":  "Océanie",
-                                  "items":  [
-                                                "Australie: plus de 400 000 ha brûlés dans le Victoria en janvier."
-                                            ]
-                              },
-                              {
-                                  "title":  "Contexte mondial",
-                                  "items":  [
-                                                "112,3 millions d ha brûlés dans le monde au 1er août (GWIS); Afrique: 55%. Océans: 20,86 C record et 37% sous vague de chaleur marine.",
-                                                {
-                                                    "text":  "Selon Greenpeace, 95% des feux de forÃªt sont d\u0027origine humaine.",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "Sources: MITECO, EFFIS/Copernicus, GWIS, protection civile, CIFFC, SNGR, Greenpeace, NOAA et Copernicus Marine Service."
-           },
-    "de":  {
-               "date":  "Aktualisiert am Samstag, 5. September 2026",
-               "details":  "Taegliches Update anzeigen",
-               "close":  "Taegliches Update schliessen",
-               "groups":  [
-                              {
-                                  "title":  "Europa",
-                                  "items":  [
-                                                "Spanien: 295.720 ha bis 2. September verbrannt (45,6% der EU-Fläche); drittschlimmste Saison seit 30 Jahren. EU: 647.375 ha, viertschlimmstes Jahr."
-                                            ]
-                              },
-                              {
-                                  "title":  "Afrika",
-                                  "items":  [
-                                                "Algerien: 154 Brände in 24 Stunden am Höhepunkt; 6 Tote in Annaba."
-                                            ]
-                              },
-                              {
-                                  "title":  "Asien",
-                                  "items":  [
-                                                "Türkei: 95.000 ha verbrannt; Russland (Sibirien): rund 600.000 ha im Jahr 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "Nordamerika",
-                                  "items":  [
-                                                "Kanada: 3.848 Brände und 2,92 Millionen ha; USA: höchste Warnstufe."
-                                            ]
-                              },
-                              {
-                                  "title":  "Südamerika",
-                                  "items":  [
-                                                "Ecuador: mindestens 300 ha in Cotacachi-Cayapas verbrannt. Brasilien: 1,76 Millionen ha und 4.682 Ereignisse."
-                                            ]
-                              },
-                              {
-                                  "title":  "Ozeanien",
-                                  "items":  [
-                                                "Australien: im Januar mehr als 400.000 ha in Victoria verbrannt."
-                                            ]
-                              },
-                              {
-                                  "title":  "Globaler Kontext",
-                                  "items":  [
-                                                "Weltweit 112,3 Millionen ha bis 1. August verbrannt (GWIS); Afrika: 55%. Ozeane: 20,86 C Rekord und 37% marine Hitzewelle.",
-                                                {
-                                                    "text":  "Laut Greenpeace haben 95% der WaldbrÃ¤nde einen menschlichen Ursprung.",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "Quellen: MITECO, EFFIS/Copernicus, GWIS, Zivilschutz, CIFFC, SNGR, Greenpeace, NOAA und Copernicus Marine Service."
-           },
-    "it":  {
-               "date":  "Aggiornato sabato 5 settembre 2026",
-               "details":  "Vedi aggiornamento quotidiano",
-               "close":  "Chiudi aggiornamento quotidiano",
-               "groups":  [
-                              {
-                                  "title":  "Europa",
-                                  "items":  [
-                                                "Spagna: 295.720 ha bruciati al 2 settembre (45,6% dell area UE); terza peggiore stagione in 30 anni. UE: 647.375 ha, quarto peggior anno."
-                                            ]
-                              },
-                              {
-                                  "title":  "Africa",
-                                  "items":  [
-                                                "Algeria: 154 incendi in 24 ore al picco; 6 morti ad Annaba."
-                                            ]
-                              },
-                              {
-                                  "title":  "Asia",
-                                  "items":  [
-                                                "Turchia: 95.000 ha bruciati; Russia (Siberia): circa 600.000 ha nel 2026."
-                                            ]
-                              },
-                              {
-                                  "title":  "Nord America",
-                                  "items":  [
-                                                "Canada: 3.848 incendi e 2,92 milioni di ha; Stati Uniti: allerta massima."
-                                            ]
-                              },
-                              {
-                                  "title":  "Sud America",
-                                  "items":  [
-                                                "Ecuador: almeno 300 ha bruciati a Cotacachi-Cayapas. Brasile: 1,76 milioni di ha e 4.682 eventi."
-                                            ]
-                              },
-                              {
-                                  "title":  "Oceania",
-                                  "items":  [
-                                                "Australia: oltre 400.000 ha bruciati nel Victoria a gennaio."
-                                            ]
-                              },
-                              {
-                                  "title":  "Contesto globale",
-                                  "items":  [
-                                                "112,3 milioni di ha bruciati nel mondo al 1 agosto (GWIS); Africa: 55%. Oceani: record di 20,86 C e 37% sotto ondata di calore marina.",
-                                                {
-                                                    "text":  "Secondo Greenpeace, il 95% degli incendi boschivi ha origine umana.",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "Fonti: MITECO, EFFIS/Copernicus, GWIS, protezione civile, CIFFC, SNGR, Greenpeace, NOAA e Copernicus Marine Service."
-           },
-    "zh":  {
-               "date":  "æ›´æ–°äºŽ2026å¹´9æœˆ5æ—¥ï¼Œæ˜ŸæœŸå…­",
-               "details":  "æŸ¥çœ‹æ¯æ—¥æ›´æ–°",
-               "close":  "å…³é—­æ¯æ—¥æ›´æ–°",
-               "groups":  [
-                              {
-                                  "title":  "欧洲",
-                                  "items":  [
-                                                "西班牙截至9月2日过火295,720公顷，占欧盟45.6%；为30年来第三差季节。欧盟共647,375公顷，为第四差年份。"
-                                            ]
-                              },
-                              {
-                                  "title":  "非洲",
-                                  "items":  [
-                                                "阿尔及利亚高峰期24小时154起火灾；安纳巴6人死亡。"
-                                            ]
-                              },
-                              {
-                                  "title":  "亚洲",
-                                  "items":  [
-                                                "土耳其过火95,000公顷；俄罗斯西伯利亚2026年约600,000公顷。"
-                                            ]
-                              },
-                              {
-                                  "title":  "北美洲",
-                                  "items":  [
-                                                "加拿大3,848起火灾、过火292万公顷；美国警报升至最高级别。"
-                                            ]
-                              },
-                              {
-                                  "title":  "南美洲",
-                                  "items":  [
-                                                "厄瓜多尔Cotacachi-Cayapas至少过火300公顷。巴西2026年过火176万公顷、4,682起事件。"
-                                            ]
-                              },
-                              {
-                                  "title":  "大洋洲",
-                                  "items":  [
-                                                "澳大利亚维多利亚州1月过火逾400,000公顷。"
-                                            ]
-                              },
-                              {
-                                  "title":  "全球背景",
-                                  "items":  [
-                                                "截至8月1日全球过火1.123亿公顷（GWIS），非洲占55%。海洋温度创20.86 C纪录，37%处于海洋热浪中。",
-                                                {
-                                                    "text":  "ç»¿è‰²å’Œå¹³ç»„ç»‡ç§°ï¼Œ95%çš„æ£®æž—ç«ç¾ä¸Žäººä¸ºå› ç´ æœ‰å…³ã€‚",
-                                                    "href":  "https://es.greenpeace.org/es/sala-de-prensa/comunicados/greenpeace-exige-que-no-se-olviden-de-las-zonas-quemadas-en-2025-y-que-se-actue-en-2026-con-prevencion-y-gestion-posincendios-2/"
-                                                }
-                                            ]
-                              }
-                          ],
-               "sources":  "æ¥æºï¼šMITECOã€EFFIS/Copernicusã€GWISã€æ°‘é˜²æœºæž„ã€CIFFCã€SNGRã€ç»¿è‰²å’Œå¹³ç»„ç»‡ã€NOAAå’ŒCopernicus Marine Serviceã€‚"
-           }
+  "en": {
+    "date": "Updated Friday, October 9, 2026",
+    "details": "View the daily update",
+    "close": "Close daily update",
+    "groups": [
+      {
+        "title": "Europe",
+        "items": [
+          {
+            "text": "Spain · EFFIS satellite estimate: 300,998 ha by 1 Oct 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "European Union · EFFIS satellite estimate: 686,071 ha by 1 Oct 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "Europe · GWIS burned area to 1 Aug 2026: 3,992,404 ha (3.6% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Africa",
+        "items": [
+          {
+            "text": "Africa · GWIS burned area to 1 Aug 2026: 61,870,300 ha (55.1% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "DR Congo · GWIS to 1 Aug 2026: 13,611,126 ha (12.1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "Angola · GWIS to 1 Aug 2026: 7,473,034 ha (6.7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "South Africa · GWIS to 1 Aug 2026: 784,647 ha (0.7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Asia",
+        "items": [
+          {
+            "text": "Asia · GWIS burned area to 1 Aug 2026: 19,733,182 ha (17.6% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "Russia · GWIS to 1 Aug 2026: 3,335,029 ha (3.0%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "Russia · more than 1.3 million ha burning at once on 24 Aug 2026 (not a season total): Sakha 987,067 ha; Krasnoyarsk 405,800 ha.",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "North America",
+        "items": [
+          {
+            "text": "North America · GWIS burned area to 1 Aug 2026: 6,804,905 ha (6.1% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "United States · GWIS to 1 Aug 2026: 2,371,207 ha (2.1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "Canada · GWIS to 1 Aug 2026: 2,031,754 ha (1.8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "Canada · NIFC's official seasonal outlook (14 Sep 2026): about 4.49 million ha across 5,132 fires, near the 10-year average.",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "United States · NIFC (2 Oct 2026): 9,000,619 acres (about 3.64 million ha) in 62,738 fires; the 10-year average is 6,106,514 acres.",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "South America",
+        "items": [
+          {
+            "text": "South America · GWIS burned area to 1 Aug 2026: 7,813,377 ha (7.0% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "Venezuela · GWIS to 1 Aug 2026: 2,977,466 ha (2.7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "Brazil · GWIS to 1 Aug 2026: 2,030,209 ha (1.8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "Bolivia · GWIS to 1 Aug 2026: 546,490 ha (0.5%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "Brazil (Amazonas) · INPE counted 2,384 hotspots from 1–19 Sep 2026, 282% above the 624 in the same period of 2025 (via BNC Amazonas).",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "Bolivia · about 2,538 ha in Otuquis National Park; more fires were reported in Santa Cruz and Tarija, with no national total found (20 Jul 2026).",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "Oceania",
+        "items": [
+          {
+            "text": "Oceania · GWIS burned area to 1 Aug 2026: 12,061,714 ha (10.7% of the reported world total).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Data notes",
+        "items": [
+          {
+            "text": "Country and regional GWIS tables include agricultural and planned burning as well as wildfires; do not compare them directly with EFFIS wildfire-only estimates.",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "Each figure links to its cited source."
+  },
+  "es": {
+    "date": "Actualizado viernes, 9 de octubre de 2026",
+    "details": "Ver la actualización diaria",
+    "close": "Cerrar actualización diaria",
+    "groups": [
+      {
+        "title": "Europa",
+        "items": [
+          {
+            "text": "España · estimación satelital de EFFIS: 300.998 ha hasta el 1 oct 2026 (EFFIS vía Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "Unión Europea · estimación satelital de EFFIS: 686.071 ha hasta el 1 oct 2026 (EFFIS vía Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "Europa · superficie quemada según GWIS hasta el 1 ago 2026: 3.992.404 ha (3,6% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "África",
+        "items": [
+          {
+            "text": "África · superficie quemada según GWIS hasta el 1 ago 2026: 61.870.300 ha (55,1% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "RD del Congo · GWIS hasta el 1 ago 2026: 13.611.126 ha (12,1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "Angola · GWIS hasta el 1 ago 2026: 7.473.034 ha (6,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "Sudáfrica · GWIS hasta el 1 ago 2026: 784.647 ha (0,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Asia",
+        "items": [
+          {
+            "text": "Asia · superficie quemada según GWIS hasta el 1 ago 2026: 19.733.182 ha (17,6% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "Rusia · GWIS hasta el 1 ago 2026: 3.335.029 ha (3,0%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "Rusia · más de 1,3 millones de ha ardiendo a la vez el 24 ago 2026 (no es un total de temporada): Sajá 987.067 ha; Krasnoyarsk 405.800 ha.",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "Norteamérica",
+        "items": [
+          {
+            "text": "Norteamérica · superficie quemada según GWIS hasta el 1 ago 2026: 6.804.905 ha (6,1% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "Estados Unidos · GWIS hasta el 1 ago 2026: 2.371.207 ha (2,1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "Canadá · GWIS hasta el 1 ago 2026: 2.031.754 ha (1,8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "Canadá · previsión estacional oficial del NIFC (14 sep 2026): unos 4,49 millones de ha en 5.132 incendios, cerca de la media de 10 años.",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "Estados Unidos · NIFC (2 oct 2026): 9.000.619 acres (unos 3,64 millones de ha) en 62.738 incendios; la media de 10 años es 6.106.514 acres.",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "Sudamérica",
+        "items": [
+          {
+            "text": "Sudamérica · superficie quemada según GWIS hasta el 1 ago 2026: 7.813.377 ha (7,0% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "Venezuela · GWIS hasta el 1 ago 2026: 2.977.466 ha (2,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "Brasil · GWIS hasta el 1 ago 2026: 2.030.209 ha (1,8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "Bolivia · GWIS hasta el 1 ago 2026: 546.490 ha (0,5%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "Brasil (Amazonas) · INPE contó 2.384 focos del 1 al 19 sep 2026, un 282% más que los 624 del mismo periodo de 2025 (vía BNC Amazonas).",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "Bolivia · unas 2.538 ha en el Parque Nacional Otuquis; también se informaron más incendios en Santa Cruz y Tarija, sin un total nacional disponible (20 jul 2026).",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "Oceanía",
+        "items": [
+          {
+            "text": "Oceanía · superficie quemada según GWIS hasta el 1 ago 2026: 12.061.714 ha (10,7% del total mundial publicado).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Notas sobre los datos",
+        "items": [
+          {
+            "text": "Las tablas regionales y nacionales de GWIS incluyen quemas agrícolas y planificadas además de incendios forestales; no son directamente comparables con las estimaciones de EFFIS solo de incendios forestales.",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "Cada cifra enlaza con su fuente citada."
+  },
+  "fr": {
+    "date": "Mis à jour vendredi 9 octobre 2026",
+    "details": "Voir la mise à jour quotidienne",
+    "close": "Fermer la mise à jour quotidienne",
+    "groups": [
+      {
+        "title": "Europe",
+        "items": [
+          {
+            "text": "Espagne · estimation satellitaire EFFIS : 300 998 ha au 1 oct. 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "Union européenne · estimation satellitaire EFFIS : 686 071 ha au 1 oct. 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "Europe · superficie brûlée selon GWIS au 1 août 2026 : 3 992 404 ha (3,6 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Afrique",
+        "items": [
+          {
+            "text": "Afrique · surface brûlée selon GWIS au 1 août 2026 : 61 870 300 ha (55,1 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "Rép. dém. du Congo · GWIS au 1 août 2026 : 13 611 126 ha (12,1 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "Angola · GWIS au 1 août 2026 : 7 473 034 ha (6,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "Afrique du Sud · GWIS au 1 août 2026 : 784 647 ha (0,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Asie",
+        "items": [
+          {
+            "text": "Asie · surface brûlée selon GWIS au 1 août 2026 : 19 733 182 ha (17,6 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "Russie · GWIS au 1 août 2026 : 3 335 029 ha (3,0 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "Russie · plus de 1,3 million d'ha brûlaient simultanément le 24 août 2026 (pas un total saisonnier) : Sakha 987 067 ha ; Krasnoïarsk 405 800 ha.",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "Amérique du Nord",
+        "items": [
+          {
+            "text": "Amérique du Nord · surface brûlée selon GWIS au 1 août 2026 : 6 804 905 ha (6,1 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "États-Unis · GWIS au 1 août 2026 : 2 371 207 ha (2,1 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "Canada · GWIS au 1 août 2026 : 2 031 754 ha (1,8 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "Canada · prévision saisonnière officielle du NIFC (14 sept. 2026) : environ 4,49 millions d'ha et 5 132 feux, près de la moyenne décennale.",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "États-Unis · NIFC (2 oct. 2026) : 9 000 619 acres (environ 3,64 millions d'ha) dans 62 738 feux ; la moyenne décennale est de 6 106 514 acres.",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "Amérique du Sud",
+        "items": [
+          {
+            "text": "Amérique du Sud · surface brûlée selon GWIS au 1 août 2026 : 7 813 377 ha (7,0 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "Venezuela · GWIS au 1 août 2026 : 2 977 466 ha (2,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "Brésil · GWIS au 1 août 2026 : 2 030 209 ha (1,8 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "Bolivie · GWIS au 1 août 2026 : 546 490 ha (0,5 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "Brésil (Amazonas) · l'INPE a compté 2 384 points chauds du 1er au 19 sept. 2026, soit 282 % de plus que les 624 de la même période en 2025 (via BNC Amazonas).",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "Bolivie · environ 2 538 ha dans le parc national Otuquis ; d'autres incendies ont été signalés à Santa Cruz et Tarija, sans total national disponible (20 juil. 2026).",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "Océanie",
+        "items": [
+          {
+            "text": "Océanie · surface brûlée selon GWIS au 1 août 2026 : 12 061 714 ha (10,7 % du total mondial publié).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Notes sur les données",
+        "items": [
+          {
+            "text": "Les tableaux régionaux et nationaux GWIS incluent les brûlages agricoles et planifiés ainsi que les feux de forêt ; ils ne sont pas directement comparables aux seules estimations EFFIS des feux de forêt.",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "Chaque chiffre renvoie à sa source."
+  },
+  "de": {
+    "date": "Aktualisiert am Freitag, 9. Oktober 2026",
+    "details": "Tagesupdate ansehen",
+    "close": "Tagesupdate schließen",
+    "groups": [
+      {
+        "title": "Europa",
+        "items": [
+          {
+            "text": "Spanien · EFFIS-Satellitenschätzung: 300.998 ha bis 1. Okt. 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "Europäische Union · EFFIS-Satellitenschätzung: 686.071 ha bis 1. Okt. 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "Europa · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 3.992.404 ha (3,6 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Afrika",
+        "items": [
+          {
+            "text": "Afrika · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 61.870.300 ha (55,1 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "DR Kongo · GWIS bis 1. Aug. 2026: 13.611.126 ha (12,1 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "Angola · GWIS bis 1. Aug. 2026: 7.473.034 ha (6,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "Südafrika · GWIS bis 1. Aug. 2026: 784.647 ha (0,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Asien",
+        "items": [
+          {
+            "text": "Asien · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 19.733.182 ha (17,6 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "Russland · GWIS bis 1. Aug. 2026: 3.335.029 ha (3,0 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "Russland · am 24. Aug. 2026 brannten gleichzeitig über 1,3 Mio. ha (keine Saisonbilanz): Sacha 987.067 ha; Krasnojarsk 405.800 ha.",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "Nordamerika",
+        "items": [
+          {
+            "text": "Nordamerika · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 6.804.905 ha (6,1 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "USA · GWIS bis 1. Aug. 2026: 2.371.207 ha (2,1 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "Kanada · GWIS bis 1. Aug. 2026: 2.031.754 ha (1,8 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "Kanada · offizielle saisonale NIFC-Prognose (14. Sept. 2026): etwa 4,49 Mio. ha bei 5.132 Bränden, nahe dem Zehnjahresmittel.",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "USA · NIFC (2. Okt. 2026): 9.000.619 acres (etwa 3,64 Mio. ha) bei 62.738 Bränden; der Zehnjahresdurchschnitt liegt bei 6.106.514 acres.",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "Südamerika",
+        "items": [
+          {
+            "text": "Südamerika · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 7.813.377 ha (7,0 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "Venezuela · GWIS bis 1. Aug. 2026: 2.977.466 ha (2,7 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "Brasilien · GWIS bis 1. Aug. 2026: 2.030.209 ha (1,8 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "Bolivien · GWIS bis 1. Aug. 2026: 546.490 ha (0,5 %).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "Brasilien (Amazonas) · INPE zählte vom 1.–19. Sept. 2026 2.384 Brandherde, 282 % mehr als 624 im gleichen Zeitraum 2025 (via BNC Amazonas).",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "Bolivien · etwa 2.538 ha im Nationalpark Otuquis; weitere Brände wurden in Santa Cruz und Tarija gemeldet, eine landesweite Summe liegt nicht vor (20. Juli 2026).",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "Ozeanien",
+        "items": [
+          {
+            "text": "Ozeanien · laut GWIS bis 1. Aug. 2026 verbrannte Fläche: 12.061.714 ha (10,7 % der veröffentlichten Weltsumme).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Datenhinweise",
+        "items": [
+          {
+            "text": "Die GWIS-Regional- und Ländertabellen enthalten neben Waldbränden auch landwirtschaftliche und geplante Brände; sie sind nicht direkt mit EFFIS-Schätzungen nur für Waldbrände vergleichbar.",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "Jede Zahl ist mit ihrer Quelle verknüpft."
+  },
+  "it": {
+    "date": "Aggiornato venerdì 9 ottobre 2026",
+    "details": "Vedi l'aggiornamento quotidiano",
+    "close": "Chiudi l'aggiornamento quotidiano",
+    "groups": [
+      {
+        "title": "Europa",
+        "items": [
+          {
+            "text": "Spagna · stima satellitare EFFIS: 300.998 ha al 1 ott 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "Unione europea · stima satellitare EFFIS: 686.071 ha al 1 ott 2026 (EFFIS via Ecoticias).",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "Europa · superficie bruciata secondo GWIS al 1 ago 2026: 3.992.404 ha (3,6% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Africa",
+        "items": [
+          {
+            "text": "Africa · superficie bruciata secondo GWIS al 1 ago 2026: 61.870.300 ha (55,1% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "RD del Congo · GWIS al 1 ago 2026: 13.611.126 ha (12,1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "Angola · GWIS al 1 ago 2026: 7.473.034 ha (6,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "Sudafrica · GWIS al 1 ago 2026: 784.647 ha (0,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Asia",
+        "items": [
+          {
+            "text": "Asia · superficie bruciata secondo GWIS al 1 ago 2026: 19.733.182 ha (17,6% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "Russia · GWIS al 1 ago 2026: 3.335.029 ha (3,0%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "Russia · oltre 1,3 milioni di ha bruciavano contemporaneamente il 24 ago 2026 (non è un totale stagionale): Sakha 987.067 ha; Krasnoyarsk 405.800 ha.",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "Nord America",
+        "items": [
+          {
+            "text": "Nord America · superficie bruciata secondo GWIS al 1 ago 2026: 6.804.905 ha (6,1% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "Stati Uniti · GWIS al 1 ago 2026: 2.371.207 ha (2,1%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "Canada · GWIS al 1 ago 2026: 2.031.754 ha (1,8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "Canada · previsione stagionale ufficiale NIFC (14 set 2026): circa 4,49 milioni di ha in 5.132 incendi, vicino alla media decennale.",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "Stati Uniti · NIFC (2 ott 2026): 9.000.619 acri (circa 3,64 milioni di ha) in 62.738 incendi; la media decennale è 6.106.514 acri.",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "Sud America",
+        "items": [
+          {
+            "text": "Sud America · superficie bruciata secondo GWIS al 1 ago 2026: 7.813.377 ha (7,0% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "Venezuela · GWIS al 1 ago 2026: 2.977.466 ha (2,7%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "Brasile · GWIS al 1 ago 2026: 2.030.209 ha (1,8%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "Bolivia · GWIS al 1 ago 2026: 546.490 ha (0,5%).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "Brasile (Amazonas) · INPE ha contato 2.384 focolai dall'1 al 19 set 2026, il 282% in più rispetto ai 624 dello stesso periodo 2025 (via BNC Amazonas).",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "Bolivia · circa 2.538 ha nel Parco nazionale Otuquis; altri incendi segnalati a Santa Cruz e Tarija, senza un totale nazionale disponibile (20 lug 2026).",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "Oceania",
+        "items": [
+          {
+            "text": "Oceania · superficie bruciata secondo GWIS al 1 ago 2026: 12.061.714 ha (10,7% del totale mondiale pubblicato).",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "Note sui dati",
+        "items": [
+          {
+            "text": "Le tabelle regionali e nazionali GWIS includono incendi agricoli e pianificati oltre agli incendi boschivi; non sono direttamente confrontabili con le stime EFFIS dei soli incendi boschivi.",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "Ogni cifra rimanda alla fonte citata."
+  },
+  "zh": {
+    "date": "更新于2026年10月9日，星期五",
+    "details": "查看每日更新",
+    "close": "关闭每日更新",
+    "groups": [
+      {
+        "title": "欧洲",
+        "items": [
+          {
+            "text": "西班牙·EFFIS卫星估算：截至2026年10月1日为300,998公顷（EFFIS，经Ecoticias）。",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "spain-effis"
+          },
+          {
+            "text": "欧盟·EFFIS卫星估算：截至2026年10月1日为686,071公顷（EFFIS，经Ecoticias）。",
+            "href": "https://www.ecoticias.com/medio-ambiente/incendios-espana-300998-hectareas-triple-media-2026",
+            "id": "eu-effis"
+          },
+          {
+            "text": "欧洲·GWIS截至2026年8月1日的过火面积：3,992,404公顷（占已公布全球总量的3.6%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "europe-gwis"
+          }
+        ]
+      },
+      {
+        "title": "非洲",
+        "items": [
+          {
+            "text": "非洲·GWIS截至2026年8月1日的过火面积：61,870,300公顷（占已公布全球总量的55.1%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "africa-gwis"
+          },
+          {
+            "text": "刚果民主共和国·GWIS截至2026年8月1日：13,611,126公顷（12.1%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "dr-congo-gwis"
+          },
+          {
+            "text": "安哥拉·GWIS截至2026年8月1日：7,473,034公顷（6.7%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "angola-gwis"
+          },
+          {
+            "text": "南非·GWIS截至2026年8月1日：784,647公顷（0.7%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-africa-gwis"
+          }
+        ]
+      },
+      {
+        "title": "亚洲",
+        "items": [
+          {
+            "text": "亚洲·GWIS截至2026年8月1日的过火面积：19,733,182公顷（占已公布全球总量的17.6%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "asia-gwis"
+          },
+          {
+            "text": "俄罗斯·GWIS截至2026年8月1日：3,335,029公顷（3.0%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "russia-gwis"
+          },
+          {
+            "text": "俄罗斯·2026年8月24日同时有超过130万公顷在燃烧（非季节总量）：萨哈987,067公顷；克拉斯诺亚尔斯克405,800公顷。",
+            "href": "https://www.themoscowtimes.com/2026/08/24/siberian-wildfires-reach-35m-acres-across-krasnoyarsk-and-sakha-republic-a93565",
+            "id": "russia-current"
+          }
+        ]
+      },
+      {
+        "title": "北美洲",
+        "items": [
+          {
+            "text": "北美洲·GWIS截至2026年8月1日的过火面积：6,804,905公顷（占已公布全球总量的6.1%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "north-america-gwis"
+          },
+          {
+            "text": "美国·GWIS截至2026年8月1日：2,371,207公顷（2.1%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "us-gwis"
+          },
+          {
+            "text": "加拿大·GWIS截至2026年8月1日：2,031,754公顷（1.8%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "canada-gwis"
+          },
+          {
+            "text": "加拿大·NIFC官方季节展望（2026年9月14日）：约449万公顷、5,132起火灾，接近十年平均水平。",
+            "href": "https://www.nifc.gov/nicc-files/predictive/outlooks/NA_Outlook.pdf",
+            "id": "canada-outlook"
+          },
+          {
+            "text": "美国·NIFC（2026年10月2日）：9,000,619英亩（约364万公顷），共62,738起火灾；十年平均为6,106,514英亩。",
+            "href": "https://www.nifc.gov/fire-information/nfn",
+            "id": "us-current"
+          }
+        ]
+      },
+      {
+        "title": "南美洲",
+        "items": [
+          {
+            "text": "南美洲·GWIS截至2026年8月1日的过火面积：7,813,377公顷（占已公布全球总量的7.0%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "south-america-gwis"
+          },
+          {
+            "text": "委内瑞拉·GWIS截至2026年8月1日：2,977,466公顷（2.7%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "venezuela-gwis"
+          },
+          {
+            "text": "巴西·GWIS截至2026年8月1日：2,030,209公顷（1.8%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "brazil-gwis"
+          },
+          {
+            "text": "玻利维亚·GWIS截至2026年8月1日：546,490公顷（0.5%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "bolivia-gwis"
+          },
+          {
+            "text": "巴西（亚马孙州）·INPE统计2026年9月1日至19日有2,384个热点，比2025年同期624个高282%（经BNC Amazonas）。",
+            "href": "https://bncamazonas.com.br/municipios/queimadas-disparam-282-no-amazonas-enquanto-fumaca-encobre-manaus/",
+            "id": "brazil-current"
+          },
+          {
+            "text": "玻利维亚·奥图基斯国家公园约2,538公顷；圣克鲁斯和塔里哈也报告了更多火情，暂无全国总量（2026年7月20日）。",
+            "href": "https://www.infobae.com/america/america-latina/2026/07/20/incendios-forestales-se-extienden-en-el-este-y-sur-de-bolivia-en-medio-de-escasez-de-agua-y-diesel/",
+            "id": "bolivia-current"
+          }
+        ]
+      },
+      {
+        "title": "大洋洲",
+        "items": [
+          {
+            "text": "大洋洲·GWIS截至2026年8月1日的过火面积：12,061,714公顷（占已公布全球总量的10.7%）。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "oceania-gwis"
+          }
+        ]
+      },
+      {
+        "title": "数据说明",
+        "items": [
+          {
+            "text": "GWIS地区和国家表格除野火外还包括农业焚烧及计划焚烧；不能直接与仅统计野火的EFFIS估算作比较。",
+            "href": "https://www.visualcapitalist.com/where-the-world-is-burning-in-2026/",
+            "id": "gwis-methodology"
+          }
+        ]
+      }
+    ],
+    "sources": "每项数据均链接至所引来源。"
+  }
 }

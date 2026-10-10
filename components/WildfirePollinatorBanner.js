@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslation } from "../lib/useTranslation";
 import copy from "../messages/wildfireBanner.json";
-import WildfireArt from "./WildfireArt";
 import { usePathname } from "next/navigation";
 
 export default function WildfirePollinatorBanner() {
@@ -49,7 +49,28 @@ export default function WildfirePollinatorBanner() {
           </div>
         </details>
       </div>
-      <WildfireArt />
+      <figure className="wildfire-banner__photo">
+        <Image
+          src="/wildfire/nifc-box-springs-fire.jpg"
+          alt={locale === "es"
+            ? "Un bombero forestal trabaja junto a un frente de llamas."
+            : "A wildland firefighter works beside a line of flames."}
+          width={375}
+          height={500}
+          sizes="(max-width: 640px) 108px, 176px"
+          priority
+        />
+        <figcaption>
+          <a
+            href="https://www.flickr.com/photos/nifc/albums/72177720331309023"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={locale === "es" ? "Crédito de la fotografía: NIFC en Flickr" : "Photo credit: NIFC on Flickr"}
+          >
+            Photo: NIFC · Flickr
+          </a>
+        </figcaption>
+      </figure>
     </section>
   );
 }
