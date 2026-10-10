@@ -20,7 +20,7 @@ export default function WildfirePollinatorBanner() {
       <div className="wildfire-banner__copy">
         {/* Daily refresh: update only the date and figures in wildfireBanner.json. */}
         <p className="wildfire-banner__meta">Proveneya &amp; Nahiara · {content.date}</p>
-        <p>{message}</p>
+        <p>{message} <span className="wildfire-banner__report-links"><a href="https://www.asociacionnahiara.org/reports/wildfires-and-pollinators-worldwide-2026.pdf" target="_blank" rel="noreferrer">{locale === "es" ? "Informe PDF" : "PDF report"}</a> · <a href="https://www.asociacionnahiara.org/reports/wildfires-and-pollinators-worldwide-2026.docx" target="_blank" rel="noreferrer">Word</a></span></p>
         <details className="wildfire-banner__details">
           <summary>{content.details}</summary>
           <div className="wildfire-banner__data">
