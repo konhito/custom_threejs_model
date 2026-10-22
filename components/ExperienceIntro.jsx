@@ -23,7 +23,7 @@ export default function ExperienceIntro() {
   const [globeVisible, setGlobeVisible] = useState(false);
   const [loaderFallback, setLoaderFallback] = useState(false);
   const globeSectionRef = useRef(null);
-  const { t } = useTranslation();
+  const { t, isLoading: translationsLoading } = useTranslation();
   useEffect(() => {
     const readNativeProgress = (scrollY = window.scrollY) => {
       const introDistance = Math.max(1, window.innerHeight * 2.2);
@@ -74,25 +74,25 @@ export default function ExperienceIntro() {
       <main className={styles.experience}>
         <div className={styles.canvas} style={{ opacity: sceneOpacity }}><IntroCanvas onReady={markIntroReady} /></div>
         <header className={styles.chrome} style={{ opacity: sceneOpacity }}>
-          <a href="/" className={styles.wordmark} aria-label="AquaMundi home">
-            AquaMundi
-          </a>
+          {!translationsLoading && <a href="/" className={styles.wordmark} aria-label={t("nav.homeAriaLabel")}>
+            {t("home.brandName")}
+          </a>}
         </header>
-        <div className={`${styles.copy} ${styles.introCopy}`} style={{ opacity: (1 - introFade) * sceneOpacity, transform: `translate(-50%, ${introFade * -2}vh)` }}>
+        {!translationsLoading && <div className={`${styles.copy} ${styles.introCopy}`} style={{ opacity: (1 - introFade) * sceneOpacity, transform: `translate(-50%, ${introFade * -2}vh)` }}>
           <p className={styles.heroEyebrow}>{t("home.heroSubtitle")}</p>
           <h1 className={styles.heroHeading}>
             <span>{t("home.heroTitle")}</span>
             <span>{t("home.heroTitleLine2")}</span>
           </h1>
           <a className={styles.gameLink} href="/game">{t("home.cardGameCta")} <span aria-hidden="true">→</span></a>
-        </div>
+        </div>}
         <div className={styles.spacer} aria-hidden="true" />
       </main>
 
       <div className={styles.cloudBridge} aria-hidden="true" />
 
       <div className="relative min-h-screen bg-white">
-        <main role="main" aria-label="AquaMundi, a living archive of biodiversity" className="home-experience relative">
+        <main role="main" aria-label={translationsLoading ? undefined : t("home.experienceAriaLabel")} className="home-experience relative">
           <section ref={globeSectionRef} id="globe-section" className="home-archive-section relative w-full py-20 md:py-28">
             <div className="min-h-[70vh] flex items-center justify-center">
               <div className="relative w-[92%] max-w-[1320px] h-[78vh] max-h-[820px] overflow-hidden rounded-[20px] bg-[#e6e6e2]">
