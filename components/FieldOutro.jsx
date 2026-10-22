@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useTranslation } from "../lib/useTranslation";
 import styles from "./FieldOutro.module.css";
 
-const motes = Array.from({ length: 14 }, (_, index) => index);
-
 export default function FieldOutro() {
   const { t, isLoading } = useTranslation();
   const columns = [
@@ -16,15 +14,7 @@ export default function FieldOutro() {
   if (isLoading) return null;
 
   return (
-    <footer className={styles.outro} aria-label={t("footer.fieldObservatoryAriaLabel")}>
-      <Image
-        src="/landing/field-observatory-outro.png"
-        alt={t("footer.fieldObservatoryImageAlt")}
-        fill
-        sizes="100vw"
-        className={styles.image}
-      />
-      <div className={styles.dusk} aria-hidden="true" />
+    <footer className={styles.outro} aria-label={t("footer.navigationAriaLabel")}>
       <div className={styles.content}>
         <div className={styles.brand}>
           <Link href="/" className={styles.brandLink} aria-label={t("nav.homeAriaLabel")}>
@@ -41,18 +31,6 @@ export default function FieldOutro() {
             </section>
           ))}
         </nav>
-      </div>
-      <div className={styles.motes} aria-hidden="true">
-        {motes.map((mote) => (
-          <i
-            key={mote}
-            style={{
-              "--delay": `${mote * -0.5}s`,
-              "--left": `${6 + mote * 6.8}%`,
-              "--bottom": `${8 + mote * 2.6}%`,
-            }}
-          />
-        ))}
       </div>
       <p className={styles.copyright}>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
     </footer>
