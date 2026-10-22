@@ -10,8 +10,8 @@ export default function GlobeAnimation({ country }) {
       <div>
         <p className="mb-4 text-5xl" aria-hidden="true">✦</p>
         {country && <img src={getCompleteFlowerPath(country.folder, "svg")} alt="" className="mx-auto mb-5 h-48 w-48 object-contain sm:h-56 sm:w-56" />}
-        <h1 className="font-['Fredoka_One'] text-3xl sm:text-5xl">{locale === "es" ? "¡Tu jardín ha crecido!" : "Your garden grew!"}</h1>
-        <p className="mt-3 text-lg text-[#d6eeb9]">{locale === "es" ? `Ya puedes explorar el ${t(`countries.${country.id.toLowerCase()}.flowerName`)}.` : `${country?.flowerName} is ready to explore.`}</p>
+        <h1 className="font-['Fredoka_One'] text-3xl sm:text-5xl">{t("gamePilot.ui.gardenGrew")}</h1>
+        <p className="mt-3 text-lg text-[#d6eeb9]">{t("gamePilot.ui.gardenExplore", { flowerName: locale === "es" ? t(`countries.${country.id.toLowerCase()}.flowerName`) : country?.flowerName })}</p>
       </div>
     </main>
   );

@@ -1364,6 +1364,231 @@
     "selectionCriteriaSubtitle": "Cada flor se elige cuidadosamente basándose en estos principios fundamentales",
     "selectionMethodology": "Nuestra metodología rigurosa garantiza la precisión y autenticidad cultural",
     "exploreGlobe": "Explorar el Globo"
+  },
+  "gamePilot": {
+    "ui": {
+      "introTitle": "Guardianes de las Flores",
+      "switchLanguage": "English",
+      "introDescription": "Voltea las cartas. Encuentra seis pétalos. Ayuda a florecer al clavel.",
+      "play": "¡A jugar!",
+      "playAria": "Jugar",
+      "petal": "Pétalo",
+      "minion": "Súbdito",
+      "guardian": "Guardián",
+      "revealCard": "Revelar carta",
+      "muted": "Activar sonido",
+      "unmuted": "Silenciar",
+      "boardTitle": "Restaura el {flowerName}",
+      "boardAria": "Juego de cartas del {flowerName}",
+      "boardEyebrow": "Guardianes de las Flores",
+      "thisFlower": "esta flor",
+      "petalsCollected": "Pétalos recogidos",
+      "petalsProgress": "{count} de 6 pétalos recogidos",
+      "boardHint": "Elige una carta para descubrir qué se esconde debajo.",
+      "blooming": "¡Una flor está floreciendo!",
+      "gardenAdded": "¡Tu flor ya tiene un lugar en el jardín!",
+      "gardenGrew": "¡Tu jardín ha crecido!",
+      "gardenExplore": "Ya puedes explorar el {flowerName}.",
+      "continueQuiz": "Continuar al cuestionario",
+      "flowerRevealed": "Flor revelada",
+      "removeFavorite": "Quitar de favoritos",
+      "addFavorite": "Añadir a favoritos",
+      "shareFlower": "Compartir esta flor",
+      "shareText": "🌸 {flowerName} ({scientificName}), flor representativa de {country}.\n\nDescubre más en AquaMundi.",
+      "copied": "✓ Copiado al portapapeles",
+      "exploreFlower": "Explora la flor",
+      "explored": "explorados",
+      "factHint": "Elige una carta para descubrir un dato sobre la flor.",
+      "factAria": "{label}: {action} dato floral",
+      "close": "cerrar",
+      "reveal": "revelar",
+      "tapFlip": "¡Toca para voltear!",
+      "tapReveal": "Toca para revelar",
+      "scroll": "desliza",
+      "tapClose": "Toca para cerrar",
+      "factsComplete": "{count} datos revelados · Conocimiento descubierto",
+      "profile": "Perfil AquaMundi",
+      "quizPrompt": "¿Quieres poner a prueba lo aprendido?",
+      "profileIntro": "El {flowerName} ({scientificName}) es una flor representativa de {country}.",
+      "takeQuiz": "¿Listo? ¡Haz el cuestionario!",
+      "fiveQuestions": "(5 preguntas)",
+      "noQuiz": "Aún no hay cuestionario para esta flor.",
+      "continue": "Continuar",
+      "perfect": "Perfecto",
+      "wellDone": "Bien hecho",
+      "practice": "Sigue practicando",
+      "outstanding": "¡Excelente! 🌟",
+      "excellent": "¡Muy bien! 🌸",
+      "keepLearning": "¡Sigue aprendiendo! 🌱",
+      "perfectSummary": "Conoces muy bien esta flor.",
+      "goodSummary": "{score} de {total} respuestas correctas. ¡Buen trabajo!",
+      "retrySummary": "{score} respuestas correctas. Repasa los datos e inténtalo de nuevo.",
+      "unlockGarden": "Añadir la flor al jardín",
+      "retry": "Intentar de nuevo para mejorar",
+      "knowledgeQuiz": "Cuestionario",
+      "quizTitle": "Cuestionario: {flowerName}",
+      "quizIntro": "{count} preguntas sobre los secretos de esta flor",
+      "quizTopics": "Polinizadores · País · Conservación · Cultura",
+      "startQuiz": "Empezar",
+      "questionProgress": "Pregunta {current} de {total}",
+      "correct": "🌟 ¡Correcto!",
+      "didYouKnow": "💡 ¿Sabías que...?",
+      "seeScore": "Ver mi puntuación →",
+      "nextQuestion": "Siguiente pregunta →",
+      "worldMap": "Mapa del mundo",
+      "restored": "Restaurada",
+      "notRestored": "Aún no restaurada",
+      "gardenProgress": "Progreso del jardín",
+      "locked": "Bloqueada",
+      "badgeUnlocked": "¡Insignia desbloqueada!"
+    },
+    "spain": {
+      "flowerName": "Clavel",
+      "country": "España",
+      "commonNames": "Clavel, clavel común",
+      "parameters": [
+        {
+          "key": "morphology",
+          "label": "Morfología",
+          "value": "Flores de 3 a 5 cm, con pétalos dentados o festoneados, a menudo rojos o rosados. Sus tallos miden de 40 a 80 cm. Es una planta herbácea perenne."
+        },
+        {
+          "key": "habitat",
+          "label": "Hábitat",
+          "value": "Crece en jardines mediterráneos, campos ornamentales y laderas rocosas calizas. Es originario de la cuenca mediterránea y prospera en climas cálidos y soleados."
+        },
+        {
+          "key": "historicalOrigin",
+          "label": "Origen histórico",
+          "value": "Dianthus significa «flor de los dioses» en griego. Griegos y romanos cultivaban claveles para hacer guirnaldas. En España, el clavel rojo se asocia al folclore, el flamenco y las fiestas."
+        },
+        {
+          "key": "nationalStatus",
+          "label": "Condición nacional",
+          "value": "El clavel es ampliamente considerado la flor nacional de España por su presencia en la cultura popular. No existe un decreto único que lo establezca oficialmente."
+        },
+        {
+          "key": "conservationStatus",
+          "label": "Conservación",
+          "value": "Los claveles cultivados son comunes. Algunas especies silvestres de Dianthus sufren presión local por la agricultura intensiva y las sequías mediterráneas."
+        },
+        {
+          "key": "relevantPollinator",
+          "label": "Polinizadores principales",
+          "value": "Mariposas y polillas, especialmente las de lengua larga, pueden alcanzar el néctar de sus flores tubulares."
+        },
+        {
+          "key": "culturalSignificance",
+          "label": "Importancia cultural",
+          "value": "En España, el clavel aparece en fiestas, actuaciones de flamenco y procesiones de Semana Santa. Suele representar el amor y la pasión."
+        },
+        {
+          "key": "traditionalUses",
+          "label": "Usos tradicionales",
+          "value": "Se usa como flor ornamental y de corte. Los pétalos también se han empleado en infusiones y como decoración comestible."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "¿Qué significa el nombre «Dianthus»?",
+          "options": [
+            "Flor de Venus",
+            "Flor de los dioses",
+            "Joya roja",
+            "Rey del jardín"
+          ],
+          "answer": 1,
+          "explanation": "Proviene de las palabras griegas para «dios» y «flor»."
+        },
+        {
+          "q": "¿Con qué expresiones culturales españolas se asocia el clavel?",
+          "options": [
+            "Carreras de caballos",
+            "Flamenco y fiestas",
+            "Partidos de fútbol",
+            "Esquí"
+          ],
+          "answer": 1,
+          "explanation": "El clavel es un símbolo frecuente en el flamenco y las fiestas populares."
+        },
+        {
+          "q": "¿Qué animales pueden polinizar las flores tubulares del clavel?",
+          "options": [
+            "Aves marinas",
+            "Mariposas y polillas",
+            "Mamíferos",
+            "Peces"
+          ],
+          "answer": 1,
+          "explanation": "Las mariposas y las polillas de lengua larga pueden llegar al néctar."
+        },
+        {
+          "q": "¿En qué celebraciones aparecen claveles en las procesiones?",
+          "options": [
+            "La Tomatina",
+            "Semana Santa",
+            "Año Nuevo chino",
+            "Oktoberfest"
+          ],
+          "answer": 1,
+          "explanation": "Los claveles se utilizan en procesiones de Semana Santa."
+        },
+        {
+          "q": "¿Qué presión ambiental afecta a algunas especies silvestres de Dianthus?",
+          "options": [
+            "Hielo polar",
+            "Sequías mediterráneas",
+            "Actividad volcánica",
+            "Mareas"
+          ],
+          "answer": 1,
+          "explanation": "Las sequías y la pérdida de hábitat pueden afectar a sus poblaciones silvestres."
+        }
+      ]
+    },
+    "cardNames": {
+      "climatechange": "Cambio climático",
+      "deforestation": "Deforestación",
+      "exploitation": "Explotación",
+      "ignorance": "Ignorancia",
+      "intentionalfire": "Incendio intencionado",
+      "education": "Educación",
+      "floraljustice": "Justicia floral",
+      "naturalbalance": "Equilibrio natural",
+      "reforestation": "Reforestación",
+      "water": "Agua",
+      "wildcard": "Comodín"
+    },
+    "badges": {
+      "firstFlip": [
+        "Primer descubrimiento",
+        "Has volteado tu primera carta"
+      ],
+      "explorer": [
+        "Explorador",
+        "Has revelado cuatro datos"
+      ],
+      "botanist": [
+        "Experto en botánica",
+        "Has revelado los ocho datos"
+      ],
+      "speedReader": [
+        "Lector veloz",
+        "Has revelado todas las cartas en menos de 30 segundos"
+      ]
+    }
+  },
+  "cookieConsent": {
+    "aria": "Consentimiento de cookies",
+    "title": "Tus opciones de privacidad",
+    "intro": "Usamos almacenamiento esencial para guardar esta elección y análisis opcionales solo si los permites. Lee nuestra",
+    "privacy": "Política de privacidad",
+    "and": "y el",
+    "legal": "Aviso legal",
+    "analytics": "Cookies de análisis",
+    "analyticsDesc": "Nos ayudan a conocer el uso general del sitio. Son opcionales.",
+    "reject": "Rechazar opcionales",
+    "configure": "Configurar",
+    "accept": "Aceptar selección"
   }
 }
-

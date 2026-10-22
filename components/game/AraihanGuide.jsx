@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "@/lib/useTranslation";
-import { spanishCardNames } from "@/lib/spanishGamePilot";
 
 export default function AraihanGuide({ message, onAction, actionText, showAction, cardType, country, guardianData, isIntro, petalData }) {
   const { t, locale } = useTranslation();
@@ -23,22 +22,11 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
       } else {
         // Educational phrases for each petal
         const petalNumber = petalData?.petalNumber || 1;
-        const countryName = locale === "es" && country?.id ? t(`countries.${country.id.toLowerCase()}.name`) : typeof country === 'string' ? country : (country?.country || country?.name || "this flower");
-        if (locale === "es") return t(`gameMessages.petal${petalNumber}`, { country: countryName });
-        
-        const educationalPhrases = {
-          1: `Petal 1 collected! Each petal represents a part of ${countryName}'s natural heritage. Flowers are essential for biodiversity and ecosystem health.`,
-          2: `Petal 2 collected! Did you know that flowers help maintain the balance of nature? They provide food and shelter for many creatures.`,
-          3: `Petal 3 collected! Flowers are not just beautiful. They play a crucial role in pollination, helping plants reproduce and thrive.`,
-          4: `Petal 4 collected! National flowers like ${countryName}'s represent cultural identity and connection to the land. They tell stories of history and tradition.`,
-          5: `Petal 5 collected! Conservation of flowers protects entire ecosystems. When we protect flowers, we protect the pollinators and wildlife that depend on them.`,
-          6: `Petal 6 collected! You've collected all petals! Each petal you found teaches us about the importance of preserving our natural world for future generations.`
-        };
-        
-        return educationalPhrases[petalNumber] || `You found petal ${petalNumber} of the flower of ${countryName}. Well done, guardian!`;
+        const countryName = locale === "es" && country?.id ? t(`countries.${country.id.toLowerCase()}.name`) : typeof country === 'string' ? country : (country?.country || country?.name || t("gamePilot.ui.thisFlower"));
+        return t(`gameMessages.petal${petalNumber}`, { country: countryName });
       }
     } else if (cardType === "minion") {
-      const minionName = locale === "es" ? spanishCardNames[guardianData?.id] || "súbdito" : guardianData?.name || "minion";
+      const minionName = locale === "es" ? t(`gamePilot.cardNames.${guardianData?.id}`) : guardianData?.name || t("gamePilot.ui.minion");
       if (showAction) {
         // 2-3 words only for intro dialog
         return t("gameMessages.minionRevealed");

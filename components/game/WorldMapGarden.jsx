@@ -49,7 +49,7 @@ export default function WorldMapGarden({ completedFlowers = [], currentFlower })
       <iframe
         src="/cartoon-world-map.html"
         className="absolute inset-0 w-full h-full border-0 rounded-2xl"
-        title={locale === "es" ? "Mapa del mundo" : "World Map"}
+        title={t("gamePilot.ui.worldMap")}
         scrolling="no"
       />
 
@@ -191,8 +191,8 @@ export default function WorldMapGarden({ completedFlowers = [], currentFlower })
                   )}
                   <div className="pt-2 border-t border-white/5">
                     {isCompleted
-                      ? <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#34d399" }}>{locale === "es" ? "Restaurada" : "Restored"}</span>
-                      : <span className="text-xs tracking-widest uppercase" style={{ color: "#4b5563" }}>{locale === "es" ? "Aún no restaurada" : "Not yet restored"}</span>
+                      ? <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "#34d399" }}>{t("gamePilot.ui.restored")}</span>
+                      : <span className="text-xs tracking-widest uppercase" style={{ color: "#4b5563" }}>{t("gamePilot.ui.notRestored")}</span>
                     }
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export default function WorldMapGarden({ completedFlowers = [], currentFlower })
       <div className="absolute top-3 right-3 text-right pointer-events-none rounded-xl px-3 py-2"
         style={{ zIndex: 20, background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)" }}>
         <p className="text-[7px] font-bold tracking-[0.28em] uppercase mb-0.5"
-          style={{ color: "rgba(134,239,172,0.7)" }}>{locale === "es" ? "Progreso del jardín" : "Garden Progress"}</p>
+          style={{ color: "rgba(134,239,172,0.7)" }}>{t("gamePilot.ui.gardenProgress")}</p>
         <p className="font-bold text-white leading-none"
           style={{ fontFamily: '"Cormorant Garamond",Georgia,serif', fontSize: "1.9rem" }}>
           {allCompleted.length}
@@ -213,8 +213,8 @@ export default function WorldMapGarden({ completedFlowers = [], currentFlower })
         </p>
         <div className="flex items-center justify-end gap-3 mt-1.5">
           {[
-            ["linear-gradient(135deg,#86efac,#22c55e)", locale === "es" ? "Restaurada" : "Restored"],
-            ["linear-gradient(135deg,#1f2937,#111827)", locale === "es" ? "Bloqueada" : "Locked"],
+            ["linear-gradient(135deg,#86efac,#22c55e)", t("gamePilot.ui.restored")],
+            ["linear-gradient(135deg,#1f2937,#111827)", t("gamePilot.ui.locked")],
           ].map(([bg, label]) => (
             <div key={label} className="flex items-center gap-1">
               <div className="w-2.5 h-2.5 rounded-full" style={{ background: bg }}/>

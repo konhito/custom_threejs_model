@@ -25,9 +25,9 @@ const iconMap = {
 };
 
 export default function FlowerDetailsReveal({ country, onComplete }) {
-  const { locale } = useTranslation();
+  const { locale, messages, t } = useTranslation();
   const baseDetail = getFlowerDetail(country.id);
-  const detail = locale === "es" && country.id === "SPAIN" ? localizeSpanishSpain(baseDetail) : baseDetail;
+  const detail = locale === "es" && country.id === "SPAIN" && messages?.gamePilot?.spain ? localizeSpanishSpain(baseDetail, messages.gamePilot.spain) : baseDetail;
 
   const [phase, setPhase] = useState("bloom"); // bloom → revealed → reading
   const [revealedCards, setRevealedCards] = useState([]);
@@ -279,7 +279,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         <div className="text-center text-white">
           <p className="text-xl mb-6">🌸 {country.flowerName}</p>
           <button onClick={onComplete} className="px-8 py-3 bg-emerald-500 text-white rounded-xl font-bold">
-            {locale === "es" ? "Continuar al cuestionario" : "Continue to Quiz"} →
+            {t("gamePilot.ui.continueQuiz")} →
           </button>
         </div>
       </div>
@@ -334,7 +334,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-[#a9cbac] bg-[#dcecc8]">
               <Sprout className="w-4 h-4 text-amber-700" />
-              <span className="text-amber-800 text-sm font-bold tracking-widest uppercase">{locale === "es" ? "Flor revelada" : "Flower Revealed"}</span>
+              <span className="text-amber-800 text-sm font-bold tracking-widest uppercase">{t("gamePilot.ui.flowerRevealed")}</span>
             </div>
             
             {/* Favorite button */}
@@ -344,7 +344,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
               style={{
                 animation: isFavorited ? "heart-beat 0.5s ease-out" : "none"
               }}
-              title={isFavorited ? locale === "es" ? "Quitar de favoritos" : "Remove from favorites" : locale === "es" ? "Añadir a favoritos" : "Add to favorites"}
+              title={t(`gamePilot.ui.${isFavorited ? "removeFavorite" : "addFavorite"}`)}
             >
               <Heart 
                 className={`w-5 h-5 transition-all duration-300 ${isFavorited ? 'text-pink-600 fill-pink-600' : 'text-pink-400'}`}
@@ -355,7 +355,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
             {/* Share button */}
             <button
               onClick={() => {
-                const shareText = locale === "es" ? `🌸 ${detail.flowerName} (${detail.scientificName}), flor representativa de ${detail.country}.\n\nDescubre más en AquaMundi.` : `🌸 ${detail.flowerName} (${detail.scientificName}) - National flower of ${detail.country}!\n\nDiscover more at AquaMundi.`;
+                const shareText = t("gamePilot.ui.shareText", { flowerName: detail.flowerName, scientificName: detail.scientificName, country: detail.country });
                 
                 if (navigator.share) {
                   navigator.share({
@@ -365,14 +365,14 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 } else {
                   navigator.clipboard.writeText(shareText);
                   const toast = document.createElement("div");
-                  toast.textContent = locale === "es" ? "✓ Copiado al portapapeles" : "✓ Copied to clipboard!";
+                  toast.textContent = t("gamePilot.ui.copied");
                   toast.style.cssText = "position:fixed;top:20px;right:20px;background:#f59e0b;color:white;padding:12px 24px;border-radius:12px;z-index:999;font-weight:bold;animation:fade-in-out 2s ease-out;box-shadow:0 4px 20px rgba(245,158,11,0.4);";
                   document.body.appendChild(toast);
                   setTimeout(() => toast.remove(), 2000);
                 }
               }}
               className="p-2 rounded-full border-2 border-blue-300 bg-blue-50 hover:bg-blue-100 transition-all duration-300 hover:scale-110"
-              title={locale === "es" ? "Compartir esta flor" : "Share this flower"}
+              title={t("gamePilot.ui.shareFlower")}
             >
               <Share2 
                 className="w-5 h-5 text-blue-600"
@@ -440,7 +440,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         {/* Section title + Progress Counter */}
         <div className="text-center mb-5 md:mb-6">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <h2 className="text-[#194638] text-lg md:text-xl font-['Fredoka_One']">{locale === "es" ? "Explora la flor" : "Explore the flower"}</h2>
+            <h2 className="text-[#194638] text-lg md:text-xl font-['Fredoka_One']">{t("gamePilot.ui.exploreFlower")}</h2>
             
             {/* Progress Counter */}
             <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-amber-300 bg-amber-50">
@@ -453,7 +453,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 }}>
                   {flippedCards.length}
                 </span>
-                <span className="text-amber-600">/{params.length}</span> {locale === "es" ? "explorados" : "Explored"}
+                <span className="text-amber-600">/{params.length}</span> {t("gamePilot.ui.explored")}
               </span>
               
               {/* Circular progress ring */}
@@ -483,7 +483,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
           </div>
           
           <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
-            {locale === "es" ? "Elige una carta para descubrir un dato sobre la flor." : "Pick a card to discover a new flower fact."}
+            {t("gamePilot.ui.factHint")}
           </p>
         </div>
 
@@ -513,7 +513,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                 onMouseEnter={() => setHoveredCard(i)}
                 onMouseLeave={() => setHoveredCard(null)}
                 role="button"
-                aria-label={locale === "es" ? `${param.label}: ${isFlipped ? "cerrar" : "revelar"} dato floral` : `${param.label}: ${isFlipped ? "close" : "reveal"} flower fact`}
+                aria-label={t("gamePilot.ui.factAria", { label: param.label, action: t(`gamePilot.ui.${isFlipped ? "close" : "reveal"}`) })}
                 tabIndex={0}
               >
                 {/* Gesture Hint - Only on first card, first visit */}
@@ -525,7 +525,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                     }}
                   >
                     <Hand className="w-4 h-4" strokeWidth={2.5} />
-                    {locale === "es" ? "¡Toca para voltear!" : "Tap to flip!"}
+                    {t("gamePilot.ui.tapFlip")}
                   </div>
                 )}
               
@@ -566,7 +566,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                     <span className="text-[#194638] text-sm md:text-base font-bold text-center px-2 leading-tight">
                       {param.label}
                     </span>
-                    <span className="text-amber-600 text-xs md:text-sm mt-1">{locale === "es" ? "Toca para revelar" : "Tap to reveal"}</span>
+                    <span className="text-amber-600 text-xs md:text-sm mt-1">{t("gamePilot.ui.tapReveal")}</span>
 
                     {/* Shimmer on hover */}
                     <div
@@ -614,13 +614,13 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
                           <div className="bg-gradient-to-t from-[#fffbf5] via-[#fffbf5]/80 to-transparent w-full h-12 absolute bottom-0" />
                           <div className="relative z-10 flex items-center gap-1 text-amber-600 text-[10px] animate-pulse">
                             <ChevronsDown className="w-3 h-3" strokeWidth={2.5} />
-                            {locale === "es" ? "desliza" : "scroll"}
+                            {t("gamePilot.ui.scroll")}
                           </div>
                         </div>
                       )}
                     </div>
                     {/* Close hint */}
-                    <div className="text-amber-600 text-xs md:text-sm text-center mt-3 flex-shrink-0 font-medium">{locale === "es" ? "Toca para cerrar" : "tap to close"}</div>
+                    <div className="text-amber-600 text-xs md:text-sm text-center mt-3 flex-shrink-0 font-medium">{t("gamePilot.ui.tapClose")}</div>
                   </div>
                 </div>
               </div>
@@ -675,7 +675,7 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
               ))}
             </div>
             <p className="text-amber-700 text-xs tracking-widest uppercase font-bold">
-              {locale === "es" ? `${params.length} datos revelados · Conocimiento descubierto` : `${params.length} Parameters Revealed · Knowledge Unlocked`}
+              {t("gamePilot.ui.factsComplete", { count: params.length })}
             </p>
           </div>
         )}
@@ -694,10 +694,12 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
         >
           <div className="flex items-center gap-3 mb-4">
             <Shield className="w-6 h-6 md:w-7 md:h-7 text-amber-800" strokeWidth={2} />
-            <span className="text-amber-900 font-bold text-base md:text-lg uppercase tracking-wider">{locale === "es" ? "Perfil AquaMundi" : "AquaMundi Profile"}</span>
+            <span className="text-amber-900 font-bold text-base md:text-lg uppercase tracking-wider">{t("gamePilot.ui.profile")}</span>
           </div>
           <p className="text-gray-800 text-sm md:text-base leading-relaxed">
-            {locale === "es" ? <>El <strong>{detail.flowerName}</strong> ({detail.scientificName}) es una flor representativa de {detail.country}. {detail.parameters.find(p => p.key === "relevantPollinator")?.value} ¿Quieres poner a prueba lo aprendido?</> : <><span className="text-amber-800 font-bold">{detail.flowerName}</span> ({detail.scientificName}) is the national flower of{" "}<span className="text-amber-700 font-bold">{detail.country}</span>. Its primary pollinator is the{" "}<span className="text-amber-700 font-semibold">{(detail.parameters.find(p => p.key === "relevantPollinator")?.value || "").split("—")[0].trim().replace(/^\w+\s\(/, "").replace(/\).*$/, "") || "local pollinators"}</span>. Ready to test your knowledge?</>}
+            {t("gamePilot.ui.profileIntro", { flowerName: detail.flowerName, scientificName: detail.scientificName, country: detail.country })}{" "}
+            {locale === "es" ? detail.parameters.find(p => p.key === "relevantPollinator")?.value : (detail.parameters.find(p => p.key === "relevantPollinator")?.value || "").split("—")[0].trim().replace(/^\w+\s\(/, "").replace(/\).*$/, "")}{" "}
+            {t("gamePilot.ui.quizPrompt")}
           </p>
         </div>
 
@@ -725,8 +727,8 @@ export default function FlowerDetailsReveal({ country, onComplete }) {
             />
             <span className="relative z-10 flex items-center gap-3 md:gap-4">
               <Bug className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
-              {locale === "es" ? "¿Listo? ¡Haz el cuestionario!" : "Ready? Take the Quiz!"}
-              <span className="text-amber-100 text-sm md:text-base">{locale === "es" ? "(5 preguntas)" : "(5 questions)"}</span>
+              {t("gamePilot.ui.takeQuiz")}
+              <span className="text-amber-100 text-sm md:text-base">{t("gamePilot.ui.fiveQuestions")}</span>
               <span className="text-xl">→</span>
             </span>
           </button>

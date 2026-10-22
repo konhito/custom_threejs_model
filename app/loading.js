@@ -1,8 +1,10 @@
 'use client';
 
 import { Flower2 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Loading() {
+  const isGame = usePathname() === '/game';
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center">
       <div className="text-center">
@@ -22,15 +24,15 @@ export default function Loading() {
         </div>
 
         {/* Loading Text */}
-        <h2 
+        {!isGame && <h2
           className="text-2xl md:text-3xl font-bold text-gray-800 mb-3"
           style={{ fontFamily: 'Orbitron, sans-serif' }}
         >
           Loading...
-        </h2>
-        <p className="text-gray-600">
+        </h2>}
+        {!isGame && <p className="text-gray-600">
           Preparing something beautiful for you
-        </p>
+        </p>}
 
         {/* Animated Dots */}
         <div className="flex items-center justify-center gap-2 mt-6">

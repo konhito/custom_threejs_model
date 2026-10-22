@@ -4,13 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Award, Trophy, Crown, Star, Zap, Target, X } from "lucide-react";
 import { useTranslation } from "@/lib/useTranslation";
 
-const SPANISH_BADGES = {
-  firstFlip: ["Primer descubrimiento", "Has volteado tu primera carta"],
-  explorer: ["Explorador", "Has revelado cuatro datos"],
-  botanist: ["Experto en botánica", "Has revelado los ocho datos"],
-  speedReader: ["Lector veloz", "Has revelado todas las cartas en menos de 30 segundos"],
-};
-
 const BADGE_TYPES = {
   firstFlip: {
     id: "firstFlip",
@@ -43,7 +36,7 @@ const BADGE_TYPES = {
 };
 
 export default function BadgeUnlock({ badge, onClose }) {
-  const { locale } = useTranslation();
+  const { locale, t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [particles, setParticles] = useState([]);
 
@@ -168,7 +161,7 @@ export default function BadgeUnlock({ badge, onClose }) {
 
           {/* Text */}
           <div className="mb-2">
-            <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">{locale === "es" ? "¡Insignia desbloqueada!" : "Badge Unlocked!"}</span>
+            <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">{t("gamePilot.ui.badgeUnlocked")}</span>
           </div>
           <h3 
             className="font-black text-2xl mb-2"
@@ -177,10 +170,10 @@ export default function BadgeUnlock({ badge, onClose }) {
               textShadow: `0 0 20px ${badgeData.color}80`
             }}
           >
-            {locale === "es" ? SPANISH_BADGES[badge][0] : badgeData.name}
+            {locale === "es" ? t(`gamePilot.badges.${badge}`)[0] : badgeData.name}
           </h3>
           <p className="text-white/70 text-sm">
-            {locale === "es" ? SPANISH_BADGES[badge][1] : badgeData.description}
+            {locale === "es" ? t(`gamePilot.badges.${badge}`)[1] : badgeData.description}
           </p>
         </div>
       </div>

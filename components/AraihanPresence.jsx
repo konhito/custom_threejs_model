@@ -9,7 +9,7 @@ export default function AraihanPresence() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  if (["/chat", "/shop", "/cart", "/checkout", "/library"].includes(pathname) || pathname.startsWith("/experience-lab") || pathname.startsWith("/admin")) return null;
+  if (["/chat", "/shop", "/cart", "/checkout", "/library", "/game"].includes(pathname) || pathname.startsWith("/experience-lab") || pathname.startsWith("/admin")) return null;
 
   return <aside className="fixed bottom-4 right-4 z-[120] sm:bottom-5 sm:right-20" aria-label="Araihan, companion of the Nahiara Universe">
     {open && <div className="mb-2 w-[min(21rem,calc(100vw-2rem))] overflow-hidden rounded-2xl bg-white shadow-[0_8px_18px_rgba(11,47,31,0.28)]">

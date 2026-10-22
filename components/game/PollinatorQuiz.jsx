@@ -3,7 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getFlowerDetail, getFlowerQuiz } from "@/lib/flowerDetailsData";
 import { getCompleteFlowerPath } from "@/lib/gameData";
-import { spanishSpain, localizeSpanishSpain } from "@/lib/spanishGamePilot";
+import { localizeSpanishSpain } from "@/lib/spanishGamePilot";
 import { useTranslation } from "@/lib/useTranslation";
 
 const QUESTION_THEMES = Array.from({ length: 5 }, () => ({ bg: "#fff8e8", accent: "#194638", ring: "rgba(25,70,56,0.12)", border: "#bfd9bd" }));
@@ -21,9 +21,10 @@ const ConfettiParticle = memo(function ConfettiParticle({ style, emoji }) {
 });
 
 export default function PollinatorQuiz({ country, onComplete }) {
-  const { locale } = useTranslation();
-  const detail = useMemo(() => locale === "es" && country.id === "SPAIN" ? localizeSpanishSpain(getFlowerDetail(country.id)) : getFlowerDetail(country.id), [country.id, locale]);
-  const allQuestions = useMemo(() => locale === "es" && country.id === "SPAIN" ? spanishSpain.quiz : getFlowerQuiz(country.id), [country.id, locale]);
+  const { locale, messages, t } = useTranslation();
+  const pilot = messages?.gamePilot?.spain;
+  const detail = useMemo(() => locale === "es" && country.id === "SPAIN" && pilot ? localizeSpanishSpain(getFlowerDetail(country.id), pilot) : getFlowerDetail(country.id), [country.id, locale, pilot]);
+  const allQuestions = useMemo(() => locale === "es" && country.id === "SPAIN" && pilot ? pilot.quiz : getFlowerQuiz(country.id), [country.id, locale, pilot]);
   const theme = QUESTION_THEMES;
 
   const [currentDeck, setCurrentDeck] = useState(0); // 0, 1, or 2
@@ -155,9 +156,9 @@ export default function PollinatorQuiz({ country, onComplete }) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
         <div className="text-center text-white">
-          <p className="text-xl mb-6">{locale === "es" ? "Aún no hay cuestionario para esta flor." : "No quiz available for this flower yet!"}</p>
+          <p className="text-xl mb-6">{t("gamePilot.ui.noQuiz")}</p>
           <button onClick={() => onComplete(0, 0, false)} className="px-8 py-3 bg-emerald-500 text-white rounded-xl font-bold">
-            {locale === "es" ? "Continuar" : "Continue"} →
+            {t("gamePilot.ui.continue")} →
           </button>
         </div>
       </div>
@@ -249,7 +250,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                   <span className="text-[10px] font-black uppercase tracking-widest" style={{
                     color: "#194638",
                   }}>
-                    {locale === "es" ? perfect ? "Perfecto" : great ? "Bien hecho" : "Sigue practicando" : perfect ? "Perfect" : great ? "Well Done" : "Keep Practicing"}
+                    {t(`gamePilot.ui.${perfect ? "perfect" : great ? "wellDone" : "practice"}`)}
                   </span>
                 </div>
                 <h2
@@ -259,14 +260,10 @@ export default function PollinatorQuiz({ country, onComplete }) {
                     color: "#194638",
                   }}
                 >
-                  {locale === "es" ? perfect ? "¡Excelente! 🌟" : great ? "¡Muy bien! 🌸" : "¡Sigue aprendiendo! 🌱" : perfect ? "Outstanding! 🌟" : great ? "Excellent! 🌸" : "Keep Learning! 🌱"}
+                  {t(`gamePilot.ui.${perfect ? "outstanding" : great ? "excellent" : "keepLearning"}`)}
                 </h2>
                 <p className="text-gray-600 text-xs md:text-sm leading-tight">
-                  {locale === "es" ? perfect ? "Conoces muy bien esta flor." : great ? `${score} de ${totalQ} respuestas correctas. ¡Buen trabajo!` : `${score} respuestas correctas. Repasa los datos e inténtalo de nuevo.` : perfect
-                    ? "Complete mastery of this flower's knowledge."
-                    : great
-                      ? `${score} of ${totalQ} correct. Impressive!`
-                      : `${score} correct. Review details to improve.`}
+                  {t(`gamePilot.ui.${perfect ? "perfectSummary" : great ? "goodSummary" : "retrySummary"}`, { score, total: totalQ })}
                 </p>
               </div>
             </div>
@@ -334,7 +331,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
             >
               <div className="flex items-center justify-center gap-2">
                 <span className="text-xl">🌍</span>
-                <span className="text-white font-black text-sm md:text-base tracking-wide">{locale === "es" ? "Añadir la flor al jardín" : "Unlock Flower in Garden"}</span>
+                <span className="text-white font-black text-sm md:text-base tracking-wide">{t("gamePilot.ui.unlockGarden")}</span>
                 <span className="text-white text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
               </div>
             </button>
@@ -349,7 +346,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
                 }}
               >
                 <div className="flex items-center justify-center gap-2">
-                  <span className="text-[#194638] font-bold text-sm md:text-base tracking-wide">{locale === "es" ? "Intentar de nuevo para mejorar" : "Try again for a higher score"}</span>
+                  <span className="text-[#194638] font-bold text-sm md:text-base tracking-wide">{t("gamePilot.ui.retry")}</span>
                 </div>
               </button>
             )}
@@ -383,16 +380,16 @@ export default function PollinatorQuiz({ country, onComplete }) {
             <img src={getCompleteFlowerPath(country.folder, "svg")} alt="" className="h-32 w-32 object-contain" />
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#dcecc8] mb-4">
-            <span className="text-[#194638] text-xs font-bold tracking-widest uppercase">{locale === "es" ? "Cuestionario" : "Knowledge Quiz"}</span>
+            <span className="text-[#194638] text-xs font-bold tracking-widest uppercase">{t("gamePilot.ui.knowledgeQuiz")}</span>
           </div>
           <h1 className="font-['Fredoka_One'] text-4xl mb-3" style={{ color: "#194638" }}>
-            {locale === "es" ? `Cuestionario: ${detail?.flowerName || country.flowerName}` : `${detail?.flowerName || country.flowerName} Quiz`}
+            {t("gamePilot.ui.quizTitle", { flowerName: detail?.flowerName || country.flowerName })}
           </h1>
           <p className="text-gray-600 text-sm mb-2">
-            {locale === "es" ? `${totalQ} preguntas sobre los secretos de esta flor` : `${totalQ} questions about your flower's secrets!`}
+            {t("gamePilot.ui.quizIntro", { count: totalQ })}
           </p>
           <p className="text-gray-500 text-xs mb-8">
-            {locale === "es" ? "Polinizadores · País · Conservación · Cultura" : "Pollinators · Country · Conservation · Culture"}
+            {t("gamePilot.ui.quizTopics")}
           </p>
 
           {/* Question count badges */}
@@ -416,7 +413,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               boxShadow: "0 5px 0 #0c3027",
             }}
           >
-            <span className="flex items-center gap-2">{locale === "es" ? "Empezar" : "Start Quiz"} →</span>
+            <span className="flex items-center gap-2">{t("gamePilot.ui.startQuiz")} →</span>
           </button>
         </div>
 
@@ -469,7 +466,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               ))}
             </div>
             <p className="text-gray-600 text-xs font-medium">
-              {locale === "es" ? `Pregunta ${currentQ + 1} de ${totalQ}` : `Question ${currentQ + 1} of ${totalQ}`}
+              {t("gamePilot.ui.questionProgress", { current: currentQ + 1, total: totalQ })}
             </p>
           </div>
 
@@ -598,7 +595,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
             }}
           >
             <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: selectedOption === q.answer ? "#34d399" : "#f87171" }}>
-              {locale === "es" ? selectedOption === q.answer ? "🌟 ¡Correcto!" : "💡 ¿Sabías que...?" : selectedOption === q.answer ? "🌟 Correct!" : "💡 Did you know?"}
+              {t(`gamePilot.ui.${selectedOption === q.answer ? "correct" : "didYouKnow"}`)}
             </p>
             <p className="text-gray-800 text-sm leading-relaxed">{q.explanation}</p>
           </div>
@@ -616,7 +613,7 @@ export default function PollinatorQuiz({ country, onComplete }) {
               color: "#0a0a0a",
             }}
           >
-            {locale === "es" ? isLastQ ? "Ver mi puntuación →" : "Siguiente pregunta →" : isLastQ ? "See My Score →" : "Next Question →"}
+            {t(`gamePilot.ui.${isLastQ ? "seeScore" : "nextQuestion"}`)}
           </button>
         )}
       </div>

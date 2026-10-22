@@ -6,7 +6,6 @@ import { minionTypes, guardianTypes, getPetalPath } from "@/lib/gameData";
 import { useTranslation } from "@/lib/useTranslation";
 import styles from "./GameBoard.module.css";
 import MuteButton from "./MuteButton";
-import { spanishCardNames } from "@/lib/spanishGamePilot";
 
 // Grid layout: exactly 8 cards (6 petals, 1 minion, 1 guardian)
 const CARD_COUNT = 8; // Total cards in deck
@@ -245,7 +244,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, isMut
       if (result === "reset") {
         // Calculate message typing duration + 2 seconds wait time
         // Message: "You revealed the [Minion Name] minion. The ecosystem is set back. We must start again…"
-        const minionName = locale === "es" ? spanishCardNames[card.minionData?.id] || "súbdito" : card.minionData?.name || "minion";
+        const minionName = locale === "es" ? t(`gamePilot.cardNames.${card.minionData?.id}`) : card.minionData?.name || t("gamePilot.ui.minion");
         const message = t("gameMessages.minionReset", { minionName });
         const typingSpeed = 20; // ms per character (from AraihanGuide)
         const typingDuration = message.length * typingSpeed;
@@ -304,14 +303,14 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, isMut
         </button>
         <MuteButton isMuted={isMuted} onToggle={onToggleMute} gameState="playing" />
       </div>
-      <section className={styles.surface} aria-label={locale === "es" ? `Juego de cartas del ${flowerName}` : `${country.flowerName} card game`}>
+      <section className={styles.surface} aria-label={t("gamePilot.ui.boardAria", { flowerName })}>
         <div className={styles.heading}>
           <div>
-            <p className={styles.eyebrow}>{countryName} / {locale === "es" ? "Guardianes de las Flores" : "Guardians of Flowers"}</p>
-            <h1 className={styles.title}>{locale === "es" ? `Restaura el ${flowerName}` : `Restore the ${flowerName}`}</h1>
+            <p className={styles.eyebrow}>{countryName} / {t("gamePilot.ui.boardEyebrow")}</p>
+            <h1 className={styles.title}>{t("gamePilot.ui.boardTitle", { flowerName })}</h1>
           </div>
-          <div className={styles.progress} aria-label={locale === "es" ? `${petalsCollected} de 6 pétalos recogidos` : `${petalsCollected} of 6 petals collected`}>
-            <span className={styles.progressLabel}>{locale === "es" ? "Pétalos recogidos" : "Petals collected"}</span>
+          <div className={styles.progress} aria-label={t("gamePilot.ui.petalsProgress", { count: petalsCollected })}>
+            <span className={styles.progressLabel}>{t("gamePilot.ui.petalsCollected")}</span>
             <strong>{petalsCollected}<span> / 6</span></strong>
             <div className={styles.progressDots} aria-hidden="true">
               {Array.from({ length: 6 }, (_, index) => (
@@ -332,7 +331,7 @@ export default function GameBoard({ country, petalsCollected, hasGuardian, isMut
             />
           ))}
         </div>
-        <p className={styles.hint}>{locale === "es" ? "Elige una carta para descubrir qué se esconde debajo." : "Choose a card to reveal what grows beneath."}</p>
+        <p className={styles.hint}>{t("gamePilot.ui.boardHint")}</p>
       </section>
 
       {/* How to Play Modal */}
