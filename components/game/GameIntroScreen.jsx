@@ -22,7 +22,7 @@ export default function GameIntroScreen({ onStart }) {
           </div>
         ))}
       </div>
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#f9dda0]">Proveneya &amp; Nahiara</p>
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#f9dda0]">{t("gamePilot.ui.brandName")}</p>
       <h1 className="max-w-xl text-[clamp(2.5rem,8vw,4.5rem)] leading-[1.05] text-[#fff4c7]" style={{ fontFamily: '"Fredoka One", "Trebuchet MS", sans-serif' }}>
         {t("gamePilot.ui.introTitle")}
       </h1>

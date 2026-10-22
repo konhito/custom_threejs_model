@@ -21,6 +21,7 @@ test("Spanish pilot has a complete flower profile and playable quiz", () => {
   assert.equal(localized.flowerName, "Clavel");
   assert.ok(localized.parameters.every(item => item.icon && item.label && item.value));
   assert.deepEqual(Object.keys(es.gamePilot.ui), Object.keys(en.gamePilot.ui));
+  assert.equal(es.gamePilot.ui.brandName, "Proveneya & Nahiara");
   for (const locale of ["fr", "de", "it", "zh"]) {
     const data = JSON.parse(readFileSync(new URL(`../messages/${locale}.json`, import.meta.url), "utf8"));
     assert.deepEqual(Object.keys(data.gamePilot.ui), Object.keys(en.gamePilot.ui));
