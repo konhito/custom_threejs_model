@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { ShoppingCart, BookOpen, Heart, Eye } from "lucide-react";
+import { useTranslation } from "../lib/useTranslation";
 
 export default function BookCard({
   product,
@@ -13,6 +14,7 @@ export default function BookCard({
   formatCurrency,
   onAddToCart
 }) {
+  const { t, isLoading } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const isBook = product.type === "book";
@@ -112,7 +114,7 @@ export default function BookCard({
               className="px-4 py-2 bg-white rounded-full text-gray-900 font-medium text-sm flex items-center gap-2 shadow-lg"
             >
               <Eye className="w-4 h-4" />
-              Preview free chapters
+              {isLoading ? "" : t("shopPage.previewFreeChapters")}
             </Link>
           </motion.div>
         </div>
@@ -121,7 +123,7 @@ export default function BookCard({
         <div className="p-5 space-y-3">
           {/* Category tag */}
           <span className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-[11px] font-semibold rounded uppercase tracking-wider">
-            {product.type === 'book' ? 'Novel' : 'Card Game'}
+            {isLoading ? "" : t(product.type === 'book' ? "shopPage.novel" : "shopPage.cardGame")}
           </span>
 
           {/* Title */}
@@ -146,13 +148,13 @@ export default function BookCard({
               >
                 <div className="flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4" />
-                  <span className="text-sm">Buy Printed Book</span>
+                  <span className="text-sm">{isLoading ? "" : t("shopPage.buyPrintedBook")}</span>
                 </div>
                 <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
               </motion.button>
             )}
 
-            {isBook && <Link href="/library" className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100"><span className="flex items-center gap-2"><BookOpen className="w-4 h-4"/>Read digitally</span><span className="text-right text-xs leading-4">First 3 chapters free<br/>Unlock one chapter at a time →</span></Link>}
+            {isBook && <Link href="/library" className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 transition hover:bg-amber-100"><span className="flex items-center gap-2"><BookOpen className="w-4 h-4"/>{isLoading ? "" : t("shopPage.readDigitally")}</span><span className="text-right text-xs leading-4">{isLoading ? "" : t("shopPage.firstThreeFree")}<br/>{isLoading ? "" : t("shopPage.unlockChapters")}</span></Link>}
           </div>
         </div>
       </div>

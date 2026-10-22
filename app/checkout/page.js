@@ -17,12 +17,15 @@ import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 import Footer from "../../components/Footer";
+import PageLoader from "../../components/PageLoader";
+import { useTranslation } from "../../lib/useTranslation";
 
 // Initialize Stripe (will be set from API response)
 let stripePromise = null;
 
 // Payment Form Component
 function CheckoutForm({ orderData, paymentData, onSuccess, onError }) {
+  const { t, isLoading: translationsLoading } = useTranslation();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -63,21 +66,23 @@ function CheckoutForm({ orderData, paymentData, onSuccess, onError }) {
         cartStorage.clear();
         onSuccess(orderData.order_number);
       } else {
-        setError('Payment processing. Please wait...');
+        setError(t('checkoutPage.paymentProcessingWait'));
         setIsProcessing(false);
       }
     } catch (err) {
-      setError(err.message || 'An error occurred during payment');
+      setError(err.message || t('checkoutPage.paymentError'));
       setIsProcessing(false);
     }
   };
+
+  if (translationsLoading) return null;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-100">
         <div className="flex items-center gap-2 mb-4">
           <CreditCard className="w-5 h-5 text-emerald-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Payment Details</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{t('checkoutPage.paymentDetails')}</h3>
         </div>
         <PaymentElement />
       </div>
@@ -98,19 +103,19 @@ function CheckoutForm({ orderData, paymentData, onSuccess, onError }) {
         {isProcessing ? (
           <>
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            Processing Payment...
+            {t('checkoutPage.processingPayment')}
           </>
         ) : (
           <>
             <Lock className="w-5 h-5" />
-            Pay {formatCurrency(orderData.total_amount, orderData.currency)}
+            {t('checkoutPage.payAmount', { amount: formatCurrency(orderData.total_amount, orderData.currency) })}
           </>
         )}
       </motion.button>
 
       <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
         <ShieldCheck className="w-4 h-4" />
-        <span>Your payment is secured by Stripe</span>
+        <span>{t('checkoutPage.securedByStripe')}</span>
       </div>
     </form>
   );
@@ -118,6 +123,7 @@ function CheckoutForm({ orderData, paymentData, onSuccess, onError }) {
 
 // Main Checkout Page
 export default function CheckoutPage() {
+  const { t, locale, isLoading: translationsLoading } = useTranslation();
   const router = useRouter();
   const { session, track } = useSession();
   const [step, setStep] = useState(1); // 1: Customer Info, 2: Payment
@@ -248,7 +254,7 @@ export default function CheckoutPage() {
 
       setStep(2);
     } catch (err) {
-      setError(err.message || 'Failed to create order. Please try again.');
+      setError(err.message || t('checkoutPage.createOrderError'));
     } finally {
       setLoading(false);
     }
@@ -282,6 +288,8 @@ export default function CheckoutPage() {
     </div>
   );
 
+  if (translationsLoading) return <PageLoader isLoading />;
+
   return (
     <div className="min-h-screen bg-white">
 
@@ -298,8 +306,8 @@ export default function CheckoutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Checkout</h1>
-            <p className="text-gray-600">Complete your order securely</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{t('checkoutPage.title')}</h1>
+            <p className="text-gray-600">{t('checkoutPage.subtitle')}</p>
           </motion.div>
 
           {/* Progress Steps */}
@@ -310,9 +318,9 @@ export default function CheckoutPage() {
             className="mb-8"
           >
             <div className="flex items-center justify-center gap-4">
-              <StepIndicator stepNum={1} label="Details" isActive={step === 1} isComplete={step > 1} />
+              <StepIndicator stepNum={1} label={t('checkoutPage.details')} isActive={step === 1} isComplete={step > 1} />
               <div className={`w-16 h-0.5 ${step > 1 ? 'bg-emerald-500' : 'bg-gray-200'}`}></div>
-              <StepIndicator stepNum={2} label="Payment" isActive={step === 2} isComplete={false} />
+              <StepIndicator stepNum={2} label={t('checkoutPage.payment')} isActive={step === 2} isComplete={false} />
             </div>
           </motion.div>
 
@@ -327,12 +335,12 @@ export default function CheckoutPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <User className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">{t('checkoutPage.personalInformation')}</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Full Name <span className="text-red-500">*</span>
+                        {t('checkoutPage.fullName')} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -341,12 +349,12 @@ export default function CheckoutPage() {
                         value={formData.customer_name}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                        placeholder="John Doe"
+                        placeholder={t('checkoutPage.namePlaceholder')}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Email <span className="text-red-500">*</span>
+                        {t('checkoutPage.email')} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="email"
@@ -355,12 +363,12 @@ export default function CheckoutPage() {
                         value={formData.customer_email}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                        placeholder="john@example.com"
+                        placeholder={t('checkoutPage.emailPlaceholder')}
                       />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Phone (Optional)
+                        {t('checkoutPage.phoneOptional')}
                       </label>
                       <input
                         type="tel"
@@ -378,12 +386,12 @@ export default function CheckoutPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-5 h-5 text-emerald-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">Shipping Address</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">{t('checkoutPage.shippingAddress')}</h3>
                   </div>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Street Address <span className="text-red-500">*</span>
+                        {t('checkoutPage.streetAddress')} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -392,13 +400,13 @@ export default function CheckoutPage() {
                         value={formData.shipping_address.street}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                        placeholder="123 Main Street"
+                        placeholder={t('checkoutPage.streetPlaceholder')}
                       />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                          City <span className="text-red-500">*</span>
+                          {t('checkoutPage.city')} <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -407,12 +415,12 @@ export default function CheckoutPage() {
                           value={formData.shipping_address.city}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                          placeholder="New York"
+                          placeholder={t('checkoutPage.cityPlaceholder')}
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                          Postal Code <span className="text-red-500">*</span>
+                          {t('checkoutPage.postalCode')} <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -428,7 +436,7 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                          Country <span className="text-red-500">*</span>
+                          {t('checkoutPage.country')} <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -437,12 +445,12 @@ export default function CheckoutPage() {
                           value={formData.shipping_address.country}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                          placeholder="United States"
+                          placeholder={t('checkoutPage.countryPlaceholder')}
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                          State/Province
+                          {t('checkoutPage.stateProvince')}
                         </label>
                         <input
                           type="text"
@@ -467,7 +475,7 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       className="w-5 h-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
                     />
-                    <span className="text-sm text-gray-700">Billing address same as shipping</span>
+                    <span className="text-sm text-gray-700">{t('checkoutPage.billingSameAsShipping')}</span>
                   </label>
 
                   {!formData.use_same_address && (
@@ -476,10 +484,10 @@ export default function CheckoutPage() {
                       animate={{ opacity: 1, height: 'auto' }}
                       className="space-y-4 mt-6"
                     >
-                      <h3 className="text-lg font-semibold text-gray-900">Billing Address</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">{t('checkoutPage.billingAddress')}</h3>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                          Street Address <span className="text-red-500">*</span>
+                          {t('checkoutPage.streetAddress')} <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -493,7 +501,7 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            City <span className="text-red-500">*</span>
+                            {t('checkoutPage.city')} <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="text"
@@ -506,7 +514,7 @@ export default function CheckoutPage() {
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            Postal Code <span className="text-red-500">*</span>
+                            {t('checkoutPage.postalCode')} <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="text"
@@ -521,7 +529,7 @@ export default function CheckoutPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            Country <span className="text-red-500">*</span>
+                            {t('checkoutPage.country')} <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="text"
@@ -534,7 +542,7 @@ export default function CheckoutPage() {
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            State/Province
+                            {t('checkoutPage.stateProvince')}
                           </label>
                           <input
                             type="text"
@@ -561,7 +569,7 @@ export default function CheckoutPage() {
                       className="w-5 h-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 mt-0.5"
                     />
                     <span className="text-sm text-gray-700">
-                      I have read and accept the <Link href="/privacy" className="underline">Privacy Policy</Link>. <span className="text-red-500">*</span>
+                      {t('footer.privacyAcceptPrefix')} <Link href="/privacy" className="underline">{t('footer.privacyPolicy')}</Link>{t('footer.privacyAcceptSuffix')} <span className="text-red-500">*</span>
                     </span>
                   </label>
                   <label className="flex items-start gap-3 mt-3 cursor-pointer">
@@ -573,7 +581,7 @@ export default function CheckoutPage() {
                       className="w-5 h-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 mt-0.5"
                     />
                     <span className="text-sm text-gray-700">
-                      I would like to receive updates about new products and offers.
+                      {t('checkoutPage.marketingConsent')}
                     </span>
                   </label>
                 </div>
@@ -590,7 +598,7 @@ export default function CheckoutPage() {
                     className="px-6 py-3 border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
                   >
                     <ArrowLeft className="w-5 h-5" />
-                    Back to Cart
+                    {t('checkoutPage.backToCart')}
                   </Link>
                   <motion.button
                     type="submit"
@@ -599,7 +607,7 @@ export default function CheckoutPage() {
                     whileTap={{ scale: 0.99 }}
                     className="flex-1 px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                   >
-                    {loading ? 'Processing...' : 'Continue to Payment'}
+                    {t(loading ? 'checkoutPage.processing' : 'checkoutPage.continueToPayment')}
                   </motion.button>
                 </div>
               </form>
@@ -616,11 +624,11 @@ export default function CheckoutPage() {
               <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-emerald-700 mb-1">Order Number</p>
+                    <p className="text-sm text-emerald-700 mb-1">{t('checkoutPage.orderNumber')}</p>
                     <p className="font-mono font-semibold text-gray-900">{orderData.order_number}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-emerald-700 mb-1">Total</p>
+                    <p className="text-sm text-emerald-700 mb-1">{t('cartPage.total')}</p>
                     <p className="text-2xl font-bold text-gray-900">
                       {formatCurrency(orderData.total_amount, orderData.currency)}
                     </p>
@@ -632,6 +640,7 @@ export default function CheckoutPage() {
                 stripe={stripePromise}
                 options={{
                   clientSecret: paymentData.client_secret,
+                  locale,
                   appearance: {
                     theme: 'stripe',
                     variables: {

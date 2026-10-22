@@ -4,36 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Send, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { detectUserCountry } from "../lib/languageDetection";
-
-const SPANISH_COUNTRIES = new Set(["AR", "BO", "CL", "CO", "CR", "CU", "DO", "EC", "ES", "GT", "HN", "MX", "NI", "PA", "PE", "PR", "PY", "SV", "UY", "VE"]);
-const GERMAN_COUNTRIES = new Set(["AT", "CH", "DE"]);
-const copy = {
-  en: {
-    welcome: "I am Araihan, faithful squire of Nahiara. Shall we follow a flower's trail together?",
-    starters: ["What is AquaMundi?", "How do flowers and pollinators help one another?", "Which books are available in the shop?"],
-    followUps: ["Tell me about the Flower Archive", "Which books are available in the shop?", "Help me explore a flower"],
-    start: "Start here", explore: "Keep exploring", thinking: "Araihan is gathering his thoughts...", placeholder: "Ask Araihan about flowers...",
-  },
-  es: {
-    welcome: "Soy Araihan, fiel escudero de Nahiara. ¿Seguimos juntos el rastro de una flor?",
-    starters: ["¿Qué es AquaMundi?", "¿Cómo se ayudan las flores y los polinizadores?", "¿Qué libros están disponibles en la tienda?"],
-    followUps: ["Háblame del Archivo de Flores", "¿Qué libros están disponibles en la tienda?", "Ayúdame a explorar una flor"],
-    start: "Empieza aquí", explore: "Sigue explorando", thinking: "Araihan está reuniendo sus pensamientos...", placeholder: "Pregunta a Araihan sobre las flores...",
-  },
-  de: {
-    welcome: "Ich bin Araihan, Nahiaras treuer Knappe. Wollen wir gemeinsam der Spur einer Blume folgen?",
-    starters: ["Was ist AquaMundi?", "Wie helfen sich Blumen und Bestäuber gegenseitig?", "Welche Bücher sind im Shop erhältlich?"],
-    followUps: ["Erzähl mir vom Blumenarchiv", "Welche Bücher sind im Shop erhältlich?", "Hilf mir, eine Blume zu entdecken"],
-    start: "Hier beginnen", explore: "Weiter entdecken", thinking: "Araihan sammelt seine Gedanken...", placeholder: "Frage Araihan nach Blumen...",
-  },
-};
-
-function languageFor(country) {
-  const code = String(country || "").toUpperCase();
-  if (SPANISH_COUNTRIES.has(code)) return "es";
-  if (GERMAN_COUNTRIES.has(code)) return "de";
-  return "en";
-}
+import { useTranslation } from "../lib/useTranslation";
 
 function visiblePageContext(pathname) {
   const headings = [...document.querySelectorAll("[data-araihan-context], h1, h2")];
@@ -43,25 +14,27 @@ function visiblePageContext(pathname) {
 
 export default function AraihanChat({ compact = false, onClose }) {
   const pathname = usePathname();
-  const [messages, setMessages] = useState([{ role: "assistant", content: copy.en.welcome }]);
+  const { locale, messages: translations } = useTranslation();
+  const text = translations?.araihanChat;
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState("");
   const [detectedCountry, setDetectedCountry] = useState("");
-  const [detectedLanguage, setDetectedLanguage] = useState("en");
   const [isDetecting, setIsDetecting] = useState(true);
   const inputRef = useRef(null);
   const feedRef = useRef(null);
   const pageContextRef = useRef({ path: pathname || "/", heading: "" });
 
   useEffect(() => {
+    if (text) setMessages([{ role: "assistant", content: text.welcome }]);
+  }, [text]);
+
+  useEffect(() => {
     let active = true;
     detectUserCountry().then((country) => {
       if (!active) return;
-      const language = languageFor(country);
       setDetectedCountry(country || "");
-      setDetectedLanguage(language);
-      setMessages([{ role: "assistant", content: copy[language].welcome }]);
       setIsDetecting(false);
       inputRef.current?.focus();
     });
@@ -96,10 +69,10 @@ export default function AraihanChat({ compact = false, onClose }) {
       const response = await fetch("/api/araihan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages.slice(1), locale: detectedLanguage, detectedCountry, detectedLanguage, pageContext: pageContextRef.current }),
+        body: JSON.stringify({ messages: nextMessages.slice(1), locale, detectedCountry, detectedLanguage: locale, pageContext: pageContextRef.current }),
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Araihan could not answer just now.");
+      if (!response.ok) throw new Error(result.error || text.error);
       setMessages((current) => [...current, { role: "assistant", content: result.message }]);
     } catch (requestError) {
       setError(requestError.message);
@@ -112,18 +85,18 @@ export default function AraihanChat({ compact = false, onClose }) {
     sendMessage(null, prompt);
   }
 
-  const text = copy[detectedLanguage];
+  if (!text) return null;
   const starters = compact ? text.starters.slice(0, 2) : text.starters;
   const followUps = compact ? text.followUps.slice(0, 2) : text.followUps;
 
   return (
-    <section className={`flex w-full flex-col overflow-hidden bg-[#153527] text-white ${compact ? "h-[26rem] max-h-[calc(100vh-6.5rem)]" : "min-h-[36rem] rounded-2xl shadow-[0_8px_24px_rgba(10,36,23,0.28)]"}`} aria-label="Talk with Araihan">
+    <section className={`flex w-full flex-col overflow-hidden bg-[#153527] text-white ${compact ? "h-[26rem] max-h-[calc(100vh-6.5rem)]" : "min-h-[36rem] rounded-2xl shadow-[0_8px_24px_rgba(10,36,23,0.28)]"}`} aria-label={text.talkAriaLabel}>
       <header className={`flex items-center justify-between border-b border-white/20 ${compact ? "px-4 py-3" : "px-5 py-4"}`}>
         <div>
-          <p className={`${compact ? "text-base" : "text-lg"} font-semibold`}>Araihan</p>
-          <p className="text-xs text-emerald-100">Faithful squire of Nahiara</p>
+          <p className={`${compact ? "text-base" : "text-lg"} font-semibold`}>{text.name}</p>
+          <p className="text-xs text-emerald-100">{text.subtitle}</p>
         </div>
-        {compact ? <button type="button" onClick={onClose} className="rounded-full p-1.5 text-emerald-50 transition hover:bg-white/10" aria-label="Close Araihan"><X size={17}/></button> : <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-50">Guided conversation</span>}
+        {compact ? <button type="button" onClick={onClose} className="rounded-full p-1.5 text-emerald-50 transition hover:bg-white/10" aria-label={text.closeAriaLabel}><X size={17}/></button> : <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-50">{text.guidedConversation}</span>}
       </header>
 
       <div ref={feedRef} data-lenis-prevent className={`flex-1 touch-pan-y overscroll-contain space-y-3 overflow-y-auto bg-[#f6f8f4] text-sm text-[#1e3428] ${compact ? "p-4" : "p-5"}`} aria-live="polite">
@@ -163,9 +136,9 @@ export default function AraihanChat({ compact = false, onClose }) {
       </div>
 
       <form onSubmit={sendMessage} className={`flex gap-2 border-t border-[#d6e0d8] bg-white ${compact ? "p-3" : "p-4"}`}>
-        <label className="sr-only" htmlFor="araihan-message">Your message</label>
+        <label className="sr-only" htmlFor="araihan-message">{text.yourMessage}</label>
         <input ref={inputRef} id="araihan-message" value={input} onFocus={() => { pageContextRef.current = visiblePageContext(pathname); }} onChange={(event) => setInput(event.target.value)} maxLength={1200} disabled={isDetecting} placeholder={text.placeholder} className="min-w-0 flex-1 rounded-lg border border-[#9bb6a3] px-3 py-2 text-sm text-[#193325] placeholder:text-[#506a59] focus:border-[#2f6b4f] focus:outline-none focus:ring-2 focus:ring-[#2f6b4f]/25 disabled:opacity-60" />
-        <button type="submit" disabled={isDetecting || isSending || !input.trim()} className="rounded-lg bg-[#2f6b4f] p-2.5 text-white transition hover:bg-[#24543e] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f]" aria-label="Send message">
+        <button type="submit" disabled={isDetecting || isSending || !input.trim()} className="rounded-lg bg-[#2f6b4f] p-2.5 text-white transition hover:bg-[#24543e] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f6b4f]" aria-label={text.sendAriaLabel}>
           <Send size={18} />
         </button>
       </form>

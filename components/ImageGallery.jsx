@@ -6,73 +6,75 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import TiltedCard from "./TiltedCard";
 import { BookDetailsSidePanel } from "./BookDetailsSidePanel";
+import { useTranslation } from "../lib/useTranslation";
 
 const mysterySpine = "/books/Book-Cover---Vol7-Spanish-spine.png";
 
-const mysteryCover = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='1400' viewBox='0 0 900 1400'><defs><radialGradient id='glow' cx='50%25' cy='45%25' r='60%25'><stop stop-color='%23fbbf24' stop-opacity='0.9' offset='0%25'/><stop stop-color='%23b45309' stop-opacity='0.15' offset='65%25'/><stop stop-color='%230f172a' stop-opacity='0.85' offset='100%25'/></radialGradient><linearGradient id='bg' x1='0' x2='0' y1='0' y2='1'><stop stop-color='%230b1224' offset='0%25'/><stop stop-color='%231b2a4a' offset='50%25'/><stop stop-color='%230b1224' offset='100%25'/></linearGradient></defs><rect width='900' height='1400' fill='url(%23bg)'/><circle cx='450' cy='630' r='520' fill='url(%23glow)'/><text x='450' y='720' text-anchor='middle' font-family='Cormorant, serif' font-size='420' fill='%23fef08a' font-weight='700'>?</text><text x='450' y='980' text-anchor='middle' font-family='Cormorant, serif' font-size='64' fill='%23f8fafc' opacity='0.8'>Mystery Volume</text></svg>`;
+const mysteryCover = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='1400' viewBox='0 0 900 1400'><defs><radialGradient id='glow' cx='50%25' cy='45%25' r='60%25'><stop stop-color='%23fbbf24' stop-opacity='0.9' offset='0%25'/><stop stop-color='%23b45309' stop-opacity='0.15' offset='65%25'/><stop stop-color='%230f172a' stop-opacity='0.85' offset='100%25'/></radialGradient><linearGradient id='bg' x1='0' x2='0' y1='0' y2='1'><stop stop-color='%230b1224' offset='0%25'/><stop stop-color='%231b2a4a' offset='50%25'/><stop stop-color='%230b1224' offset='100%25'/></linearGradient></defs><rect width='900' height='1400' fill='url(%23bg)'/><circle cx='450' cy='630' r='520' fill='url(%23glow)'/><text x='450' y='720' text-anchor='middle' font-family='Cormorant, serif' font-size='420' fill='%23fef08a' font-weight='700'>?</text></svg>`;
 
 const ImageGallery = () => {
+  const { t, isLoading } = useTranslation();
   const images = [
     {
       spineSrc: "/books/Book-Cover---Vol1-Spanish-Spine.png",
       coverSrc: "/books/1.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo I",
-      code: "Tomo I",
+      alt: t("home.bookVolumeAlt", { number: "I" }),
+      code: t("home.bookVolume", { number: "I" }),
       tomeNumber: 1,
       isComingSoon: false,
     },
     {
       spineSrc: "/books/Book-Cover---Vol2-Spine.png",
       coverSrc: "/books/2.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo II",
-      code: "Tomo II",
+      alt: t("home.bookVolumeAlt", { number: "II" }),
+      code: t("home.bookVolume", { number: "II" }),
       tomeNumber: 2,
       isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol3-spine.png",
       coverSrc: "/books/3.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo III",
-      code: "Tomo III",
+      alt: t("home.bookVolumeAlt", { number: "III" }),
+      code: t("home.bookVolume", { number: "III" }),
       tomeNumber: 3,
       isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol4-Spine.png",
       coverSrc: "/books/4.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo IV",
-      code: "Tomo IV",
+      alt: t("home.bookVolumeAlt", { number: "IV" }),
+      code: t("home.bookVolume", { number: "IV" }),
       tomeNumber: 4,
       isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol5-Spine.png",
       coverSrc: "/books/5.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo V",
-      code: "Tomo V",
+      alt: t("home.bookVolumeAlt", { number: "V" }),
+      code: t("home.bookVolume", { number: "V" }),
       tomeNumber: 5,
       isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol6-Spine.png",
       coverSrc: "/books/6.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo VI",
-      code: "Tomo VI",
+      alt: t("home.bookVolumeAlt", { number: "VI" }),
+      code: t("home.bookVolume", { number: "VI" }),
       tomeNumber: 6,
       isComingSoon: true,
     },
     {
       spineSrc: "/books/Book-Cover---Vol7-Spanish-spine.png",
       coverSrc: "/books/7.png",
-      alt: "Nahiara y los Guardianes de las Flores - Tomo VII",
-      code: "Tomo VII",
+      alt: t("home.bookVolumeAlt", { number: "VII" }),
+      code: t("home.bookVolume", { number: "VII" }),
       tomeNumber: 7,
       isComingSoon: true,
     },
     {
       spineSrc: mysterySpine,
       coverSrc: mysteryCover,
-      alt: "Mystery Volume",
+      alt: t("home.mysteryVolume"),
       code: "¿?",
       tomeNumber: null,
       isComingSoon: false,
@@ -111,6 +113,8 @@ const ImageGallery = () => {
       };
     }
   }, [selectedIndex, isCoarsePointer]);
+
+  if (isLoading) return null;
 
   return (
     <>
@@ -153,7 +157,7 @@ const ImageGallery = () => {
                   <motion.button
                     onClick={() => setSelectedIndex(null)}
                     className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg border border-gray-200 transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center group"
-                    aria-label="Close modal"
+                    aria-label={t("home.closeBookModal")}
                     whileHover={{ 
                       rotate: 90,
                       scale: 1.1 
@@ -203,7 +207,7 @@ const ImageGallery = () => {
                           transform: `rotate(${Math.random() * 360}deg)`,
                           opacity: Math.random() * 0.5 + 0.2,
                         }}>
-                          {['COMING SOON', 'PRÓXIMAMENTE', 'SOON', '2025'][i % 4]}
+                          {t("home.comingSoon")}
                         </div>
                       ))}
                     </div>
@@ -212,7 +216,7 @@ const ImageGallery = () => {
                     {images[selectedIndex]?.isComingSoon && (
                       <div className="mb-3 flex items-center justify-center relative z-10">
                         <span className="text-xs sm:text-sm font-bold tracking-wider px-3 py-1 rounded-full border-2 border-emerald-600 text-emerald-600 bg-transparent" style={{ fontFamily: 'Bangers, cursive', letterSpacing: '0.1em' }}>
-                          COMING SOON
+                          {t("home.comingSoon")}
                         </span>
                       </div>
                     )}
@@ -256,7 +260,7 @@ const ImageGallery = () => {
                   <motion.button
                     onClick={() => setSelectedIndex(null)}
                     className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/90 hover:bg-white shadow-lg border border-gray-200 transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center group"
-                    aria-label="Close modal"
+                    aria-label={t("home.closeBookModal")}
                     whileHover={{ 
                       rotate: 90,
                       scale: 1.1 

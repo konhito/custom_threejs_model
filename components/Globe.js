@@ -849,7 +849,7 @@ function FlowerDetailModal({ country, isVisible, onClose }) {
               >
                 <div className="flex items-center justify-center gap-3">
                   <Flower className="w-5 h-5" />
-                  <span>Explore 8 Parameters & Take Quiz</span>
+                  <span>{t("globeUi.exploreParameters")}</span>
                   <span className="text-xl">→</span>
                 </div>
               </Link>
@@ -870,6 +870,7 @@ export default function GlobeComponent({
   animateEntry = true,
   onReady,
 }) {
+  const { t, isLoading: translationsLoading } = useTranslation();
   const containerRef = useRef();
   const fullscreenContainerRef = useRef();
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -3254,7 +3255,7 @@ export default function GlobeComponent({
           <button
             onClick={() => setIsFullscreen(false)}
             className="absolute top-4 left-4 sm:top-6 sm:left-6 w-12 h-12 sm:w-14 sm:h-14 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-[10000] group"
-            aria-label="Exit fullscreen"
+            aria-label={translationsLoading ? undefined : t("globeUi.exitFullscreen")}
           >
             <Minimize2 className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:scale-110 transition-transform" />
           </button>
@@ -3264,13 +3265,13 @@ export default function GlobeComponent({
             <div
               className="w-full h-full flex items-center justify-center relative"
               role="main"
-              aria-label="Interactive 3D Globe of Sacred Flowers - Fullscreen Mode"
+              aria-label={translationsLoading ? undefined : t("globeUi.fullscreenGlobeAriaLabel")}
             >
               {/* Background Image */}
               {(showBackground || archivePresentation) && (
                 <Image
                   src="/bg_image.png"
-                  alt="Galactic Garden Background"
+                  alt={translationsLoading ? "" : t("globeUi.backgroundAlt")}
                   fill
                   priority
                   quality={85}
@@ -3288,7 +3289,7 @@ export default function GlobeComponent({
                   isGlobeLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 role="img"
-                aria-label="Interactive 3D globe showing national flowers from different countries"
+                aria-label={translationsLoading ? undefined : t("globeUi.globeAriaLabel")}
                 tabIndex={0}
               />
 
@@ -3298,7 +3299,7 @@ export default function GlobeComponent({
                   className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
                   role="status"
                   aria-live="polite"
-                  aria-label="Loading interactive 3D globe"
+                  aria-label={translationsLoading ? undefined : t("globeUi.loadingAriaLabel")}
                 >
                   <GlobeLoader />
                 </div>
@@ -3327,13 +3328,13 @@ export default function GlobeComponent({
               : {}),
           }}
           role="main"
-          aria-label="Interactive 3D Globe of Sacred Flowers"
+          aria-label={translationsLoading ? undefined : t("globeUi.globeRegionAriaLabel")}
         >
           {/* Fullscreen Button Overlay - Always visible on mobile, hover on desktop */}
           {(!cinematic || archivePresentation) && <button
             onClick={toggleFullscreen}
             className="absolute top-4 left-4 sm:top-6 sm:left-6 w-10 h-10 sm:w-12 sm:h-12 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm z-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-            aria-label="Enter fullscreen"
+            aria-label={translationsLoading ? undefined : t("globeUi.enterFullscreen")}
           >
             <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </button>}
@@ -3342,7 +3343,7 @@ export default function GlobeComponent({
           {(showBackground || archivePresentation) && (
             <Image
               src="/bg_image.png"
-              alt="Galactic Garden Background - A cosmic view of Earth with floating flower representations from different countries"
+              alt={translationsLoading ? "" : t("globeUi.backgroundDescription")}
               fill
               priority
               quality={85}
@@ -3398,7 +3399,7 @@ export default function GlobeComponent({
                 : {}),
             }}
             role="img"
-            aria-label="Interactive 3D globe showing national flowers from different countries. Click on colored spheres to learn about each country's sacred flower."
+            aria-label={translationsLoading ? undefined : t("globeUi.globeInstructions")}
             tabIndex={0}
           />
 
@@ -3408,7 +3409,7 @@ export default function GlobeComponent({
               className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50"
               role="status"
               aria-live="polite"
-              aria-label="Loading interactive 3D globe"
+              aria-label={translationsLoading ? undefined : t("globeUi.loadingAriaLabel")}
             >
               <GlobeLoader />
             </div>
@@ -3416,7 +3417,7 @@ export default function GlobeComponent({
 
           {cinematic && cinematicCountry && !isCinematicComplete && (
             <aside className="pointer-events-none absolute bottom-5 right-5 z-[60] w-[min(19rem,calc(100%_-_2.5rem))] rounded-2xl border border-white/15 bg-[#061824]/75 p-5 text-left text-[#e7eff1] shadow-2xl backdrop-blur-xl sm:bottom-8 sm:right-8">
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#9ec9d8]">Living satellite</p>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[.22em] text-[#9ec9d8]">{t("globeUi.livingSatellite")}</p>
               <h2 className="font-serif text-2xl leading-none">{cinematicCountry.flowerName}</h2>
               <p className="mt-2 text-sm text-[#b9ccd2]">{cinematicCountry.country}</p>
               <p className="mt-4 text-sm leading-relaxed text-[#d2dfe2]">{cinematicCountry.flowerDescription}</p>

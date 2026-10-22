@@ -26,8 +26,10 @@ import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 import BookCard from "../../components/BookCard";
 import Footer from "../../components/Footer";
+import { useTranslation } from "../../lib/useTranslation";
 
 export default function ShopPage() {
+  const { t, isLoading: translationsLoading } = useTranslation();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currency, setCurrency] = useState("eur");
@@ -192,7 +194,7 @@ export default function ShopPage() {
         {detectingLocation ? (
           <div className="flex items-center gap-2 text-xs text-gray-500 bg-white px-3 py-2 rounded-xl border border-gray-100 shadow-sm">
             <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
-            <span>Detecting...</span>
+            <span>{translationsLoading ? "" : t("shopPage.detecting")}</span>
           </div>
         ) : (
           detectedCountry && (
@@ -217,7 +219,7 @@ export default function ShopPage() {
         <div className="max-w-5xl mx-auto text-center relative">
           {/* Overline */}
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-400 mb-6">
-            Nahiara Collection
+            {translationsLoading ? "" : t("shopPage.collection")}
           </p>
 
           {/* Main heading — editorial serif */}
@@ -225,9 +227,9 @@ export default function ShopPage() {
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-gray-900 leading-[0.95] tracking-tight"
             style={{ fontFamily: '"Cormorant Garamond", serif' }}
           >
-            Stories That
+            {translationsLoading ? "" : t("shopPage.heroLine1")}
             <br />
-            <span className="italic font-normal">Bloom</span>
+            <span className="italic font-normal">{translationsLoading ? "" : t("shopPage.heroLine2")}</span>
           </h1>
 
           {/* Divider */}
@@ -235,22 +237,22 @@ export default function ShopPage() {
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-12">
-            Enchanting tales and games celebrating the magic of nature and the wisdom of flowers.
+            {translationsLoading ? "" : t("shopPage.subtitle")}
           </p>
 
           {/* Feature pills */}
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 text-gray-600 rounded-full border border-stone-200">
               <Package className="w-4 h-4 text-gray-400" />
-              <span>Free Shipping over €50</span>
+              <span>{translationsLoading ? "" : t("shopPage.freeShipping")}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 text-gray-600 rounded-full border border-stone-200">
               <Zap className="w-4 h-4 text-gray-400" />
-              <span>Read 3 Chapters Free</span>
+              <span>{translationsLoading ? "" : t("shopPage.freeChapters")}</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 text-gray-600 rounded-full border border-stone-200">
               <Shield className="w-4 h-4 text-gray-400" />
-              <span>Secure Payment</span>
+              <span>{translationsLoading ? "" : t("shopPage.securePayment")}</span>
             </div>
           </div>
         </div>
@@ -341,7 +343,7 @@ export default function ShopPage() {
                       <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="px-4 py-2 bg-white rounded-full text-gray-900 font-medium text-sm flex items-center gap-2 shadow-lg">
                           <Eye className="w-4 h-4" />
-                          Quick View
+                          {translationsLoading ? "" : t("shopPage.quickView")}
                         </div>
                       </div>
                     </div>
@@ -350,7 +352,7 @@ export default function ShopPage() {
                     <div className="p-5 space-y-3">
                       {/* Category */}
                       <span className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-[11px] font-semibold rounded uppercase tracking-wider">
-                        Card Game
+                        {translationsLoading ? "" : t("shopPage.cardGame")}
                       </span>
 
                       {/* Title */}
@@ -372,7 +374,7 @@ export default function ShopPage() {
                           >
                             <div className="flex items-center gap-2">
                               <ShoppingCart className="w-4 h-4" />
-                              <span className="text-sm">Add to Cart</span>
+                              <span className="text-sm">{translationsLoading ? "" : t("shopPage.addToCart")}</span>
                             </div>
                             <span className="text-sm font-bold">{formatCurrency(price, currency)}</span>
                           </button>
@@ -384,7 +386,7 @@ export default function ShopPage() {
                           >
                             <div className="flex items-center gap-2">
                               <Download className="w-4 h-4 text-gray-500" />
-                              <span className="text-sm">Digital Version</span>
+                              <span className="text-sm">{translationsLoading ? "" : t("shopPage.digitalVersion")}</span>
                             </div>
                             <span className="text-sm font-bold">{formatCurrency(digitalPrice, currency)}</span>
                           </button>
@@ -409,10 +411,10 @@ export default function ShopPage() {
                 className="text-2xl font-bold text-gray-900 mb-3"
                 style={{ fontFamily: '"Cormorant Garamond", serif' }}
               >
-                Coming Soon
+                {translationsLoading ? "" : t("shopPage.comingSoon")}
               </h3>
               <p className="text-gray-500 leading-relaxed">
-                We&apos;re preparing enchanting new additions to the collection. Check back soon!
+                {translationsLoading ? "" : t("shopPage.emptyDescription")}
               </p>
             </div>
           </div>
@@ -427,8 +429,8 @@ export default function ShopPage() {
               <CheckCircle className="w-4 h-4 text-green-400" />
             </div>
             <div>
-              <p className="font-medium text-sm">Added to cart</p>
-              <Link href="/cart" className="text-xs font-semibold text-amber-300 hover:text-amber-200">Checkout →</Link>
+              <p className="font-medium text-sm">{translationsLoading ? "" : t("shopPage.addedToCart")}</p>
+              <Link href="/cart" className="text-xs font-semibold text-amber-300 hover:text-amber-200">{translationsLoading ? "" : t("shopPage.checkout")}</Link>
             </div>
           </div>
         </div>

@@ -16,8 +16,8 @@ export default function Footer() {
     if (!userEmail.trim()) return;
     
     // Create mailto link to organization's email
-    const mailtoSubject = encodeURIComponent('Contact from AquaMundi Website');
-    const mailtoBody = encodeURIComponent(`Hello,\n\nFrom: ${userEmail.trim()}\n\nBest regards`);
+    const mailtoSubject = encodeURIComponent(t('footer.contactSubject'));
+    const mailtoBody = encodeURIComponent(t('footer.contactBody', { email: userEmail.trim() }));
     
     window.location.href = `mailto:${contactEmail}?subject=${mailtoSubject}&body=${mailtoBody}`;
     
@@ -38,7 +38,7 @@ export default function Footer() {
               <div className="relative flex-shrink-0">
                 <Image
                   src="/logo1.png"
-                  alt="AquaMundi Logo"
+                  alt={t('footer.logoAlt')}
                   width={120}
                   height={120}
                   className="w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-28 xl:h-28 object-contain"
@@ -51,13 +51,13 @@ export default function Footer() {
                 style={{ fontFamily: '"Cormorant Garamond", serif', lineHeight: '1.2' }}
                 translate="no"
               >
-                AquaMundi
+                {t('home.brandName')}
               </h2>
             </div>
             
             {/* Subtitle - Single line on all devices */}
             <p className="text-gray-400 text-xs sm:text-sm md:text-base text-center lg:text-left mt-2 notranslate whitespace-nowrap" translate="no">
-              PROVENEYA & NAHIARA
+              {t('gamePilot.ui.brandName')}
             </p>
           </div>
 
@@ -94,7 +94,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/evento-dibuja-flor" className="hover:text-white transition-colors duration-200">
-                    Evento Abril 2026
+                    {t('footer.aprilEvent')}
                   </Link>
                 </li>
               </ul>
@@ -133,12 +133,12 @@ export default function Footer() {
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 text-xs sm:text-sm">
                 <li>
                   <Link href="/san-system" className="hover:text-white transition-colors duration-200">
-                    SAN System
+                    {t('footer.sanSystem')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/nahiara-measure" className="hover:text-white transition-colors duration-200">
-                    Nahiara Measure
+                    {t('footer.nahiaraMeasure')}
                   </Link>
                 </li>
                 <li>
@@ -148,12 +148,12 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/scorfidon" className="hover:text-white transition-colors duration-200">
-                    Scorfidon Protocol
+                    {t('footer.scorfidonProtocol')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/pfno" className="hover:text-white transition-colors duration-200">
-                    PFNO Protocol
+                    {t('footer.pfnoProtocol')}
                   </Link>
                 </li>
                 <li>
@@ -174,10 +174,10 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal-notice" className="hover:text-white transition-colors duration-200">Legal Notice</Link>
+                  <Link href="/legal-notice" className="hover:text-white transition-colors duration-200">{t('footer.legalNotice')}</Link>
                 </li>
                 <li>
-                  <button type="button" onClick={() => window.dispatchEvent(new Event('cookie-settings'))} className="hover:text-white transition-colors duration-200">Cookie settings</button>
+                  <button type="button" onClick={() => window.dispatchEvent(new Event('cookie-settings'))} className="hover:text-white transition-colors duration-200">{t('footer.cookieSettings')}</button>
                 </li>
               </ul>
             </div>
@@ -213,7 +213,7 @@ export default function Footer() {
               </div>
               <label className="flex items-start gap-2 text-xs text-gray-400">
                 <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5" />
-                <span>I have read and accept the <Link href="/privacy" className="underline">Privacy Policy</Link>.</span>
+                <span>{t('footer.privacyAcceptPrefix')} <Link href="/privacy" className="underline">{t('footer.privacyPolicy')}</Link>{t('footer.privacyAcceptSuffix')}</span>
               </label>
             </form>
           </div>
@@ -258,7 +258,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 md:pt-8 border-t border-gray-800">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
-            <p className="text-center">© {new Date().getFullYear()} AquaMundi. All rights reserved.</p>
+            <p className="text-center">{t('footer.copyright', { year: new Date().getFullYear() })}</p>
           </div>
         </div>
       </div>

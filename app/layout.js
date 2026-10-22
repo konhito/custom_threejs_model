@@ -10,6 +10,7 @@ import ConsentAnalytics from "../components/ConsentAnalytics";
 import WildfirePollinatorBanner from "../components/WildfirePollinatorBanner";
 import SmoothScroll from "../components/SmoothScroll";
 import AraihanPresence from "../components/AraihanPresence";
+import LocaleDocumentLanguage from "../components/LocaleDocumentLanguage";
 
 
 const geistSans = Geist({
@@ -93,7 +94,6 @@ export default function RootLayout({ children }) {
       <head>
         {/* Prevent browser translation */}
         <meta name="google" content="notranslate" />
-        <meta httpEquiv="Content-Language" content="en" />
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -164,6 +164,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SmoothScroll />
+        <LocaleDocumentLanguage />
         <WildfirePollinatorBanner />
         {children}
         <AraihanPresence />

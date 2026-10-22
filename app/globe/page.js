@@ -5,6 +5,7 @@ import Navigation from "../../components/Navigation";
 import GlobeLoader from "../../components/GlobeLoader";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "../../lib/useTranslation";
 
 // Lazy load Globe component
 const Globe = dynamic(() => import("../../components/Globe"), {
@@ -17,18 +18,19 @@ const Globe = dynamic(() => import("../../components/Globe"), {
 });
 
 export default function GlobePage() {
+  const { t, isLoading } = useTranslation();
   return (
-    <main role="main" aria-label="Full Interactive 3D Globe Experience" className="relative min-h-screen">
+    <main role="main" aria-label={isLoading ? undefined : t("globeUi.pageAriaLabel")} className="relative min-h-screen">
       <Navigation />
       
       {/* Back to Home Button */}
       <Link
         href="/"
         className="absolute top-4 left-4 md:top-6 md:left-6 z-50 flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 group"
-        aria-label="Back to home page"
+        aria-label={isLoading ? undefined : t("globeUi.backToHome")}
       >
         <ArrowLeft className="w-4 h-4 text-gray-700 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-sm font-medium text-gray-700">Back to Home</span>
+        <span className="text-sm font-medium text-gray-700">{isLoading ? "" : t("globeUi.backToHome")}</span>
       </Link>
 
       {/* Full Globe Experience - No oval border, full screen */}

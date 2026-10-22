@@ -11,8 +11,11 @@ import { useSession } from "../../hooks/useSession";
 import Navigation from "../../components/Navigation";
 import ShopBreadcrumb from "../../components/ShopBreadcrumb";
 import Footer from "../../components/Footer";
+import PageLoader from "../../components/PageLoader";
+import { useTranslation } from "../../lib/useTranslation";
 
 export default function CartPage() {
+  const { t, isLoading: translationsLoading } = useTranslation();
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState({});
   const [currency, setCurrency] = useState('eur');
@@ -140,6 +143,8 @@ export default function CartPage() {
     </div>
   );
 
+  if (translationsLoading) return <PageLoader isLoading />;
+
   if (cart.length === 0) {
     return (
       <div className="min-h-screen bg-white">
@@ -155,17 +160,17 @@ export default function CartPage() {
               <ShoppingCart className="w-12 h-12 text-gray-400" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Your cart is empty
+              {t("cartPage.emptyTitle")}
             </h2>
             <p className="text-gray-600 mb-8">
-              Discover our enchanting collection of books and start your journey.
+              {t("cartPage.emptyDescription")}
             </p>
             <Link
               href="/shop"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all shadow-lg"
             >
               <ArrowLeft className="w-5 h-5" />
-              Browse Collection
+              {t("cartPage.browseCollection")}
             </Link>
           </motion.div>
         </div>
@@ -205,10 +210,10 @@ export default function CartPage() {
             className="mb-8"
           >
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Shopping Cart
+              {t("cartPage.title")}
             </h1>
             <p className="text-gray-600">
-              {cart.length} {cart.length === 1 ? 'item' : 'items'} in your cart
+              {t(cart.length === 1 ? "cartPage.itemCountOne" : "cartPage.itemCountMany", { count: cart.length })}
             </p>
           </motion.div>
 
@@ -262,12 +267,12 @@ export default function CartPage() {
                                 {item.is_digital ? (
                                   <>
                                     <Sparkles className="w-3 h-3" />
-                                    Digital
+                                    {t("cartPage.digital")}
                                   </>
                                 ) : (
                                   <>
                                     <Package className="w-3 h-3" />
-                                    Physical
+                                    {t("cartPage.physical")}
                                   </>
                                 )}
                               </span>
@@ -275,7 +280,7 @@ export default function CartPage() {
                             <button
                               onClick={() => removeItem(item.product_id, item.is_digital)}
                               className="text-gray-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition-all"
-                              title="Remove item"
+                              title={t("cartPage.removeItem")}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -287,6 +292,7 @@ export default function CartPage() {
                               <button
                                 onClick={() => updateQuantity(item.product_id, item.is_digital, item.quantity - 1)}
                                 className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-all"
+                                aria-label={t("cartPage.decreaseQuantity")}
                               >
                                 <Minus className="w-4 h-4 text-gray-600" />
                               </button>
@@ -294,6 +300,7 @@ export default function CartPage() {
                               <button
                                 onClick={() => updateQuantity(item.product_id, item.is_digital, item.quantity + 1)}
                                 className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white transition-all"
+                                aria-label={t("cartPage.increaseQuantity")}
                               >
                                 <Plus className="w-4 h-4 text-gray-600" />
                               </button>
@@ -301,7 +308,7 @@ export default function CartPage() {
 
                             {/* Price */}
                             <div className="text-right">
-                              <p className="text-sm text-gray-500">{formatCurrency(price, currency)} each</p>
+                              <p className="text-sm text-gray-500">{t("cartPage.priceEach", { price: formatCurrency(price, currency) })}</p>
                               <p className="text-lg font-bold text-gray-900">
                                 {formatCurrency(total, currency)}
                               </p>
@@ -322,20 +329,20 @@ export default function CartPage() {
                 animate={{ opacity: 1, x: 0 }}
                 className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-100 shadow-sm sticky top-24"
               >
-                <h2 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-4">{t("cartPage.orderSummary")}</h2>
                 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-gray-600">
-                    <span>Subtotal</span>
+                    <span>{t("cartPage.subtotal")}</span>
                     <span className="font-medium text-gray-900">{formatCurrency(getTotal(), currency)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600">
-                    <span>Shipping</span>
-                    <span className="text-emerald-600 font-medium">Calculated at checkout</span>
+                    <span>{t("cartPage.shipping")}</span>
+                    <span className="text-emerald-600 font-medium">{t("cartPage.calculatedAtCheckout")}</span>
                   </div>
                   <div className="border-t border-gray-200 pt-3">
                     <div className="flex justify-between">
-                      <span className="text-lg font-bold text-gray-900">Total</span>
+                      <span className="text-lg font-bold text-gray-900">{t("cartPage.total")}</span>
                       <span className="text-xl font-bold text-gray-900">{formatCurrency(getTotal(), currency)}</span>
                     </div>
                   </div>
@@ -346,7 +353,7 @@ export default function CartPage() {
                     href="/checkout"
                     className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
                   >
-                    Proceed to Checkout
+                    {t("cartPage.proceedToCheckout")}
                     <ArrowRight className="w-5 h-5" />
                   </Link>
 
@@ -355,7 +362,7 @@ export default function CartPage() {
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all"
                   >
                     <ArrowLeft className="w-5 h-5" />
-                    Continue Shopping
+                    {t("cartPage.continueShopping")}
                   </Link>
                 </div>
 
@@ -364,11 +371,11 @@ export default function CartPage() {
                   <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
                     <span className="flex items-center gap-1">
                       <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                      Secure Checkout
+                      {t("cartPage.secureCheckout")}
                     </span>
                     <span className="flex items-center gap-1">
                       <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></div>
-                      Free Returns
+                      {t("cartPage.freeReturns")}
                     </span>
                   </div>
                 </div>

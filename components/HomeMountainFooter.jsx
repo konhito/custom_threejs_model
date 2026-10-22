@@ -9,7 +9,7 @@ import styles from "./HomeMountainFooter.module.css";
 const ashFragments = Array.from({ length: 28 }, (_, index) => index);
 
 export default function HomeMountainFooter() {
-  const { t } = useTranslation();
+  const { t, isLoading } = useTranslation();
   const footerRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -28,8 +28,10 @@ export default function HomeMountainFooter() {
   const columns = [
     { title: t("footer.explore"), links: [["/flowers", t("nav.flowers")], ["/pollinators", t("nav.pollinators")], ["/living-archive", t("nav.archive")]] },
     { title: t("footer.learn"), links: [["/education", t("nav.education")], ["/guardians", t("nav.guardians")], ["/impact", t("nav.impact")]] },
-    { title: t("footer.legal"), links: [["/about", t("nav.about")], ["/privacy", t("footer.privacyPolicy")], ["/contact-the-author", "Contact"]] },
+    { title: t("footer.legal"), links: [["/about", t("nav.about")], ["/privacy", t("footer.privacyPolicy")], ["/contact-the-author", t("footer.contact")]] },
   ];
+
+  if (isLoading) return null;
 
   return (
     <footer ref={footerRef} className={styles.footer}>
@@ -53,11 +55,11 @@ export default function HomeMountainFooter() {
         <div className={styles.brand}>
           <Link href="/" className={styles.brandLink}>
             <Image src="/logo1.png" alt="" width={72} height={72} className={styles.logo} />
-            <span className={styles.wordmark}>AquaMundi</span>
+            <span className={styles.wordmark}>{t("home.brandName")}</span>
           </Link>
-          <p>Proveneya &amp; Nahiara</p>
+          <p>{t("gamePilot.ui.brandName")}</p>
         </div>
-        <nav className={styles.links} aria-label="Footer navigation">
+        <nav className={styles.links} aria-label={t("footer.navigationAriaLabel")}>
           {columns.map((column) => (
             <section key={column.title}>
               <h2>{column.title}</h2>
@@ -66,7 +68,7 @@ export default function HomeMountainFooter() {
           ))}
         </nav>
       </div>
-      <p className={styles.copyright}>&copy; {new Date().getFullYear()} AquaMundi. All rights reserved.</p>
+      <p className={styles.copyright}>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
     </footer>
   );
 }

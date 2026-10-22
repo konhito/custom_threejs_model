@@ -610,7 +610,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-gray-300 border-t-transparent rounded-full animate-spin mb-2 sm:mb-3" />
                 <span className="text-xs sm:text-sm text-gray-500 px-2 text-center">
-                  {t('common.loading') || "Loading 3D model..."}
+                  {t('common.loading')}
                 </span>
               </div>
             )}
@@ -628,12 +628,12 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
             {/* Biological Data */}
             <div className={`${bgColorClasses[pollinator.color] || bgColorClasses.amber} backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border`}>
               <h3 className={`text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] ${textClasses[pollinator.color] || textClasses.amber} mb-3 sm:mb-4`}>
-                {t('pollinators.biologicalData') || "1. BIOLOGICAL DATA"}
+                {t('pollinators.biologicalData')}
               </h3>
               <div className="grid gap-2 sm:gap-3 text-xs sm:text-sm">
                 <div className={`bg-white/80 rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 border-l-4 ${borderClasses[pollinator.color] || borderClasses.amber}`}>
                   <div className={`text-[10px] sm:text-[11px] font-semibold ${textClasses[pollinator.color] || textClasses.amber} uppercase mb-0.5 sm:mb-1`}>
-                    {t('pollinators.scientificName') || "Scientific name"}
+                    {t('pollinators.scientificName')}
                   </div>
                   <div className="text-gray-800 line-clamp-1 sm:line-clamp-none">
                     <em>{pollinator.scientificName}</em>
@@ -641,7 +641,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
                 </div>
                 <div className={`bg-white/80 rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2 border-l-4 ${borderClasses[pollinator.color] || borderClasses.amber}`}>
                   <div className={`text-[10px] sm:text-[11px] font-semibold ${textClasses[pollinator.color] || textClasses.amber} uppercase mb-0.5 sm:mb-1`}>
-                    {t('pollinators.group') || "Group"}
+                    {t('pollinators.group')}
                   </div>
                   <div className="text-gray-800 line-clamp-2 sm:line-clamp-none">
                     {pollinator.group}
@@ -650,13 +650,13 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
                 <div className="text-[11px] sm:text-xs text-gray-700 space-y-1 mt-2 sm:mt-3">
                   <p className="line-clamp-3 sm:line-clamp-none">
                     <span className="font-semibold">
-                      {t('pollinators.basicMorphology') || "Basic morphology:"}
+                      {t('pollinators.basicMorphology')}
                     </span>{" "}
                     {pollinator.morphology}
                   </p>
                   <p className="line-clamp-2 sm:line-clamp-none">
                     <span className="font-semibold">
-                      {t('pollinators.habitatDistribution') || "Habitat & distribution:"}
+                      {t('pollinators.habitatDistribution')}
                     </span>{" "}
                     {pollinator.habitat}
                   </p>
@@ -667,7 +667,7 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
             {/* Pollinator Role */}
             <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-200">
               <h3 className={`text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] ${textClasses[pollinator.color] || textClasses.amber} mb-3 sm:mb-4`}>
-                {t('pollinators.pollinatorRole') || "2-5. POLLINATOR ROLE, CONSERVATION & ARAIHAN MEASURE"}
+                {t('pollinators.pollinatorRole')}
               </h3>
               <p className="text-gray-800 text-xs sm:text-sm leading-relaxed mb-2 sm:mb-3 line-clamp-4 sm:line-clamp-none">
                 {pollinator.role}
@@ -677,10 +677,10 @@ function Pollinator3DViewer({ pollinator, t, isActive = false, onGLBLoaded }) {
               </p>
               <div className="mt-3 sm:mt-4 text-[11px] sm:text-xs text-gray-600 space-y-0.5">
                 <p>
-                  <span className="font-mono font-semibold">S.A.N.:</span> {pollinator.sanCode}
+                  <span className="font-mono font-semibold">{t('flowersCatalog.sanCode')}</span> {pollinator.sanCode}
                 </p>
                 <p>
-                  {t('pollinators.araihanMeasure') || "Araihan Measure:"} {pollinator.araihanMeasure}
+                  {t('pollinators.araihanMeasure')} {pollinator.araihanMeasure}
                 </p>
               </div>
             </div>
@@ -881,7 +881,7 @@ export default function PollinatorsPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t('pollinators.searchPlaceholder') || "Search by SAN code, name, or species..."}
+                  placeholder={t('pollinators.searchPlaceholder')}
                   className="w-full pl-12 pr-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400 shadow-sm transition-all"
                 />
                 {searchQuery && (
@@ -905,7 +905,7 @@ export default function PollinatorsPage() {
               <div className="space-y-8 px-2 sm:px-0">
                 {filteredPollinators.length === 0 ? (
                   <div className="text-center py-16">
-                    <p className="text-gray-500 text-lg">No pollinators match your search.</p>
+                    <p className="text-gray-500 text-lg">{t('pollinatorsCatalog.noResults')}</p>
                   </div>
                 ) : (
                   filteredPollinators.map((pollinator) => (
@@ -1129,7 +1129,7 @@ export default function PollinatorsPage() {
                       href="/pollinators/gallery"
                       className="inline-flex items-center gap-2 px-5 py-3 sm:px-8 sm:py-4 bg-gray-900 text-white text-sm sm:text-base font-semibold rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl active:scale-95 sm:hover:scale-105 transition-all duration-300 touch-manipulation"
                     >
-                      <span>{t('pollinators.exploreGallery') || "Explore Gallery"}</span>
+                      <span>{t('pollinators.exploreGallery')}</span>
                       <Globe2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     </Link>
                   </div>

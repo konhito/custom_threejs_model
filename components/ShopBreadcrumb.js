@@ -2,31 +2,33 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Store, ShoppingCart, CreditCard, ChevronRight, Home } from "lucide-react";
+import { useTranslation } from "../lib/useTranslation";
 
 export default function ShopBreadcrumb() {
+  const { t, isLoading } = useTranslation();
   const pathname = usePathname();
 
   const breadcrumbItems = [
     {
-      name: "Home",
+      name: t("nav.home"),
       href: "/",
       icon: Home,
       active: pathname === "/"
     },
     {
-      name: "Shop",
+      name: t("nav.shop"),
       href: "/shop",
       icon: Store,
       active: pathname === "/shop"
     },
     {
-      name: "Cart",
+      name: t("nav.cart"),
       href: "/cart",
       icon: ShoppingCart,
       active: pathname === "/cart"
     },
     {
-      name: "Checkout",
+      name: t("shopPage.checkoutNav"),
       href: "/checkout",
       icon: CreditCard,
       active: pathname === "/checkout"
@@ -44,6 +46,8 @@ export default function ShopBreadcrumb() {
   } else {
     return null;
   }
+
+  if (isLoading) return null;
 
   return (
     <nav className="mb-6">

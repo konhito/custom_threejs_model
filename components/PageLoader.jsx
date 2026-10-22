@@ -1,15 +1,18 @@
 "use client";
 
 import React from 'react';
+import enMessages from '../messages/en.json';
+import { useTranslation } from '../lib/useTranslation';
 import styles from './PageLoader.module.css';
 
 const PageLoader = ({ isLoading }) => {
+  const { t, isLoading: translationsLoading } = useTranslation();
   if (!isLoading) return null;
 
   return (
     <div className={styles.loaderWrapper}>
       <div className={styles.brandText}>
-        AQUA MUNDI
+        {translationsLoading ? enMessages.home.loaderBrandName : t('home.loaderBrandName')}
       </div>
       <div className={styles.flower}>
         <div className={`${styles.petal} ${styles.petal1}`} />
