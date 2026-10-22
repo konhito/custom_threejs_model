@@ -7,8 +7,8 @@
 .wordmark:focus-visible { outline: 3px solid #ffdd74; outline-offset: 4px; }
 .copy { position: fixed; z-index: 5; left: 50%; width: min(58rem, calc(100vw - 3rem)); transform: translateX(-50%); text-align: center; text-wrap: balance; }
 .introCopy { top: calc(var(--site-banner-height) + 26vh); color: #f4f7f3; will-change: opacity, transform; }
-.heroEyebrow { margin: 0; color: #c4d3d9; font: italic 400 clamp(1rem, 1.7vw, 1.4rem)/1.25 Georgia, serif; }
-.heroHeading { width: min(92vw, 14ch); margin: .7rem auto 0; color: #f4f7f3; font: 500 clamp(2.8rem, 7.5vw, 6rem)/.94 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; text-shadow: 0 2px 18px rgba(3, 18, 30, .55); }
+.heroEyebrow { margin: 0; color: #c4d3d9; font: italic 400 clamp(1.2rem, 2vw, 1.7rem)/1.25 "Cormorant Garamond", Georgia, serif; }
+.heroHeading { width: min(92vw, 14ch); margin: .7rem auto 0; color: #f4f7f3; font: 600 clamp(2.8rem, 7.5vw, 6rem)/.94 "Cormorant Garamond", Georgia, serif; letter-spacing: -.025em; text-wrap: balance; text-shadow: 0 2px 18px rgba(3, 18, 30, .55); }
 .heroHeading span { display: block; }
 .gameLink { display: inline-flex; align-items: center; gap: .75rem; margin-top: clamp(1.25rem, 3vw, 2rem); padding: .9rem 1.4rem; border: 2px solid #f3cb79; border-radius: 999px; background: #f3cb79; color: #173b31; font: 700 1rem/1.2 Arial, sans-serif; text-decoration: none; box-shadow: 0 6px 22px rgba(0,0,0,.3); transition: transform .2s ease, background .2s ease; }
 .gameLink:hover { transform: translateY(-3px); background: #ffe4a1; }

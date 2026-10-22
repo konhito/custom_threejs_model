@@ -47,10 +47,10 @@
 }
 .wordmark {
   color: inherit;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2.35rem, 4vw, 4.25rem);
-  font-weight: 600;
-  letter-spacing: -.025em;
+  font-family: "Agustina Signature", cursive;
+  font-size: clamp(2.35rem, 3.4vw, 3.75rem);
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: .95;
   text-decoration: none;
 }
@@ -87,7 +87,7 @@
 
 @media (max-width: 640px) {
   .content { grid-template-columns: 1fr; }
-  .wordmark { font-size: clamp(2.35rem, 12vw, 3.5rem); }
+  .wordmark { font-size: clamp(1.8rem, 8vw, 2.5rem); white-space: nowrap; }
   .brand p { margin-left: 0; }
   .links { gap: 1rem; grid-template-columns: repeat(2, 1fr); }
   .links section:last-child { grid-column: span 2; }

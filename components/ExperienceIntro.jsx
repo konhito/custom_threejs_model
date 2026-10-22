@@ -95,13 +95,13 @@ export default function ExperienceIntro() {
         <main role="main" aria-label={translationsLoading ? undefined : t("home.experienceAriaLabel")} className="home-experience relative">
           <section ref={globeSectionRef} id="globe-section" className="home-archive-section relative w-full py-20 md:py-28">
             <div className="min-h-[70vh] flex items-center justify-center">
-              <div className="relative w-[92%] max-w-[1320px] h-[78vh] max-h-[820px] overflow-hidden rounded-[20px] bg-[#e6e6e2]">
+              <div className="relative w-[92%] max-w-[1320px] h-[78vh] max-h-[820px] overflow-hidden rounded-[14px] bg-[#eaf0e9]">
                 <Globe showOvalBorder={false} showBackground eager animateEntry={false} onReady={markGlobeReady} />
               </div>
             </div>
           </section>
           <section className="home-archive-loop relative w-full">
-            <CurvedLoop marqueeText={t("home.marqueeText")} speed={2} curveAmount={220} direction="left" interactive className="font-serif" />
+            <CurvedLoop marqueeText={t("home.marqueeText")} speed={2} curveAmount={160} direction="left" interactive className="font-serif" />
           </section>
           <section className="home-library-section relative w-full py-20 md:py-28">
             {!translationsLoading && <div className="landing-section-heading">
