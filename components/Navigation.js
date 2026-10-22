@@ -16,7 +16,8 @@ import {
   FaShoppingCart,
   FaBook,
   FaGlobe,
-  FaCalculator
+  FaCalculator,
+  FaGamepad
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { FloatingDock } from "./ui/floating-dock";
@@ -30,6 +31,12 @@ const getNavItems = (t) => [
     path: "/",
     icon: FaHome,
     description: t('navDescriptions.home')
+  },
+  {
+    name: t('nav.game'),
+    path: "/game",
+    icon: FaGamepad,
+    description: t('home.cardGameDesc')
   },
   {
     name: t('nav.about'),

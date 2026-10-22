@@ -18,7 +18,8 @@ import {
   FaBook,
   FaTimes,
   FaBars,
-  FaChevronRight
+  FaChevronRight,
+  FaGamepad
 } from "react-icons/fa";
 import { cartStorage } from "../lib/api";
 import { useTranslation } from "../lib/useTranslation";
@@ -30,6 +31,12 @@ const getNavItems = (t) => [
     path: "/",
     icon: FaHome,
     description: t('navDescriptions.home')
+  },
+  {
+    name: t('nav.game'),
+    path: "/game",
+    icon: FaGamepad,
+    description: t('home.cardGameDesc')
   },
   {
     name: t('nav.about'),

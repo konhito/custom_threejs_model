@@ -84,6 +84,7 @@ export default function ExperienceIntro() {
             <span>{t("home.heroTitle")}</span>
             <span>{t("home.heroTitleLine2")}</span>
           </h1>
+          <a className={styles.gameLink} href="/game">{t("home.cardGameCta")} <span aria-hidden="true">→</span></a>
         </div>
         <div className={styles.spacer} aria-hidden="true" />
       </main>

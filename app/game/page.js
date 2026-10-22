@@ -7,7 +7,7 @@ import FlowerFormation from "@/components/game/FlowerFormation";
 import PageLoader from "@/components/PageLoader";
 import AraihanGuide from "@/components/game/AraihanGuide";
 import { countriesData } from "@/lib/gameData";
-import { useTranslation } from "@/lib/useTranslation";
+import { useTranslation, getCurrentLocale } from "@/lib/useTranslation";
 import { useGameLoader } from "@/hooks/useGameLoader";
 import { useGamePersistence } from "@/hooks/useGamePersistence";
 import { useGameHandlers } from "@/hooks/useGameHandlers";
@@ -23,8 +23,18 @@ import FlowerDetailsReveal from "@/components/game/FlowerDetailsReveal";
 import PollinatorQuiz from "@/components/game/PollinatorQuiz";
 
 export default function GamePage() {
-  const { t } = useTranslation();
+  const { t, locale, isLoading: translationsLoading } = useTranslation();
   const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams?.get("lang") === "es" && getCurrentLocale() !== "es") {
+      document.cookie = "NEXT_LOCALE=es;path=/;max-age=86400;samesite=lax";
+      window.location.reload();
+    }
+  }, [searchParams]);
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    return () => { document.documentElement.lang = "en"; };
+  }, [locale]);
 
   // Core game state
   const [gameState, setGameState] = useState("intro");
@@ -64,15 +74,21 @@ export default function GamePage() {
 
   // Check for country parameter in URL
   useEffect(() => {
+    if (locale === "es") setSelectedCountry(countriesData.find(c => c.id === "SPAIN"));
+  }, [locale, setSelectedCountry]);
+
+  useEffect(() => {
     const countryParam = searchParams?.get('country');
-    if (countryParam && !isLoading) {
+    if (countryParam && !isLoading && locale !== "es") {
       const country = countriesData.find(c => c.id === countryParam);
       if (country) {
         setSelectedCountry(country);
         setGameState("flowerDetails");
       }
     }
-  }, [searchParams, isLoading, setSelectedCountry]);
+  }, [searchParams, isLoading, locale, setSelectedCountry]);
+
+  if (translationsLoading) return <PageLoader isLoading />;
 
   return (
     <div className={`min-h-screen relative overflow-x-hidden overflow-y-auto ${gameState === "playing" ? "bg-[#174538] text-white" : gameState === "completed" ? "text-black" : "bg-black text-white"}`}>

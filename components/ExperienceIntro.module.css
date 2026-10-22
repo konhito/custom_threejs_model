@@ -10,6 +10,9 @@
 .heroEyebrow { margin: 0; color: #c4d3d9; font: italic 400 clamp(1rem, 1.7vw, 1.4rem)/1.25 Georgia, serif; }
 .heroHeading { width: min(92vw, 14ch); margin: .7rem auto 0; color: #f4f7f3; font: 500 clamp(2.8rem, 7.5vw, 6rem)/.94 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; text-shadow: 0 2px 18px rgba(3, 18, 30, .55); }
 .heroHeading span { display: block; }
+.gameLink { display: inline-flex; align-items: center; gap: .75rem; margin-top: clamp(1.25rem, 3vw, 2rem); padding: .9rem 1.4rem; border: 2px solid #f3cb79; border-radius: 999px; background: #f3cb79; color: #173b31; font: 700 1rem/1.2 Arial, sans-serif; text-decoration: none; box-shadow: 0 6px 22px rgba(0,0,0,.3); transition: transform .2s ease, background .2s ease; }
+.gameLink:hover { transform: translateY(-3px); background: #ffe4a1; }
+.gameLink:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 .sceneTitle { position: fixed; top: calc(var(--site-banner-height) + 14vh); left: 50%; z-index: 1; display: grid; gap: .6rem; width: min(90vw, 62rem); transform: translateX(-50%); color: #f1f6f6; text-align: center; pointer-events: none; mix-blend-mode: screen; will-change: opacity, transform, filter, clip-path; }
 .sceneTitleMain { font: 500 clamp(3rem, 9vw, 8rem)/.88 Georgia, serif; letter-spacing: -.035em; text-wrap: balance; }
 .sceneTitleSub { color: #a9c2c4; font: 700 .62rem/1 var(--font-geist-mono), monospace; letter-spacing: .22em; text-transform: uppercase; }
@@ -27,3 +30,4 @@
 @keyframes dissolveTitle { 0% { opacity: 1; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, 0) scale(1); } 55% { opacity: .9; filter: blur(0); clip-path: inset(0 0 0 0); transform: translate(-50%, -1vh) scale(1.015); } 100% { opacity: 0; filter: blur(12px); clip-path: inset(0 48% 0 48%); transform: translate(-50%, -9vh) scale(1.08); } }
 @media (max-width: 700px) { .chrome { padding: 1.25rem; } .wordmark { font-size: 2rem; } .introCopy { top: calc(var(--site-banner-height) + 20vh); } .heroHeading { width: min(90vw, 12ch); font-size: clamp(2.25rem, 11vw, 4rem); } .map { padding: .55rem .7rem; } }
 @media (prefers-reduced-motion: reduce) { .canvas { position: absolute; height: 100svh; } .snow { display: none; } .introCopy, .discoveryCopy, .sceneTitle { position: absolute; animation: none; } .discoveryCopy { opacity: 1; top: 58%; } }
+@media (prefers-reduced-motion: reduce) { .gameLink { transition: none; } }

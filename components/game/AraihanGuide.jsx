@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "@/lib/useTranslation";
+import { spanishCardNames } from "@/lib/spanishGamePilot";
 
 export default function AraihanGuide({ message, onAction, actionText, showAction, cardType, country, guardianData, isIntro, petalData }) {
+  const { t, locale } = useTranslation();
   const [displayedMessage, setDisplayedMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -16,11 +19,12 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
     if (cardType === "petal") {
       if (showAction) {
         // 2-3 words only for intro dialog
-        return "Petal collected";
+        return t("gameMessages.petalCollected");
       } else {
         // Educational phrases for each petal
         const petalNumber = petalData?.petalNumber || 1;
-        const countryName = typeof country === 'string' ? country : (country?.country || country?.name || "this flower");
+        const countryName = locale === "es" && country?.id ? t(`countries.${country.id.toLowerCase()}.name`) : typeof country === 'string' ? country : (country?.country || country?.name || "this flower");
+        if (locale === "es") return t(`gameMessages.petal${petalNumber}`, { country: countryName });
         
         const educationalPhrases = {
           1: `Petal 1 collected! Each petal represents a part of ${countryName}'s natural heritage. Flowers are essential for biodiversity and ecosystem health.`,
@@ -34,29 +38,29 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
         return educationalPhrases[petalNumber] || `You found petal ${petalNumber} of the flower of ${countryName}. Well done, guardian!`;
       }
     } else if (cardType === "minion") {
-      const minionName = guardianData?.name || "minion";
+      const minionName = locale === "es" ? spanishCardNames[guardianData?.id] || "súbdito" : guardianData?.name || "minion";
       if (showAction) {
         // 2-3 words only for intro dialog
-        return "Minion revealed";
+        return t("gameMessages.minionRevealed");
       } else {
         // Full version for gameplay notification
-        return `You revealed the ${minionName} minion. The ecosystem is set back. We must start again…`;
+        return t("gameMessages.minionReset", { minionName });
       }
     } else if (cardType === "guardian") {
       if (showAction) {
         // 2-3 words only for intro dialog
-        return "Guardian activated";
+        return t("gameMessages.guardianActivated");
       } else {
         // Full version for gameplay notification
-        return "You activated a Guardian. Hope is with you. Continue!";
+        return t("gameMessages.guardianContinue");
       }
     } else if (cardType === "guardian-protect") {
       if (showAction) {
         // 2-3 words only for intro dialog
-        return "Guardian protected";
+        return t("gameMessages.guardianProtected");
       } else {
         // Full version for gameplay notification
-        return "The Guardian protected you from the minion! Continue your quest to restore the flower.";
+        return t("gameMessages.guardianSavedFull");
       }
     }
     return message;
@@ -154,7 +158,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
                   <button
                     onClick={dismissMessage}
                     className="flex-shrink-0 w-7 h-7 rounded-full hover:bg-amber-50 border border-transparent hover:border-amber-200 flex items-center justify-center transition-all"
-                    aria-label="Close message"
+                    aria-label={t("game.close")}
                   >
                     <X className="w-4 h-4 text-gray-500" />
                   </button>
@@ -180,7 +184,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-white font-bold text-xl md:text-2xl lg:text-3xl mb-2">Araihan</h3>
-              <p className="text-[#d6eeb9] text-sm md:text-base lg:text-lg">Loyal Squire of Nahiara</p>
+              <p className="text-[#d6eeb9] text-sm md:text-base lg:text-lg">{t("araihan.subtitle")}</p>
             </div>
           </div>
 
@@ -278,7 +282,7 @@ export default function AraihanGuide({ message, onAction, actionText, showAction
                 setIsVisible(false);
               }}
               className="flex-shrink-0 w-8 h-8 rounded-full bg-white/50 hover:bg-white/80 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
-              aria-label="Close message"
+              aria-label={t("game.close")}
             >
               <X className="w-4 h-4 text-gray-600" />
             </button>
