@@ -104,6 +104,11 @@ export default function ExperienceIntro() {
             <CurvedLoop marqueeText={t("home.marqueeText")} speed={2} curveAmount={220} direction="left" interactive className="font-serif" />
           </section>
           <section className="home-library-section relative w-full py-20 md:py-28">
+            {!translationsLoading && <div className="landing-section-heading">
+              <p>{t("home.booksName")}</p>
+              <h2>{t("landing.bookTitle")}</h2>
+              <span>{t("home.booksDesc")}</span>
+            </div>}
             <ImageGallery />
           </section>
           <section className="relative w-full pb-20 md:pb-28">
