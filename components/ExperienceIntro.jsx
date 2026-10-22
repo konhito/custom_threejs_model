@@ -111,7 +111,12 @@ export default function ExperienceIntro() {
             </div>}
             <ImageGallery />
           </section>
-          <section className="relative w-full pb-20 md:pb-28">
+          <section className="home-paths-section relative w-full pb-20 md:pb-28">
+            {!translationsLoading && <div className="landing-section-heading">
+              <p>{t("home.exploreName")}</p>
+              <h2>{t("landing.continueJourney")}</h2>
+              <span>{t("landing.journeyText")}</span>
+            </div>}
             <BentoDemo />
           </section>
         </main>
